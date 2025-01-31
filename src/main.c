@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/01/31 06:36:04 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/01/31 20:12:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //READLINE LEAK DE BASE C MIEUX GNL MAIS IL EN FAUT UN PARFAIT BONUSE JE RECODERAIS CA UN DE CES JOURS
 t_boolean	minishell_launch(char **av, char **env)
 {
-	char *line;
+	char	*line;
 
 	(void)av;
 	(void)env;
@@ -24,9 +24,11 @@ t_boolean	minishell_launch(char **av, char **env)
 	funny_stuff();
 	while (1)
 	{
-		ft_putstr_fd(RED_LIGHT "minishell ", 2);
-		line = readline(0);
-		pause();
+		line = readline("minishell/ ");
+		if (line)
+			add_history(line);
+		if ((ft_strncmp(line, "exit", 4) == 0))
+			exit(42);
 	}
 }
 
