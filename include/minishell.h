@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 01:11:29 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/01 03:19:17 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum s_boolean
 void	funny_stuff(void);
 void	cd(t_core *core);
 void	cmd_exec(t_core *core);
+void	env_var(t_core *core);
 void	exit_status_display(t_core *core);
 void	signal_handler(void);
 #endif

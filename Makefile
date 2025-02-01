@@ -2,8 +2,9 @@ SRCS = 	src/main.c \
 		src/welcome.c \
 		src/signals.c \
 		src/cmd/cd.c \
-		src/cmd/exit_display.c \
 		src/cmd/exec.c \
+		src/cmd/env_var.c \
+		src/cmd/exit_display.c \
 
 OBJS = $(SRCS:.c=.o)
 

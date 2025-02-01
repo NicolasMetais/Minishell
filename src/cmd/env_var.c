@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 06:03:21 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/01 05:53:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_exec(t_core *core)
+void	env_var(t_core *core)
 {
- 	if ((ft_strncmp(core->line, "exit", 5) == 0))
-		exit(0);
-	if ((ft_strncmp(core->line, "cd", 2) == 0))
-		cd(core);
-	if (ft_strnstr(core->line, "$?", ft_strlen(core->line)))
-		exit_status_display(core);
-	if ((ft_strncmp(core->line, "$", 1) == 0))
-		env_var(core);
+	int	i;
+
+	i = 0;
+	core->line++;
+	while (core->env[i])
+	{
+		if (ft_strncmp(core->line, core->env[i], ft_strlen(core->line)) == 0)
+		{
+			core->line = core->line + ft_strlen(core->line);
+		}
+		i++;
+	}
 }

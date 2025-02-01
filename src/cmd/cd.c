@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 01:12:29 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/01 05:47:02 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	cd(t_core *core)
 	if (chdir(core->line) == -1)
 	{
 		core->dollars_qmark = 2;
-		perror("");
+		//perror("");
 	}
 }
