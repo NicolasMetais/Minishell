@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/01/31 06:28:08 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/01 01:11:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,18 @@
 # include <stdio.h>
 # include <signal.h>
 # include <readline/readline.h>
+# include <dirent.h>
+#include <unistd.h>
 # include <readline/history.h>
+
+typedef struct s_core
+{
+	int				ac;
+	char			**av;
+	char			**env;
+	unsigned int	dollars_qmark;
+	char			*line;
+}	t_core;
 
 typedef enum s_boolean
 {
@@ -29,5 +40,8 @@ typedef enum s_boolean
 }	t_boolean;
 
 void	funny_stuff(void);
+void	cd(t_core *core);
+void	cmd_exec(t_core *core);
+void	exit_status_display(t_core *core);
 void	signal_handler(void);
 #endif
