@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 06:05:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:43:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ t_boolean	minishell_launch(t_core *core)
 	funny_stuff();
 	while (1)
 	{
-		printf("%s\n", core->line);
 		core->line = readline("minishell/ ");
 		if (core->line)
 			add_history(core->line);
 		cmd_exec(core);
-		free(core->line);
-		core->line = NULL;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 06:03:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:46:33 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cmd_exec(t_core *core)
 {
- 	if ((ft_strncmp(core->line, "exit", 5) == 0))
+	if ((ft_strncmp(core->line, "exit", 4) == 0))
 		exit(0);
 	if ((ft_strncmp(core->line, "cd", 2) == 0))
 		cd(core);
