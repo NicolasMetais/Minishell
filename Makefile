@@ -5,6 +5,7 @@ SRCS = 	src/main.c \
 		src/cmd/exec.c \
 		src/cmd/env_var.c \
 		src/cmd/exit_display.c \
+		src/cmd/builtin.c \
 
 OBJS = $(SRCS:.c=.o)
 

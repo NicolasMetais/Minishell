@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:22:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 05:53:48 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/04 02:53:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	exit_status_display(t_core *core)
 {
-	printf("%d\n", core->dollars_qmark);
-	core->dollars_qmark = 0;
+	(void)core;
+	printf("%u\n", g_dollar_qmark);
+	g_dollar_qmark = 0;
 }

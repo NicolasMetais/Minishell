@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/04 05:50:31 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/04 04:37:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigint(int sig)
+t_boolean	builtin(t_core *core)
 {
-
-	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	signal_handler(void)
-{
-	struct sigaction	sign;
-
-	sign.sa_handler = handle_sigint;
-	sigemptyset(&sign.sa_mask);
-	sign.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sign, NULL);
+	if ((ft_strncmp(core->line, "cd", 2) == 0))
+		return (cd_parsing(core), true);
+	if (ft_strnstr(core->line, "echo $?", ft_strlen(core->line)))
+		return (exit_status_display(core), true);
+	if ((ft_strncmp(core->line, "$", 1) == 0))
+		return (env_var(core), true);
+	return (false);
 }

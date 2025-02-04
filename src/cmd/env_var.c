@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/01 05:53:59 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/02 05:44:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	env_var(t_core *core)
 	{
 		if (ft_strncmp(core->line, core->env[i], ft_strlen(core->line)) == 0)
 		{
-			core->line = core->line + ft_strlen(core->line);
+			printf("%s\n", core->env[i]);
 		}
 		i++;
 	}
