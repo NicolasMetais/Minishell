@@ -1,17 +1,20 @@
 SRCS = 	src/main.c \
 		src/welcome.c \
 		src/signals.c \
+		src/init_env.c \
 		src/cmd/cd.c \
 		src/cmd/exec.c \
 		src/cmd/env_var.c \
 		src/cmd/exit_display.c \
 		src/cmd/builtin.c \
+		src/utils/ft_get_env.c \
+		src/utils/rotate_env.c \
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude
+CFLAGS = -Wall -Wextra -Werror -g3 -Ilibft/include -Iinclude
 
 NAME = minishell
 

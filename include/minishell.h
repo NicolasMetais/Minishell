@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/04 04:50:03 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/05 07:03:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define MINISHELL_H
 
 # define RED_LIGHT "\033[91m"
-
+# define WHITE "\e[0;37m"
 
 # include "libft.h"
+
 # include <stdio.h>
 # include <signal.h>
 # include <readline/readline.h>
@@ -31,33 +32,43 @@
 
 extern unsigned int g_dollar_qmark;
 
-# define WHITE "\e[0;37m"
-
-typedef struct s_core
-{
-	int				ac;
-	char			**av;
-	char			**env;
-	char			*pwd;
-	char			*prompt;
-	char			*line;
-	char			**temp_path;
-}	t_core;
-
 typedef enum s_boolean
 {
 	false,
 	true,
 }	t_boolean;
 
+# include "cmd.h"
+
+typedef struct s_env
+{
+	char			*name;
+	char			*env;
+	struct s_env	*next;
+}		t_env;
+
+typedef struct s_core
+{
+	int				ac;
+	char			**av;
+	char			*pwd;
+	char			*prompt;
+	char			*line;
+	char			**temp_path;
+	char			**env_dup;
+	t_env			*env;
+}	t_core;
+
 void		funny_stuff(void);
-void		cd(t_core *core);
-void		cmd_exec(t_core *core);
-void		env_var(t_core *core);
-void		exit_status_display(t_core *core);
+
+//UTILS
+char		*ft_get_env(t_env *env, char *name);
+t_env		*rotate_env(t_core *core, char *var_name);
+
+//ENV VAR INIT
+void		duplicate_env(t_core *core, char **todup);
+
+//SIGNALS
 void		signal_handler(void);
 
-t_boolean	builtin(t_core *core);
-
-void	cd_parsing(t_core *core);
 #endif

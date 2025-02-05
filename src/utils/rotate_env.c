@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   rotate_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/04 23:30:17 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/05 06:50:52 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/05 07:02:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	env_var(t_core *core)
-{
-	int	i;
+/**
+ * @brief ROTATE THE ENV VARIABLE LINKED LIST ON THE GIVEN NAME
+ * IT'S "BASICALY" A SELECT_ENV WITH LINKED LIST
+ * 
+ * @param core 
+ * @param var_name 
+ * @return t_env 
+ */
 
-	i = 0;
-	core->line++;
-	while (core->env[i])
-	{
-		if (ft_strncmp(core->line, core->env[i], ft_strlen(core->line)) == 0)
-		{
-			printf("%s\n", core->env[i]);
-		}
-		i++;
-	}
-} */
+t_env	*rotate_env(t_core *core, char *var_name)
+{
+	while (ft_strncmp(core->env->name, var_name, ft_strlen(var_name)) != 0)
+		core->env = core->env->next;
+	return (core->env);
+}

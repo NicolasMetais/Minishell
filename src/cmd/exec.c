@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/04 02:05:47 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/05 01:53:58 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cmd_exec(t_core *core)
 		checker = access(test, F_OK);
 		if (checker == 0)
 		{
-			execve(test, temp_arg, core->env);
+			execve(test, temp_arg, core->env_dup);
 			perror("");
 		}
 	}
