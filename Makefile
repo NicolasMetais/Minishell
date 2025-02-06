@@ -9,6 +9,7 @@ SRCS = 	src/main.c \
 		src/cmd/builtin.c \
 		src/utils/ft_get_env.c \
 		src/utils/rotate_env.c \
+		src/utils/ft_strcmp.c \
 
 OBJS = $(SRCS:.c=.o)
 

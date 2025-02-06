@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/05 07:03:00 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/06 02:14:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,17 @@ typedef struct s_core
 	t_env			*env;
 }	t_core;
 
-void		funny_stuff(void);
+void	funny_stuff(void);
 
 //UTILS
-char		*ft_get_env(t_env *env, char *name);
-t_env		*rotate_env(t_core *core, char *var_name);
+char	*ft_get_env(t_env *env, char *name);
+t_env	*rotate_env(t_core *core, char *var_name);
+int		ft_strcmp(char *s1, char *s2);
 
 //ENV VAR INIT
-void		duplicate_env(t_core *core, char **todup);
+void	duplicate_env(t_core *core, char **todup);
 
 //SIGNALS
-void		signal_handler(void);
+void	signal_handler(void);
 
 #endif
