@@ -52,8 +52,10 @@ void	free_split(char **split);
 void	free_node(t_cmd *ctx);
 
 void	get_fd(t_cmd *cmd, char **cmd_line_split);
-
 int		get_outfd(t_cmd *cmd, char **cmd_split);
 int		get_infd(t_cmd *cmd, char **cmd_split);
+
+t_boolean	is_redirection(char	*s);
+int			command_counter(char **line_split)
 
 #endif

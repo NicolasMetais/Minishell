@@ -12,51 +12,22 @@
 
 #include "minishell.h"
 
-char	**get_all_path(char **env)
+void	add_back(t_cmd *head, t_cmd *new)
 {
-	int		i;
-	char	*s;
-	char	**env_path;
+	t_cmd	*tmp;
 
-	while (env[i])
+	if (head == NULL)
 	{
-		if (ft_strncmp(env[i], "PATH=", ft_strlen("PATH=")) == 0)
-		{
-			s = env[i];
-			break ;
-		}
-		i++;
+		head = new;
+		tmp = NULL;
+		return ;
 	}
-	s += 5;
-	env_path = ft_split(s, ';');
-	if (!env_path)
-		return (NULL);
-	return (env_path);
-}
-
-char	*get_path(char **cmd_line_split, char **all_path)
-{
-	char	*cmd_path;
-	char	*one_path;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (all_path[i])
-	{
-		j = 0;
-		one_path = ft_strjoin(all_path[i], "/");
-		while (cmd_line_split[j])
-		{
-			cmd_path = ft_strjoin(one_path, cmd_line_split[j]);
-			if (access(cmd_path, F_OK | X_OK) == 0)
-				return (cmd_path);
-			free(cmd_path);
-			j++;
-		}
-		free(one_path);
-		i++;
-	}
+	tmp = head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+	tmp = NULL;
+	return ;
 }
 
 t_cmd   *new_cmd(char *line_split, char **all_path)
@@ -93,6 +64,17 @@ est un index. A chaque commande on cree un node qu'on ajoute a la liste avec add
 cf new_cmd pour l'initialisation des nodes src/parsing/initialisation.c .
 */
 
+void	check_and_add_cmd_to_list(t_cmd *head, t_cmd *tmp)
+{
+		if (tmp->in_fd[0] == -1 || tmp->out_fd[0] == -1)
+		{
+			free_node(tmp);
+			return ;
+		}
+		else
+			add_back(head, tmp);
+}
+
 t_cmd   *set_cmd(char **line_split, char **env)
 {
 	t_cmd	*head;
@@ -101,15 +83,15 @@ t_cmd   *set_cmd(char **line_split, char **env)
 
 	i = 0;		
 	head = new_cmd(line_split[i], env);
+	if (!head)
+		return (NULL);
 	i++;
 	while (line_split[i])
 	{
 		tmp = new_cmd(line_split[i], env);
-		if (!tmp || tmp->in_fd[0] == -1 || tmp->out_fd[0] == -1)
-		{
-			free_node(tmp);
-		}
-		add_back(head, tmp);
+		if (!tmp)
+			return (freelist(head), NULL);
+		check_and_add_cmd_to_list(head, tmp);
 		i++;
 	}
 }

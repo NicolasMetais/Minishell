@@ -24,3 +24,16 @@ int	command_counter(char **line_split)
 		i++;
 	return (i);
 }
+
+t_boolean	is_redirection(char	*s)
+{
+	if (ft_strncmp(s, "<", 1) == 0)
+		return (true);
+	if (ft_strncmp(s, "<<", 1) == 0)
+		return (true);
+	if (ft_strncmp(s, ">", 1) == 0)
+		return (true);	
+	if (ft_strncmp(s, ">>", 1) == 0)
+		return (true);
+	return (false);
+}

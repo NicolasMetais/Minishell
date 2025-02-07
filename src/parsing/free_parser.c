@@ -24,7 +24,21 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_node(t_cmd *ctx)
+void	free_node(t_cmd *cmd)
 {
+	free(cmd->path);
+	free(cmd);
+}
 
+void	freelist(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	while (cmd)
+	{
+		tmp = cmd->next;
+		freenode(cmd);
+		cmd = tmp;
+	}
+	cmd = NULL;
 }
