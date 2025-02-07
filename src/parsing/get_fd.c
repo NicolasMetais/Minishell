@@ -29,6 +29,11 @@ void	fd_init(t_cmd *cmd)
 	cmd->out_fd[1] = 0;
 }
 
+/*open_file() est appele dans get_infd() et get_outfd() pour ouvrir les fichiers de redirection.
+Si le fichier ne s'ouvre pas, le message d'erreur s'affiche mais le programme continue. 
+
+La commande n'est pas ajoutee a la liste fd = -1.*/
+
 int		open_file(char	*file)
 {
 	int	fd;
@@ -42,7 +47,7 @@ int		open_file(char	*file)
 	return (fd);
 }
 
-/*get_infd recupere un infile et le type de redirection de la commande
+/*get_infd() recupere un infile et le type de redirection de la commande
 char **cmd_split est le tableau de la commande entiere.
 
 ex : < chips cat -e 
@@ -56,6 +61,8 @@ corrspond a une redirection. Si la string correspond a une redirectin, on ouvre 
 d,a
 */
 
+// aucune gestion d'erreur pour l'instant
+
 int	get_infd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
@@ -66,12 +73,23 @@ int	get_infd(t_cmd *cmd, char **cmd_split)
 		if (ft_strncmp(cmd_split[i], "<", 1) == 0 
 			|| ft_strncmp(cmd_split[i], "<<", 2) == 0)
 		{
+			if (ft_strlen(cmd_split[i]) == 2)
+			{
+				if (cmd->here_doc != NULL)
+					free(cmd->here_doc);
+				cmd->here_doc = ft_strdup(cmd_split[i + 1]);
+			}
+			else
+			{
 				cmd->in_fd[0] = open_file(cmd_split[i + 1]);
 				cmd->in_fd[0] = ft_strlen(cmd_split[i]);
+			}
 		}
 		i++;
 	}
 }
+
+/*get_outfd() marche comme get_out fd pour la redirection out*/
 
 int	get_outfd(t_cmd *cmd, char **cmd_split)
 {
@@ -93,6 +111,7 @@ int	get_outfd(t_cmd *cmd, char **cmd_split)
 void	get_fd(t_cmd *cmd, char **cmd_line_split)
 {
 	fd_init(cmd);
+	cmd->here_doc = NULL;
 	get_fd_in(cmd, cmd_line_split);
 	get_fd_out(cmd, cmd_line_split);
 }

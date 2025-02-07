@@ -32,6 +32,7 @@ typedef struct s_commande
 {
 	char			**cmd;
 	char			*path;
+	char			*here_doc;
 	int				in_fd[2];
 	int				out_fd[2];
 
@@ -46,16 +47,16 @@ typedef struct s_global
 	t_cmd	*cmd;
 }				t_glb;
 
-void	funny_stuff(void);
+void		funny_stuff(void);
 
-void	free_split(char **split);
-void	free_node(t_cmd *ctx);
+void		free_split(char **split);
+void		free_node(t_cmd *ctx);
 
-void	get_fd(t_cmd *cmd, char **cmd_line_split);
-int		get_outfd(t_cmd *cmd, char **cmd_split);
-int		get_infd(t_cmd *cmd, char **cmd_split);
+void		get_fd(t_cmd *cmd, char **cmd_line_split);
+int			get_outfd(t_cmd *cmd, char **cmd_split);
+int			get_infd(t_cmd *cmd, char **cmd_split);
 
 t_boolean	is_redirection(char	*s);
-int			command_counter(char **line_split)
+int			command_counter(char **line_split);
 
 #endif

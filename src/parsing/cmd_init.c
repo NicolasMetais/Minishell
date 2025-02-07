@@ -71,6 +71,12 @@ void	check_and_add_cmd_to_list(t_cmd *head, t_cmd *tmp)
 			free_node(tmp);
 			return ;
 		}
+		if (ft_strlen(tmp->in_fd[1]) > 2 || ft_strlen(tmp->out_fd[2]))
+		{
+			free_node(tmp);
+			// ajouter une gestion d'erreur (ex : ">>>>>" token not found blablabla)
+			return;
+		}
 		else
 			add_back(head, tmp);
 }
