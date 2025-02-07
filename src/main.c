@@ -18,11 +18,12 @@ t_boolean	minishell_launch(char **av, char **env)
 {
 	(void)av;
 	(void)env;
+	char	*line;
 	funny_stuff();
 	while (1)
 	{
-		ft_putstr_fd(RED_LIGHT "minishell ", 2);
-		readline(0);
+		line = readline("minishell/ ");
+		
 	}
 }
 
