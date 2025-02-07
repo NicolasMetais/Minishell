@@ -8,8 +8,13 @@ SRCS = 	src/main.c \
 		src/cmd/exit_display.c \
 		src/cmd/builtin.c \
 		src/utils/ft_get_env.c \
+		src/utils/get_env_size.c \
 		src/utils/rotate_env.c \
+		src/utils/update_env_tab.c \
 		src/utils/ft_strcmp.c \
+		src/error_manager/errors.c \
+		src/free/free_env.c \
+		src/free/free.c \
 
 OBJS = $(SRCS:.c=.o)
 

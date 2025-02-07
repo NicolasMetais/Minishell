@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   get_env_size.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 04:31:10 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/07 05:33:29 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/07 08:11:26 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_var(t_core *core, t_builtin *builtin)
+int	get_env_size(t_env	*env)
 {
-	int	i;
+	int		i;
+	t_env	*copy;
 
-	(void)builtin;
 	i = 0;
-	core->line++;
-	rotate_env(core, core->line);
-	printf("%s\n", core->env->var);
+	copy = env;
+	while (copy->next != env)
+	{
+		copy = copy->next;
+		i++;
+	}
+	return (i);
 }

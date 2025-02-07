@@ -6,38 +6,18 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/06 06:41:51 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/07 10:57:37 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char	*check_for_env(t_core *core, char *folder)
-// {
-// 	int	i;
-// 	int j;
-
-// 	i = 0; //FAUT RECODER CA PLUS HAUT CA MARCHE PARTOUT PAREIL :)
-// 	while (folder[i])
-// 	{
-// 		if (folder[i] == '$')
-// 		{
-// 			j = i + 1;
-// 			while (folder[j])
-// 			{
-// 				if (!ft_isalpha(folder[j]))
-// 				{
-// 					if (ft_get_env(core->env, ft_substr(folder, i + 1, j)))
-// 					{
-// 						insert_in_folder(folder, i, j);
-// 					}
-// 				}
-// 				j++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }
+void	free_cd(t_cd *cd)
+{
+	free(cd->pwd);
+	free(cd->oldpwd);
+	free(cd->home);
+}
 
 /**
  * @brief UPDATE TWO ENV VAR : PWD & OLDPWD TO KNOW 
@@ -46,14 +26,24 @@
  * @param path 
  * @param undo 
  */
-void	update_pwd(t_core *core, t_cd *cd)
+t_boolean	update_pwd(t_core *core, t_cd *cd)
 {
+	char	*get_path;
 
 	cd->oldpwd = cd->pwd;
 	rotate_env(core, "OLDPWD");
-	core->env->env = ft_strjoin("OLDPWD=", cd->oldpwd);
+	core->env->var = ft_strjoin("OLDPWD=", cd->oldpwd);
+	if (!core->env->var)
+		return (false);
 	rotate_env(core, "PWD");
-	core->env->env = ft_strjoin("PWD=", getcwd(NULL, 0));
+	get_path = getcwd(NULL, 0);
+	core->env->var = ft_strjoin("PWD=", get_path);
+	free(get_path);
+	if (!core->env->var)
+		return (false);
+	if (!update_env_dup(core))
+		return (false);
+	return (true);
 }
 /**
  * @brief EXEC CD WITH OPTIONS OR NOT / ERRORS
@@ -62,25 +52,40 @@ void	update_pwd(t_core *core, t_cd *cd)
  * @param undo 
  */
 
-void	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin)
+t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin)
 {
 	char	*folder;
 	int		status;
 
 	folder = builtin->cmd[1];
-	if (cd->ignore)
-		folder = builtin->cmd[2];
 	if (cd->ishome)
-		folder = ft_get_env(core->env, "HOME");
+		folder = cd->home;
 	if (cd->undo)
-		folder = ft_get_env(core->env, "OLDPWD");
+		folder = cd->oldpwd;
 	status = chdir(folder);
 	if (status == -1)
-	{
-		perror(ft_strjoin("cd: ", folder));
-		return ;
-	}
-	update_pwd(core, cd);
+		return (funct_error("cd: ", folder));
+	if (!update_pwd(core, cd))
+		return (false);
+	free(folder);
+	free_cd(cd);
+	return (true);
+}
+
+t_boolean	cd_setup(t_core *core, t_cd *cd)
+{
+	cd->pwd = ft_get_env(core->env, "PWD");
+	if (!cd->pwd)
+		return (false);
+	cd->oldpwd = ft_get_env(core->env, "OLDPWD");
+	if (!cd->oldpwd)
+		return (false);
+	cd->home = ft_get_env(core->env, "HOME");
+	if (!cd->home)
+		return (false);
+	cd->undo = false;
+	cd->ishome = false;
+	return (true);
 }
 
 /**
@@ -89,42 +94,29 @@ void	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin)
  * @param core 
  */
 
-void	cd_init(t_core *core, t_builtin *builtin)
+t_boolean	cd_init(t_core *core, t_builtin *builtin)
 {
 	t_cd	cd;
-	int		i;
-	char	*custom_error;
 
-	i = 0;
-	cd.pwd = ft_get_env(core->env, "PWD");
-	cd.oldpwd = ft_get_env(core->env, "OLDPWD");
-	cd.home = ft_get_env(core->env, "HOME");   
-	cd.undo = false;
-	cd.ishome = false;
-	cd.ignore = false;
+	if (!cd_setup(core, &cd))
+		return (false);
+	if (builtin->arg_number == 1)
+		return (false);
 	if (builtin->cmd[1][0] == '-')
 	{
-		if (builtin->arg_number == 2)
+		if (ft_strlen(builtin->cmd[1]) == 1)
 			cd.undo = true;
-		if (builtin->cmd[1][1] == '-' && builtin->arg_number == 3)
-			cd.ignore = true;
+		else if (builtin->cmd[1][1] == '-' &&
+			builtin->arg_number == 2 && ft_strlen(builtin->cmd[1]) == 2)
+			cd.ishome = true;
 		else
-		{ //a mettre dans un error_manager pour la norme ?
-			custom_error = ft_strjoin("cd: ", ft_substr(builtin->cmd[1],
-						1, ft_strlen(builtin->cmd[1]) - 1));
-			custom_error = ft_strjoin(custom_error, ": invalid option");
-			ft_putendl_fd(custom_error, 2);
-			g_dollar_qmark = 2;
-			return ;
-		}
+			return (invalid_option(builtin, "cd: "));
 	}
 	if (ft_strcmp(builtin->cmd[1], "~") == 0 || builtin->arg_number == 1)
 		cd.ishome = true;
 	if (builtin->arg_number > 2)
-	{
-		g_dollar_qmark = 2;
-		ft_putendl_fd("cd: too many arguments", 2);
-		return ;
-	}
-	cd_exec(core, &cd, builtin);
+		return (too_many_args("cd: "));
+	if (!cd_exec(core, &cd, builtin))
+		return (false);
+	return (true);
 }

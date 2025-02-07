@@ -1,42 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_env.c                                       :+:      :+:    :+:   */
+/*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 01:09:55 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 10:51:25 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/07 04:58:13 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/07 05:40:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/**
- * @brief Get env content from env name
- * 
- * @param env 
- * @param name 
- * @return char* 
- */
-char	*ft_get_env(t_env *env, char *name)
+
+void	emergency_free_tab(char **tab, int i)
+{
+	while (tab[i])
+	{
+		free(tab[i]);
+		i--;
+	}
+	free(tab);
+}
+
+void	emergency_free_env_var(t_env *env)
 {
 	t_env	*copy;
-	int		size;
-	int		i;
-	char	*cut;
 
-	i = -1;
-	size = ft_strlen(name);
 	copy = env;
-
-	while (copy->next != env)
+	while (copy)
 	{
-		if (ft_strncmp(copy->name, name, size) == 0)
-		{
-			cut = ft_substr(copy->var, size + 1, ft_strlen(copy->var));
-			return (cut);
-		}
-		copy = copy->next;
+		env = env->next;
+		free(copy);
+		copy = env;
 	}
-	return (NULL);
+}
+
+
+void	free_env(t_core *core)
+{
+	t_env	*current;
+	t_env	*next;
+	int		i;
+	int		size;
+
+	i = 0;
+	current = core->env;
+	size = get_env_size(core->env);
+	while (i < size)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+		i++;
+	}
+	free(core->env_dup);
 }

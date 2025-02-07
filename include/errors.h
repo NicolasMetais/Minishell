@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 04:31:10 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/07 02:14:11 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/07 03:26:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef ERRORS_H
+# define ERRORS_H
 
-void	env_var(t_core *core, t_builtin *builtin)
-{
-	int	i;
+//ERROR MODULABLE PROTECTED FUNCTIONS
+t_boolean	invalid_option(t_builtin *builtin, char *cmd);
+t_boolean	too_many_args(char *cmd);
+//PERROR MODULABLE
+t_boolean	funct_error(char *cmd, char *addvalue);
 
-	(void)builtin;
-	i = 0;
-	core->line++;
-	rotate_env(core, core->line);
-	printf("%s\n", core->env->var);
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/06 02:14:59 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/07 07:58:32 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ typedef enum s_boolean
 }	t_boolean;
 
 # include "cmd.h"
+# include "errors.h"
 
 typedef struct s_env
 {
 	char			*name;
-	char			*env;
+	char			*var;
 	struct s_env	*next;
 }		t_env;
 
@@ -59,17 +60,24 @@ typedef struct s_core
 	t_env			*env;
 }	t_core;
 
-void	funny_stuff(void);
+void		funny_stuff(void);
 
 //UTILS
-char	*ft_get_env(t_env *env, char *name);
-t_env	*rotate_env(t_core *core, char *var_name);
-int		ft_strcmp(char *s1, char *s2);
+t_boolean	update_env_dup(t_core *core);
+char		*ft_get_env(t_env *env, char *name);
+t_env		*rotate_env(t_core *core, char *var_name);
+int			ft_strcmp(char *s1, char *s2);
+int			get_env_size(t_env	*env);
 
 //ENV VAR INIT
-void	duplicate_env(t_core *core, char **todup);
+t_boolean	duplicate_env(t_core *core, char **todup);
 
 //SIGNALS
-void	signal_handler(void);
+void		signal_handler(void);
 
+//FREE
+void		emergency_free_tab(char **tab, int i);
+void		emergency_free_env_var(t_env *env);
+void		free_env(t_core *core);
+void		free_tab(char **tab);
 #endif

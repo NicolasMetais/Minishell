@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   update_env_tab.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 04:31:10 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/07 03:47:20 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/07 04:44:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_var(t_core *core, t_builtin *builtin)
+t_boolean	update_env_dup(t_core *core)
 {
-	int	i;
+	t_env	*copy;
+	int		i;
 
-	(void)builtin;
+	copy = core->env;
 	i = 0;
-	core->line++;
-	rotate_env(core, core->line);
-	printf("%s\n", core->env->var);
+	while (core->env->next != copy)
+	{
+		free(core->env_dup[i]);
+		core->env_dup[i] = ft_strdup(core->env->var);
+		if (core->env_dup[i])
+			return (false);
+		core->env = core->env->next;
+		i++;
+	}
+	return (true);
 }

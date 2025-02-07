@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 19:04:05 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/05 03:29:01 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/07 07:55:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,57 @@ t_env	*new_env(char *todup)
 		lst->name[i] = todup[i];
 		i++;
 	}
-	lst->env = ft_strdup(todup);
+	lst->var = ft_strdup(todup);
 	lst->next = NULL;
 	return (lst);
 }
 
-void	duplicate_env(t_core *core, char **todup)
+t_boolean	create_env_tab(t_core *core, char **todup)
 {
-	int		i;
-	t_env	*new;
+	int	i;
 
 	i = 0;
 	while (todup[i])
 		i++;
 	core->env_dup = malloc(sizeof(char *) * (i + 1));
+	if (!core->env_dup)
+		return (false);
 	i = 0;
 	while (todup[i])
 	{
 		core->env_dup[i] = ft_strdup(todup[i]);
+		if (!core->env_dup[i])
+			return (emergency_free_tab(core->env_dup, i), false);
 		i++;
 	}
 	core->env_dup[i] = NULL;
+	return (true);
+}
+
+t_boolean	duplicate_env(t_core *core, char **todup)
+{
+	int		i;
+	t_env	*new;
+
+	if (!create_env_tab(core, todup))
+		return (false);
 	i = 1;
 	core->env = new_env(todup[0]);
+	if (!core->env)
+		return (free_tab(core->env_dup), false);
 	new = core->env;
 	while (todup[i])
 	{
 		new->next = new_env(todup[i]);
+		if (!new->next)
+		{
+			free_tab(core->env_dup);
+			emergency_free_env_var(core->env);
+			return (false);
+		}
 		new = new->next;
 		i++;
 	}
 	new->next = core->env;
+	return (true);
 }

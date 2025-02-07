@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 04:31:10 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/07 05:40:11 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/07 05:41:26 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_var(t_core *core, t_builtin *builtin)
+void	free_tab(char **tab)
 {
 	int	i;
 
-	(void)builtin;
 	i = 0;
-	core->line++;
-	rotate_env(core, core->line);
-	printf("%s\n", core->env->var);
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

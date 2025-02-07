@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/06 05:14:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/07 11:15:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,66 @@
 
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 
-void	core_init(t_core *core, int ac, char **av)
+t_boolean	core_init(t_core *core, int ac, char **av)
 {
-	int	i;
+	int		i;
+	char	*path;
+
 	i = -1;
 	core->ac = ac;
 	core->av = av;
-	core->temp_path = ft_split(ft_get_env(core->env, "PATH"), ':');
+	core->pwd = NULL;
+	core->prompt = NULL;
+	path = ft_get_env(core->env, "PATH");
+	if (!path)
+		return (false);
+	core->temp_path = ft_split(path, ':');
+	if (!core->temp_path)
+		return (free(path), false);
+	free(path);
+	return (true);
 }
 
-void	prompt_update(t_core *core)
+t_boolean	prompt_update(t_core *core)
 {
+	char	*temp;
+
+	free(core->prompt);
 	core->pwd = ft_get_env(core->env, "PWD"); // peut etre un strdup ici mais jsp
+	if (!core->pwd)
+		return (false);
 	core->prompt = ft_strjoin(RED_LIGHT, core->pwd);
-	core->prompt = ft_strjoin(core->prompt, "$ ");
-	core->prompt = ft_strjoin(core->prompt, WHITE);
+	free(core->pwd);
+	if (!core->prompt)
+		return (false);
+	
+	temp = ft_strjoin(core->prompt, "$ ");
+	free(core->prompt);
+	if (!core->prompt)
+		return (false);
+	core->prompt = ft_strjoin(temp, WHITE);
+	if (!core->prompt)
+		return (false);
+	return (true);
 }
 
 t_boolean	minishell_launch(t_core *core)
 {
 	pid_t	pid;
+	int		error;
 
 	signal_handler();
 	funny_stuff();
 	while (1)
 	{
-		prompt_update(core);
+		if (!prompt_update(core))
+			core->prompt = "Minishell/ ";
 		core->line = readline(core->prompt);
 		if (core->line)
 		{
 			add_history(core->line);
-			if (!builtin(core))
+			error = builtin(core);
+			if (error == 0)
 			{
 				pid = fork();
 				if (pid == 0)
@@ -52,7 +81,13 @@ t_boolean	minishell_launch(t_core *core)
 				else
 					wait(0);
 			}
+			else if (error == 2)
+			{
+				free_env(core);
+				free(core->prompt);
+			}
 		}
+		free(core->line);
 	}
 }
 
@@ -65,8 +100,10 @@ int	main(int ac, char **av, char **env)
 
 	if (ac == 1)
 	{
-		duplicate_env(&core, env);
-		core_init(&core, ac, av);
+		if (!duplicate_env(&core, env))
+			return (false);
+		if (!core_init(&core, ac, av))
+			return (free_env(&core), false);
 		minishell_launch(&core);
 	}
 }
