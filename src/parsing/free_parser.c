@@ -16,6 +16,7 @@ void	free_split(char **split)
 {
 	int i;
 
+	i = 0;
 	while (split[i])
 	{
 		free(split[i]);
@@ -37,7 +38,7 @@ void	freelist(t_cmd *cmd)
 	while (cmd)
 	{
 		tmp = cmd->next;
-		freenode(cmd);
+		free_node(cmd);
 		cmd = tmp;
 	}
 	cmd = NULL;

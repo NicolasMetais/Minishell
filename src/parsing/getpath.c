@@ -18,6 +18,8 @@ char	**get_all_path(char **env)
 	char	*s;
 	char	**env_path;
 
+	i = 0;
+	s = NULL;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", ft_strlen("PATH=")) == 0)
