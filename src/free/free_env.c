@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 04:58:13 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 05:40:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/08 19:15:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,13 @@ void	free_env(t_core *core)
 	while (i < size)
 	{
 		next = current->next;
+		free(current->name);
+		free(current->var);
 		free(current);
 		current = next;
 		i++;
 	}
-	free(core->env_dup);
+	free(current->name);
+	free(current->var);
+	free(current);
 }

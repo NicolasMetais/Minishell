@@ -3,6 +3,7 @@ SRCS = 	src/main.c \
 		src/signals.c \
 		src/init_env.c \
 		src/cmd/cd.c \
+		src/cmd/echo.c \
 		src/cmd/exec.c \
 		src/cmd/env_var.c \
 		src/cmd/exit_display.c \
@@ -15,6 +16,7 @@ SRCS = 	src/main.c \
 		src/error_manager/errors.c \
 		src/free/free_env.c \
 		src/free/free.c \
+		src/free/garbage_collector.c \
 
 OBJS = $(SRCS:.c=.o)
 

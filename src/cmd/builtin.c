@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 09:31:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/08 21:54:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@ t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
 	if ((ft_strcmp(builtin->cmd[0], "cd") == 0))
 	{
 		if (!cd_init(core, builtin))
+		{
+			printf("TEST\n");
 			return (false);
+		}
 		return (true);
 	}
 	if ((ft_strcmp(builtin->cmd[0], "echo") == 0))
 	{
-		exit_status_display(core, builtin);
+		echo_init(builtin);
 		return (true);
 	}
 	if ((ft_strcmp(core->line, "exit") == 0))
+	{
+		free_tab(core->env_dup);
+		free_env(core);
 		exit(0);
+	}
 /* 	if (builtin->cmd[0][0] == '$')
 		return (env_var(core, &builtin), true); */
 	return (false);
@@ -35,6 +42,7 @@ t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
 int	builtin(t_core *core)
 {
 	t_builtin	builtin;
+	int			error;
 	int			i;
 
 	i = 0;
@@ -44,8 +52,7 @@ int	builtin(t_core *core)
 	while (builtin.cmd[i])
 		i++;
 	builtin.arg_number = i;
-	if (builtin_or_not(core, &builtin))
-		return (1);
+	error = builtin_or_not(core, &builtin);
 	free_tab(builtin.cmd);
-	return (0);
+	return (error);
 }

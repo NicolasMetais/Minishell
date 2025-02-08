@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 19:04:05 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 07:55:44 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/08 16:18:27 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ t_env	*new_env(char *todup)
 	while (todup[i] != '=')
 		i++;
 	lst->name = malloc(sizeof(char) * (i + 1));
+	if (!lst->name)
+		return (NULL);
 	i = 0;
 	while (todup[i] != '=')
 	{
@@ -52,6 +54,8 @@ t_env	*new_env(char *todup)
 		i++;
 	}
 	lst->var = ft_strdup(todup);
+	if (!lst->var)
+		return (NULL);
 	lst->next = NULL;
 	return (lst);
 }

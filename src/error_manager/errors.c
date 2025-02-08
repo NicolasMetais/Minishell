@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 03:26:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/08 21:51:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_boolean	invalid_option(t_builtin *builtin, char *cmd)
 	if (!custom_error)
 		return (free(custom_error), false);
 	ft_putendl_fd(custom_error, 2);
-	g_dollar_qmark = 2;
+	exit_code = 2;
 	return (true);
 }
 
@@ -36,7 +36,7 @@ t_boolean	too_many_args(char *cmd)
 	if (!custom_error)
 		return (false);
 	ft_putendl_fd(custom_error, 2);
-	g_dollar_qmark = 1;
+	exit_code = 1;
 	return (true);
 }
 
@@ -48,6 +48,6 @@ t_boolean	funct_error(char *cmd, char *addvalue)
 	if (!custom_error)
 		return (false);
 	perror(custom_error);
-	g_dollar_qmark = 1;
+	exit_code = 1;
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 07:58:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/08 21:51:27 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <string.h>
 # include <sys/wait.h>
 
-extern unsigned int g_dollar_qmark;
+extern unsigned int exit_code;
 
 typedef enum s_boolean
 {

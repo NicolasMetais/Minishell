@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/07 09:33:48 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:34:32 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void	cmd_exec(t_core *core)
 		if (checker == 0)
 		{
 			execve(test, temp_arg, core->env_dup);
-			perror("");
 		}
 		else
+		{
+			perror("test");
 			free(test);
+		}
 	}
 	free_tab(temp_arg);
 	free(slash);
