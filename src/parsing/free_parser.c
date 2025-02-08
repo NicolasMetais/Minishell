@@ -25,9 +25,27 @@ void	free_split(char **split)
 	free(split);
 }
 
+void	free_split_init(char **split, int i)
+{
+	int n;
+
+	n = 0;
+	while (n < i)
+	{
+		free(split[n]);
+		n++;
+	}
+	free(split);
+}
+
 void	free_node(t_cmd *cmd)
 {
-	free(cmd->path);
+	if (cmd->path)
+		free(cmd->path);
+	if (cmd->cmd)
+		free_split(cmd->cmd);
+	if (cmd->here_doc)
+		free(cmd->here_doc);
 	free(cmd);
 }
 
@@ -42,4 +60,13 @@ void	freelist(t_cmd *cmd)
 		cmd = tmp;
 	}
 	cmd = NULL;
+}
+
+void	free_global(t_glb *glb)
+{
+	if (glb->cmd)
+		free_list(glb->cmd);
+	if (glb->path)
+		free_split(glb->path);
+	free(glb);
 }

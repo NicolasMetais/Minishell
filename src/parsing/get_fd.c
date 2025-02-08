@@ -63,7 +63,7 @@ d,a
 
 // aucune gestion d'erreur pour l'instant
 
-void	get_infd(t_cmd *cmd, char **cmd_split)
+t_boolean	get_infd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
 	
@@ -78,19 +78,29 @@ void	get_infd(t_cmd *cmd, char **cmd_split)
 				if (cmd->here_doc != NULL)
 					free(cmd->here_doc);
 				cmd_split = realloc_cmd(cmd_split, i);
+				if (!cmd_split)
+					return (false);
 				cmd->here_doc = ft_strdup(cmd_split[i + 1]);
+				if (!cmd->here_doc)
+					return (false);
 				cmd_split = realloc_cmd(cmd_split, i + 1);
+				if (!cmd_split)
+					return (false);
 			}
 			else
-				realloc_fd_in(cmd, cmd_split, i);
+			{
+				if (!realloc_fd_in(cmd, cmd_split, i))
+					return (false);
+			}
 		}
 		i++;
 	}
+	return (true);
 }
 
 /*get_outfd() marche comme get_out fd pour la redirection out*/
 
-void	get_outfd(t_cmd *cmd, char **cmd_split)
+t_boolean	get_outfd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
 	
@@ -99,15 +109,20 @@ void	get_outfd(t_cmd *cmd, char **cmd_split)
 	{
 		if (ft_strncmp(cmd_split[i], ">", 1) == 0 
 			|| ft_strncmp(cmd_split[i], ">>", 2) == 0)
-			realloc_fd_out(cmd, cmd_split, i);
+			if (!realloc_fd_out(cmd, cmd_split, i));
+				return (false);
 		i++;
 	}
+	return (true);
 }
 
-void	get_fd(t_cmd *cmd, char **cmd_line_split)
+t_boolean	get_fd(t_cmd *cmd, char **cmd_line_split)
 {
 	fd_init(cmd);
 	cmd->here_doc = NULL;
-	get_infd(cmd, cmd_line_split);
-	get_outfd(cmd, cmd_line_split);
+	if (!get_infd(cmd, cmd_line_split))
+		return (false);
+	if (!get_outfd(cmd, cmd_line_split))
+		return (false);
+	return (true);
 }

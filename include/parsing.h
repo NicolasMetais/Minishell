@@ -37,19 +37,21 @@ typedef struct s_global
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
 void		freelist(t_cmd *cmd);
+void		free_global(t_glb *glb);
+void		free_split_init(char **split, int i)
 
-void		get_fd(t_cmd *cmd, char **cmd_line_split);
-void		get_outfd(t_cmd *cmd, char **cmd_split);
-void		get_infd(t_cmd *cmd, char **cmd_split);
+t_boolean	get_fd(t_cmd *cmd, char **cmd_line_split);
+t_boolean	get_outfd(t_cmd *cmd, char **cmd_split);
+t_boolean	get_infd(t_cmd *cmd, char **cmd_split);
 
 int			command_counter(char **line_split);
-void        global_init(t_glb *glb, char *read_line, char **env);
+t_boolean	global_init(t_glb *glb, char *read_line, char **env);
 
 char		*get_path(char **cmd_line_split, char **all_path);
 char		**get_all_path(char **env);
 
 char		**realloc_cmd(char **cmd, int supp);
-void		realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
-void		realloc_fd_out(t_cmd *cmd, char **cmd_split, int i);
+t_boolean	realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
+t_boolean	realloc_fd_out(t_cmd *cmd, char **cmd_split, int i);
 
 #endif

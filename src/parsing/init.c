@@ -42,11 +42,15 @@ int	search_cmd(char **all_path, char **cmd)
 	{
 		j = 0;
 		one_path = ft_strjoin(all_path[i], "/");
+		if (!one_path)
+			return (free(one_path), -2);
 		while (cmd[j])
 		{
 			while (is_redirection(cmd[j]))
 				j += 2;
 			cmd_path = ft_strjoin(one_path, cmd[j]);
+			if (!cmd_path)
+				return (free(one_path), -2);
 			if (access(cmd_path, F_OK | X_OK) == 0)
 				return (free(one_path), j);
 			free(cmd_path);
@@ -68,16 +72,32 @@ char	**get_cmd(char **cmd_line_split, char **all_path)
 	i_cmd = search_cmd(all_path, cmd_line_split);
 	if (i_cmd == -1)
 		return (cmd_line_split);
+	if (i_cmd == -2)
+		return (free_split_init(cmd, i), NULL);
 	cmd = malloc(sizeof(char *) * (command_counter(cmd_line_split) + 1));
 	if (!cmd)
 		return (NULL);
 	while (i < command_counter(cmd_line_split))
 	{
 		if (i == 0)
+		{
 			cmd[i] = ft_strdup(cmd_line_split[i_cmd]);
+			if (!cmd[i])
+				return (free_split_init(cmd, i), NULL);
+			i++;
+		}
+		else if (i == i_cmd && i != 0)
+			i++;
 		else
-			cmd[i] = 
+		{
+			cmd[i] = ft_strdup(cmd_line_split[i]);
+			if (!cmd[i])
+				return (free_split_init(cmd, i), NULL);
+			i++;
+		}
 	}
+	cmd[i] = NULL;
+	return (free_split(cmd_line_split), cmd);
 }
 
 t_cmd   *new_cmd(char *line_split, char **all_path)
@@ -90,10 +110,15 @@ t_cmd   *new_cmd(char *line_split, char **all_path)
 		return (NULL);
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+		return (free_split(cmd_line_split), NULL);
 	cmd->path = get_path(cmd_line_split, all_path);
-	get_fd(cmd, cmd_line_split);
+	if (!cmd->path)
+		return (free_split(cmd_line_split), NULL);
+	if (!get_fd(cmd, cmd_line_split))
+		return (free_split(cmd_line_split), NULL);
 	cmd->cmd = get_cmd(cmd_line_split, all_path);
+	if (!cmd->cmd)
+		return (free_split(cmd_line_split), NULL);
 	cmd->next = NULL;
 	free_split(cmd_line_split);
 	return (cmd);
@@ -137,6 +162,7 @@ t_cmd   *set_cmd(char **line_split, char **env)
 	t_cmd	*head;
 	t_cmd	*tmp;
 	int		i;
+	int		i;
 
 	i = 0;		
 	head = new_cmd(line_split[i], env);
@@ -154,7 +180,7 @@ t_cmd   *set_cmd(char **line_split, char **env)
 	return (head);
 }
 
-void    global_init(t_glb *glb, char *read_line, char **env)
+t_boolean global_init(t_glb *glb, char *read_line, char **env)
 {
 	char	**line_split;
 
@@ -166,5 +192,11 @@ void    global_init(t_glb *glb, char *read_line, char **env)
 		return ;
 	glb->nb_cmd = command_counter(line_split);
 	glb->path = get_all_path(env);
+	if (!glb->path)	
+		return (free_split(line_split), free(glb), false);
 	glb->cmd = set_cmd(line_split, glb->path);
+	if (!glb->cmd)
+		return (free_split(line_split), free_global(glb), false);
+	free_split(line_split);
+	return (true);
 }
