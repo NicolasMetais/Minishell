@@ -30,9 +30,9 @@ void	add_back(t_cmd *head, t_cmd *new)
 	return ;
 }
 
-t_cmd   *new_cmd(char *line_split, char **all_path)
+t_cmd	*new_cmd(char *line_split, char **all_path)
 {
-	t_cmd   *cmd;
+	t_cmd	*cmd;
 	char	**cmd_line_split;
 
 	cmd_line_split = ft_split(line_split, ' ');
@@ -55,46 +55,30 @@ t_cmd   *new_cmd(char *line_split, char **all_path)
 	return (cmd);
 }
 
-/* set_cmd() cree la liste chaine de commande.
-
-(ex : "< chips cat | wc -l", Ici on a deux commande "< chip cat" et "wc -l")
-
-char **line_split correspond au tableau de commande initialise dans
-global_init() avec ft_split.
-
-nb correspond on nombre total de commande renvoyer par command_count dans 
-global_init().
-
-Donc on itere sur chaque membre de notre tableau de commande ou chaque commande
-est un index. A chaque commande on cree un node qu'on ajoute a la liste avec add_back.
-
-cf new_cmd pour l'initialisation des nodes src/parsing/initialisation.c .
-*/
-
 void	check_and_add_cmd_to_list(t_cmd *head, t_cmd *tmp)
 {
-		if (tmp->in_fd[0] == -1 || tmp->out_fd[0] == -1)
-		{
-			free_node(tmp);
-			return ;
-		}
-		if (tmp->in_fd[1] > 2 || tmp->out_fd[1] > 2)
-		{
-			free_node(tmp);
-			// ajouter une gestion d'erreur (ex : ">>>>>" token not found blablabla)
-			return;
-		}
-		else
-			add_back(head, tmp);
+	if (tmp->in_fd[0] == -1 || tmp->out_fd[0] == -1)
+	{
+		free_node(tmp);
+		return ;
+	}
+	if (tmp->in_fd[1] > 2 || tmp->out_fd[1] > 2)
+	{
+		free_node(tmp);
+		// ajouter une gestion d'erreur (ex : ">>>>>" token not found blablabla)
+		return ;
+	}
+	else
+		add_back(head, tmp);
 }
 
-t_cmd   *set_cmd(char **line_split, char **env)
+t_cmd	*set_cmd(char **line_split, char **env)
 {
 	t_cmd	*head;
 	t_cmd	*tmp;
 	int		i;
 
-	i = 0;		
+	i = 0;
 	head = new_cmd(line_split[i], env);
 	if (!head)
 		return (NULL);
@@ -110,10 +94,10 @@ t_cmd   *set_cmd(char **line_split, char **env)
 	return (head);
 }
 
-t_glb *global_init(char *read_line, char **env)
+t_glb	*global_init(char *read_line, char **env)
 {
 	char	**line_split;
-	t_glb 	*glb;
+	t_glb	*glb;
 
 	line_split = ft_split(read_line, '|');
 	if (!line_split)
@@ -123,7 +107,7 @@ t_glb *global_init(char *read_line, char **env)
 		return (NULL);
 	glb->nb_cmd = command_counter(line_split);
 	glb->path = get_all_path(env);
-	if (!glb->path)	
+	if (!glb->path)
 		return (free_split(line_split), free(glb), NULL);
 	glb->cmd = set_cmd(line_split, glb->path);
 	if (!glb->cmd)

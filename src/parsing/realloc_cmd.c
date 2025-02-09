@@ -29,10 +29,9 @@ char	**realloc_cmd(char **cmd, int supp)
 	{
 		if (i == supp)
 			j++;
-		cmd_dup[i] = ft_strdup(cmd[j]); 
+		cmd_dup[i] = ft_strdup(cmd[j]);
 		if (!cmd_dup[i])
-			return(free_split_init(cmd_dup, i), free_split(cmd), NULL);
-
+			return (free_split_init(cmd_dup, i), free_split(cmd), NULL);
 		i++;
 		j++;
 	}
@@ -41,9 +40,9 @@ char	**realloc_cmd(char **cmd, int supp)
 	return (cmd_dup);
 }
 
-char	**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i)	
+char	**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i)
 {
-	cmd->out_fd[0] = open_file(cmd_split[i + 1]);
+	cmd->out_fd[0] = open_file_out(cmd_split[i + 1], ft_strlen(cmd_split[i]));
 	cmd->out_fd[0] = ft_strlen(cmd_split[i]);
 	cmd_split = realloc_cmd(cmd_split, i + 1);
 	if (!cmd_split)
@@ -56,7 +55,7 @@ char	**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i)
 
 char	**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i)
 {
-	cmd->in_fd[0] = open_file(cmd_split[i + 1]);
+	cmd->in_fd[0] = open_file_in(cmd_split[i + 1]);
 	cmd->in_fd[0] = ft_strlen(cmd_split[i]);
 	cmd_split = realloc_cmd(cmd_split, i + 1);
 	if (!cmd_split)

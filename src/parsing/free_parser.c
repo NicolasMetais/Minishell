@@ -14,7 +14,7 @@
 
 void	free_split(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])
@@ -27,7 +27,7 @@ void	free_split(char **split)
 
 void	free_split_init(char **split, int i)
 {
-	int n;
+	int	n;
 
 	n = 0;
 	while (n < i)
