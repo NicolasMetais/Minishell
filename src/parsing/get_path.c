@@ -30,7 +30,7 @@ char	**get_all_path(char **env)
 		i++;
 	}
 	s += 5;
-	env_path = ft_split(s, ';');
+	env_path = ft_split(s, ':');
 	if (!env_path)
 		return (NULL);
 	return (env_path);

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include "parsing.h"
 /*Gestion des redirections
 
 
@@ -27,24 +27,6 @@ void	fd_init(t_cmd *cmd)
 	cmd->in_fd[1]= 0;
 	cmd->out_fd[0] = -2;
 	cmd->out_fd[1] = 0;
-}
-
-/*open_file() est appele dans get_infd() et get_outfd() pour ouvrir les fichiers de redirection.
-Si le fichier ne s'ouvre pas, le message d'erreur s'affiche mais le programme continue. 
-
-La commande n'est pas ajoutee a la liste fd = -1.*/
-
-int		open_file(char	*file)
-{
-	int	fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		write(2, file, ft_strlen(file));
-		perror("");
-	}
-	return (fd);
 }
 
 /*get_infd() recupere un infile et le type de redirection de la commande
@@ -63,7 +45,7 @@ d,a
 
 // aucune gestion d'erreur pour l'instant
 
-t_boolean	get_infd(t_cmd *cmd, char **cmd_split)
+char	**get_infd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
 	
@@ -79,50 +61,60 @@ t_boolean	get_infd(t_cmd *cmd, char **cmd_split)
 					free(cmd->here_doc);
 				cmd_split = realloc_cmd(cmd_split, i);
 				if (!cmd_split)
-					return (false);
+					return (NULL);
 				cmd->here_doc = ft_strdup(cmd_split[i + 1]);
 				if (!cmd->here_doc)
-					return (false);
+					return (NULL);
 				cmd_split = realloc_cmd(cmd_split, i + 1);
 				if (!cmd_split)
-					return (false);
+					return (NULL);
+				return (cmd_split);
 			}
 			else
-			{
-				if (!realloc_fd_in(cmd, cmd_split, i))
-					return (false);
+			{	
+				cmd_split = realloc_fd_in(cmd, cmd_split, i);
+				if (!cmd_split)
+					return (NULL);
+				return (cmd_split);
 			}
 		}
 		i++;
 	}
-	return (true);
+	return (cmd_split);
 }
 
 /*get_outfd() marche comme get_out fd pour la redirection out*/
 
-t_boolean	get_outfd(t_cmd *cmd, char **cmd_split)
+char 	**get_outfd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
 	
 	i = 0;
+
 	while (cmd_split[i])
 	{
 		if (ft_strncmp(cmd_split[i], ">", 1) == 0 
 			|| ft_strncmp(cmd_split[i], ">>", 2) == 0)
-			if (!realloc_fd_out(cmd, cmd_split, i));
-				return (false);
+		{
+			if (!realloc_fd_out(cmd, cmd_split, i))
+				return (NULL);
+		}
 		i++;
 	}
-	return (true);
+	return (cmd_split);
 }
 
-t_boolean	get_fd(t_cmd *cmd, char **cmd_line_split)
+char	**get_fd(t_cmd *cmd, char **cmd_line_split)
 {
+	char **tmp;
+
 	fd_init(cmd);
 	cmd->here_doc = NULL;
-	if (!get_infd(cmd, cmd_line_split))
-		return (false);
-	if (!get_outfd(cmd, cmd_line_split))
-		return (false);
-	return (true);
+	tmp = get_infd(cmd, cmd_line_split);
+	if (!cmd_line_split)
+		return (NULL);
+	cmd_line_split = get_outfd(cmd, tmp);
+	if (!cmd_line_split)
+		return (NULL);
+	return (cmd_line_split);
 }

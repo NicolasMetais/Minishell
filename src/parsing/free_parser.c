@@ -65,7 +65,7 @@ void	freelist(t_cmd *cmd)
 void	free_global(t_glb *glb)
 {
 	if (glb->cmd)
-		free_list(glb->cmd);
+		freelist(glb->cmd);
 	if (glb->path)
 		free_split(glb->path);
 	free(glb);

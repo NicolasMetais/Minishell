@@ -37,3 +37,21 @@ t_boolean	is_redirection(char	*s)
 		return (true);
 	return (false);
 }
+
+/*open_file() est appele dans get_infd() et get_outfd() pour ouvrir les fichiers de redirection.
+Si le fichier ne s'ouvre pas, le message d'erreur s'affiche mais le programme continue. 
+
+La commande n'est pas ajoutee a la liste fd = -1.*/
+
+int		open_file(char	*file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		write(2, file, ft_strlen(file));
+		perror("");
+	}
+	return (fd);
+}

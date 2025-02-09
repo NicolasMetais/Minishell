@@ -18,21 +18,22 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 {
 	(void)av;
 	char	*line;
-
+	t_cmd	*tmp;
 //	funny_stuff();
 	while (1)
 	{
 		line = readline("minishell/ ");
-		global_init(global, line, env);
-		while (global->cmd)
+		global = global_init(line, env);
+		tmp = global->cmd;
+		while (tmp)
 		{
-			printf("path = %s", global->cmd->path);
-			printf("here_doc = %s", global->cmd->here_doc);
-			printf("in_fd[0] (file descriptor) = %d", global->cmd->in_fd[0]);
-			printf("in_fd[1] (redirection) = %d", global->cmd->in_fd[1]);
-			printf("out_fd[0] (file descriptor) = %d", global->cmd->out_fd[0]);
-			printf("out_fd[1] (redirection) = %d", global->cmd->out_fd[1]);
-			global->cmd = global->cmd->next;
+			printf("path = %s\n", tmp->path);
+			printf("here_doc = %s\n", tmp->here_doc);
+			printf("in_fd[0] (file descriptor) = %d\n", tmp->in_fd[0]);
+			printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
+			printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);
+			printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
+			tmp = tmp->next;
 		}
 	}
 }
