@@ -7,6 +7,7 @@ SRCS = 	src/main.c \
 		src/parsing/init.c \
 		src/parsing/utils.c \
 		src/parsing/realloc_cmd.c \
+		src/parsing/get_fd_in_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
