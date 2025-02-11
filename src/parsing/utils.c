@@ -55,7 +55,6 @@ int	open_file_out(char	*file, int i, int len)
 {
 	int	fd;
 
-	fprintf(stderr, "%s %d", file, len);
 	fd = 0;
 	if (i != 2)
 	{
