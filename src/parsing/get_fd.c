@@ -51,14 +51,21 @@ d,a
 char	**get_infd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
+	int	k;
 
 	i = 0;
 	while (cmd_split[i])
 	{
+		k = 1;
 		if (ft_strncmp(cmd_split[i], "<", 1) == 0
 			|| ft_strncmp(cmd_split[i], "<<", 2) == 0)
+		{
 			cmd_split = handle_in_redirection(cmd_split, cmd, i);
-		i++;
+			k = 0;
+			i = 0;
+		}
+		if (k != 0)
+			i++;
 	}
 	return (cmd_split);
 }
@@ -68,18 +75,23 @@ char	**get_infd(t_cmd *cmd, char **cmd_split)
 char	**get_outfd(t_cmd *cmd, char **cmd_split)
 {
 	int	i;
+	int	k;
 
 	i = 0;
 	while (cmd_split[i])
 	{
+		k = 1;
 		if (ft_strncmp(cmd_split[i], ">", 1) == 0
 			|| ft_strncmp(cmd_split[i], ">>", 2) == 0)
 		{
 			cmd_split = realloc_fd_out(cmd, cmd_split, i);
 			if (!cmd_split)
 				return (NULL);
+			k = 0;
+			i = 0;
 		}
-		i++;
+		if (k != 0)
+			i++;
 	}
 	return (cmd_split);
 }

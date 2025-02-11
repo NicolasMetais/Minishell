@@ -36,13 +36,15 @@ char	**get_all_path(char **env)
 	return (env_path);
 }
 
-char	*handle_path_reshearching(char *one_path, char *cmd_line_split, int j)
+char	*handle_path_reshearching(char *one_path, char **cmd_line_split, int j)
 {
 	char	*cmd_path;
 
 	cmd_path = ft_strjoin(one_path, cmd_line_split[j]);
 	if (!cmd_path)
 		return (free(one_path), NULL);
+	// if (j != 0 && is_redirection(cmd_line_split[j - 1]))
+	// 	return (cmd_path);
 	if (access(cmd_path, F_OK | X_OK) == 0)
 		return (free(one_path), cmd_path);
 	return (cmd_path);
@@ -50,29 +52,29 @@ char	*handle_path_reshearching(char *one_path, char *cmd_line_split, int j)
 
 char	*get_path(char **cmd_line_split, char **all_path)
 {
-	char	*cmd_path;
-	char	*one_path;
-	int		i;
-	int		j;
+	t_utils	u;
 
-	i = 0;
-	while (all_path[i])
+	u.i = 0;
+	while (all_path[++u.i])
 	{
-		one_path = ft_strjoin(all_path[i], "/");
-		if (!one_path)
+		u.s1 = ft_strjoin(all_path[u.i], "/");
+		if (!u.s1)
 			return (NULL);
-		j = -1;
-		while (cmd_line_split[++j])
+		u.j = -1;
+		while (cmd_line_split[++u.j])
 		{
-			while (is_redirection(cmd_line_split[j]))
-				j += 2;
-			cmd_path = handle_path_reshearching(one_path, cmd_line_split, j);
-			if (!cmd_path)
+			if (u.j != 0 && is_redirection(cmd_line_split[u.j - 1]))
+				u.j++;
+			if (u.j == command_counter(cmd_line_split))
+				break ;
+			u.s2 = handle_path_reshearching(u.s1, cmd_line_split, u.j);
+			if (!u.s2)
 				return (NULL);
-			free(cmd_path);
+			if (access(u.s2, F_OK | X_OK) == 0)
+				return (u.s2);
+			free(u.s2);
 		}
-		free(one_path);
-		i++;
+		free(u.s1);
 	}
 	return (NULL);
 }

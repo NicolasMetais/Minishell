@@ -19,10 +19,10 @@ char	**handle_heredoc(char **cmd_split, t_cmd *cmd, int i)
 	cmd_split = realloc_cmd(cmd_split, i);
 	if (!cmd_split)
 		return (NULL);
-	cmd->here_doc = ft_strdup(cmd_split[i + 1]);
+	cmd->here_doc = ft_strdup(cmd_split[i]);
 	if (!cmd->here_doc)
 		return (NULL);
-	cmd_split = realloc_cmd(cmd_split, i + 1);
+	cmd_split = realloc_cmd(cmd_split, i);
 	if (!cmd_split)
 		return (NULL);
 	return (cmd_split);

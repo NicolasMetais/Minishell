@@ -13,18 +13,23 @@
 #include "minishell.h"
 
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
-//READLINE LEAK DE BASE C MIEUX GNL MAIS IL EN FAUT UN PARFAIT BONUSE JE RECODERAIS CA UN DE CES JOURS
+//READLINE LEAK DE BASE C MIEUX GNL MAIS IL EN FAUT UN PARFAIT 
+//BONUSE JE RECODERAIS CA UN DE CES JOURS
 t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 {
 	(void)av;
 	char	*line;
 	t_cmd	*tmp;
-//	funny_stuff();
+	int 	i;
+
+	i = 0;
+	tmp = NULL;
 	while (1)
 	{
 		line = readline("minishell/ ");
 		global = global_init(line, env);
-		tmp = global->cmd;
+		if (global)
+			tmp = global->cmd;
 		while (tmp)
 		{
 			printf("path = %s\n", tmp->path);
@@ -33,9 +38,15 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 			printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
 			printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);
 			printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
+			for (int i = 0; tmp->cmd[i]; i++)
+				printf("%s \n", tmp->cmd[i]);
 			tmp = tmp->next;
 		}
+		i++;
+		free(line);
+		free_global(global);
 	}
+	return (true);
 }
 
 int	main(int ac, char **av, char **env)

@@ -38,27 +38,32 @@ t_boolean	is_redirection(char	*s)
 int	open_file_in(char *file)
 {
 	int	fd;
+	int	len;
 
+	len = ft_strlen(file);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		write(2, file, ft_strlen(file));
+		write(2, file, len);
+		write(2, " : ", 3);
 		perror("");
 	}
 	return (fd);
 }
 
-int	open_file_out(char	*file, int i)
+int	open_file_out(char	*file, int i, int len)
 {
 	int	fd;
 
+	fprintf(stderr, "%s %d", file, len);
 	fd = 0;
 	if (i != 2)
 	{
 		fd = open(file, O_TRUNC | O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 		{
-			write(2, file, ft_strlen(file));
+			write(2, file, len);
+			write(2, " : ", 3);
 			perror("");
 		}
 	}
@@ -67,7 +72,8 @@ int	open_file_out(char	*file, int i)
 		fd = open(file, O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 		{
-			write(2, file, ft_strlen(file));
+			write(2, file, len);
+			write(2, " : ", 3);
 			perror("");
 		}
 	}

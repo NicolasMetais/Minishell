@@ -42,14 +42,14 @@ t_cmd	*new_cmd(char *line_split, char **all_path)
 	if (!cmd)
 		return (free_split(cmd_line_split), NULL);
 	cmd->path = get_path(cmd_line_split, all_path);
-	if (!cmd->path)
-		return (free_split(cmd_line_split), NULL);
+	// if (!cmd->path)
+	// 	return (free_split(cmd_line_split), NULL);
 	cmd_line_split = get_fd(cmd, cmd_line_split);
 	if (!cmd_line_split)
 		return (free_split(cmd_line_split), NULL);
 	cmd->cmd = get_cmd(cmd_line_split, all_path);
-	if (!cmd->cmd)
-		return (free_split(cmd_line_split), NULL);
+	// if (!cmd->cmd)
+	// 	return (free_split(cmd_line_split), NULL);
 	cmd->next = NULL;
 	free_split(cmd_line_split);
 	return (cmd);
@@ -65,7 +65,6 @@ void	check_and_add_cmd_to_list(t_cmd *head, t_cmd *tmp)
 	if (tmp->in_fd[1] > 2 || tmp->out_fd[1] > 2)
 	{
 		free_node(tmp);
-		// ajouter une gestion d'erreur (ex : ">>>>>" token not found blablabla)
 		return ;
 	}
 	else
@@ -99,6 +98,8 @@ t_glb	*global_init(char *read_line, char **env)
 	char	**line_split;
 	t_glb	*glb;
 
+	if (ft_strlen(read_line) == 0)
+		return (NULL);
 	line_split = ft_split(read_line, '|');
 	if (!line_split)
 		return (NULL);
