@@ -49,7 +49,7 @@ char		*get_path(char **cmd_line_split, char **all_path);
 char		**get_all_path(char **env);
 char		**realloc_cmd(char **cmd, int supp);
 int			open_file_in(char	*file);
-int			open_file_out(char	*file, int i, int len);
+int			open_file_out(char	*file, int i);
 char		**get_cmd(char **cmd_line_split, char **all_path);
 int			search_cmd(char **all_path, char **cmd);
 char		**handle_heredoc(char **cmd_split, t_cmd *cmd, int i);

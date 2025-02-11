@@ -43,8 +43,6 @@ char	*handle_path_reshearching(char *one_path, char **cmd_line_split, int j)
 	cmd_path = ft_strjoin(one_path, cmd_line_split[j]);
 	if (!cmd_path)
 		return (free(one_path), NULL);
-	// if (j != 0 && is_redirection(cmd_line_split[j - 1]))
-	// 	return (cmd_path);
 	if (access(cmd_path, F_OK | X_OK) == 0)
 		return (free(one_path), cmd_path);
 	return (cmd_path);

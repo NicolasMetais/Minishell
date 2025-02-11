@@ -40,14 +40,12 @@ int	search_cmd(char **all_path, char **cmd)
 	return (-1);
 }
 
-char	**init_cmd(char **cmd_line_split, int i_cmd)
+char	**init_cmd(char **cmd_line_split, int i_cmd, int j)
 {
 	char	**cmd;
 	int		i;
-	int		j;
 
 	i = -1;
-	j = 0;
 	cmd = malloc(sizeof(char *) * (command_counter(cmd_line_split) + 1));
 	if (!cmd)
 		return (NULL);
@@ -57,7 +55,7 @@ char	**init_cmd(char **cmd_line_split, int i_cmd)
 		{
 			cmd[i] = ft_strdup(cmd_line_split[i_cmd]);
 			if (!cmd[i])
-					return (free_split(cmd_line_split), free(cmd), NULL);
+				return (free_split(cmd_line_split), free(cmd), NULL);
 			i++;
 		}
 		if (j == i_cmd)
@@ -70,9 +68,10 @@ char	**init_cmd(char **cmd_line_split, int i_cmd)
 	return (cmd);
 }
 
-char 	**one_word(char	**cmd_line_split)
+char	**one_word(char	**cmd_line_split)
 {
 	char	**cmd;
+
 	cmd = malloc(sizeof(char *) * 2);
 	if (!cmd)
 		return (NULL);
@@ -95,7 +94,7 @@ char	**get_cmd(char **cmd_line_split, char **all_path)
 		cmd = one_word(cmd_line_split);
 		if (!cmd)
 			return (NULL);
-		else 
+		else
 			return (cmd);
 	}
 	i_cmd = search_cmd(all_path, cmd_line_split);
@@ -103,7 +102,7 @@ char	**get_cmd(char **cmd_line_split, char **all_path)
 		return (cmd_line_split);
 	if (i_cmd == -2)
 		return (NULL);
-	cmd = init_cmd(cmd_line_split, i_cmd);
+	cmd = init_cmd(cmd_line_split, i_cmd, 0);
 	if (!cmd)
 		return (NULL);
 	cmd[len] = NULL;

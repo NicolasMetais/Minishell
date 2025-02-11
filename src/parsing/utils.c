@@ -51,7 +51,7 @@ int	open_file_in(char *file)
 	return (fd);
 }
 
-int	open_file_out(char	*file, int i, int len)
+int	open_file_out(char	*file, int i)
 {
 	int	fd;
 
@@ -61,7 +61,7 @@ int	open_file_out(char	*file, int i, int len)
 		fd = open(file, O_TRUNC | O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 		{
-			write(2, file, len);
+			write(2, file, ft_strlen(file));
 			write(2, " : ", 3);
 			perror("");
 		}
@@ -71,7 +71,7 @@ int	open_file_out(char	*file, int i, int len)
 		fd = open(file, O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (fd < 0)
 		{
-			write(2, file, len);
+			write(2, file, ft_strlen(file));
 			write(2, " : ", 3);
 			perror("");
 		}

@@ -45,7 +45,7 @@ char	**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i)
 {
 	if (cmd->out_fd[0] > 0)
 		close (cmd->out_fd[0]);
-	cmd->out_fd[0] = open_file_out(cmd_split[i + 1], ft_strlen(cmd_split[i]), ft_strlen(cmd_split[i + 1]));
+	cmd->out_fd[0] = open_file_out(cmd_split[i + 1], ft_strlen(cmd_split[i]));
 	cmd->out_fd[1] = ft_strlen(cmd_split[i]);
 	cmd_split = realloc_cmd(cmd_split, i);
 	if (!cmd_split)
