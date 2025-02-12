@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 12:34:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/09 10:57:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,13 @@ void	cmd_exec(t_core *core)
 		test = ft_strjoin(core->temp_path[i], slash);
 		checker = access(test, F_OK);
 		if (checker == 0)
-		{
 			execve(test, temp_arg, core->env_dup);
-		}
 		else
-		{
-			perror("test");
 			free(test);
-		}
 	}
+	test = ft_strjoin(temp_arg[0], ": ");
+	cmd_not_found(test);
+	free(test);
 	free_tab(temp_arg);
 	free(slash);
 }

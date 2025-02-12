@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 21:51:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/12 14:20:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_boolean	prompt_update(t_core *core)
 		return (false);
 	return (true);
 }
-
+// NE PAS OUBLIER DE GERER LES VARIABLE LOCALE
 t_boolean	minishell_launch(t_core *core)
 {
 	pid_t	pid;
@@ -91,7 +91,6 @@ t_boolean	minishell_launch(t_core *core)
 	}
 }
 
-
 unsigned int	exit_code = 0;
 
 int	main(int ac, char **av, char **env)
@@ -106,4 +105,6 @@ int	main(int ac, char **av, char **env)
 			return (free_env(&core), false);
 		minishell_launch(&core);
 	}
+	else
+		printf("error\n");
 }

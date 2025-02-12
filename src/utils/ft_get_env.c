@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:09:55 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 08:20:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:20:21 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,22 @@ char	*ft_get_env(t_env *env, char *name)
 	int		i;
 	char	*cut;
 
+	if (!env || !name)
+		return (NULL);
 	i = -1;
 	size = ft_strlen(name);
 	copy = env;
-
-	while (copy->next != env)
+	while (1)
 	{
-		if (ft_strncmp(copy->name, name, size) == 0)
+		if (copy->name && copy->var && ft_strncmp(copy->name, name, size) == 0
+			&& ft_strlen(copy->var) > (size_t)size && copy->var[size] == '=')
 		{
 			cut = ft_substr(copy->var, size + 1, ft_strlen(copy->var));
 			return (cut);
 		}
 		copy = copy->next;
+		if (copy == env)
+			break ;
 	}
 	return (NULL);
 }

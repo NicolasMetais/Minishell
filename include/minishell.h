@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 21:51:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/12 14:17:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,12 @@ t_env		*rotate_env(t_core *core, char *var_name);
 int			ft_strcmp(char *s1, char *s2);
 int			get_env_size(t_env	*env);
 
+//LOCAL & ENV CONVERSIONS
+t_boolean	var_manager(t_core *core, t_builtin *builtin);
+
 //ENV VAR INIT
 t_boolean	duplicate_env(t_core *core, char **todup);
+t_env		*new_env(char *todup);
 
 //SIGNALS
 void		signal_handler(void);
@@ -80,4 +84,7 @@ void		emergency_free_tab(char **tab, int i);
 void		emergency_free_env_var(t_env *env);
 void		free_env(t_core *core);
 void		free_tab(char **tab);
+
+//KILL
+void		kill_program(t_core *core);
 #endif

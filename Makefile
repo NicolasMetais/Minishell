@@ -2,10 +2,14 @@ SRCS = 	src/main.c \
 		src/welcome.c \
 		src/signals.c \
 		src/init_env.c \
+		src/var_manager.c \
 		src/cmd/cd.c \
 		src/cmd/echo.c \
+		src/cmd/exit.c \
+		src/cmd/pwd.c \
 		src/cmd/exec.c \
-		src/cmd/env_var.c \
+		src/cmd/export.c \
+		src/cmd/env.c \
 		src/cmd/exit_display.c \
 		src/cmd/builtin.c \
 		src/utils/ft_get_env.c \

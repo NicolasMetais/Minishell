@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 02:05:31 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/12 17:09:49 by nmetais          ###   ########.fr       */
+/*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
+/*   Updated: 2025/02/10 11:07:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+t_boolean	env(t_core *core, t_builtin *builtin)
 {
 	int	i;
 
 	i = 0;
-	if (!s1 && !s2)
-		return (0);
-	if (!s1)
-		return (-1);
-	if (!s2)
-		return (1);
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	if (builtin->arg_number > 1)
+		return (false);
+	while (core->env_dup[i])
+	{
+		printf("%s\n", core->env_dup[i]);
 		i++;
-	return ((unsigned int)s1[i] - (unsigned int)s2[i]);
+	}
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 06:12:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 21:54:36 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/11 12:53:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ void		cmd_exec(t_core *core);
 
 //BUILTIN
 int			builtin(t_core *core);
-void		env_var(t_core *core, t_builtin *builtin);
+t_boolean	env(t_core *core, t_builtin *builtin);
 void		exit_status_display(t_core *core, t_builtin *builtin);
 t_boolean	cd_init(t_core *core, t_builtin *builtin);
 t_boolean	echo_init(t_builtin *builtin);
+t_boolean	pwd(t_core *core, t_builtin *builtin);
+t_boolean	exit_custom(t_core *core, t_builtin *builtin);
+t_boolean	export(t_core *core, t_builtin *builtin);
 
 //GARBAGE COLLECTOR
 void		add_to_gc(t_gc **gc, void *data);
