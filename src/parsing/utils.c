@@ -16,6 +16,8 @@ int	command_counter(char **line_split)
 {
 	int	i;
 
+	if (!line_split)
+		return (0);
 	i = 0;
 	while (line_split[i])
 		i++;

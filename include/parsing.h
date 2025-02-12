@@ -38,6 +38,12 @@ typedef	struct s_utils
 	int		j;
 }			t_utils;
 
+typedef struct s_quote
+{
+	char			*str;
+	int				i;
+	struct s_quote	*next;
+}				t_quote;
 
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
@@ -54,5 +60,14 @@ char		**get_cmd(char **cmd_line_split, char **all_path);
 int			search_cmd(char **all_path, char **cmd);
 char		**handle_heredoc(char **cmd_split, t_cmd *cmd, int i);
 char		**handle_in_redirection(char **cmd_split, t_cmd *cmd, int i);
+char		**get_quote(char *line_split);
+char		**realloc_quote(char **tab, char *new);
+int			check_backward(char	*line);
+char		*nothing_backward_double(char *line);
+char		*nothing_backward_simple(char *line);
+char		*handle_simple_quote(char *line);
+char		*handle_double_quote(char *line);
+char		*ft_strndup(char *line, int c);
+int			is_a_sep(char	c);
 
 #endif

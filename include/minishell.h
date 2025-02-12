@@ -39,5 +39,4 @@ char		**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
 char		**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i);
 t_glb		*global_init(char *read_line, char **env);
 
-
 #endif

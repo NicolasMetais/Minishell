@@ -35,7 +35,8 @@ t_cmd	*new_cmd(char *line_split, char **all_path)
 	t_cmd	*cmd;
 	char	**cmd_line_split;
 
-	cmd_line_split = ft_split(line_split, ' ');
+	cmd_line_split = get_quote(line_split);
+//	cmd_line_split = ft_split(line_split, ' ');
 	if (!cmd_line_split)
 		return (NULL);
 	cmd = malloc(sizeof(t_cmd));
@@ -45,9 +46,10 @@ t_cmd	*new_cmd(char *line_split, char **all_path)
 	cmd_line_split = get_fd(cmd, cmd_line_split);
 	if (!cmd_line_split)
 		return (free_split(cmd_line_split), NULL);
-	cmd->cmd = get_cmd(cmd_line_split, all_path);
+	cmd->cmd = cmd_line_split;
+	//get_cmd(cmd_line_split, all_path);
 	cmd->next = NULL;
-	free_split(cmd_line_split);
+	//free_split(cmd_line_split);
 	return (cmd);
 }
 
