@@ -37,6 +37,15 @@ t_boolean	is_redirection(char	*s)
 	return (false);
 }
 
+t_boolean	is_redirection_char(char	s)
+{
+	if (s == '<')
+		return (true);
+	if (s == '>')
+		return (true);
+	return (false);
+}
+
 int	open_file_in(char *file)
 {
 	int	fd;

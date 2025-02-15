@@ -36,7 +36,6 @@ t_cmd	*new_cmd(char *line_split, char **all_path)
 	char	**cmd_line_split;
 
 	cmd_line_split = get_quote(line_split);
-//	cmd_line_split = ft_split(line_split, ' ');
 	if (!cmd_line_split)
 		return (NULL);
 	cmd = malloc(sizeof(t_cmd));
@@ -47,9 +46,7 @@ t_cmd	*new_cmd(char *line_split, char **all_path)
 	if (!cmd_line_split)
 		return (free_split(cmd_line_split), NULL);
 	cmd->cmd = cmd_line_split;
-	//get_cmd(cmd_line_split, all_path);
 	cmd->next = NULL;
-	//free_split(cmd_line_split);
 	return (cmd);
 }
 

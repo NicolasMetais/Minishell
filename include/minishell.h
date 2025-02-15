@@ -31,6 +31,7 @@ typedef enum s_boolean
 
 void		funny_stuff(void);
 
+t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
 char		**get_fd(t_cmd *cmd, char **cmd_line_split);
 char		**get_outfd(t_cmd *cmd, char **cmd_split);

@@ -40,9 +40,10 @@ typedef	struct s_utils
 
 typedef struct s_quote
 {
-	char			*str;
-	int				i;
-	struct s_quote	*next;
+	char	**tab;
+	char	*tmp;
+	int		end;
+	char	*str;
 }				t_quote;
 
 void		free_split(char **split);
@@ -67,7 +68,15 @@ char		*nothing_backward_double(char *line);
 char		*nothing_backward_simple(char *line);
 char		*handle_simple_quote(char *line);
 char		*handle_double_quote(char *line);
+char		*remove_double_quote(char *line, int *end);
+char		*remove_simple_quote(char *line, int *end);
 char		*ft_strndup(char *line, int c);
-int			is_a_sep(char	c);
+char		*ft_strndup_bis(char *line, int c);
+int			is_a_sep(char c);
+char		*handle_quote(char *line);
+char		*handle_remove(char *line, int *end);
+char    	*handle_no_quote(char *line);
+char		*remove_no_quote(char *line, int *end);
+char		*realloc_line(char	*old, int c, int *end);
 
 #endif
