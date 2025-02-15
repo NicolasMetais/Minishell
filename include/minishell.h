@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/12 14:17:57 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/15 13:28:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ t_env		*rotate_env(t_core *core, char *var_name);
 int			ft_strcmp(char *s1, char *s2);
 int			get_env_size(t_env	*env);
 
-//LOCAL & ENV CONVERSIONS
+//ENV VARIABLE CONVERSIONS
 t_boolean	var_manager(t_core *core, t_builtin *builtin);
+char		*delete_var(char *tocut, int start, int end);
+char		*write_var(char *code, char *tocut, int j, int size);
 
 //ENV VAR INIT
 t_boolean	duplicate_env(t_core *core, char **todup);

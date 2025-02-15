@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/12 17:00:00 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/15 22:58:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,6 @@ t_boolean	builtin_the_third(t_builtin *builtin, t_core *core)
 		if (!exit_custom(core, builtin))
 			return (false);
 		return (true);
-	}
-	if ((builtin->cmd[0][0] == '_' || ft_isalpha(builtin->cmd[0][0])))
-	{
-		while (builtin->cmd[0][i])
-		{
-			if (builtin->cmd[0][i] == '=')
-				printf("WIP: c'est une variable a assigner");
-			i++;
-		}
 	}
 	return (false);
 }
@@ -84,7 +75,7 @@ t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
 			return (false);
 		return (true);
 	}
-	if (!builtin_the_sec(builtin, core))
+	if (builtin_the_sec(builtin, core))
 		return (true);
 	return (false);
 }
@@ -102,8 +93,8 @@ int	builtin(t_core *core)
 	while (builtin.cmd[i])
 		i++;
 	builtin.arg_number = i;
- 	if (!var_manager(core, &builtin))
-		return (1);
+	if (!var_manager(core, &builtin))
+		return (free_tab(builtin.cmd), 1);
 	error = builtin_or_not(core, &builtin);
 	free_tab(builtin.cmd);
 	return (error);

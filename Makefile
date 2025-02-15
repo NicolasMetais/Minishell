@@ -2,7 +2,8 @@ SRCS = 	src/main.c \
 		src/welcome.c \
 		src/signals.c \
 		src/init_env.c \
-		src/var_manager.c \
+		src/var_replace.c \
+		src/var_replace_bis.c \
 		src/cmd/cd.c \
 		src/cmd/echo.c \
 		src/cmd/exit.c \
