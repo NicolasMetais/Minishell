@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 06:12:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/11 12:53:59 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:12:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_boolean	echo_init(t_builtin *builtin);
 t_boolean	pwd(t_core *core, t_builtin *builtin);
 t_boolean	exit_custom(t_core *core, t_builtin *builtin);
 t_boolean	export(t_core *core, t_builtin *builtin);
+t_boolean	marked_or_env(char *var, t_core *core);
 
 //GARBAGE COLLECTOR
 void		add_to_gc(t_gc **gc, void *data);

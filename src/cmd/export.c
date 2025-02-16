@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:54:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/15 23:04:43 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:46:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,52 @@ void	print_env_alpha(t_core *core)
 	}
 }
 
+t_boolean	isempty(char **tab)
+{
+	int			i;
+	t_boolean	empty;
+
+	i = 1;
+	empty = false;
+	while (tab[i])
+	{
+		if (tab[i][0] == '\0')
+			empty = true;
+		else
+			empty = false;
+		i++;
+	}
+	return (empty);
+}
+
+
 t_boolean	export(t_core *core, t_builtin *builtin)
 {
-	if (builtin->arg_number == 1)
+	int	i;
+
+	i = 0;
+	if (isempty(builtin->cmd) || builtin->arg_number == 1)
+	{
 		print_env_alpha(core);
+		return (true);
+	}
+	if (builtin->arg_number > 1)
+	{
+		while (builtin->cmd[++i])
+		{
+			if (builtin->cmd[i][0] == '_' || ft_isalpha(builtin->cmd[i][0]))
+				marked_or_env(builtin->cmd[i], core);
+			else
+				not_valid_id(builtin->cmd[i], "export0: ");
+		}
+	}
 	return (true);
 }
+/* 	t_env *copy;
+
+	copy = core->mark;
+	while (copy->next != core->mark)
+	{
+		printf("%s\n", copy->name);
+		copy = copy->next;
+	} */

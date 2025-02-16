@@ -10,6 +10,7 @@ SRCS = 	src/main.c \
 		src/cmd/pwd.c \
 		src/cmd/exec.c \
 		src/cmd/export.c \
+		src/cmd/export_bis.c \
 		src/cmd/env.c \
 		src/cmd/exit_display.c \
 		src/cmd/builtin.c \
@@ -19,6 +20,7 @@ SRCS = 	src/main.c \
 		src/utils/update_env_tab.c \
 		src/utils/ft_strcmp.c \
 		src/error_manager/errors.c \
+		src/error_manager/errors_bis.c \
 		src/free/free_env.c \
 		src/free/free.c \
 		src/free/garbage_collector.c \

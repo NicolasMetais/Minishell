@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/15 13:28:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:33:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_core
 	char			**temp_path;
 	char			**env_dup;
 	t_env			*env;
+	t_env			*mark;
 }	t_core;
 
 void		funny_stuff(void);
@@ -77,6 +78,7 @@ char		*write_var(char *code, char *tocut, int j, int size);
 //ENV VAR INIT
 t_boolean	duplicate_env(t_core *core, char **todup);
 t_env		*new_env(char *todup);
+t_env		*lstlast_env(t_env *lst);
 
 //SIGNALS
 void		signal_handler(void);
