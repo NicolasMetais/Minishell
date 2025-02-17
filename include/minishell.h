@@ -18,6 +18,7 @@
 # include "parsing.h"
 # include "libft.h"
 # include <stdio.h>
+# include <math.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -29,7 +30,18 @@ typedef enum s_boolean
 	true,
 }			t_boolean;
 
-void		funny_stuff(void);
+typedef struct s_pipe
+{
+	char		**cmd_tab;
+	char		*tmp;
+	char		*str;
+	char			c;
+	int				i;
+	int			end;
+	t_boolean	valid;
+	t_boolean	quote;
+
+}				t_pipe_var;
 
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
@@ -39,5 +51,8 @@ char		**get_infd(t_cmd *cmd, char **cmd_split);
 char		**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
 char		**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i);
 t_glb		*global_init(char *read_line, char **env);
+char		*remove_double_quote(char *line, int *end);
+void		increment(t_pipe_var *ctx);
+t_boolean	is_in_quote(char *str);
 
 #endif

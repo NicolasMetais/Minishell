@@ -30,18 +30,18 @@ void	add_back(t_cmd *head, t_cmd *new)
 	return ;
 }
 
-t_cmd	*new_cmd(char *line_split, char **all_path)
+t_cmd	*new_cmd(char *line_split)
 {
 	t_cmd	*cmd;
 	char	**cmd_line_split;
 
-	cmd_line_split = get_quote(line_split);
+	cmd_line_split = get_quote_dup(line_split);
 	if (!cmd_line_split)
 		return (NULL);
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (free_split(cmd_line_split), NULL);
-	cmd->path = get_path(cmd_line_split, all_path);
+	cmd->here_doc = NULL;
 	cmd_line_split = get_fd(cmd, cmd_line_split);
 	if (!cmd_line_split)
 		return (free_split(cmd_line_split), NULL);
@@ -66,20 +66,20 @@ void	check_and_add_cmd_to_list(t_cmd *head, t_cmd *tmp)
 		add_back(head, tmp);
 }
 
-t_cmd	*set_cmd(char **line_split, char **env)
+t_cmd	*set_cmd(char **line_split)
 {
 	t_cmd	*head;
 	t_cmd	*tmp;
 	int		i;
 
 	i = 0;
-	head = new_cmd(line_split[i], env);
+	head = new_cmd(line_split[i]);
 	if (!head)
 		return (NULL);
 	i++;
 	while (line_split[i])
 	{
-		tmp = new_cmd(line_split[i], env);
+		tmp = new_cmd(line_split[i]);
 		if (!tmp)
 			return (freelist(head), NULL);
 		check_and_add_cmd_to_list(head, tmp);
@@ -95,7 +95,7 @@ t_glb	*global_init(char *read_line, char **env)
 
 	if (ft_strlen(read_line) == 0)
 		return (NULL);
-	line_split = ft_split(read_line, '|');
+	line_split = get_pipe(read_line);
 	if (!line_split)
 		return (NULL);
 	glb = malloc(sizeof(t_glb));
@@ -105,7 +105,7 @@ t_glb	*global_init(char *read_line, char **env)
 	glb->path = get_all_path(env);
 	if (!glb->path)
 		return (free_split(line_split), free(glb), NULL);
-	glb->cmd = set_cmd(line_split, glb->path);
+	glb->cmd = set_cmd(line_split);
 	if (!glb->cmd)
 		return (free_split(line_split), free_global(glb), NULL);
 	free_split(line_split);

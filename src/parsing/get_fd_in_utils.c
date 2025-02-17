@@ -12,14 +12,22 @@
 
 #include "minishell.h"
 
+char	**add_here_doc(char **heredoc, char *word)
+{
+	char	**new_heredoc;
+	char	*new;
+
+	new = ft_strdup(word);
+	new_heredoc = realloc_add_to_tab(heredoc, new);
+	return (new_heredoc);
+}
+
 char	**handle_heredoc(char **cmd_split, t_cmd *cmd, int i)
 {
-	if (cmd->here_doc != NULL)
-		free(cmd->here_doc);
 	cmd_split = realloc_cmd(cmd_split, i);
 	if (!cmd_split)
 		return (NULL);
-	cmd->here_doc = ft_strdup(cmd_split[i]);
+	cmd->here_doc = add_here_doc(cmd->here_doc, cmd_split[i]);
 	if (!cmd->here_doc)
 		return (NULL);
 	cmd_split = realloc_cmd(cmd_split, i);

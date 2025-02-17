@@ -32,8 +32,11 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 			tmp = global->cmd;
 		while (tmp)
 		{
-			printf("path = %s\n", tmp->path);
-			printf("here_doc = %s\n", tmp->here_doc);
+			if (tmp->here_doc)
+			{
+				for (int i = 0; tmp->here_doc[i]; i++)
+					printf("here_doc[%d] = %s\n", i, tmp->here_doc[i]);
+			}
 			printf("in_fd[0] (file descriptor) = %d\n", tmp->in_fd[0]);
 			printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
 			printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);

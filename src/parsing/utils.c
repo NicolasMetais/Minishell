@@ -37,7 +37,7 @@ t_boolean	is_redirection(char	*s)
 	return (false);
 }
 
-t_boolean	is_redirection_char(char	s)
+t_boolean	is_redirection_char(char s)
 {
 	if (s == '<')
 		return (true);

@@ -12,16 +12,6 @@
 
 #include "minishell.h"
 #include "parsing.h"
-/*Gestion des redirections
-
-
-fd_init() initialise toutes les variables qui concernent les files.
-
-Les files descriptors sont a -2 pour ne pas confondre en cas 
-d'erreur d'ouverture.
-fd_..[1] correspond a la redirection 1 = > | <, 2 = >> | <<. 
-Ils sont a 0 si il n'y a pas de redirection.
-Si ils sont superieur a 2 on detecte une rreur de saisie */
 
 void	fd_init(t_cmd *cmd)
 {
@@ -30,23 +20,6 @@ void	fd_init(t_cmd *cmd)
 	cmd->out_fd[0] = -2;
 	cmd->out_fd[1] = 0;
 }
-
-/*get_infd() recupere un infile et le type de redirection de la commande
-char **cmd_split est le tableau de la commande entiere.
-
-ex : < chips cat -e 
-"<"
-"chips"
-"cat"
-"-e"
-
-on par court le tableau en comparant n caractere de la string pour voir si 
-la string corrspond a une redirection. 
-Si la string correspond a une redirectin, on ouvre la string
-d,a
-*/
-
-// aucune gestion d'erreur pour l'instant
 
 char	**get_infd(t_cmd *cmd, char **cmd_split)
 {
@@ -71,8 +44,6 @@ char	**get_infd(t_cmd *cmd, char **cmd_split)
 	}
 	return (cmd_split);
 }
-
-/*get_outfd() marche comme get_out fd pour la redirection out*/
 
 char	**get_outfd(t_cmd *cmd, char **cmd_split)
 {

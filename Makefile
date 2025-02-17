@@ -1,15 +1,13 @@
 SRCS = 	src/main.c \
-		src/welcome.c \
 		src/parsing/free_parser.c \
 		src/parsing/get_fd.c \
-		src/parsing/get_path.c \
 		src/parsing/init.c \
 		src/parsing/utils.c \
+		src/parsing/utils_.c \
 		src/parsing/realloc_cmd.c \
 		src/parsing/get_fd_in_utils.c \
-		src/parsing/handle_quote/get_quote.c \
-		src/parsing/handle_quote/handle_quote.c \
-		src/parsing/handle_quote/handle_no_quote.c \
+		src/parsing/get_pipe.c \
+		src/parsing/handle_quote/get_quote_dup.c \
 		src/parsing/handle_quote/realloc_quote.c \
 		src/parsing/handle_quote/get_quote_utils.c \
 

@@ -12,23 +12,12 @@
 
 #include "minishell.h"
 
-int	is_a_sep(char	c)
-{
-	if (c == ' ')
-		return (0);
-	if (c == '"')
-		return (2);
-	if (c == '\'')
-		return (1);
-	return (-1);
-}
-
 char	*ft_strndup(char *line, int c)
 {
 	char	*dup;
 	int		i;
 
-    i = 0;
+	i = 0;
 	line -= c;
 	dup = malloc(sizeof(char) * (c + 1));
 	if (!dup)
@@ -43,20 +32,25 @@ char	*ft_strndup(char *line, int c)
 	return (dup);
 }
 
-char	*ft_strndup_bis(char *line, int c)
+t_boolean	is_in_quote(char *str)
 {
-	char	*dup;
 	int		i;
+	char	c;
 
-    i = 0;
-	dup = malloc(sizeof(char) * (c + 1));
-	if (!dup)
-		return (NULL);
-	while (i < c)
-	{
-		dup[i] = line[i];
+	i = 0;
+	c = str[i];
+	while (str[i])
 		i++;
+	i--;
+	fprintf(stderr, "str : '%s'\n", str);
+	if (c == '\'' || c == '"')
+	{
+		if (str[i] == c)
+		{
+			fprintf(stderr, "true\n");
+			return (true);
+		}
 	}
-	dup[i] = '\0';
-	return (dup);
+	fprintf(stderr, "false\n");
+	return (false);
 }
