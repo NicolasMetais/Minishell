@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-//READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
-//READLINE LEAK DE BASE C MIEUX GNL MAIS IL EN FAUT UN PARFAIT 
-//BONUSE JE RECODERAIS CA UN DE CES JOURS
 t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 {
 	(void)av;
@@ -24,7 +21,7 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 
 	i = 0;
 	tmp = NULL;
-	while (1)
+	while (i < 2)
 	{
 		line = readline("minishell/ ");
 		global = global_init(line, env);

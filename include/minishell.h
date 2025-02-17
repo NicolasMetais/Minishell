@@ -35,6 +35,7 @@ typedef struct s_pipe
 	char		**cmd_tab;
 	char		*tmp;
 	char		*str;
+	char		*fstr;
 	char			c;
 	int				i;
 	int			end;

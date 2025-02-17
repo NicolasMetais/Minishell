@@ -21,6 +21,7 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->valid = false;
 	ctx->quote = false;
 	ctx->str = ft_strdup(line);
+	ctx->fstr = ctx->str;
 }
 
 void	handle_quote_dup(t_pipe_var *ctx)
@@ -111,5 +112,5 @@ char	**get_quote_dup(char *line)
 		else
 			increment(&ctx);
 	}
-	return (clear_quote(ctx.cmd_tab));
+	return (free(ctx.fstr), clear_quote(ctx.cmd_tab));
 }

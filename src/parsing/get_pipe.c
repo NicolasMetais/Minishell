@@ -35,6 +35,7 @@ void	pipe_var_init(t_pipe_var *ctx, char *line)
 	ctx->valid = false;
 	ctx->quote = false;
 	ctx->str = ft_strdup(line);
+	ctx->fstr = ctx->str;
 }
 
 void	handle_pipe(t_pipe_var *ctx)
@@ -90,5 +91,5 @@ char	**get_pipe(char *line)
 		else
 			increment(&ctx);
 	}
-	return (ctx.cmd_tab);
+	return (free(ctx.fstr), ctx.cmd_tab);
 }
