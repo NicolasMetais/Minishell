@@ -53,15 +53,16 @@ void		free_split_init(char **split, int i);
 int			command_counter(char **line_split);
 char		**get_all_path(char **env);
 char		**realloc_cmd(char **cmd, int supp);
-int			open_file_in(char	*file);
-int			open_file_out(char	*file, int i);
+int			open_file_in(char *file);
+int			open_file_out(char *file, int i);
 char		**handle_heredoc(char **cmd_split, t_cmd *cmd, int i);
 char		**handle_in_redirection(char **cmd_split, t_cmd *cmd, int i);
 char		**get_quote_dup(char *line_split);
 char		**realloc_add_to_tab(char **tab, char *new);
 char		*ft_strndup(char *line, int c);
 int			is_a_sep(char c);
-char		*realloc_line(char	*old, int c, int *end);
+char		*realloc_line(char *old, int c, int *end);
 char		**get_pipe(char *line);
+char		*ft_strnjoin(char const *s1, char const *s2, int c);
 
 #endif

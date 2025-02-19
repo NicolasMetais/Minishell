@@ -21,7 +21,7 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 
 	i = 0;
 	tmp = NULL;
-	while (i < 2)
+	while (1)
 	{
 		line = readline("minishell/ ");
 		global = global_init(line, env);
@@ -40,7 +40,7 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 			printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
 			for (int i = 0; tmp->cmd[i]; i++)
 				printf("%s \n", tmp->cmd[i]);
-			tmp = tmp->next;
+			 tmp = tmp->next;
 		}
 		i++;
 		free(line);

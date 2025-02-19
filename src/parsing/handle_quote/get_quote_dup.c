@@ -12,16 +12,83 @@
 
 #include "minishell.h"
 
+char	*ft_pignouf(char *line)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(line) - 1;
+	while (line[i] == ' ')
+		i++;
+	while (line[len] == ' ')
+	{
+		len--;
+		j++;
+	}
+	new = malloc(sizeof(char) * (ft_strlen(line) - (i + j)) + 1);
+	if (!new)
+		return (NULL);
+	j = 0;
+	while (i <= len)
+	{
+		new[j] = line[i];
+		i++;
+		j++;
+	}
+	new[j] = '\0';
+	return (new);
+}
+
 void	quote_var_init(t_pipe_var *ctx, char *line)
 {
 	ctx->c = 0;
-	ctx->i = 0;
+  	ctx->i = 0;
 	ctx->end = 0;
 	ctx->cmd_tab = NULL;
 	ctx->valid = false;
 	ctx->quote = false;
-	ctx->str = ft_strdup(line);
+	ctx->str = ft_pignouf(line);
 	ctx->fstr = ctx->str;
+}
+
+char	*handle_inside_quote(char *old, char *new, int *i, char *type)
+{
+	char	*str;
+
+	*type = 0;
+	fprintf(stderr, "\nold : %s, str : %s, i = %d\n\n", old, new - *i, *i);
+	str = ft_strnjoin(old, new, *i);
+	*i = 0;
+	return (str);
+}
+
+char	*inside_quote(char *str, int c)
+{
+	char	*new;
+	char	type;
+	int		i;
+
+	i = 0;
+	type = 0;
+	new = NULL;
+	str -= c;
+	while (i < c && *str)
+	{
+		if (*str == type)
+			new = handle_inside_quote(new, str, &i, &type);
+		if ((*str == '"' || *str == '\'') && type == 0)
+			type = *str;
+		else
+			i++;
+		str++;
+	}
+	if (!new)
+		return (ft_strndup(str, c));
+	return (new);
 }
 
 void	handle_quote_dup(t_pipe_var *ctx)
@@ -31,13 +98,15 @@ void	handle_quote_dup(t_pipe_var *ctx)
 		if (ft_strlen(ctx->str + 1) == 0)
 		{
 			ctx->str++;
-			ctx->tmp = ft_strndup(ctx->str, ctx->c + 1);
+			ctx->tmp = inside_quote(ctx->str, ctx->c + 1);
 		}
 		else
-			ctx->tmp = ft_strndup(ctx->str, ctx->c);
+			ctx->tmp = inside_quote(ctx->str, ctx->c);
 		ctx->cmd_tab = realloc_add_to_tab(ctx->cmd_tab, ctx->tmp);
 		ctx->str -= ctx->c;
 		ctx->str = realloc_line(ctx->str, ctx->c + 1, &ctx->end);
+		free(ctx->fstr);
+		ctx->fstr = ctx->str;
 		ctx->c = 0;
 	}
 	ctx->valid = false;
@@ -106,11 +175,11 @@ char	**get_quote_dup(char *line)
 			ctx.quote = true;
 			increment(&ctx);
 		}
-		if ((*ctx.str == ' ' && ctx.quote == false)
+		if (((*ctx.str == ' ') && ctx.quote == false)
 			|| ft_strlen(ctx.str + 1) == 0)
 			handle_quote_dup(&ctx);
 		else
 			increment(&ctx);
 	}
-	return (free(ctx.fstr), clear_quote(ctx.cmd_tab));
+	return (ctx.cmd_tab);
 }

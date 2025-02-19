@@ -54,6 +54,8 @@ void	handle_pipe(t_pipe_var *ctx)
 		ctx->cmd_tab = realloc_add_to_tab(ctx->cmd_tab, ctx->tmp);
 		ctx->str -= ctx->c;
 		ctx->str = realloc_line(ctx->str, ctx->c + 1, &ctx->end);
+		free(ctx->fstr);
+		ctx->fstr = ctx->str;
 		ctx->c = 0;
 	}
 	ctx->valid = false;
@@ -91,5 +93,5 @@ char	**get_pipe(char *line)
 		else
 			increment(&ctx);
 	}
-	return (free(ctx.fstr), ctx.cmd_tab);
+	return (ctx.cmd_tab);
 }
