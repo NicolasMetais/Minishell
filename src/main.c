@@ -6,13 +6,11 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/12 14:20:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:24:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
@@ -24,6 +22,8 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->av = av;
 	core->pwd = NULL;
 	core->prompt = NULL;
+	core->new_line = NULL;
+	core->mark = NULL;
 	path = ft_get_env(core->env, "PATH");
 	if (!path)
 		return (false);
@@ -34,6 +34,7 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	return (true);
 }
 
+//UPDATE DE LA PATH DU SHELL
 t_boolean	prompt_update(t_core *core)
 {
 	char	*temp;
@@ -48,7 +49,7 @@ t_boolean	prompt_update(t_core *core)
 		return (false);
 	temp = ft_strjoin(core->prompt, "$ ");
 	free(core->prompt);
-	if (!core->prompt)
+	if (!temp)
 		return (false);
 	core->prompt = ft_strjoin(temp, WHITE);
 	free(temp);
@@ -56,7 +57,8 @@ t_boolean	prompt_update(t_core *core)
 		return (false);
 	return (true);
 }
-// NE PAS OUBLIER DE GERER LES VARIABLE LOCALE
+
+//READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 t_boolean	minishell_launch(t_core *core)
 {
 	pid_t	pid;
@@ -72,6 +74,8 @@ t_boolean	minishell_launch(t_core *core)
 		if (core->line)
 		{
 			add_history(core->line);
+			if (!setup_var(core))
+				return (false);
 			error = builtin(core);
 			if (error == 0)
 			{
@@ -87,12 +91,15 @@ t_boolean	minishell_launch(t_core *core)
 				free(core->prompt);
 			}
 		}
+		else
+			exit(0);
 		free(core->line);
 	}
 }
-
+//VAR GLOBALE EXIT
 unsigned int	exit_code = 0;
 
+//DUPLICATION DE LA VARIABLE D'ENV
 int	main(int ac, char **av, char **env)
 {
 	t_core	core;

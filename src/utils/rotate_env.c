@@ -6,24 +6,28 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 06:50:52 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/05 07:02:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/20 22:30:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief ROTATE THE ENV VARIABLE LINKED LIST ON THE GIVEN NAME
- * IT'S "BASICALY" A SELECT_ENV WITH LINKED LIST
- * 
- * @param core 
- * @param var_name 
- * @return t_env 
- */
+//JE ROTATE LA LISTE CHAINEE A L'ENDROIT INDIQUE
 
 t_env	*rotate_env(t_core *core, char *var_name)
 {
-	while (ft_strncmp(core->env->name, var_name, ft_strlen(var_name)) != 0)
+	t_env	*start;
+
+	if (!core->env || !var_name)
+		return (NULL);
+	start = core->env;
+	while (core->env)
+	{
+		if (ft_strcmp(core->env->name, var_name) == 0)
+			return (core->env);
 		core->env = core->env->next;
+		if (core->env == start)
+			break ;
+	}
 	return (core->env);
 }

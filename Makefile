@@ -1,5 +1,6 @@
 SRCS = 	src/main.c \
 		src/welcome.c \
+		src/terminal.c \
 		src/signals.c \
 		src/init_env.c \
 		src/var_replace.c \
@@ -10,15 +11,17 @@ SRCS = 	src/main.c \
 		src/cmd/pwd.c \
 		src/cmd/exec.c \
 		src/cmd/export.c \
-		src/cmd/export_bis.c \
+		src/cmd/export_marked.c \
+		src/cmd/export_var.c \
+		src/cmd/unset.c \
 		src/cmd/env.c \
-		src/cmd/exit_display.c \
 		src/cmd/builtin.c \
 		src/utils/ft_get_env.c \
 		src/utils/get_env_size.c \
 		src/utils/rotate_env.c \
 		src/utils/update_env_tab.c \
 		src/utils/ft_strcmp.c \
+		src/utils/env_exist.c \
 		src/error_manager/errors.c \
 		src/error_manager/errors_bis.c \
 		src/free/free_env.c \

@@ -6,12 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:54:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/16 19:46:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/20 22:52:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//TRIE A BULLE POUR TRIER LES NOMS
 char	**sort_tab(char **names)
 {
 	int		i;
@@ -37,21 +38,26 @@ char	**sort_tab(char **names)
 	return (names);
 }
 
-void	print_env_alpha(t_core *core)
+//JE TRIE LES NOM DES ENVS DANS L'ORDRE ALPHA ET JE LES PRINT
+t_boolean	print_env_alpha(t_core *core)
 {
 	char	**names;
 	int		size;
 	int		i;
 
-	i = 0;
+	i = -1;
 	size = get_env_size(core->env);
-	names = malloc(sizeof(char *) * size + 1);
-	while (i < size)
+	names = malloc(sizeof(char *) * (size + 1));
+	if (!names)
+		return (false);
+	while (++i < size)
 	{
 		names[i] = ft_strdup(core->env->name);
+		if (!names[i])
+			return (free_tab(names), false);
 		core->env = core->env->next;
-		i++;
 	}
+	names[i] = NULL;
 	names = sort_tab(names);
 	i = 0;
 	while (names[i])
@@ -59,8 +65,11 @@ void	print_env_alpha(t_core *core)
 		rotate_env(core, names[i++]);
 		printf("%s\n", core->env->var);
 	}
+	return (free_tab(names), true);
 }
 
+//JE VERIFIE QUE EXPORT SOIT BIEN VIDE. EXEMPLE SI JE MET EXPORT $TEST.
+//TEST EXISTE PAS DONC EXPORT EST VIDE MAIS J'AI 2 ARG
 t_boolean	isempty(char **tab)
 {
 	int			i;
@@ -79,34 +88,40 @@ t_boolean	isempty(char **tab)
 	return (empty);
 }
 
+t_boolean	export_parse(char *cmd, t_core *core)
+{
+	if (cmd[0] == '_' || ft_isalpha(cmd[0]))
+		marked_or_env(cmd, core);
+	else
+	{
+		if (!not_valid_id(cmd, "export: "))
+			return (false);
+	}
+	return (true);
+}
 
+//EXPORT DOIT CREER DE NOUVELLES VAR D'ENV 
+//ET DES VARIABLE MARQUEE SI ON PRECISE PAS DE =
+//SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV TRIEE ALPHABETIQUEMENT
+//EXPORT TOUT SEUL DOIT AFFICHER ENV + MARKED
+//EXPORT A=1 + A=$A$A EXPLOSION DE L'ENV
+//EXPORT -- ou -qqch : erreur invalid option
 t_boolean	export(t_core *core, t_builtin *builtin)
 {
-	int	i;
+	int			i;
 
 	i = 0;
 	if (isempty(builtin->cmd) || builtin->arg_number == 1)
 	{
-		print_env_alpha(core);
-		return (true);
+		if (!print_env_alpha(core))
+			return (false);
+		else
+			return (true);
 	}
 	if (builtin->arg_number > 1)
 	{
 		while (builtin->cmd[++i])
-		{
-			if (builtin->cmd[i][0] == '_' || ft_isalpha(builtin->cmd[i][0]))
-				marked_or_env(builtin->cmd[i], core);
-			else
-				not_valid_id(builtin->cmd[i], "export0: ");
-		}
+			export_parse(builtin->cmd[i], core);
 	}
 	return (true);
 }
-/* 	t_env *copy;
-
-	copy = core->mark;
-	while (copy->next != core->mark)
-	{
-		printf("%s\n", copy->name);
-		copy = copy->next;
-	} */

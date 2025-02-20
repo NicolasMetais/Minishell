@@ -6,12 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 13:25:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/15 21:26:53 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:45:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//JE DELETE LA VAR SI ELLE EXISTE PAS ET JE RECONSTRUIS LA STRING SANS LA VAR
 char	*delete_var(char *tocut, int start, int end)
 {
 	char	*new;
@@ -36,7 +37,7 @@ char	*delete_var(char *tocut, int start, int end)
 	new[i] = '\0';
 	return (new);
 }
-
+//J'ECRIT LA VAR A LA PLACE DU $VAR
 char	*write_var(char *code, char *tocut, int j, int size)
 {
 	char	*new;

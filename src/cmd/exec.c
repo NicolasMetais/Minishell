@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/09 10:57:19 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:19:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	cmd_exec(t_core *core)
 	int		i;
 
 	i = -1;
-	temp_arg = ft_split(core->line, ' ');
-	if (!temp_arg)
-		return ;
+	temp_arg = core->new_line;
 	slash = ft_strjoin("/", temp_arg[0]);
 	if (!slash)
 		return ;

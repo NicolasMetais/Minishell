@@ -6,18 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:09:55 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/12 22:20:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:41:55 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/**
- * @brief Get env content from env name
- * 
- * @param env 
- * @param name 
- * @return char* 
- */
+
+//RETURN LA VAR D'ENV EN FONCTION DU NOM
 char	*ft_get_env(t_env *env, char *name)
 {
 	t_env	*copy;

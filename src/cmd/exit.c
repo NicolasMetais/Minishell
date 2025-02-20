@@ -6,12 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/10 11:02:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:24:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//EXIT DOIT AFFICHER DES ERREUR SI ON L'UTILISE MAL MAIS DOIT EXIT QUAND MEME
 t_boolean	exit_custom(t_core *core, t_builtin *builtin)
 {
 	unsigned int	status;

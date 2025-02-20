@@ -6,11 +6,12 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:53:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 20:26:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:41:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+//COLLECTION DE TOUT LES MALLOC ET FREE SI BESOIN
 
 t_gc	*new_gc(void *data)
 {

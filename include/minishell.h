@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/16 17:33:44 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:18:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
+# include <termios.h>
 
 extern unsigned int exit_code;
 
@@ -55,6 +56,7 @@ typedef struct s_core
 	char			*pwd;
 	char			*prompt;
 	char			*line;
+	char			**new_line;
 	char			**temp_path;
 	char			**env_dup;
 	t_env			*env;
@@ -69,9 +71,14 @@ char		*ft_get_env(t_env *env, char *name);
 t_env		*rotate_env(t_core *core, char *var_name);
 int			ft_strcmp(char *s1, char *s2);
 int			get_env_size(t_env	*env);
+t_boolean	env_exist(t_core *core, char *var);
+
+//TERMINAL SETUP (desac ctrl + \ & ctrl + z)
+void		setup_terminal(void);
+void		restore_terminal(void);
 
 //ENV VARIABLE CONVERSIONS
-t_boolean	var_manager(t_core *core, t_builtin *builtin);
+t_boolean	setup_var(t_core *core);
 char		*delete_var(char *tocut, int start, int end);
 char		*write_var(char *code, char *tocut, int j, int size);
 

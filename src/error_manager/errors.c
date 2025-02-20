@@ -6,12 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/16 13:16:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/20 13:59:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //TOUTES LES FONCTIONS D'ERREURS LEAK A CAUSE DES JOIN DE SES MORTS
+
+//FLAG INVALIDE
 t_boolean	invalid_option(t_builtin *builtin, char *cmd)
 {
 	char	*custom_error;
@@ -29,6 +31,7 @@ t_boolean	invalid_option(t_builtin *builtin, char *cmd)
 	return (true);
 }
 
+//TROP D'ARG
 t_boolean	too_many_args(char *cmd)
 {
 	char	*custom_error;
@@ -42,6 +45,7 @@ t_boolean	too_many_args(char *cmd)
 	return (true);
 }
 
+//PERROR MODULABLE
 t_boolean	funct_error(char *cmd, char *addvalue)
 {
 	char	*custom_error;
@@ -55,6 +59,7 @@ t_boolean	funct_error(char *cmd, char *addvalue)
 	return (true);
 }
 
+//COMMAND NOT FOUND
 t_boolean	cmd_not_found(char *cmd)
 {
 	char	*custom_error;

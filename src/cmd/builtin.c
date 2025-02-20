@@ -6,26 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/15 22:58:25 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/20 14:02:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_boolean	builtin_the_third(t_builtin *builtin, t_core *core)
-{
-	int i;
-
-	i = 0;
-	if ((ft_strcmp(builtin->cmd[0], "unset") == 0))
-	{
-		if (!exit_custom(core, builtin))
-			return (false);
-		return (true);
-	}
-	return (false);
-}
-
+//DEUXIEME CHECKER DE BUILTIN
 t_boolean	builtin_the_sec(t_builtin *builtin, t_core *core)
 {
 	if ((ft_strcmp(builtin->cmd[0], "exit") == 0))
@@ -48,13 +35,14 @@ t_boolean	builtin_the_sec(t_builtin *builtin, t_core *core)
 	}
 	if ((ft_strcmp(builtin->cmd[0], "unset") == 0))
 	{
-		if (!exit_custom(core, builtin))
+		if (!unset(core, builtin))
 			return (false);
 		return (true);
 	}
 	return (false);
 }
 
+//CHECKER DE BUILTIN
 t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
 {
 	if ((ft_strcmp(builtin->cmd[0], "cd") == 0))
@@ -80,6 +68,8 @@ t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
 	return (false);
 }
 
+//JE DECOUPE LES ARGS ENTRE LES PIPES 
+//(echo test | ls -l) (je decoupe echo test pour trouver echo)
 int	builtin(t_core *core)
 {
 	t_builtin	builtin;
@@ -87,15 +77,11 @@ int	builtin(t_core *core)
 	int			i;
 
 	i = 0;
-	builtin.cmd = ft_split(core->line, ' ');
-	if (!builtin.cmd)
-		return (2);
+	builtin.cmd = core->new_line;
 	while (builtin.cmd[i])
 		i++;
 	builtin.arg_number = i;
-	if (!var_manager(core, &builtin))
-		return (free_tab(builtin.cmd), 1);
+	exit_code = 0;
 	error = builtin_or_not(core, &builtin);
-	free_tab(builtin.cmd);
 	return (error);
 }

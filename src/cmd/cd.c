@@ -6,19 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 21:24:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/20 14:40:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief UPDATE TWO ENV VAR : PWD & OLDPWD TO KNOW 
- * THE SHELL POSITION IN THE FILES
- * @param core 
- * @param path 
- * @param undo 
- */
+//JE MET A JOUR PWD ET OLD AVEC LES BONNE PATH.
+//OLDPWD A TOUJOURS UNE EXEC DE RETARD SUR PWD
 t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 {
 	char	*get_path;
@@ -41,13 +36,8 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 	free_gc(gc);
 	return (true);
 }
-/**
- * @brief EXEC CD WITH OPTIONS OR NOT / ERRORS
- * @param core 
- * @param path 
- * @param undo 
- */
 
+//J'EXECUTE CD AVEC CHDIR ET L'ARGUMENT (folder) DEPEND DES OPTIONS
 t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 {
 	char	*folder;
@@ -66,6 +56,7 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 	return (true);
 }
 
+//INIT D'UNE STRUCTURE AVEC PLEIN D'OPTIONS
 t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 {
 	*gc = NULL;
@@ -86,12 +77,8 @@ t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 	return (true);
 }
 
-/**
- * @brief check cd options -, --, ~ ,
- * arg numbers and invalid flags
- * @param core 
- */
-
+//JE REGARDE SI J'AI LES OPTIONS -, -- et ~ sinon je balance tout dans chdir
+//JE CHECK LE NB d'ARG
 t_boolean	cd_init(t_core *core, t_builtin *builtin)
 {
 	t_cd	cd;

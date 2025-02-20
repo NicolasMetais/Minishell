@@ -6,12 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:46:08 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/09 13:23:49 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:25:37 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//GESTION DU FLAG -N QUI PREND EN COMPTE LES MULTIPLE -N ET -NNNNN..
 int	flag_check(t_builtin *builtin, t_boolean *flag)
 {
 	int	j;
@@ -38,6 +39,7 @@ int	flag_check(t_builtin *builtin, t_boolean *flag)
 	return (i);
 }
 
+//PRINTF POUR EXEC ECHO
 t_boolean	echo_init(t_builtin *builtin)
 {
 	int			i;

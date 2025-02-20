@@ -6,18 +6,20 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 19:04:05 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/08 16:18:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:14:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+//TROUVER LE DERNIER ELEMENT DE L'ENV
 t_env	*lstlast_env(t_env *lst)
 {
-	int	i;
+	int		i;
+	t_env	*copy;
 
 	i = 0;
-	while (lst && lst->next)
+	copy = lst;
+	while (copy && lst->next != copy)
 	{
 		i++;
 		lst = lst->next;
@@ -25,6 +27,7 @@ t_env	*lstlast_env(t_env *lst)
 	return (lst);
 }
 
+//SERT A R
 void	lstadd_back_env(t_env **lst, t_env *new)
 {
 	if (*lst)
@@ -33,6 +36,7 @@ void	lstadd_back_env(t_env **lst, t_env *new)
 		*lst = new;
 }
 
+//JE CREE UNE NOUVELLE STRUCT PAR ENV
 t_env	*new_env(char *todup)
 {
 	t_env	*lst;
@@ -46,20 +50,22 @@ t_env	*new_env(char *todup)
 		i++;
 	lst->name = malloc(sizeof(char) * (i + 1));
 	if (!lst->name)
-		return (NULL);
+		return (free (lst), NULL);
 	i = 0;
 	while (todup[i] != '=')
 	{
 		lst->name[i] = todup[i];
 		i++;
 	}
+	lst->name[i] = '\0';
 	lst->var = ft_strdup(todup);
 	if (!lst->var)
-		return (NULL);
+		return (free(lst->name), free(lst), NULL);
 	lst->next = NULL;
 	return (lst);
 }
 
+//char ** pour execve
 t_boolean	create_env_tab(t_core *core, char **todup)
 {
 	int	i;
@@ -82,6 +88,7 @@ t_boolean	create_env_tab(t_core *core, char **todup)
 	return (true);
 }
 
+//Je duplique l'env dans une liste chainee et dans un char ** (pour execve)
 t_boolean	duplicate_env(t_core *core, char **todup)
 {
 	int		i;
