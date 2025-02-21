@@ -7,11 +7,14 @@ SRCS = 	src/main.c \
 		src/parsing/realloc_cmd.c \
 		src/parsing/get_fd_in_utils.c \
 		src/parsing/get_pipe.c \
-		src/parsing/handle_quote/get_quote_dup.c \
+		src/parsing/handle_quote/get_quote.c \
 		src/parsing/handle_quote/realloc_quote.c \
 		src/parsing/handle_quote/get_quote_utils.c \
 		src/parsing/handle_quote/get_quote_utils_2.c \
 		src/parsing/handle_quote/get_quote_utils_3.c \
+		src/parsing/handle_quote/get_quote_utils_4.c \
+		src/parsing/handle_quote/handle_inside_quote.c \
+		src/parsing/handle_quote/remove.c \
 
 OBJS = $(SRCS:.c=.o)
 

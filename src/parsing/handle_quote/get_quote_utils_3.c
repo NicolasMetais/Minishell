@@ -67,7 +67,8 @@ void	t_in_quote_init(t_in_quote *ctx, char *str, int c)
 			ctx->str = remove_begin(ctx->str, to_remove_begin(ctx->str));
 		ctx->end = get_end(tmp, c);
 		if (ctx->end)
-			ctx->str = remove_end(ctx->str, to_remove_end(ctx->str, space_in_quote(ctx->str)));
+			ctx->str = remove_end(ctx->str,
+					to_remove_end(ctx->str, space_in_quote(ctx->str)));
 	}
 	else
 	{

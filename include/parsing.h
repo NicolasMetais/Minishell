@@ -94,5 +94,6 @@ char		*get_end(char *str, int c);
 void		t_in_quote_init(t_in_quote *ctx, char *str, int c);
 char		*join_word(t_in_quote *ctx);
 char		*ft_pignouf(char *line);
+char		*handle_inside_quote(t_in_quote *ctx);
 
 #endif

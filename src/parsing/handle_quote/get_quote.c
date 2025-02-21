@@ -15,58 +15,13 @@
 void	quote_var_init(t_pipe_var *ctx, char *line)
 {
 	ctx->c = 0;
-  	ctx->i = 0;
+	ctx->i = 0;
 	ctx->end = 0;
 	ctx->cmd_tab = NULL;
 	ctx->valid = false;
 	ctx->quote = false;
 	ctx->str = ft_pignouf(line);
 	ctx->fstr = ctx->str;
-}
-
-char	*handle_inside_quote(t_in_quote *ctx)
-{
-	char	*str;
-	char	*tmp;
-	int		len;
-
-	tmp = NULL;
-	len = 0;
-	if (ctx->i == 0)
-	{
-		ctx->str+= 2;
-		ctx->type = 0;
-		return (ctx->str);
-	}
-	str = ft_strnjoin(ctx->mid, ctx->str, ctx->i);
-	if (!str)
-		return (NULL);
-	ctx->str -= ctx->i;
-	ctx->str = remove_begin(ctx->str, ctx->i);
-	ctx->i = 0;
-	ctx->type = 0;
-	if (*ctx->str == '"' || *ctx->str == '\'')
-	{
-		ctx->type = *ctx->str;
-		ctx->str++;
-		if (*ctx->str == '"' || *ctx->str == '\'')
-			ctx->type = *ctx->str;
-	}
-	if (*ctx->str != '"' && *ctx->str != '\'' && ft_strlen(ctx->str) != 0 && *ctx->str != ' ')
-	{
-		len = to_remove_begin(ctx->str);
-		tmp = get_begin(ctx->str, len);
-		if (tmp)
-			ctx->str = remove_begin(ctx->str, len);
-		str = ft_strjoin(str, tmp);
-		if (*ctx->str == '"' || *ctx->str == '\'')
-		{
-			ctx->type = *ctx->str;
-			ctx->str++;
-			ctx->i++;
-		}
-	}
-	return (str);
 }
 
 char	*inside_quote(char *str, int c)
@@ -82,7 +37,7 @@ char	*inside_quote(char *str, int c)
 		{
 			ctx.mid = handle_inside_quote(&ctx);
 			if (ft_strlen(ctx.str) == 0 || *ctx.str == ' ')
-				break;
+				break ;
 			ctx.str++;
 		}
 		if ((*ctx.str == '"' || *ctx.str == '\'') && ctx.type == 0)
