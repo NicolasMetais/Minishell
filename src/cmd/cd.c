@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 14:40:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/21 18:24:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 		return (false);
 	rotate_env(core, "PWD");
 	get_path = getcwd(NULL, 0);
+	if (!get_path)
+	{
+		write(2, "chdir: error retrieving current directory: ", 43);
+		perror("getcwd: cannot access parent directories");
+		return (free_gc(gc), true);
+	}
 	free(core->env->var);
 	core->env->var = ft_strjoin("PWD=", get_path);
 	free(get_path);
@@ -49,7 +55,7 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 	if (cd->undo)
 		folder = cd->oldpwd;
 	status = chdir(folder);
-	if (status == -1)
+	if (status < 0)
 		return (funct_error("cd: ", folder));
 	if (!update_pwd(core, cd, gc))
 		return (false);

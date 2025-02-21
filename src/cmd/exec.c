@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/19 12:19:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/21 20:58:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ void	cmd_exec(t_core *core)
 	test = ft_strjoin(temp_arg[0], ": ");
 	cmd_not_found(test);
 	free(test);
-	free_tab(temp_arg);
 	free(slash);
 }

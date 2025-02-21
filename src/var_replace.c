@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:32:22 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 17:52:44 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/21 21:19:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,14 @@ t_boolean	replace_var_env(t_core *core, char **tocut, int j)
 		if (!var)
 			return (false);
 		data = ft_get_env(core->env, var);
-		free(var);
 		if (!insert_del(data, tocut, j, i))
-			return (free(data), false);
-		free(data);
+			return (free(var), free(data), false);
+		return (free(var), free(data), true);
+	}
+	if (j < (int)ft_strlen(*tocut) && ft_isdigit((*tocut)[j + 1]))
+	{
+		if (!insert_del(NULL, tocut, j, j + 2))
+			return (false);
 		return (true);
 	}
 	return (false);

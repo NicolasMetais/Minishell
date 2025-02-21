@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:11:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 20:14:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/21 13:08:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_boolean	new_marked(char *var, t_core *core)
 		last->next = new;
 		new->next = core->mark;
 	}
+
 	return (true);
 }
 

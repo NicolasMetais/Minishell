@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:54:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 22:52:13 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:02:06 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,50 @@ char	**sort_tab(char **names)
 	return (names);
 }
 
+char	**setup_names(t_core *core, char **names, int env_size, int size)
+{	
+	int	i;
+
+	i = -1;
+	while (++i < env_size)
+	{
+		names[i] = ft_strdup(core->env->var);
+		if (!names[i])
+			return (free_tab(names), NULL);
+		core->env = core->env->next;
+	}
+	while (i < size)
+	{
+		names[i] = ft_strdup(core->mark->name);
+		if (!names[i])
+			return (free_tab(names), NULL);
+		core->mark = core->mark->next;
+		i++;
+	}
+	names[i] = NULL;
+	return (names);
+}
+
 //JE TRIE LES NOM DES ENVS DANS L'ORDRE ALPHA ET JE LES PRINT
 t_boolean	print_env_alpha(t_core *core)
 {
 	char	**names;
-	int		size;
 	int		i;
+	int		size;
+	int		env_size;
 
 	i = -1;
-	size = get_env_size(core->env);
+	env_size = get_env_size(core->env);
+	size = env_size + get_env_size(core->mark);
 	names = malloc(sizeof(char *) * (size + 1));
 	if (!names)
 		return (false);
-	while (++i < size)
-	{
-		names[i] = ft_strdup(core->env->name);
-		if (!names[i])
-			return (free_tab(names), false);
-		core->env = core->env->next;
-	}
-	names[i] = NULL;
+	names = setup_names(core, names, env_size, size);
+	if (!names)
+		return (false);
 	names = sort_tab(names);
-	i = 0;
-	while (names[i])
-	{
-		rotate_env(core, names[i++]);
-		printf("%s\n", core->env->var);
-	}
+	while (names[++i])
+		printf("export %s\n", names[i]);
 	return (free_tab(names), true);
 }
 
@@ -88,40 +105,33 @@ t_boolean	isempty(char **tab)
 	return (empty);
 }
 
-t_boolean	export_parse(char *cmd, t_core *core)
-{
-	if (cmd[0] == '_' || ft_isalpha(cmd[0]))
-		marked_or_env(cmd, core);
-	else
-	{
-		if (!not_valid_id(cmd, "export: "))
-			return (false);
-	}
-	return (true);
-}
 
 //EXPORT DOIT CREER DE NOUVELLES VAR D'ENV 
 //ET DES VARIABLE MARQUEE SI ON PRECISE PAS DE =
-//SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV TRIEE ALPHABETIQUEMENT
-//EXPORT TOUT SEUL DOIT AFFICHER ENV + MARKED
-//EXPORT A=1 + A=$A$A EXPLOSION DE L'ENV
-//EXPORT -- ou -qqch : erreur invalid option
+//SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV + MARQUEE TRIEE ALPHABETIQUEMENT
 t_boolean	export(t_core *core, t_builtin *builtin)
 {
 	int			i;
 
 	i = 0;
 	if (isempty(builtin->cmd) || builtin->arg_number == 1)
+		return (print_env_alpha(core));
+	if (builtin->cmd[1][0] == '-')
 	{
-		if (!print_env_alpha(core))
-			return (false);
-		else
+		if (invalid_option(builtin, "export: "))
 			return (true);
+		else
+			return (false);
 	}
-	if (builtin->arg_number > 1)
+	while (builtin->cmd[++i])
 	{
-		while (builtin->cmd[++i])
-			export_parse(builtin->cmd[i], core);
+		if (builtin->cmd[i][0] == '_' || ft_isalpha(builtin->cmd[i][0]))
+			marked_or_env(builtin->cmd[i], core);
+		else
+		{
+			if (!not_valid_id(builtin->cmd[i], "export: "))
+				return (false);
+		}
 	}
 	return (true);
 }

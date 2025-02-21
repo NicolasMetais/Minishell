@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 14:02:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/21 18:24:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,16 @@ int	builtin(t_core *core)
 	int			i;
 
 	i = 0;
-	builtin.cmd = core->new_line;
-	while (builtin.cmd[i])
+	while (core->new_line[i])
 		i++;
 	builtin.arg_number = i;
+	builtin.cmd = malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (core->new_line[++i])
+		builtin.cmd[i] = ft_strdup(core->new_line[i]);
+	builtin.cmd[i] = NULL;
 	exit_code = 0;
 	error = builtin_or_not(core, &builtin);
+	free_tab(builtin.cmd);
 	return (error);
 }
