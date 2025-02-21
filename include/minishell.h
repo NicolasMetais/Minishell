@@ -36,7 +36,7 @@ typedef struct s_pipe
 	char		*tmp;
 	char		*str;
 	char		*fstr;
-	char			c;
+	int			c;
 	int				i;
 	int			end;
 	t_boolean	valid;
@@ -55,5 +55,8 @@ t_glb		*global_init(char *read_line, char **env);
 char		*remove_double_quote(char *line, int *end);
 void		increment(t_pipe_var *ctx);
 t_boolean	is_in_quote(char *str);
+t_boolean 	quote_inside(char *str, int i);
+t_boolean	 space_in_quote(char *str);
+
 
 #endif

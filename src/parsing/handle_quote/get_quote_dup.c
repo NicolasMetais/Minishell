@@ -12,37 +12,6 @@
 
 #include "minishell.h"
 
-char	*ft_pignouf(char *line)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*new;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(line) - 1;
-	while (line[i] == ' ')
-		i++;
-	while (line[len] == ' ')
-	{
-		len--;
-		j++;
-	}
-	new = malloc(sizeof(char) * (ft_strlen(line) - (i + j)) + 1);
-	if (!new)
-		return (NULL);
-	j = 0;
-	while (i <= len)
-	{
-		new[j] = line[i];
-		i++;
-		j++;
-	}
-	new[j] = '\0';
-	return (new);
-}
-
 void	quote_var_init(t_pipe_var *ctx, char *line)
 {
 	ctx->c = 0;
@@ -55,39 +24,76 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->fstr = ctx->str;
 }
 
-char	*handle_inside_quote(char *old, char *new, int *i, char *type)
+char	*handle_inside_quote(t_in_quote *ctx)
 {
 	char	*str;
+	char	*tmp;
+	int		len;
 
-	*type = 0;
-	fprintf(stderr, "\nold : %s, str : %s, i = %d\n\n", old, new - *i, *i);
-	str = ft_strnjoin(old, new, *i);
-	*i = 0;
+	tmp = NULL;
+	len = 0;
+	if (ctx->i == 0)
+	{
+		ctx->str+= 2;
+		ctx->type = 0;
+		return (ctx->str);
+	}
+	str = ft_strnjoin(ctx->mid, ctx->str, ctx->i);
+	if (!str)
+		return (NULL);
+	ctx->str -= ctx->i;
+	ctx->str = remove_begin(ctx->str, ctx->i);
+	ctx->i = 0;
+	ctx->type = 0;
+	if (*ctx->str == '"' || *ctx->str == '\'')
+	{
+		ctx->type = *ctx->str;
+		ctx->str++;
+		if (*ctx->str == '"' || *ctx->str == '\'')
+			ctx->type = *ctx->str;
+	}
+	if (*ctx->str != '"' && *ctx->str != '\'' && ft_strlen(ctx->str) != 0 && *ctx->str != ' ')
+	{
+		len = to_remove_begin(ctx->str);
+		tmp = get_begin(ctx->str, len);
+		if (tmp)
+			ctx->str = remove_begin(ctx->str, len);
+		str = ft_strjoin(str, tmp);
+		if (*ctx->str == '"' || *ctx->str == '\'')
+		{
+			ctx->type = *ctx->str;
+			ctx->str++;
+			ctx->i++;
+		}
+	}
 	return (str);
 }
 
 char	*inside_quote(char *str, int c)
 {
-	char	*new;
-	char	type;
-	int		i;
+	t_in_quote	ctx;
+	char		*new;
 
-	i = 0;
-	type = 0;
-	new = NULL;
 	str -= c;
-	while (i < c && *str)
+	t_in_quote_init(&ctx, str, c);
+	while (ctx.i < c && ft_strlen(ctx.str) != 0)
 	{
-		if (*str == type)
-			new = handle_inside_quote(new, str, &i, &type);
-		if ((*str == '"' || *str == '\'') && type == 0)
-			type = *str;
+		if (*ctx.str == ctx.type)
+		{
+			ctx.mid = handle_inside_quote(&ctx);
+			if (ft_strlen(ctx.str) == 0 || *ctx.str == ' ')
+				break;
+			ctx.str++;
+		}
+		if ((*ctx.str == '"' || *ctx.str == '\'') && ctx.type == 0)
+			ctx.type = *ctx.str;
 		else
-			i++;
-		str++;
+			ctx.i++;
+		ctx.str++;
 	}
+	new = join_word(&ctx);
 	if (!new)
-		return (ft_strndup(str, c));
+		return (ft_strndup(ctx.str, c));
 	return (new);
 }
 
@@ -110,48 +116,6 @@ void	handle_quote_dup(t_pipe_var *ctx)
 		ctx->c = 0;
 	}
 	ctx->valid = false;
-}
-
-char	*remove_quote(char *str)
-{
-	size_t		i;
-	int			j;
-	char		*new;
-	
-	i = 0;
-	j = 1;
-	new = malloc(sizeof(char) * ft_strlen(str) - 1);
-	if (!new)
-		return (NULL);
-	while (i < ft_strlen(str) - 2)
-	{
-		new[i] = str[j];
-		i++;
-		j++;
-	}
-	new[i] = '\0';
-	return (new);
-}
-
-char	**clear_quote(char	**cmd)
-{
-	char	**clear_cmd;
-	char	*tmp;
-	int		i;
-
-	clear_cmd = NULL;
-	i = 0;
-	while (cmd[i])
-	{
-		if (is_in_quote(cmd[i]))
-			tmp = remove_quote(cmd[i]);
-		else
-			tmp = ft_strdup(cmd[i]);
-		clear_cmd = realloc_add_to_tab(clear_cmd, tmp);
-		i++;
-	}
-	free_split(cmd);
-	return (clear_cmd);
 }
 
 char	**get_quote_dup(char *line)

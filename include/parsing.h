@@ -37,6 +37,17 @@ typedef	struct s_utils
 	int		j;
 }			t_utils;
 
+typedef struct s_in_quote
+{
+	char	*begin;
+	char	*mid;
+	char	*end;
+	char	*new;
+	char	*str;
+	char	type;
+	int		i;
+}				t_in_quote;
+
 typedef struct s_quote
 {
 	char	**tab;
@@ -44,6 +55,14 @@ typedef struct s_quote
 	int		end;
 	char	*str;
 }				t_quote;
+
+typedef struct s_pignouf
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*new;
+}				t_pignouf;
 
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
@@ -60,9 +79,20 @@ char		**handle_in_redirection(char **cmd_split, t_cmd *cmd, int i);
 char		**get_quote_dup(char *line_split);
 char		**realloc_add_to_tab(char **tab, char *new);
 char		*ft_strndup(char *line, int c);
+char		*ft_strdup_end(char *str, int c);
 int			is_a_sep(char c);
 char		*realloc_line(char *old, int c, int *end);
 char		**get_pipe(char *line);
 char		*ft_strnjoin(char const *s1, char const *s2, int c);
+char		*ft_strjoin_custom(char const *s1, char const *s2);
+char		*remove_begin(char *old, int c);
+int			to_remove_begin(char *old);
+int			to_remove_end(char *old, int c);
+char		*remove_end(char *old, int c);
+char		*get_begin(char *str, int c);
+char		*get_end(char *str, int c);
+void		t_in_quote_init(t_in_quote *ctx, char *str, int c);
+char		*join_word(t_in_quote *ctx);
+char		*ft_pignouf(char *line);
 
 #endif

@@ -32,6 +32,28 @@ char	*ft_strndup(char *line, int c)
 	return (dup);
 }
 
+char	*ft_strdup_end(char *str, int c)
+{
+	char	*dup_end;
+	int		i;
+
+	if (c == 0)
+		return (NULL);
+	dup_end = malloc(sizeof(char) * (c + 1));
+	if (!dup_end)
+		return (NULL);
+	i = 0;
+	str++;
+	while (i < c)
+	{
+		dup_end[i] = *str;
+		i++;
+		str++;
+	}
+	dup_end[i] = '\0';
+	return (dup_end);
+}
+
 char	*ft_strnjoin(char const *s1, char const *s2, int c)
 {
 	char	*buffer;
@@ -72,15 +94,55 @@ t_boolean	is_in_quote(char *str)
 	while (str[i])
 		i++;
 	i--;
-	fprintf(stderr, "str : '%s'\n", str);
 	if (c == '\'' || c == '"')
 	{
 		if (str[i] == c)
-		{
-			fprintf(stderr, "true\n");
 			return (true);
-		}
 	}
-	fprintf(stderr, "false\n");
 	return (false);
+}
+
+t_boolean quote_inside(char *str, int i)
+{
+	char	c;
+	int		j;
+
+	j = 0;
+	c = 0;
+	while (*str && j < i)
+	{	
+		if (*str == c)
+			return (true);
+		if (*str == '\'' || *str == '"')	
+			c = *str;
+		str++;
+		j++;
+	}
+	return (false);
+}
+
+t_boolean space_in_quote(char *str)
+{
+	char		c;
+	t_boolean	status;
+	int			i;
+
+	status = false;
+	i = 0;
+	c = 0;
+	while (*str)
+	{
+		if (*str == c)
+			status = false;
+		if (*str == '\'' || *str == '"')	
+		{
+			c = *str;
+			status = true;
+		}
+		if (*str == ' ' && status == false)
+			return (i);
+		str++;
+		i++;
+	}
+	return (i);
 }
