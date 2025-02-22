@@ -1,6 +1,5 @@
 SRCS = 	src/main.c \
 		src/welcome.c \
-		src/terminal.c \
 		src/signals.c \
 		src/init_env.c \
 		src/var_replace.c \

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/19 12:18:24 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/22 16:05:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ int			ft_strcmp(char *s1, char *s2);
 int			get_env_size(t_env	*env);
 t_boolean	env_exist(t_core *core, char *var);
 
-//TERMINAL SETUP (desac ctrl + \ & ctrl + z)
-void		setup_terminal(void);
-void		restore_terminal(void);
-
 //ENV VARIABLE CONVERSIONS
 t_boolean	setup_var(t_core *core);
 char		*delete_var(char *tocut, int start, int end);
@@ -88,7 +84,8 @@ t_env		*new_env(char *todup);
 t_env		*lstlast_env(t_env *lst);
 
 //SIGNALS
-void		signal_handler(void);
+void		signal_update(void);
+void		signal_reset(void);
 
 //FREE
 void		emergency_free_tab(char **tab, int i);

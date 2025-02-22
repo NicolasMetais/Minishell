@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 18:25:10 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/22 16:05:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ t_boolean	minishell_launch(t_core *core)
 	pid_t	pid;
 	int		error;
 
-	signal_handler();
 	funny_stuff();
 	while (1)
 	{
 		if (!prompt_update(core))
 			core->prompt = "Minishell/ ";
+		signal_update();
 		core->line = readline(core->prompt);
 		if (core->line)
 		{
