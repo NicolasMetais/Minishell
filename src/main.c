@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/22 16:05:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/23 21:19:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ t_boolean	minishell_launch(t_core *core)
 		core->line = readline(core->prompt);
 		if (core->line)
 		{
-			add_history(core->line);
 			if (!setup_var(core))
 				return (false);
+			add_history(core->line);
+
 			error = builtin(core);
 			if (error == 0)
 			{

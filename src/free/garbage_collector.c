@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:53:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/18 15:41:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/23 14:31:28 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	*gc_malloc(t_gc	**gc, unsigned int size)
 	data = malloc(size);
 	if (!data)
 		return (NULL);
-
 	new = new_gc(data);
 	if (!new)
 		return (free(data), NULL);

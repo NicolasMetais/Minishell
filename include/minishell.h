@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/22 16:05:24 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/23 15:12:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "libft.h"
 
 # include <stdio.h>
+# include <math.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -41,6 +42,20 @@ typedef enum s_boolean
 
 # include "cmd.h"
 # include "errors.h"
+
+typedef struct s_pipe
+{
+	char		**cmd_tab;
+	char		*tmp;
+	char		*str;
+	char		*fstr;
+	int			c;
+	int			i;
+	int			end;
+	t_boolean	valid;
+	t_boolean	quote;
+
+}				t_pipe_var;
 
 typedef struct s_env
 {
@@ -95,4 +110,5 @@ void		free_tab(char **tab);
 
 //KILL
 void		kill_program(t_core *core);
+
 #endif
