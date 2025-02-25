@@ -29,17 +29,17 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 			tmp = global->cmd;
 		while (tmp)
 		{
-			if (tmp->here_doc)
-			{
-				for (int i = 0; tmp->here_doc[i]; i++)
-					printf("here_doc[%d] = %s\n", i, tmp->here_doc[i]);
-			}
-			printf("in_fd[0] (file descriptor) = %d\n", tmp->in_fd[0]);
-			printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
-			printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);
-			printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
-			for (int i = 0; tmp->cmd[i]; i++)
-				printf("%s \n", tmp->cmd[i]);
+			// if (tmp->here_doc)
+			// {
+			// 	for (int i = 0; tmp->here_doc[i]; i++)
+			// 		printf("here_doc[%d] = %s\n", i, tmp->here_doc[i]);
+			// }
+			// printf("in_fd[0] (file descriptor) = %d\n", tmp->in_fd[0]);
+			// printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
+			// printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);
+			// printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
+			 for (int i = 0; tmp->cmd[i]; i++)
+			 	printf("%s \n", tmp->cmd[i]);
 			 tmp = tmp->next;
 		}
 		i++;

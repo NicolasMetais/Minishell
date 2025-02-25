@@ -17,11 +17,13 @@ char	*realloc_line(char	*old, int c, int *end)
 	char	*new;
 	int		i;
 
-	if (ft_strlen(old + c) == 0 || (int)ft_strlen(old) < c)
+	if (end && (ft_strlen(old + c) == 0 || (int)ft_strlen(old) < c))
 	{
 		*end = 1;
 		return (old);
 	}
+	else if (ft_strlen(old + c) == 0 || (int)ft_strlen(old) < c)
+		return (old);
 	new = malloc(sizeof(char) * (ft_strlen(old) - c + 1));
 	if (!new)
 		return (NULL);
@@ -41,7 +43,6 @@ char	**new_tab_init(char **new_tab, char *new)
 {
 	new_tab[0] = ft_strdup(new);
 	new_tab[1] = NULL;
-	free(new);
 	return (new_tab);
 }
 
@@ -69,5 +70,7 @@ char	**realloc_add_to_tab(char **tab, char *new)
 	if (!new_tab[i])
 		return (NULL);
 	new_tab[i + 1] = NULL;
-	return (free_split(tab), free(new), new_tab);
+	if (ft_strlen(new) != 0 && new)
+		free(new);
+	return (free_split(tab), new_tab);
 }

@@ -13,8 +13,6 @@ SRCS = 	src/main.c \
 		src/parsing/handle_quote/get_quote_utils_2.c \
 		src/parsing/handle_quote/get_quote_utils_3.c \
 		src/parsing/handle_quote/get_quote_utils_4.c \
-		src/parsing/handle_quote/handle_inside_quote.c \
-		src/parsing/handle_quote/remove.c \
 
 OBJS = $(SRCS:.c=.o)
 

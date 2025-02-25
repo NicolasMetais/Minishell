@@ -44,6 +44,17 @@ typedef struct s_pipe
 
 }				t_pipe_var;
 
+typedef struct s_quote
+{
+	t_boolean	quote;
+	t_boolean	no_quote;
+	char		*word;
+	char		*str;
+	int			i;
+	int			k;
+	char		c;
+}				t_quote;
+
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
 char		**get_fd(t_cmd *cmd, char **cmd_line_split);

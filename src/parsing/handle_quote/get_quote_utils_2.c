@@ -18,9 +18,9 @@ char	*ft_strjoin_custom(char const *s1, char const *s2)
 	int		i;
 
 	i = 0;
-	if (ft_strlen(s1) == 0)
+	if (ft_strlen(s1) == 0 && !s1)
 		return ((char *)s2);
-	if (ft_strlen(s2) == 0)
+	if (ft_strlen(s2) == 0 && !s2)
 		return ((char *)s1);
 	buffer = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!buffer)
