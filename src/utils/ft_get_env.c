@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:09:55 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/18 15:41:55 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:17:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*ft_get_env(t_env *env, char *name)
 	if (!env || !name)
 		return (NULL);
 	i = -1;
-	size = ft_strlen(name);
 	copy = env;
+	size = ft_strlen(name);
 	while (1)
 	{
 		if (copy->name && copy->var && ft_strncmp(copy->name, name, size) == 0

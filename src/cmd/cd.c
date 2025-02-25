@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 18:24:19 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:59:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 	return (true);
 }
 
+
+
 //J'EXECUTE CD AVEC CHDIR ET L'ARGUMENT (folder) DEPEND DES OPTIONS
 t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 {
@@ -51,12 +53,22 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 
 	folder = builtin->cmd[1];
 	if (cd->ishome)
+	{
+		if (!cd->home)
+			return (free_gc(gc), env_not_set("HOME", "cd: "));
 		folder = cd->home;
+	}
 	if (cd->undo)
+	{
+		if (!cd->oldpwd)
+			return (free_gc(gc), env_not_set("OLDPWD", "cd: "));
 		folder = cd->oldpwd;
+	}
 	status = chdir(folder);
 	if (status < 0)
 		return (funct_error("cd: ", folder));
+	if (!cd->pwd)
+		create_env_pwd(core); //A CHANGER VOIR DANS LE MAIN
 	if (!update_pwd(core, cd, gc))
 		return (false);
 	return (true);
@@ -67,16 +79,10 @@ t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 {
 	*gc = NULL;
 	cd->pwd = ft_get_env(core->env, "PWD");
-	if (!cd->pwd)
-		return (false);
 	add_to_gc(gc, cd->pwd);
 	cd->oldpwd = ft_get_env(core->env, "OLDPWD");
-	if (!cd->oldpwd)
-		return (free_gc(*gc), false);
 	add_to_gc(gc, cd->oldpwd);
 	cd->home = ft_get_env(core->env, "HOME");
-	if (!cd->home)
-		return (free_gc(*gc), false);
 	add_to_gc(gc, cd->home);
 	cd->undo = false;
 	cd->ishome = false;

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 00:42:38 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 20:58:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:23:01 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	cmd_exec(t_core *core)
 	int		i;
 
 	i = -1;
+	int fd = open("/dev/tty", O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 	temp_arg = core->new_line;
 	slash = ft_strjoin("/", temp_arg[0]);
 	if (!slash)

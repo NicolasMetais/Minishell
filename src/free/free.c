@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 05:40:11 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/22 15:57:44 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:29:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 //FREE DE TOUT LE PROGRAMME
 void	kill_program(t_core *core)
 {
-	free_tab(core->env_dup);
+	if (core->env)
+		free_tab(core->env_dup);
 	free_env(core);
 }
 

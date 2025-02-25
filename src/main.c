@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/23 21:19:11 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:59:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->new_line = NULL;
 	core->mark = NULL;
 	path = ft_get_env(core->env, "PATH");
-	if (!path)
-		return (false);
-	core->temp_path = ft_split(path, ':');
-	if (!core->temp_path)
-		return (free(path), false);
-	free(path);
+	if (path)
+	{
+		core->temp_path = ft_split(path, ':');
+		if (!core->temp_path)
+			return (free(path), false);
+		free(path);
+	}
 	return (true);
 }
 
@@ -39,7 +40,8 @@ t_boolean	prompt_update(t_core *core)
 {
 	char	*temp;
 
-	free(core->prompt);
+	if (core->env)
+		free(core->prompt);
 	core->pwd = ft_get_env(core->env, "PWD");
 	if (!core->pwd)
 		return (false);
@@ -68,7 +70,7 @@ t_boolean	minishell_launch(t_core *core)
 	while (1)
 	{
 		if (!prompt_update(core))
-			core->prompt = "Minishell/ ";
+			core->prompt = RED_LIGHT "Minishell/ " WHITE;
 		signal_update();
 		core->line = readline(core->prompt);
 		if (core->line)
@@ -76,7 +78,6 @@ t_boolean	minishell_launch(t_core *core)
 			if (!setup_var(core))
 				return (false);
 			add_history(core->line);
-
 			error = builtin(core);
 			if (error == 0)
 			{
@@ -107,10 +108,16 @@ int	main(int ac, char **av, char **env)
 {
 	t_core	core;
 
+	core.env = NULL;
 	if (ac == 1)
 	{
-		if (!duplicate_env(&core, env))
-			return (false);
+		if (env[0])
+		{
+			if (!duplicate_env(&core, env))
+				return (false);
+		}
+		else
+			create_env(&core); //SETUP MA PROPRE VARIABLE D'ENV POUR EVITER LES SEGFAULT EXPORT,UNSET,env ET CD
 		if (!core_init(&core, ac, av))
 			return (free_env(&core), false);
 		minishell_launch(&core);
