@@ -85,5 +85,9 @@ void		get_word_in_quote(t_quote *ctx, t_free_var *f);
 void		no_quote(t_quote *ctx, t_free_var *f);
 void		get_word_init(t_quote *ctx, char *str, int j);
 void		quote_var_init(t_pipe_var *ctx, char *line);
+void		cmd_tab_handle_quote_failed(char **tmp, t_pipe_var *ctx);
+void		realloc_line_handle_quote_failed(t_pipe_var *ctx);
+void		get_word_failed(t_pipe_var *ctx);
+void		reset_handle_quote(t_pipe_var *ctx);
 
 #endif

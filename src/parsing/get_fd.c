@@ -57,8 +57,9 @@ char	**get_outfd(t_cmd *cmd, char **cmd_split)
 		if (ft_strncmp(cmd_split[i], ">", 1) == 0
 			|| ft_strncmp(cmd_split[i], ">>", 2) == 0)
 		{
-			fprintf(stderr, "%s, %s \n", cmd_split[i], cmd_split[i + 1]);
 			cmd_split = realloc_fd_out(cmd, cmd_split, i);
+			if (!cmd_split)
+				return (NULL);
 			k = 0;
 			i = 0;
 		}
@@ -75,7 +76,7 @@ char	**get_fd(t_cmd *cmd, char **cmd_line_split)
 	fd_init(cmd);
 	cmd->here_doc = NULL;
 	tmp = get_infd(cmd, cmd_line_split);
-	if (!cmd_line_split)
+	if (!tmp)
 		return (NULL);
 	cmd_line_split = get_outfd(cmd, tmp);
 	if (!cmd_line_split)

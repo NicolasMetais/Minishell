@@ -15,6 +15,7 @@ SRCS = 	src/main.c \
 		src/parsing/handle_quote/quote_or_not.c \
 		src/parsing/handle_quote/var_init.c \
 		src/parsing/handle_quote/free_quote.c \
+		src/parsing/handle_quote/free_quote_2.c \
 
 OBJS = $(SRCS:.c=.o)
 

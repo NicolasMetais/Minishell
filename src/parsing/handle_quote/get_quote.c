@@ -36,7 +36,7 @@ void	simple_word(t_quote *ctx, t_free_var *f)
 	ctx->k--;
 	if (*ctx->str == '\'' || *ctx->str == '"')
 		ctx->c = *ctx->str;
-	else	
+	else
 		ctx->c = 0;
 	quote_or_not_free(ctx, f);
 }
@@ -77,6 +77,7 @@ char	*extract_word(t_quote *ctx)
 	}
 	if (ctx->quote == true)
 	{
+		fprintf(stderr, "je passe\n");
 		tmp = ft_strndup(ctx->str, ctx->i - 1);
 		if (!tmp)
 			return (free(ctx->str), free(ctx->word), NULL);
@@ -93,6 +94,16 @@ char	*extract_word(t_quote *ctx)
 	return (ctx->word);
 }
 
+void	get_word_turn_true(t_quote *ctx)
+{
+	ctx->quote = true;
+	ctx->c = *ctx->str;
+	if (ctx->i == 0)
+		get_word_increment(ctx);
+	if (ctx->i > 1)
+		ctx->no_quote = true;
+}
+
 char	*get_word(char *str, int j)
 {
 	t_quote	ctx;
@@ -101,14 +112,7 @@ char	*get_word(char *str, int j)
 	while (ctx.k != -1 )
 	{
 		if (ctx.c == 0 && (*ctx.str == '"' || *ctx.str == '\''))
-		{
-			ctx.quote = true;
-			ctx.c = *ctx.str;
-			if (ctx.i == 0)
-				get_word_increment(&ctx);
-			if (ctx.i > 1)
-				ctx.no_quote = true;
-		}
+			get_word_turn_true(&ctx);
 		if ((ctx.c == *ctx.str || ctx.no_quote == true || ctx.k == 0) && ctx.i != 0)
 		{
 			if (ctx.c == *ctx.str)
@@ -123,17 +127,20 @@ char	*get_word(char *str, int j)
 		else
 			get_word_increment(&ctx);
 	}
-	return (free(ctx.tmp), ctx.word);
+	if (ctx.tmp)
+		free(ctx.tmp);
+	return (ctx.word);
 }
 
 void	handle_quote(t_pipe_var *ctx)
 {
+	char	**tmp;
+
+	tmp = ctx->cmd_tab;
 	ctx->tmp = get_word(ctx->str, ctx->c);
 	if (!ctx->tmp)
 	{
-		free_split(ctx->cmd_tab);
-		ctx->cmd_tab = NULL;
-		free(ctx->str);
+		get_word_failed(ctx);
 		return ;
 	}
 	ctx->str -= ctx->c;
@@ -141,18 +148,23 @@ void	handle_quote(t_pipe_var *ctx)
 	ctx->str = realloc_line(ctx->str, ctx->c + 1, &ctx->end);
 	if (!ctx->str)
 	{
-		free_split(ctx->cmd_tab);
-		ctx->cmd_tab = NULL;
-		free(ctx->fstr);
-		free(ctx->tmp);
+		realloc_line_handle_quote_failed(ctx);
 		return ;
 	}
-	if (ctx->fstr)
-		free(ctx->fstr);
 	ctx->cmd_tab = realloc_add_to_tab(ctx->cmd_tab, ctx->tmp);
-	free(ctx->tmp);
-	ctx->c = 0;
-	ctx->fstr = NULL;
+	if (!ctx->cmd_tab)
+	{
+		cmd_tab_handle_quote_failed(tmp, ctx);
+		return ;
+	}
+	reset_handle_quote(ctx);
+}
+
+void	get_quote_turn_true(t_pipe_var *ctx)
+{
+	ctx->i = *ctx->str;
+	ctx->quote = true;
+	increment(ctx);
 }
 
 char	**get_quote_dup(char *line)
@@ -165,11 +177,7 @@ char	**get_quote_dup(char *line)
 	while (ctx.end == 0)
 	{	
 		if (ctx.i == 0 && (*ctx.str == '"' || *ctx.str == '\''))
-		{
-			ctx.i = *ctx.str;
-			ctx.quote = true;
-			increment(&ctx);
-		}
+			get_quote_turn_true(&ctx);
 		if (ctx.i == *ctx.str)
 		{
 			ctx.quote = false;

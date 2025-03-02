@@ -42,6 +42,8 @@ char	*realloc_line(char	*old, int c, int *end)
 char	**new_tab_init(char **new_tab, char *new)
 {
 	new_tab[0] = ft_strdup(new);
+	if (!new_tab[0])
+		return (free_split_init(new_tab, 2), NULL);
 	new_tab[1] = NULL;
 	return (new_tab);
 }
@@ -63,12 +65,12 @@ char	**realloc_add_to_tab(char **tab, char *new)
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new)
-			return (NULL);
+			return (free_split_init(tab, i), NULL);
 		i++;
 	}
 	new_tab[i] = ft_strdup(new);
 	if (!new_tab[i])
-		return (NULL);
+		return (free_split_init(tab, i), NULL);
 	new_tab[i + 1] = NULL;
 	if (ft_strlen(new) != 0 && new)
 		free(new);
