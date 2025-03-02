@@ -38,55 +38,6 @@ void	pipe_var_init(t_pipe_var *ctx, char *line)
 	ctx->fstr = ctx->str;
 }
 
-void	handle_pipe_1(t_pipe_var *ctx)
-{
-	if (ft_strlen(ctx->str) == 1)
-	{
-		ctx->str++;
-		ctx->tmp = ft_strndup(ctx->str, ctx->c + 1);
-		if (!ctx->tmp)
-		{
-			free(ctx->str - ctx->c - 1);
-			free_split(ctx->cmd_tab);
-			ctx->cmd_tab = NULL;
-			return ;
-		}
-	}
-	else
-	{
-		ctx->tmp = ft_strndup(ctx->str, ctx->c);
-		if (!ctx->tmp)
-		{
-			free(ctx->str - ctx->c);
-			free_split(ctx->cmd_tab);
-			ctx->cmd_tab = NULL;
-			return ;
-		}
-	}
-}
-
-void	handle_pipe_2(t_pipe_var *ctx)
-{
-	ctx->cmd_tab = realloc_add_to_tab(ctx->cmd_tab, ctx->tmp);
-	if (!ctx->cmd_tab)
-	{
-		free_split(tmp);
-		free(ctx->str - ctx->c);
-		return ;
-	}
-	ctx->str -= ctx->c;
-	ctx->str = realloc_line(ctx->str, ctx->c + 1, &ctx->end);
-	if (!ctx->str)
-	{
-		free(ctx->fstr);
-		free_split(ctx->cmd_tab);
-		ctx->cmd_tab = NULL;
-		return ;
-	}
-	free(ctx->fstr);
-	ctx->fstr = ctx->str;
-	ctx->c = 0;
-}
 
 void	handle_pipe(t_pipe_var *ctx)
 {
@@ -97,12 +48,47 @@ void	handle_pipe(t_pipe_var *ctx)
 		return ;
 	if (ctx->quote == false || ft_strlen(ctx->str + 1) == 0)
 	{
-		handle_pipe_1(ctx);
-		if (ctx->cmd_tab == NULL)
+		if (ft_strlen(ctx->str) == 1)
+		{
+			ctx->str++;
+			ctx->tmp = ft_strndup(ctx->str, ctx->c + 1);
+			if (!ctx->tmp)
+			{
+				free(ctx->str - ctx->c - 1);
+				free_split(ctx->cmd_tab);
+				ctx->cmd_tab = NULL;
+				return ;
+			}
+		}
+		else
+		{
+			ctx->tmp = ft_strndup(ctx->str, ctx->c);
+			if (!ctx->tmp)
+			{
+				free(ctx->str - ctx->c);
+				free_split(ctx->cmd_tab);
+				ctx->cmd_tab = NULL;
+				return ;
+			}
+		}
+		ctx->cmd_tab = realloc_add_to_tab(ctx->cmd_tab, ctx->tmp);
+		if (!ctx->cmd_tab)
+		{
+			free_split(tmp);
+			free(ctx->str - ctx->c);
 			return ;
-		handle_pipe_2(ctx);		
-		if (ctx->cmd_tab == NULL)
-			return ;
+		}
+		ctx->str -= ctx->c;
+		ctx->str = realloc_line(ctx->str, ctx->c + 1, &ctx->end);
+		if (!ctx->str)
+		{
+			free(ctx->fstr);
+			free_split(ctx->cmd_tab);
+			ctx->cmd_tab = NULL;
+		}
+		free(ctx->fstr);
+		ctx->fstr = ctx->str;
+		ctx->c = 0;
 	}
 	if (ctx->tmp)
 		free(ctx->tmp);
@@ -116,13 +102,6 @@ void	increment(t_pipe_var *ctx)
 	ctx->c++;
 }
 
-void	get_pipe_turn_false(t_pipe_var *ctx)
-{
-	ctx.i = 0;
-	ctx.quote = false;
-	increment(ctx);
-}
-
 char	**get_pipe(char *line)
 {
 	t_pipe_var	ctx;
@@ -133,21 +112,26 @@ char	**get_pipe(char *line)
 	while (ctx.end == 0)
 	{
 		if (ctx.str && (*ctx.str == ctx.i && *ctx.str))
-			get_pipe_turn_false(&ctx);
+		{
+			ctx.i = 0;
+			ctx.quote = false;
+			increment(&ctx);
+		}
 		if (ctx.str && ((*ctx.str == '\'' || *ctx.str == '"') && ctx.i == 0))
 		{
 			ctx.i = *ctx.str;
 			ctx.quote = true;
 		}
+		printf("s : %s len : %zu\n", ctx.str, ft_strlen(ctx.str));
 		if ((*ctx.str == '|' && ctx.quote == false)
-			|| ft_strlen(ctx.str) == 1)
+			|| ft_strlen(ctx.str) == 0)
 		{
 			handle_pipe(&ctx);
-			if (ctx.cmd_tab == NULL)
-				return (NULL);
+			printf("je passe\n");
 		}
 		else
 			increment(&ctx);
 	}
+	printf("je sors\n");
 	return (ctx.cmd_tab);
 }

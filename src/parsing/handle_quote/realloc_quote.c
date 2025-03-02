@@ -17,7 +17,7 @@ char	*realloc_line(char	*old, int c, int *end)
 	char	*new;
 	int		i;
 
-	if (end && (!(old + c) || (int)ft_strlen(old) < c))
+	if (end && (!(old + c) || (int)ft_strlen(old) <= c))
 	{
 		*end = 1;
 		return (old);

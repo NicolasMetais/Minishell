@@ -31,7 +31,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline  -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(@D)

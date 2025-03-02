@@ -127,8 +127,6 @@ char	*get_word(char *str, int j)
 		else
 			get_word_increment(&ctx);
 	}
-	if (ctx.tmp)
-		free(ctx.tmp);
 	return (ctx.word);
 }
 
