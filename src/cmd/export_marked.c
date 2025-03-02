@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:11:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 13:08:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/02 13:55:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_boolean	new_marked(char *var, t_core *core)
 	t_env	*new;
 	t_env	*last;
 
+	if (env_exist(core, var))
+		return (true);
 	new = malloc(sizeof(t_env));
 	if (!new)
 		return (false);

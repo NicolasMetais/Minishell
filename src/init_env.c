@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 19:04:05 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/01 16:20:37 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/02 13:48:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ t_boolean	create_empty_env(t_core *core)
 		return (free(core->env_dup), emergency_free_env_var(core->env), false);
 	new = new->next;
 	new->next = core->env;
+	update_env_dup(core);
 	return (true);
 }
