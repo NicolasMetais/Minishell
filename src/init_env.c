@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 19:04:05 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 14:02:14 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/01 16:20:37 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ t_env	*lstlast_env(t_env *lst)
 		lst = lst->next;
 	}
 	return (lst);
-}
-
-//SERT A R
-void	lstadd_back_env(t_env **lst, t_env *new)
-{
-	if (*lst)
-		lstlast_env(*lst)->next = new;
-	else
-		*lst = new;
 }
 
 //JE CREE UNE NOUVELLE STRUCT PAR ENV
@@ -113,6 +104,32 @@ t_boolean	duplicate_env(t_core *core, char **todup)
 		new = new->next;
 		i++;
 	}
+	new->next = core->env;
+	return (true);
+}
+
+t_boolean	create_empty_env(t_core *core)
+{
+	t_env	*new;
+
+	core->env_dup = malloc(sizeof(char *));
+	core->env_dup[0] = NULL;
+	core->env = new_env("PWD=");
+	if (!core->env)
+		return (free(core->env_dup), emergency_free_env_var(core->env), false);
+	new = core->env;
+	new->next = new_env("OLDPWD=");
+	if (!new->next)
+		return (free(core->env_dup), emergency_free_env_var(core->env), false);
+	new = new->next;
+	new->next = new_env("HOME=");
+	if (!new->next)
+		return (free(core->env_dup), emergency_free_env_var(core->env), false);
+	new = new->next;
+	new->next = new_env("PATH=");
+	if (!new->next)
+		return (free(core->env_dup), emergency_free_env_var(core->env), false);
+	new = new->next;
 	new->next = core->env;
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/25 15:59:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/01 14:41:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 	status = chdir(folder);
 	if (status < 0)
 		return (funct_error("cd: ", folder));
-	if (!cd->pwd)
-		create_env_pwd(core); //A CHANGER VOIR DANS LE MAIN
 	if (!update_pwd(core, cd, gc))
 		return (false);
 	return (true);

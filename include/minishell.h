@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/24 20:30:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/01 16:15:47 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char		*write_var(char *code, char *tocut, int j, int size);
 t_boolean	duplicate_env(t_core *core, char **todup);
 t_env		*new_env(char *todup);
 t_env		*lstlast_env(t_env *lst);
+t_boolean	create_empty_env(t_core *core);
 
 //SIGNALS
 void		signal_update(void);

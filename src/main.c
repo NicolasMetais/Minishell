@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/25 15:59:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/01 16:16:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ int	main(int ac, char **av, char **env)
 				return (false);
 		}
 		else
-			create_env(&core); //SETUP MA PROPRE VARIABLE D'ENV POUR EVITER LES SEGFAULT EXPORT,UNSET,env ET CD
+		{
+			if (!create_empty_env(&core))
+				return (false);
+		}
 		if (!core_init(&core, ac, av))
 			return (free_env(&core), false);
 		minishell_launch(&core);
