@@ -39,3 +39,35 @@ char	*ft_pignouf(char *line)
 	var.new[var.j] = '\0';
 	return (var.new);
 }
+
+t_boolean	is_empty(char *str)
+{
+	char	*tmp;
+
+	tmp = str;
+	tmp -= 1;
+	if (*str == '"' || *str == '\'')
+	{
+		if (*tmp == *str)
+			return (true);
+	}
+	return (false);
+}
+
+void	free_var_init(t_quote *ctx, t_free_var *f)
+{
+	f->str = ctx->str - ctx->i;
+	f->word = ctx->word;
+	f->tmp = NULL;
+}
+
+void get_word_increment(t_quote	*ctx)
+{
+	ctx->k--;
+	if (ctx->k >= 0)
+	{
+		ctx->str++;
+		ctx->i++;
+	}
+}
+

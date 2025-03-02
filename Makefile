@@ -12,13 +12,15 @@ SRCS = 	src/main.c \
 		src/parsing/handle_quote/get_quote_utils.c \
 		src/parsing/handle_quote/get_quote_utils_2.c \
 		src/parsing/handle_quote/get_quote_utils_3.c \
-		src/parsing/handle_quote/get_quote_utils_4.c \
+		src/parsing/handle_quote/quote_or_not.c \
+		src/parsing/handle_quote/var_init.c \
+		src/parsing/handle_quote/free_quote.c \
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
 
 NAME = minishell
 
@@ -28,7 +30,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(@D)

@@ -18,20 +18,20 @@ char	*ft_strjoin_custom(char const *s1, char const *s2)
 	int		i;
 
 	i = 0;
-	if (ft_strlen(s1) == 0 && !s1)
-		return ((char *)s2);
-	if (ft_strlen(s2) == 0 && !s2)
-		return ((char *)s1);
+	if (!s1)
+		return (ft_strdup((char *)s2));
+	if (!s2)
+		return (ft_strdup((char *)s1));
 	buffer = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!buffer)
-		return (NULL);
-	while (*s1 && s1)
+		return (free((char *)s1), NULL);
+	while (*s1)
 	{
 		buffer[i] = *s1;
 		s1++;
 		i++;
 	}
-	while (*s2 && s2)
+	while (*s2)
 	{	
 		buffer[i] = *s2;
 		s2++;

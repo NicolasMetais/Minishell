@@ -50,6 +50,7 @@ typedef struct s_quote
 	t_boolean	no_quote;
 	char		*word;
 	char		*str;
+	char		*tmp;
 	int			i;
 	int			k;
 	char		c;
@@ -68,6 +69,21 @@ void		increment(t_pipe_var *ctx);
 t_boolean	is_in_quote(char *str);
 t_boolean 	quote_inside(char *str, int i);
 t_boolean	 space_in_quote(char *str);
+t_boolean	is_empty(char *str);
 
+void		free_var_init(t_quote *ctx, t_free_var *f);
+void		get_word_increment(t_quote	*ctx);
+
+void		realloc_line_failed(t_quote *ctx, t_free_var *f);
+void		join_custom_failed(t_quote *ctx, t_free_var *f);
+void		ndup_failed(t_quote *ctx, t_free_var *f);
+void		quote_or_not_free(t_quote *ctx, t_free_var *f);
+
+void		quote_or_not(t_quote *ctx);
+void		realloc_line_in_quote(t_quote *ctx, t_free_var *f);
+void		get_word_in_quote(t_quote *ctx, t_free_var *f);
+void		no_quote(t_quote *ctx, t_free_var *f);
+void		get_word_init(t_quote *ctx, char *str, int j);
+void		quote_var_init(t_pipe_var *ctx, char *line);
 
 #endif

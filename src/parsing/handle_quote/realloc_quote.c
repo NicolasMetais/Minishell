@@ -17,12 +17,12 @@ char	*realloc_line(char	*old, int c, int *end)
 	char	*new;
 	int		i;
 
-	if (end && (ft_strlen(old + c) == 0 || (int)ft_strlen(old) < c))
+	if (end && (!(old + c) || (int)ft_strlen(old) < c))
 	{
 		*end = 1;
 		return (old);
 	}
-	else if (ft_strlen(old + c) == 0 || (int)ft_strlen(old) < c)
+	else if (!(old + c)|| (int)ft_strlen(old) < c)
 		return (old);
 	new = malloc(sizeof(char) * (ft_strlen(old) - c + 1));
 	if (!new)

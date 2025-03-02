@@ -44,7 +44,7 @@ void	handle_pipe(t_pipe_var *ctx)
 		return ;
 	if (ctx->quote == false || ft_strlen(ctx->str + 1) == 0)
 	{
-		if (ft_strlen(ctx->str + 1) == 0)
+		if (ft_strlen(ctx->str) == 1)
 		{
 			ctx->str++;
 			ctx->tmp = ft_strndup(ctx->str, ctx->c + 1);
@@ -58,6 +58,9 @@ void	handle_pipe(t_pipe_var *ctx)
 		ctx->fstr = ctx->str;
 		ctx->c = 0;
 	}
+	if (ctx->tmp)
+		free(ctx->tmp);
+	ctx->tmp = NULL;
 	ctx->valid = false;
 }
 
@@ -88,7 +91,7 @@ char	**get_pipe(char *line)
 			ctx.quote = true;
 		}
 		if ((*ctx.str == '|' && ctx.quote == false)
-			|| ft_strlen(ctx.str + 1) == 0)
+			|| ft_strlen(ctx.str) == 1)
 			handle_pipe(&ctx);
 		else
 			increment(&ctx);

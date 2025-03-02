@@ -21,7 +21,7 @@ t_boolean	minishell_launch(char **av, char **env, t_glb *global)
 
 	i = 0;
 	tmp = NULL;
-	while (1)
+	while (i < 1)
 	{
 		line = readline("minishell/ ");
 		global = global_init(line, env);

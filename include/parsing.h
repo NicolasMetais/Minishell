@@ -29,6 +29,14 @@ typedef struct s_global
 	t_cmd	*cmd;
 }				t_glb;
 
+typedef struct s_free_var
+{
+	char	*str;
+	char	*tmp;
+	char	*word;
+
+}			t_free_var;
+
 typedef	struct s_utils
 {
 	char	*s1;
@@ -67,5 +75,6 @@ char		**get_pipe(char *line);
 char		*ft_strnjoin(char const *s1, char const *s2, int c);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
 char		*ft_pignouf(char *line);
+
 
 #endif

@@ -32,28 +32,6 @@ char	*ft_strndup(char *line, int c)
 	return (dup);
 }
 
-char	*ft_strdup_end(char *str, int c)
-{
-	char	*dup_end;
-	int		i;
-
-	if (c == 0)
-		return (NULL);
-	dup_end = malloc(sizeof(char) * (c + 1));
-	if (!dup_end)
-		return (NULL);
-	i = 0;
-	str++;
-	while (i < c)
-	{
-		dup_end[i] = *str;
-		i++;
-		str++;
-	}
-	dup_end[i] = '\0';
-	return (dup_end);
-}
-
 char	*ft_strnjoin(char const *s1, char const *s2, int c)
 {
 	char	*buffer;

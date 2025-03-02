@@ -12,100 +12,63 @@
 
 #include "minishell.h"
 
-void	quote_var_init(t_pipe_var *ctx, char *line)
+void	simple_word(t_quote *ctx, t_free_var *f)
 {
-	ctx->c = 0;
-	ctx->i = 0;
-	ctx->end = 0;
-	ctx->cmd_tab = NULL;
-	ctx->valid = false;
-	ctx->quote = false;
-	ctx->str = ft_pignouf(line);
-	ctx->fstr = ctx->str;
-}
-
-void	get_word_init(t_quote *ctx, char *str, int j)
-{
-	str -= j;
-	ctx->i = 0;
-	ctx->c = 0;
-	ctx->k = j;
-	ctx->word = NULL;
-	ctx->no_quote = false;
-	ctx->quote = false;
-	ctx->str = ft_strdup(str);
-}
-
-t_boolean	is_empty(char *str)
-{
-	char	*tmp;
-
-	tmp = str;
-	tmp -= 1;
-	str -= 2;
-	if (*str == '"' || *str == '\'')
+	f->tmp = ft_strndup(ctx->str, ctx->i);
+	if (!f->tmp)
 	{
-		if (*tmp == *str)
-			return (true);
+		ndup_failed(ctx, f);
+		return ;
 	}
-	return (false);
-}
-
-void	quote_or_not(t_quote *ctx)
-{
-	char	*tmp;
-
-	if (ctx->no_quote == true)
+	ctx->word = ft_strjoin_custom(ctx->word, f->tmp);
+	if (!ctx->word)
 	{
-		ctx->str--;
-		tmp = ft_strndup(ctx->str, ctx->i - 1);
-		ctx->word = ft_strjoin_custom(ctx->word, tmp);
-		ctx->str -= ctx->i - 1;
-		ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
-		ctx->no_quote = false;
-		if ((*ctx->str == '"' || *ctx->str == '\''))
-			ctx->c = *ctx->str;
+		join_custom_failed(ctx, f);
+		return ;
 	}
-	else
+	free(f->tmp);
+	ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
+	if (!ctx->str)
 	{
-		tmp = ft_strndup(ctx->str, ctx->i - 1);
-		ctx->word = ft_strjoin_custom(ctx->word, tmp);
-		ctx->str++;
-		ctx->k--;
-		ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
+		realloc_line_failed(ctx, f);
+		return ;
 	}
+	ctx->k--;
+	if (*ctx->str == '\'' || *ctx->str == '"')
+		ctx->c = *ctx->str;
+	else	
+		ctx->c = 0;
+	quote_or_not_free(ctx, f);
 }
 
 void	handle_inside_quote(t_quote *ctx)
 {
-	char	*tmp;
+	t_free_var	f;
 
+	free_var_init(ctx, &f);
 	if (*ctx->str != '\'' && *ctx->str != '"')
 	{
-		tmp = ft_strndup(ctx->str, ctx->i);
-		ctx->word = ft_strjoin_custom(ctx->word, tmp);
-		ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
-		ctx->k--;
-		//free tmp, free word
-		ctx->c = 0;
+		simple_word(ctx, &f);
 	}
 	else
-	{
 		quote_or_not(ctx);
-	}
-	tmp = NULL;
 }
 
 char	*extract_word(t_quote *ctx)
 {
 	char	*tmp;
 	
-	if (ctx->quote == false && ctx->i == 2 && is_empty(ctx->str))
+	ctx->tmp = ctx->str - ctx->i;
+	if (ctx->quote == false && ctx->i == 1 && is_empty(ctx->str))
 	{
-		fprintf(stderr, "empty\n");
 		ctx->str = realloc_line(ctx->str, ctx->i, NULL);
+		if (!ctx->str)
+			return (free(ctx->tmp), free(ctx->word), NULL);
+		ctx->k--;
 		ctx->c = 0;
-		return (ctx->word);
+		if (!ctx->word)
+			return (free(ctx->tmp), "");
+		return (free(ctx->tmp), ctx->word);
 	}
 	if (ctx->quote == false)
 	{
@@ -115,22 +78,19 @@ char	*extract_word(t_quote *ctx)
 	if (ctx->quote == true)
 	{
 		tmp = ft_strndup(ctx->str, ctx->i - 1);
+		if (!tmp)
+			return (free(ctx->str), free(ctx->word), NULL);
 		ctx->word = ft_strjoin_custom(ctx->word, tmp);
+		free(tmp);
+		if (!ctx->word)
+			return (free(ctx->str), NULL);
 		ctx->str = realloc_line(ctx->str, ctx->i, NULL);
-		//free tmp, free word
+		if (!ctx->str)
+			return (free(ctx->tmp), free(ctx->word), NULL);
+		ctx->tmp = ctx->str;
 		return (ctx->word);
 	}
 	return (ctx->word);
-}
-
-void get_word_increment(t_quote	*ctx)
-{
-	ctx->k--;
-	if (ctx->k >= 0)
-	{
-		ctx->str++;
-		ctx->i++;
-	}
 }
 
 char	*get_word(char *str, int j)
@@ -144,37 +104,55 @@ char	*get_word(char *str, int j)
 		{
 			ctx.quote = true;
 			ctx.c = *ctx.str;
-			get_word_increment(&ctx);
+			if (ctx.i == 0)
+				get_word_increment(&ctx);
 			if (ctx.i > 1)
 				ctx.no_quote = true;
 		}
-		if ((ctx.c == *ctx.str || ft_strlen(ctx.str) == 0 || ctx.no_quote == true))
+		if ((ctx.c == *ctx.str || ctx.no_quote == true || ctx.k == 0) && ctx.i != 0)
 		{
-		fprintf(stderr, " IN word : '%s', newstr : '%s'\n", ctx.word, ctx.str);
 			if (ctx.c == *ctx.str)
 				ctx.quote = false;
 			ctx.word = extract_word(&ctx);
-			fprintf(stderr, "OUT word : '%s', newstr : '%s'\n", ctx.word, ctx.str);
-		if (ctx.k == 0)
-				break;
+			if (ctx.word == NULL)
+				return (NULL);
+			if (ctx.k == 0)
+					break;
 			ctx.i = 0;
 		}
 		else
 			get_word_increment(&ctx);
 	}
-	fprintf(stderr, "word final: '%s'\n", ctx.word);
-	return (ctx.word);
+	return (free(ctx.tmp), ctx.word);
 }
 
 void	handle_quote(t_pipe_var *ctx)
 {
 	ctx->tmp = get_word(ctx->str, ctx->c);
-	ctx->fstr = ctx->str;
+	if (!ctx->tmp)
+	{
+		free_split(ctx->cmd_tab);
+		ctx->cmd_tab = NULL;
+		free(ctx->str);
+		return ;
+	}
 	ctx->str -= ctx->c;
-	ctx->str = realloc_line(ctx->str, ctx->c, &ctx->end);
+	ctx->fstr = ctx->str;
+	ctx->str = realloc_line(ctx->str, ctx->c + 1, &ctx->end);
+	if (!ctx->str)
+	{
+		free_split(ctx->cmd_tab);
+		ctx->cmd_tab = NULL;
+		free(ctx->fstr);
+		free(ctx->tmp);
+		return ;
+	}
+	if (ctx->fstr)
+		free(ctx->fstr);
 	ctx->cmd_tab = realloc_add_to_tab(ctx->cmd_tab, ctx->tmp);
+	free(ctx->tmp);
 	ctx->c = 0;
-	//free(ctx->fstr);
+	ctx->fstr = NULL;
 }
 
 char	**get_quote_dup(char *line)
@@ -198,7 +176,11 @@ char	**get_quote_dup(char *line)
 			ctx.i = 0;
 		}
 		if ((*ctx.str == ' ' && ctx.quote == false) || ft_strlen(ctx.str) == 0)
+		{	
 			handle_quote(&ctx);
+			if (!ctx.cmd_tab)
+				return (NULL);
+		}
 		else
 			increment(&ctx);
 	}
