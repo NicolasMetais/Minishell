@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/01 16:15:47 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 16:53:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,6 @@ typedef enum s_boolean
 
 # include "cmd.h"
 # include "errors.h"
-
-typedef struct s_pipe
-{
-	char		**cmd_tab;
-	char		*tmp;
-	char		*str;
-	char		*fstr;
-	int			c;
-	int			i;
-	int			end;
-	t_boolean	valid;
-	t_boolean	quote;
-
-}				t_pipe_var;
 
 typedef struct s_env
 {
