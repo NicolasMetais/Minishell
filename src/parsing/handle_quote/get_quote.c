@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+void	simple_word_realloc(t_quote *ctx, t_free_var *f)
+{
+	ctx->str -= ctx->i;
+	ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
+	if (!ctx->str)
+	{
+		realloc_line_failed(ctx, f);
+		return ;
+	}
+	ctx->k--;
+	if (*ctx->str == '\'' || *ctx->str == '"')
+		ctx->c = *ctx->str;
+	else
+		ctx->c = 0;
+}
+
 void	simple_word(t_quote *ctx, t_free_var *f)
 {
 	f->tmp = ft_strndup(ctx->str, ctx->i);
@@ -27,18 +43,9 @@ void	simple_word(t_quote *ctx, t_free_var *f)
 		return ;
 	}
 	free(f->tmp);
-	ctx->str -= ctx->i;
-	ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
-	if (!ctx->str)
-	{
-		realloc_line_failed(ctx, f);
+	simple_word_realloc(ctx, f);
+	if (ctx->word == NULL)
 		return ;
-	}
-	ctx->k--;
-	if (*ctx->str == '\'' || *ctx->str == '"')
-		ctx->c = *ctx->str;
-	else
-		ctx->c = 0;
 	quote_or_not_free_2(ctx, f);
 }
 

@@ -36,6 +36,7 @@ t_cmd	*new_cmd(char *line_split)
 	char	**cmd_line_split;
 
 	cmd_line_split = get_quote_dup(line_split);
+	fprintf(stderr, "cmd_split ok");
 	if (!cmd_line_split)
 		return (NULL);
 	cmd = malloc(sizeof(t_cmd));
@@ -82,7 +83,6 @@ t_cmd	*set_cmd(char **line_split)
 		tmp = new_cmd(line_split[i]);
 		if (!tmp)
 			return (freelist(head), NULL);
-		check_and_add_cmd_to_list(head, tmp);
 		i++;
 	}
 	return (head);
@@ -96,6 +96,7 @@ t_glb	*global_init(char *read_line, char **env)
 	if (ft_strlen(read_line) == 0)
 		return (NULL);
 	line_split = get_pipe(read_line);
+	fprintf(stderr, "get_pipe ok");
 	if (!line_split)
 		return (NULL);
 	glb = malloc(sizeof(t_glb));

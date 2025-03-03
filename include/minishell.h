@@ -122,6 +122,20 @@ void		free_tab(char **tab);
 //KILL
 void		kill_program(t_core *core);
 
+
+// HANDLE PIPE IN PARSING
+void		handle_pipe(t_pipe_var *ctx);
+void		handle_pipe_realloc_line_and_tab(t_pipe_var *ctx, char **tmp);
+void		handle_pipe_get_cmd(t_pipe_var *ctx);
+char		**get_pipe(char *line);
+t_boolean	pipe_valid(char *line);
+
+// STRUCT INIT PARSING
+
+void	pipe_var_init(t_pipe_var *ctx, char *line);
+void	quote_var_init(t_pipe_var *ctx, char *line);
+void	get_word_init(t_quote *ctx, char *str, int j);
+
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
 char		**get_fd(t_cmd *cmd, char **cmd_line_split);

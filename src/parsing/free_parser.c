@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// FREE DOUBLE TABLEAU
 void	free_split(char **split)
 {
 	int	i;
@@ -25,6 +26,7 @@ void	free_split(char **split)
 	free(split);
 }
 
+// FREE DOUBLE TABLEAU SI MALLOC FAIL
 void	free_split_init(char **split, int i)
 {
 	int	n;
@@ -38,6 +40,7 @@ void	free_split_init(char **split, int i)
 	free(split);
 }
 
+// FREE NODE CMD
 void	free_node(t_cmd *cmd)
 {
 	if (cmd->cmd)
@@ -47,6 +50,7 @@ void	free_node(t_cmd *cmd)
 	free(cmd);
 }
 
+// FREE LA LISTE DE COMMANDE
 void	freelist(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -60,6 +64,7 @@ void	freelist(t_cmd *cmd)
 	cmd = NULL;
 }
 
+//FREE LE GLOBAL
 void	free_global(t_glb *glb)
 {
 	if (glb)

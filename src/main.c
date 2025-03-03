@@ -81,7 +81,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 		core->line = readline(core->prompt);
 		global = global_init(core->line, core->env_dup);
 		while (global->cmd)
-		{
+		{		
 			for (int i = 0; global->cmd->cmd[i]; i++)
 				printf("%s \n", global->cmd->cmd[i]);
 			global->cmd = global->cmd->next;

@@ -37,36 +37,15 @@ void	ndup_failed(t_quote *ctx, t_free_var *f)
 
 void	quote_or_not_free_2(t_quote *ctx, t_free_var *f)
 {
-	
-	fprintf(stderr, "k : %d\n", ctx->k);
 	if (ft_strncmp(f->str, ctx->str, ft_strlen(f->str)) != 0)
 	{	
-		fprintf(stderr, "is free add : %p, %s\n", f->str, f->str);	
 		free(f->str);
 	}
 	if (ctx->k == -1)
 	{
-		fprintf(stderr, "is free add : %p, %s\n", ctx->str, ctx->str);
 		free(ctx->str);
 	}
 	free(f->word);
-	f->str = NULL;
-	f->word = NULL;
-	ctx->tmp = ctx->str;
-}
-
-
-void	quote_or_not_free(t_quote *ctx, t_free_var *f)
-{
-	fprintf(stderr, "k : %d\n", ctx->k);
-	free(f->word);
-	fprintf(stderr, "is free add : %p, %s\n", f->str, f->str);	
-	free(f->str);
-	if (ctx->k == 0)
-	{	
-		fprintf(stderr, "is free add : %p, %s\n", ctx->str, ctx->str);
-		free(ctx->str);
-	}
 	f->str = NULL;
 	f->word = NULL;
 	ctx->tmp = ctx->str;

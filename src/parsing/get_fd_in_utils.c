@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// AJOUTE LES HEREDOC AU TABLEAU **heredoc
 char	**add_here_doc(char **heredoc, char *word)
 {
 	char	**new_heredoc;

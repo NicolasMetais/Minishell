@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+t_boolean	pipe_valid(char *line)
+{
+	char	*tmp;
+
+	tmp = line;
+	if (*line != '\0')
+		line++;
+	while (*line && *line == ' ')
+		line++;
+	if (*line == '|')
+		return (false);
+	return (true);
+}
+
+void	increment(t_pipe_var *ctx)
+{
+	ctx->str++;
+	ctx->c++;
+}
+
 char	*ft_strndup(char *line, int c)
 {
 	char	*dup;
