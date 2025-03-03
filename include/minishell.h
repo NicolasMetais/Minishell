@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 18:53:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 19:31:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@
 # define RED_LIGHT "\033[91m"
 # define WHITE "\e[0;37m"
 
+//HEADERS
+# include "boolean.h"
 # include "parsing.h"
 # include "pipex.h"
+# include "cmd.h"
+# include "errors.h"
+//LIBFT
 # include "libft.h"
+//C LIBS
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -29,12 +35,6 @@
 # include <sys/types.h>
 
 extern unsigned int exit_code;
-
-typedef enum s_boolean
-{
-	false,
-	true,
-}			t_boolean;
 
 typedef struct s_pipe
 {
@@ -64,9 +64,6 @@ typedef struct s_quote
 	char		c;
 }				t_quote;
 
-# include "cmd.h"
-# include "errors.h"
-
 typedef struct s_env
 {
 	char			*name;
@@ -88,6 +85,7 @@ typedef struct s_core
 	t_env			*mark;
 }	t_core;
 
+//DON'T FORGET TO DELETE BEFORE PUSH
 void		funny_stuff(void);
 
 //UTILS
@@ -123,6 +121,7 @@ void		free_tab(char **tab);
 //KILL
 void		kill_program(t_core *core);
 
+//A TRIER
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
 char		**get_fd(t_cmd *cmd, char **cmd_line_split);

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_exist.c                                        :+:      :+:    :+:   */
+/*   boolean.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 10:00:27 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/18 15:41:36 by nmetais          ###   ########.fr       */
+/*   Created: 2025/03/03 19:29:35 by nmetais           #+#    #+#             */
+/*   Updated: 2025/03/03 19:29:53 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BOOLEAN_H
+# define BOOLEAN_H
 
-//EST-CE QUE LA VAR D'ENV EXISTE
-t_boolean	env_exist(t_core *core, char *var)
+typedef enum s_boolean
 {
-	t_env	*copy;
+	false,
+	true,
+}			t_boolean;
 
-	if (!core->env || !var)
-		return (false);
-	copy = core->env;
-	while (copy)
-	{
-		if (copy->name && ft_strcmp(copy->name, var) == 0)
-			return (true);
-		copy = copy->next;
-		if (copy == core->env)
-			break ;
-	}
-	return (false);
-}
+#endif

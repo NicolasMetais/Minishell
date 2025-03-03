@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/04 01:23:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 19:26:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
-
-typedef enum s_boolean
-{
-	false,
-	true,
-}	t_boolean;
 
 typedef struct s_pipex
 {

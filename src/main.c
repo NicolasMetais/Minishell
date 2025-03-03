@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 17:59:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 19:26:23 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 		while (global->cmd)
 		{
 			for (int i = 0; global->cmd->cmd[i]; i++)
-				printf("%s \n", global->cmd->cmd[i]);
+				printf("CMD %s \n", global->cmd->cmd[i]);
 			global->cmd = global->cmd->next;
 		}
 		if (core->line)
