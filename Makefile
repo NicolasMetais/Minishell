@@ -43,6 +43,13 @@ SRCS = 	src/main.c \
 		src/free/free_env.c \
 		src/free/free.c \
 		src/free/garbage_collector.c \
+		src/exec/core.c \
+		src/exec/exec_shell.c \
+		src/exec/free_exec.c \
+		src/exec/here_doc.c \
+		src/exec/main_exec.c \
+		src/exec/parsing.c \
+		src/exec/process_manager.c \
 
 OBJS = $(SRCS:.c=.o)
 

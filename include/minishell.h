@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 17:54:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 18:53:16 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define WHITE "\e[0;37m"
 
 # include "parsing.h"
+# include "pipex.h"
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
