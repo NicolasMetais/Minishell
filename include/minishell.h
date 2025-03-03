@@ -50,7 +50,9 @@ typedef struct s_quote
 	t_boolean	no_quote;
 	char		*word;
 	char		*str;
+	char		*fstr;
 	char		*tmp;
+	char		*first;
 	int			i;
 	int			k;
 	char		c;
@@ -89,5 +91,6 @@ void		cmd_tab_handle_quote_failed(char **tmp, t_pipe_var *ctx);
 void		realloc_line_handle_quote_failed(t_pipe_var *ctx);
 void		get_word_failed(t_pipe_var *ctx);
 void		reset_handle_quote(t_pipe_var *ctx);
+void		quote_or_not_free_2(t_quote *ctx, t_free_var *f);
 
 #endif

@@ -90,8 +90,6 @@ void	handle_pipe(t_pipe_var *ctx)
 		ctx->fstr = ctx->str;
 		ctx->c = 0;
 	}
-	if (ctx->tmp)
-		free(ctx->tmp);
 	ctx->tmp = NULL;
 	ctx->valid = false;
 }
@@ -122,16 +120,13 @@ char	**get_pipe(char *line)
 			ctx.i = *ctx.str;
 			ctx.quote = true;
 		}
-		printf("s : %s len : %zu\n", ctx.str, ft_strlen(ctx.str));
 		if ((*ctx.str == '|' && ctx.quote == false)
 			|| ft_strlen(ctx.str) == 0)
 		{
 			handle_pipe(&ctx);
-			printf("je passe\n");
 		}
 		else
 			increment(&ctx);
 	}
-	printf("je sors\n");
 	return (ctx.cmd_tab);
 }

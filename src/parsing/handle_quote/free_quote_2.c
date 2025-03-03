@@ -31,7 +31,6 @@ void	get_word_failed(t_pipe_var *ctx)
 
 void	reset_handle_quote(t_pipe_var *ctx)
 {
-	free(ctx->tmp);
 	ctx->c = 0;
 	free(ctx->fstr);
 	ctx->fstr = NULL;		

@@ -72,6 +72,7 @@ void	realloc_line_in_quote(t_quote *ctx, t_free_var *f)
 	if (ctx->i == 1)
 	{
 		ctx->str = realloc_line(ctx->str, ctx->i, NULL);
+		fprintf(stderr, "realloc : %p, %s\n", ctx->str, ctx->str);
 		if (!ctx->str)
 		{
 			realloc_line_failed(ctx, f);
@@ -81,6 +82,7 @@ void	realloc_line_in_quote(t_quote *ctx, t_free_var *f)
 	else
 	{
 		ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
+		fprintf(stderr, "realloc : %p, %s\n", ctx->str, ctx->str);
 		if (!ctx->str)
 		{
 			realloc_line_failed(ctx, f);

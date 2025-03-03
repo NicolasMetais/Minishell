@@ -43,8 +43,9 @@ char	**new_tab_init(char **new_tab, char *new)
 {
 	new_tab[0] = ft_strdup(new);
 	if (!new_tab[0])
-		return (free_split_init(new_tab, 2), NULL);
+		return (free_split_init(new_tab, 2), free(new), NULL);
 	new_tab[1] = NULL;
+	free(new);
 	return (new_tab);
 }
 
@@ -70,9 +71,8 @@ char	**realloc_add_to_tab(char **tab, char *new)
 	}
 	new_tab[i] = ft_strdup(new);
 	if (!new_tab[i])
-		return (free_split_init(tab, i), NULL);
+		return (free_split_init(tab, i), free(new), NULL);
 	new_tab[i + 1] = NULL;
-	if (ft_strlen(new) != 0 && new)
-		free(new);
+	free(new);
 	return (free_split(tab), new_tab);
 }

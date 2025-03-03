@@ -57,6 +57,7 @@ t_boolean	is_empty(char *str)
 void	free_var_init(t_quote *ctx, t_free_var *f)
 {
 	f->str = ctx->str - ctx->i;
+	fprintf(stderr, "fstr : %p, '%s'\n", f->str, f->str);
 	f->word = ctx->word;
 	f->tmp = NULL;
 }

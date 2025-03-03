@@ -27,6 +27,7 @@ void	simple_word(t_quote *ctx, t_free_var *f)
 		return ;
 	}
 	free(f->tmp);
+	ctx->str -= ctx->i;
 	ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
 	if (!ctx->str)
 	{
@@ -38,7 +39,7 @@ void	simple_word(t_quote *ctx, t_free_var *f)
 		ctx->c = *ctx->str;
 	else
 		ctx->c = 0;
-	quote_or_not_free(ctx, f);
+	quote_or_not_free_2(ctx, f);
 }
 
 void	handle_inside_quote(t_quote *ctx)
@@ -47,9 +48,7 @@ void	handle_inside_quote(t_quote *ctx)
 
 	free_var_init(ctx, &f);
 	if (*ctx->str != '\'' && *ctx->str != '"')
-	{
 		simple_word(ctx, &f);
-	}
 	else
 		quote_or_not(ctx);
 }
@@ -65,9 +64,11 @@ char	*extract_word(t_quote *ctx)
 		if (!ctx->str)
 			return (free(ctx->tmp), free(ctx->word), NULL);
 		ctx->k--;
+		if (ctx->k == 0)
+			free(ctx->str);
 		ctx->c = 0;
 		if (!ctx->word)
-			return (free(ctx->tmp), "");
+			return (free(ctx->tmp), ft_strdup(""));
 		return (free(ctx->tmp), ctx->word);
 	}
 	if (ctx->quote == false)
@@ -76,8 +77,8 @@ char	*extract_word(t_quote *ctx)
 		return (ctx->word);
 	}
 	if (ctx->quote == true)
-	{
-		fprintf(stderr, "je passe\n");
+	{			
+		fprintf(stderr, "JE SUIS UTILE");
 		tmp = ft_strndup(ctx->str, ctx->i - 1);
 		if (!tmp)
 			return (free(ctx->str), free(ctx->word), NULL);
@@ -109,6 +110,8 @@ char	*get_word(char *str, int j)
 	t_quote	ctx;
 
 	get_word_init(&ctx, str, j);
+	if (!ctx.str)
+		return (NULL);
 	while (ctx.k != -1 )
 	{
 		if (ctx.c == 0 && (*ctx.str == '"' || *ctx.str == '\''))
@@ -120,8 +123,8 @@ char	*get_word(char *str, int j)
 			ctx.word = extract_word(&ctx);
 			if (ctx.word == NULL)
 				return (NULL);
-			if (ctx.k == 0)
-					break;
+			if (ctx.k <= 0)
+				break;
 			ctx.i = 0;
 		}
 		else

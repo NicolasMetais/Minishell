@@ -76,5 +76,4 @@ char		*ft_strnjoin(char const *s1, char const *s2, int c);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
 char		*ft_pignouf(char *line);
 
-
 #endif
