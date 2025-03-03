@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/01 16:16:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 14:12:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_boolean	minishell_launch(t_core *core)
 	while (1)
 	{
 		if (!prompt_update(core))
-			core->prompt = RED_LIGHT "Minishell/ " WHITE;
+			core->prompt = NULL;
 		signal_update();
 		core->line = readline(core->prompt);
 		if (core->line)

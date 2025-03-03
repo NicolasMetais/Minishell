@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 18:24:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 14:42:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
 	}
 	if ((ft_strcmp(builtin->cmd[0], "pwd") == 0))
 	{
-		if (!pwd(core, builtin))
+		if (!pwd(builtin))
 			return (false);
 		return (true);
 	}

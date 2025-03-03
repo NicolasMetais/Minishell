@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 19:04:05 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/02 13:48:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/02 17:24:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,11 @@ t_boolean	create_empty_env(t_core *core)
 
 	core->env_dup = malloc(sizeof(char *));
 	core->env_dup[0] = NULL;
-	core->env = new_env("PWD=");
+	core->env = new_env("PWD=Minishell/");
 	if (!core->env)
 		return (free(core->env_dup), emergency_free_env_var(core->env), false);
 	new = core->env;
 	new->next = new_env("OLDPWD=");
-	if (!new->next)
-		return (free(core->env_dup), emergency_free_env_var(core->env), false);
-	new = new->next;
-	new->next = new_env("HOME=");
 	if (!new->next)
 		return (free(core->env_dup), emergency_free_env_var(core->env), false);
 	new = new->next;

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/01 14:41:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:31:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 {
 	char	*get_path;
 
-	cd->oldpwd = cd->pwd;
+	if (cd->pwd)
+		cd->oldpwd = cd->pwd;
 	rotate_env(core, "OLDPWD");
 	free(core->env->var);
 	core->env->var = ft_strjoin("OLDPWD=", cd->oldpwd);
@@ -72,13 +73,39 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
 	return (true);
 }
 
+//AJOUTE UN ELEMENT A L'ENV
+t_boolean	add_new_env(t_core *core, char *add)
+{
+	t_env	*new;
+	t_env	*last;
+
+	last = lstlast_env(core->env);
+	new = new_env(add);
+	if (!new)
+		return (false);
+	new->next = core->env;
+	last->next = new;
+	return (true);
+}
+
 //INIT D'UNE STRUCTURE AVEC PLEIN D'OPTIONS
 t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 {
+
 	*gc = NULL;
 	cd->pwd = ft_get_env(core->env, "PWD");
+	if (!cd->pwd)
+	{
+		if (!add_new_env(core, "PWD="))
+			return (false);
+	}
 	add_to_gc(gc, cd->pwd);
 	cd->oldpwd = ft_get_env(core->env, "OLDPWD");
+	if (!cd->oldpwd)
+	{
+		if (!add_new_env(core, "OLDPWD="))
+			return (false);
+	}
 	add_to_gc(gc, cd->oldpwd);
 	cd->home = ft_get_env(core->env, "HOME");
 	add_to_gc(gc, cd->home);
