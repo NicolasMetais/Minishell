@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:54:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 15:02:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 22:38:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,27 +109,28 @@ t_boolean	isempty(char **tab)
 //EXPORT DOIT CREER DE NOUVELLES VAR D'ENV 
 //ET DES VARIABLE MARQUEE SI ON PRECISE PAS DE =
 //SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV + MARQUEE TRIEE ALPHABETIQUEMENT
-t_boolean	export(t_core *core, t_builtin *builtin)
+t_boolean	export(t_core *core, t_glb *global)
 {
 	int			i;
 
 	i = 0;
-	if (isempty(builtin->cmd) || builtin->arg_number == 1)
+	if (isempty(global->cmd->args) || global->cmd->args_nb == 1)
 		return (print_env_alpha(core));
-	if (builtin->cmd[1][0] == '-')
+	if (global->cmd->args[1][0] == '-')
 	{
-		if (invalid_option(builtin, "export: "))
+		if (invalid_option(global, "export: "))
 			return (true);
 		else
 			return (false);
 	}
-	while (builtin->cmd[++i])
+	while (global->cmd->args[++i])
 	{
-		if (builtin->cmd[i][0] == '_' || ft_isalpha(builtin->cmd[i][0]))
-			marked_or_env(builtin->cmd[i], core);
+		if (global->cmd->args[i][0] == '_'
+			|| ft_isalpha(global->cmd->args[i][0]))
+			marked_or_env(global->cmd->args[i], core);
 		else
 		{
-			if (!not_valid_id(builtin->cmd[i], "export: "))
+			if (!not_valid_id(global->cmd->args[i], "export: "))
 				return (false);
 		}
 	}

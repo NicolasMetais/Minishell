@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 19:26:23 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/05 23:18:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,16 @@
 // printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
 // printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);
 // printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
+// while (global->cmd)
+// {
+// 	for (int i = 0; global->cmd->cmd[i]; i++)
+// 		printf("CMD %s \n", global->cmd->cmd[i]);
+// 	global->cmd = global->cmd->next;
+// }
 
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
 	int		i;
-	char	*path;
 
 	i = -1;
 	core->ac = ac;
@@ -34,14 +39,6 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->prompt = NULL;
 	core->new_line = NULL;
 	core->mark = NULL;
-	path = ft_get_env(core->env, "PATH");
-	if (path)
-	{
-		core->temp_path = ft_split(path, ':');
-		if (!core->temp_path)
-			return (free(path), false);
-		free(path);
-	}
 	return (true);
 }
 
@@ -69,9 +66,24 @@ t_boolean	prompt_update(t_core *core)
 		return (false);
 	return (true);
 }
+
+int	empty(char *line)
+{
+	while (*line)
+	{
+		if (ft_isprint(*line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
+
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 t_boolean	minishell_launch(t_core *core, t_glb *global)
 {
+	int	save;
+
+	save = dup(STDIN_FILENO);
 	funny_stuff();
 	while (1)
 	{
@@ -79,28 +91,25 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			core->prompt = NULL;
 		signal_update();
 		core->line = readline(core->prompt);
-		global = global_init(core->line, core->env_dup);
-		while (global->cmd)
+		if (core->line && !empty(core->line))
 		{
-			for (int i = 0; global->cmd->cmd[i]; i++)
-				printf("CMD %s \n", global->cmd->cmd[i]);
-			global->cmd = global->cmd->next;
-		}
-		if (core->line)
-		{
+			add_history(core->line);
 			if (!setup_var(core))
 				return (false);
-			add_history(core->line);
+			global = global_init(core->line, core->env_dup); // IL FAUT RENOMMER TOUT ET METTRE CA DANS LA STRUCT CORE APRES MERGE
+			if (!builtin(core, global))
+				main_exec(global, core);
+			if (dup2(save, STDIN_FILENO) < 0)
+				return (false);
+			free_global(global);
 		}
-		else
+ 		else if (!core->line)
 		{
 			printf("exit\n");
 			kill_program(core);
 			exit(0);
 		}
-		free_tab(core->new_line);
 		free(core->line);
-		free_global(global);
 	}
 }
 //VAR GLOBALE EXIT

@@ -6,14 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/18 15:24:36 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 22:34:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //EXIT DOIT AFFICHER DES ERREUR SI ON L'UTILISE MAL MAIS DOIT EXIT QUAND MEME
-t_boolean	exit_custom(t_core *core, t_builtin *builtin)
+t_boolean	exit_custom(t_core *core, t_glb *global)
 {
 	unsigned int	status;
 	int				i;
@@ -21,23 +21,23 @@ t_boolean	exit_custom(t_core *core, t_builtin *builtin)
 	i = 0;
 	status = 0;
 	printf("exit\n");
-	if (builtin->arg_number > 1)
+	if (global->cmd->args_nb > 1)
 	{
-		if ((builtin->cmd[1][0] == '-') || (builtin->cmd[1][0] == '+'))
+		if ((global->cmd->args[1][0] == '-') || (global->cmd->args[1][0] == '+'))
 			i++;
-		while (builtin->cmd[1][i])
+		while (global->cmd->args[1][i])
 		{
-			if (!ft_isdigit(builtin->cmd[1][i++]))
+			if (!ft_isdigit(global->cmd->args[1][i++]))
 			{
-				status = only_num_arg(builtin, "exit: ");
+				status = only_num_arg(global, "exit: ");
 				break ;
 			}
 		}
-		if (builtin->arg_number > 2 && !status)
+		if (global->cmd->args_nb > 2 && !status)
 			status = too_many_args("exit: ");
 	}
-	if (status == 0 && builtin->arg_number > 1)
-		status = ft_atol(builtin->cmd[1]);
+	if (status == 0 && global->cmd->args_nb > 1)
+		status = ft_atol(global->cmd->args[1]);
 	kill_program(core);
 	exit(status);
 }

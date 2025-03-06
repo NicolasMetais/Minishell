@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-07 12:45:54 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/03 22:48:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	free_split_init(char **split, int i)
 
 void	free_node(t_cmd *cmd)
 {
-	if (cmd->cmd)
-		free_split(cmd->cmd);
+	if (cmd->args)
+		free_split(cmd->args);
 	if (cmd->here_doc)
 		free_split(cmd->here_doc);
 	free(cmd);

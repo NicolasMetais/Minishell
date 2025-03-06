@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-05 13:32:09 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/03 22:49:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_cmd	*new_cmd(char *line_split)
 	cmd_line_split = get_fd(cmd, cmd_line_split);
 	if (!cmd_line_split)
 		return (free_split(cmd_line_split), NULL);
-	cmd->cmd = cmd_line_split;
+	cmd->args = cmd_line_split;
 	cmd->next = NULL;
 	return (cmd);
 }

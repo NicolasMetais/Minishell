@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quet_quote_utils_3.c                               :+:      :+:    :+:   */
+/*   get_quote_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-20 19:08:38 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-20 19:08:38 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/20 19:08:38 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/03 21:30:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_boolean	is_empty(char *str)
 void	free_var_init(t_quote *ctx, t_free_var *f)
 {
 	f->str = ctx->str - ctx->i;
-	fprintf(stderr, "fstr : %p, '%s'\n", f->str, f->str);
 	f->word = ctx->word;
 	f->tmp = NULL;
 }

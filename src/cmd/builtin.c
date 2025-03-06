@@ -6,36 +6,36 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 14:42:00 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:06:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //DEUXIEME CHECKER DE BUILTIN
-t_boolean	builtin_the_sec(t_builtin *builtin, t_core *core)
+t_boolean	builtin_the_sec(t_glb *global, t_core *core)
 {
-	if ((ft_strcmp(builtin->cmd[0], "exit") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "exit") == 0))
 	{
-		if (!exit_custom(core, builtin))
+		if (!exit_custom(core, global))
 			return (false);
 		return (true);
 	}
-	if ((ft_strcmp(builtin->cmd[0], "env") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "env") == 0))
 	{
-		if (!env(core, builtin))
+		if (!env(core, global))
 			return (false);
 		return (true);
 	}
-	if ((ft_strcmp(builtin->cmd[0], "export") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "export") == 0))
 	{
-		if (!export(core, builtin))
+		if (!export(core, global))
 			return (false);
 		return (true);
 	}
-	if ((ft_strcmp(builtin->cmd[0], "unset") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "unset") == 0))
 	{
-		if (!unset(core, builtin))
+		if (!unset(core, global))
 			return (false);
 		return (true);
 	}
@@ -43,50 +43,40 @@ t_boolean	builtin_the_sec(t_builtin *builtin, t_core *core)
 }
 
 //CHECKER DE BUILTIN
-t_boolean	builtin_or_not(t_core *core, t_builtin *builtin)
+t_boolean	builtin_or_not(t_core *core, t_glb *global)
 {
-	if ((ft_strcmp(builtin->cmd[0], "cd") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "cd") == 0))
 	{
-		if (!cd_init(core, builtin))
+		if (!cd_init(core, global))
 			return (false);
 		return (true);
 	}
-	if ((ft_strcmp(builtin->cmd[0], "echo") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "echo") == 0))
 	{
-		if (!echo_init(builtin))
+		if (!echo_init(global))
 			return (false);
 		return (true);
 	}
-	if ((ft_strcmp(builtin->cmd[0], "pwd") == 0))
+	if ((ft_strcmp(global->cmd->args[0], "pwd") == 0))
 	{
-		if (!pwd(builtin))
+		if (!pwd(global))
 			return (false);
 		return (true);
 	}
-	if (builtin_the_sec(builtin, core))
+	if (builtin_the_sec(global, core))
 		return (true);
 	return (false);
 }
 
-//JE DECOUPE LES ARGS ENTRE LES PIPES 
-//(echo test | ls -l) (je decoupe echo test pour trouver echo)
-int	builtin(t_core *core)
+int	builtin(t_core *core, t_glb *global)
 {
-	t_builtin	builtin;
 	int			error;
 	int			i;
 
 	i = 0;
-	while (core->new_line[i])
+	while (global->cmd->args[i])
 		i++;
-	builtin.arg_number = i;
-	builtin.cmd = malloc(sizeof(char *) * (i + 1));
-	i = -1;
-	while (core->new_line[++i])
-		builtin.cmd[i] = ft_strdup(core->new_line[i]);
-	builtin.cmd[i] = NULL;
-	exit_code = 0;
-	error = builtin_or_not(core, &builtin);
-	free_tab(builtin.cmd);
+	global->cmd->args_nb = i;
+	error = builtin_or_not(core, global);
 	return (error);
 }

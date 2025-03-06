@@ -43,19 +43,18 @@ SRCS = 	src/main.c \
 		src/free/free_env.c \
 		src/free/free.c \
 		src/free/garbage_collector.c \
-		src/exec/core.c \
-		src/exec/exec_shell.c \
+		src/exec/fork.c \
+		src/exec/exec.c \
 		src/exec/free_exec.c \
 		src/exec/here_doc.c \
 		src/exec/main_exec.c \
-		src/exec/parsing.c \
-		src/exec/process_manager.c \
+		src/exec/dup.c \
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
 
 NAME = minishell
 
@@ -63,15 +62,14 @@ LIB = libft/libft.a
 
 all: $(NAME)
 
-
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(@D)
 
 .c.o:
-	$(CC) $(CFLAGS)  -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 bonus:
 	make

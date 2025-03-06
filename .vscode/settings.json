@@ -2,7 +2,8 @@
     "files.associations": {
         "minishell.h": "c",
         "libft.h": "c",
-        "pipex.h": "c"
+        "pipex.h": "c",
+        "unistd.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

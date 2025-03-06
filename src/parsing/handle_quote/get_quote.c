@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_pipe.c                                         :+:      :+:    :+:   */
+/*   get_quote.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-16 07:50:50 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-16 07:50:50 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/16 07:50:50 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/03 21:07:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	handle_inside_quote(t_quote *ctx)
 char	*extract_word(t_quote *ctx)
 {
 	char	*tmp;
-	
+
 	ctx->tmp = ctx->str - ctx->i;
 	if (ctx->quote == false && ctx->i == 1 && is_empty(ctx->str))
 	{

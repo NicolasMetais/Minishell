@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 13:25:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 21:10:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:49:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,27 @@ char	*write_var(char *code, char *tocut, int j, int size)
 	}
 	new[l] = '\0';
 	return (new);
+}
+
+void	rewrite_line(t_core *core, int arg_nb, int count)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	k = 0;
+	free(core->line);
+	core->line = malloc(sizeof(char) * (arg_nb + count));
+	if (!core->line)
+		return ;
+	while (core->new_line[++i])
+	{
+		j = -1;
+		while (core->new_line[i][++j])
+			core->line[k++] = core->new_line[i][j];
+		if (core->new_line[i + 1] != NULL)
+			core->line[k++] = ' ';
+	}
+	core->line[k] = '\0';
 }

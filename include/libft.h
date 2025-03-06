@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 19:32:34 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/01/11 18:24:32 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:21:48 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "boolean.h"
 # include <stddef.h>
 # include "ft_printf.h"
 # include <fcntl.h>

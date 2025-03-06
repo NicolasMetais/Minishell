@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 13:59:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 22:50:16 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 //TOUTES LES FONCTIONS D'ERREURS LEAK A CAUSE DES JOIN DE SES MORTS
 
 //FLAG INVALIDE
-t_boolean	invalid_option(t_builtin *builtin, char *cmd)
+t_boolean	invalid_option(t_glb *global, char *cmd)
 {
 	char	*custom_error;
 
-	custom_error = ft_strjoin(cmd, ft_substr(builtin->cmd[1],
+	custom_error = ft_strjoin(cmd, ft_substr(global->cmd->args[1],
 				0, 2));
 	if (!custom_error)
 		return (false);
@@ -73,11 +73,11 @@ t_boolean	cmd_not_found(char *cmd)
 	return (true);
 }
 
-int	only_num_arg(t_builtin *builtin, char *cmd)
+int	only_num_arg(t_glb *global, char *cmd)
 {
 	char	*custom_error;
 
-	custom_error = ft_strjoin(builtin->cmd[1], ": numeric argument required");
+	custom_error = ft_strjoin(global->cmd->args[1], ": numeric argument required");
 	custom_error = ft_strjoin(cmd, custom_error);
 	if (!custom_error)
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 19:31:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/06 02:32:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 //HEADERS
 # include "boolean.h"
 # include "parsing.h"
-# include "pipex.h"
-# include "cmd.h"
+# include "exec.h"
+# include "builtin.h"
 # include "errors.h"
 //LIBFT
 # include "libft.h"
@@ -33,6 +33,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/types.h>
+#include <sys/wait.h>
 
 extern unsigned int exit_code;
 
@@ -79,7 +80,8 @@ typedef struct s_core
 	char			*prompt;
 	char			*line;
 	char			**new_line;
-	char			**temp_path;
+	char			*path;
+	char			**splitted_path;
 	char			**env_dup;
 	t_env			*env;
 	t_env			*mark;
@@ -101,6 +103,7 @@ long long	ft_atol(const char *nptr);
 t_boolean	setup_var(t_core *core);
 char		*delete_var(char *tocut, int start, int end);
 char		*write_var(char *code, char *tocut, int j, int size);
+void		rewrite_line(t_core *core, int arg_nb, int count);
 
 //ENV VAR INIT
 t_boolean	duplicate_env(t_core *core, char **todup);

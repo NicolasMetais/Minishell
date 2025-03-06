@@ -3,30 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-08 11:50:12 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/06 02:18:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+#include "boolean.h"
+
 typedef struct s_commande
 {
-	char				**cmd;
+	char				**args;
 	char				**here_doc;
 	int					in_fd[2];
 	int					out_fd[2];
+	int					args_nb;
 	struct s_commande	*next;
 }				t_cmd;
 
 typedef struct s_global
 {
-	int		nb_cmd;
-	char	**path;
-	t_cmd	*cmd;
+	int			nb_cmd;
+	char		**path;
+	t_boolean	absolute_path;
+	t_cmd		*cmd;
 }				t_glb;
 
 typedef struct s_free_var
@@ -37,7 +41,7 @@ typedef struct s_free_var
 
 }			t_free_var;
 
-typedef	struct s_utils
+typedef struct s_utils
 {
 	char	*s1;
 	char	*s2;

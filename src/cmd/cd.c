@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 15:31:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 22:40:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 
 
 //J'EXECUTE CD AVEC CHDIR ET L'ARGUMENT (folder) DEPEND DES OPTIONS
-t_boolean	cd_exec(t_core *core, t_cd *cd, t_builtin *builtin, t_gc *gc)
+t_boolean	cd_exec(t_core *core, t_cd *cd, t_glb *global, t_gc *gc)
 {
 	char	*folder;
 	int		status;
 
-	folder = builtin->cmd[1];
+	folder = global->cmd->args[1];
 	if (cd->ishome)
 	{
 		if (!cd->home)
@@ -116,31 +116,31 @@ t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 
 //JE REGARDE SI J'AI LES OPTIONS -, -- et ~ sinon je balance tout dans chdir
 //JE CHECK LE NB d'ARG
-t_boolean	cd_init(t_core *core, t_builtin *builtin)
+t_boolean	cd_init(t_core *core, t_glb *global)
 {
 	t_cd	cd;
 	t_gc	*gc;
 
 	if (!cd_setup(core, &cd, &gc))
 		return (false);
-	if (builtin->arg_number == 2)
+	if (global->cmd->args_nb == 2)
 	{
-		if (builtin->cmd[1][0] == '-')
+		if (global->cmd->args[1][0] == '-')
 		{
-			if (ft_strlen(builtin->cmd[1]) == 1)
+			if (ft_strlen(global->cmd->args[1]) == 1)
 				cd.undo = true;
-			else if (builtin->cmd[1][1] == '-'
-						&& ft_strlen(builtin->cmd[1]) == 2)
+			else if (global->cmd->args[1][1] == '-'
+						&& ft_strlen(global->cmd->args[1]) == 2)
 				cd.ishome = true;
 			else
-				return (invalid_option(builtin, "cd: "));
+				return (invalid_option(global, "cd: "));
 		}
 	}
-	if (builtin->arg_number > 2)
+	if (global->cmd->args_nb > 2)
 		return (too_many_args("cd: "));
-	if (ft_strcmp(builtin->cmd[1], "~") == 0 || builtin->arg_number == 1)
+	if (ft_strcmp(global->cmd->args[1], "~") == 0 || global->cmd->args_nb == 1)
 		cd.ishome = true;
-	if (!cd_exec(core, &cd, builtin, gc))
+	if (!cd_exec(core, &cd, global, gc))
 		return (false);
 	return (true);
 }

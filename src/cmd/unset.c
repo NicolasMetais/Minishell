@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 09:36:19 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/19 22:09:55 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 22:39:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ void	delete_env(t_core *core)
 }
 //JE VAIS CHERCHER LA VAR D'ENV ET JE LA DELETE SI ELLE EXISTE
 //NOT A VALID IDENTIFIER
-t_boolean	unset(t_core *core, t_builtin *builtin)
+t_boolean	unset(t_core *core, t_glb *global)
 {
 	int	i;
 
 	i = 0;
-	if (builtin->arg_number > 1)
+	if (global->cmd->args_nb > 1)
 	{
-		while (builtin->cmd[++i])
+		while (global->cmd->args[++i])
 		{
-			if (env_exist(core, builtin->cmd[i]))
+			if (env_exist(core, global->cmd->args[i]))
 			{
-				rotate_env(core, builtin->cmd[i]);
+				rotate_env(core, global->cmd->args[i]);
 				delete_env(core);
 				update_env_dup(core);
 			}

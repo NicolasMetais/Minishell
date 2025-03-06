@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:32:22 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/21 21:19:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:49:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ t_boolean	replace_var_env(t_core *core, char **tocut, int j)
 }
 
 //EXTENSION DE VARIABLE $? et $VARIABLE
-//A GERER
-//LIMITER LA TAILLE 4096CHARACTERES
-//$8HOME qui affiche HOME
 char	**var_manager(t_core *core, char **new_line, t_boolean *replace)
 {
 	int	i;
@@ -131,11 +128,26 @@ char	**var_manager(t_core *core, char **new_line, t_boolean *replace)
 t_boolean	setup_var(t_core *core)
 {
 	t_boolean	replace;
+	int			i;
+	int			j;
+	int			count;
 
+	count = 0;
 	replace = false;
 	core->new_line = ft_split(core->line, ' ');
 	if (!core->new_line)
 		return (false);
 	core->new_line = var_manager(core, core->new_line, &replace);
+	i = 0;
+	while (core->new_line[i])
+	{
+		j = 0;
+		while (core->new_line[i][j])
+			j++;
+		count += j;
+		i++;
+	}
+	rewrite_line(core, i, count);
+	free_tab(core->new_line);
 	return (true);
 }

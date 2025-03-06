@@ -6,19 +6,19 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/02 13:47:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/03 22:34:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //JE PRINT TOUTES LES VARS D'ENV
-t_boolean	env(t_core *core, t_builtin *builtin)
+t_boolean	env(t_core *core, t_glb *global)
 {
 	int	i;
 
 	i = -1;
-	if (builtin->arg_number > 1)
+	if (global->cmd->args_nb > 1)
 		return (false);
 	while (core->env_dup[++i])
 	{
