@@ -12,13 +12,12 @@
 
 #include "minishell.h"
 
-
 void	no_quote(t_quote *ctx, t_free_var *f)
 {
 	f->tmp = ft_strndup(ctx->str, ctx->i);
 	if (!f->tmp)
 	{
-        ndup_failed(ctx, f);
+		ndup_failed(ctx, f);
 		return ;
 	}
 	ctx->word = ft_strjoin_custom(ctx->word, f->tmp);
@@ -72,7 +71,6 @@ void	realloc_line_in_quote(t_quote *ctx, t_free_var *f)
 	if (ctx->i == 1)
 	{
 		ctx->str = realloc_line(ctx->str, ctx->i, NULL);
-		fprintf(stderr, "realloc : %p, %s\n", ctx->str, ctx->str);
 		if (!ctx->str)
 		{
 			realloc_line_failed(ctx, f);
@@ -82,7 +80,6 @@ void	realloc_line_in_quote(t_quote *ctx, t_free_var *f)
 	else
 	{
 		ctx->str = realloc_line(ctx->str, ctx->i + 1, NULL);
-		fprintf(stderr, "realloc : %p, %s\n", ctx->str, ctx->str);
 		if (!ctx->str)
 		{
 			realloc_line_failed(ctx, f);
@@ -111,10 +108,10 @@ void	quote_or_not(t_quote *ctx)
 		ctx->str -= ctx->i;
 		realloc_line_in_quote(ctx, &f);
 		if (ctx->word == NULL)
-			return ;	
+			return ;
 		if (*ctx->str == '\'' || *ctx->str == '"')
 			ctx->c = *ctx->str;
-		else	
+		else
 			ctx->c = 0;
 	}
 	quote_or_not_free(ctx, &f);

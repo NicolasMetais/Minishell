@@ -43,7 +43,7 @@ typedef struct s_pipex
 	int			input_fd;
 	t_boolean	absolute_path;
 	t_boolean	here_doc;
-}	t_pipex;
+}				t_pipex;
 
 void		free_all(t_pipex *pipex);
 

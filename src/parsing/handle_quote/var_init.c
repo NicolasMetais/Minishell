@@ -47,7 +47,6 @@ void	get_word_init(t_quote *ctx, char *str, int j)
 	ctx->no_quote = false;
 	ctx->quote = false;
 	ctx->str = ft_strdup(str);
-	fprintf(stderr, "og alloc : %p, %s\n", ctx->str, ctx->str);
 	ctx->tmp = ctx->str;
 	ctx->first = ctx->str;
 }

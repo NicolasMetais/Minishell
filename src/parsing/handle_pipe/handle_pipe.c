@@ -69,8 +69,8 @@ void	handle_pipe(t_pipe_var *ctx)
 	if (ctx->quote == false || ft_strlen(ctx->str + 1) == 0)
 	{
 		handle_pipe_get_cmd(ctx);
-		if (ctx->cmd_tab == NULL)
-			return ;
+		if (!ctx->tmp)
+			exit (-1); // pb de malloc
 		handle_pipe_realloc_line_and_tab(ctx, tmp);
 		if (ctx->cmd_tab == NULL)
 			return ;

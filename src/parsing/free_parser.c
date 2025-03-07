@@ -45,8 +45,6 @@ void	free_node(t_cmd *cmd)
 {
 	if (cmd->cmd)
 		free_split(cmd->cmd);
-	if (cmd->here_doc)
-		free_split(cmd->here_doc);
 	free(cmd);
 }
 

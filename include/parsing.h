@@ -13,12 +13,25 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+typedef enum s_type_red
+{
+	double_,
+	simple,
+}			t_type_red;
+
+typedef struct s_file
+{
+	t_type_red		type;
+	t_boolean		complete;
+	char			*file;
+	struct s_file	*next;
+}				t_file;
+
 typedef struct s_commande
 {
 	char				**cmd;
-	char				**here_doc;
-	int					in_fd[2];
-	int					out_fd[2];
+	t_file				*in;	
+	t_file				*out;
 	struct s_commande	*next;
 }				t_cmd;
 
@@ -45,6 +58,13 @@ typedef	struct s_utils
 	int		j;
 }			t_utils;
 
+typedef struct s_realloc_get_bool
+{
+	int	i;
+	int	len;
+	int	*new;
+}				t_r_get_bool;
+
 typedef struct s_pignouf
 {
 	int		i;
@@ -52,6 +72,21 @@ typedef struct s_pignouf
 	int		len;
 	char	*new;
 }				t_pignouf;
+
+
+// typedef	enum s_type
+// {
+// 	WORD,
+// 	RED,
+// 	PIPE,
+// }			t_type;
+
+// typedef struct s_token
+// {
+// 	t_type			type;
+// 	struct s_token	*next_tk;
+// 	struct s_token	*next_cmd;
+// }				t_token;
 
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
@@ -74,6 +109,8 @@ char		*realloc_line(char *old, int c, int *end);
 char		*ft_strnjoin(char const *s1, char const *s2, int c);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
 char		*ft_pignouf(char *line);
-
+// t_token		*get_token(char *line);
+int			bool_len(int *bool);
+char		*realloc_str_file(char *str, int i, int j);
 
 #endif

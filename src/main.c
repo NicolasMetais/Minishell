@@ -73,6 +73,9 @@ t_boolean	prompt_update(t_core *core)
 t_boolean	minishell_launch(t_core *core, t_glb *global)
 {
 	funny_stuff();
+	int	i;
+
+	i= 0;
 	while (1)
 	{
 		if (!prompt_update(core))
@@ -82,8 +85,26 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 		global = global_init(core->line, core->env_dup);
 		while (global->cmd)
 		{		
-			for (int i = 0; global->cmd->cmd[i]; i++)
-				printf("%s \n", global->cmd->cmd[i]);
+			printf("INFILE\n");
+			while (global->cmd->in)
+			{
+				printf ("nb[%d] file : %s, type : %d\n", i, global->cmd->in->file, global->cmd->in->type);
+				global->cmd->in = global->cmd->in->next;
+				i++;
+			}
+			i = 0;
+			printf("\n");
+			printf("OUTFILE\n");
+			while (global->cmd->out)
+			{
+				printf ("nb[%d] file : %s, type : %d\n", i, global->cmd->out->file, global->cmd->out->type);
+				global->cmd->out = global->cmd->out->next;
+				i++;
+			}
+			printf("\n");
+			printf("COMMANDE\n");
+			for (int j = 0; global->cmd->cmd[j]; j++)
+				printf("%s \n", global->cmd->cmd[j]);
 			global->cmd = global->cmd->next;
 		}
 		if (core->line)

@@ -16,7 +16,6 @@
 # define RED_LIGHT "\033[91m"
 # define WHITE "\e[0;37m"
 
-# include "parsing.h"
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -34,6 +33,24 @@ typedef enum s_boolean
 	false,
 	true,
 }			t_boolean;
+
+# include "parsing.h"
+
+typedef struct s_redirection
+{
+	t_type_red				type;
+	t_boolean				valid;
+	t_boolean				error;
+	struct s_redirection	*next;
+}				t_red;
+
+typedef	struct s_get_red_bool
+{
+	t_red		error;
+	char		c;
+	t_boolean	quote;
+	char		*word;
+}				t_bool_red;
 
 typedef struct s_pipe
 {
@@ -138,7 +155,7 @@ void	get_word_init(t_quote *ctx, char *str, int j);
 
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
-char		**get_fd(t_cmd *cmd, char **cmd_line_split);
+char		**get_fd(t_cmd *cmd, char **cmd_split, t_red *tab_red);
 char		**get_outfd(t_cmd *cmd, char **cmd_split);
 char		**get_infd(t_cmd *cmd, char **cmd_split);
 char		**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
@@ -160,6 +177,7 @@ void		ndup_failed(t_quote *ctx, t_free_var *f);
 void		quote_or_not_free(t_quote *ctx, t_free_var *f);
 
 void		quote_or_not(t_quote *ctx);
+void		handle_inside_quote(t_quote *ctx);
 void		realloc_line_in_quote(t_quote *ctx, t_free_var *f);
 void		get_word_in_quote(t_quote *ctx, t_free_var *f);
 void		no_quote(t_quote *ctx, t_free_var *f);
@@ -170,5 +188,12 @@ void		realloc_line_handle_quote_failed(t_pipe_var *ctx);
 void		get_word_failed(t_pipe_var *ctx);
 void		reset_handle_quote(t_pipe_var *ctx);
 void		quote_or_not_free_2(t_quote *ctx, t_free_var *f);
+t_boolean	unexpected_token_red(char *cmd_one_line, t_red *tab_red);
+t_boolean	is_double(char *word);
+void		init_bool_red(t_bool_red *ctx, char *word);
+void		turn_true_get_bool(t_bool_red *ctx);
+t_red		*get_tk_red(char *line);
+char		*get_word(char *str, int j);
+void		turn_false_get_bool(t_bool_red *ctx);
 
 #endif

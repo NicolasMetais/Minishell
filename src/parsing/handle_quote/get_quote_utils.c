@@ -51,33 +51,3 @@ char	*ft_strndup(char *line, int c)
 	dup[i] = '\0';
 	return (dup);
 }
-
-char	*ft_strnjoin(char const *s1, char const *s2, int c)
-{
-	char	*buffer;
-	int		i;
-	int		j;
-
-	i = 0;
-	if (!s1)
-		return (ft_strndup((char *)s2, c));
-	s2 -= c;
-	buffer = malloc(sizeof(char) * (ft_strlen(s1) + c + 1));
-	if (!buffer)
-		return (NULL);
-	while (*s1 && s1)
-	{
-		buffer[i] = *s1;
-		s1++;
-		i++;
-	}
-	j = 0;
-	while (j < c)
-	{
-		buffer[i + j] = *s2;
-		s2++;
-		j++;
-	}
-	buffer[i + j] = '\0';
-	return (buffer);
-}
