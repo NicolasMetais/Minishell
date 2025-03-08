@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/06 02:36:19 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:01:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ t_boolean	fork_process(t_exec *exec, pid_t pid);
 void		fd_setup(t_glb *global, int *pipe_fd);
 
 void		here_doc(t_glb *global);
-t_boolean	cor(t_exec *exec);
+t_boolean	fork_setup(t_exec *exec);
 
 #endif

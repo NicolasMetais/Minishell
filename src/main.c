@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/05 23:18:57 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:21:53 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 }
 //VAR GLOBALE EXIT
 unsigned int	exit_code = 0;
+
+volatile sig_atomic_t	g_signal = 0;
+
 
 //DUPLICATION DE LA VARIABLE D'ENV
 int	main(int ac, char **av, char **env)

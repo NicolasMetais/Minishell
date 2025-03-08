@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/06 02:32:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 00:42:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # include <fcntl.h>
 # include <sys/types.h>
 #include <sys/wait.h>
+
+extern volatile sig_atomic_t	g_signal;
 
 extern unsigned int exit_code;
 
