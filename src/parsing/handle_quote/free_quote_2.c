@@ -33,5 +33,18 @@ void	reset_handle_quote(t_pipe_var *ctx)
 {
 	ctx->c = 0;
 	free(ctx->fstr);
-	ctx->fstr = NULL;		
+	ctx->fstr = NULL;
+}
+
+void	quote_or_not_free(t_quote *ctx, t_free_var *f)
+{
+	free(f->word);
+	free(f->str);
+	if (ctx->k == 0)
+	{	
+		free(ctx->str);
+	}
+	f->str = NULL;
+	f->word = NULL;
+	ctx->tmp = ctx->str;
 }

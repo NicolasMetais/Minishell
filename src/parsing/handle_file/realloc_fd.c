@@ -41,32 +41,30 @@ char	**realloc_cmd(char **cmd, int supp)
 	return (cmd_dup);
 }
 
-char	**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i)
+char	*realloc_str_file(char *str, int i, int j)
 {
-	if (cmd->out_fd[0] > 0)
-		close (cmd->out_fd[0]);
-	cmd->out_fd[0] = open_file_out(cmd_split[i + 1], ft_strlen(cmd_split[i]));
-	cmd->out_fd[1] = ft_strlen(cmd_split[i]);
-	cmd_split = realloc_cmd(cmd_split, i);
-	if (!cmd_split)
-		return (NULL);
-	cmd_split = realloc_cmd(cmd_split, i);
-	if (!cmd_split)
-		return (NULL);
-	return (cmd_split);
-}
+	char	*new;
+	int		k;
+	int		len;
 
-char	**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i)
-{
-	if (cmd->in_fd[0] > 0)
-		close (cmd->in_fd[0]);
-	cmd->in_fd[0] = open_file_in(cmd_split[i + 1]);
-	cmd->in_fd[1] = ft_strlen(cmd_split[i]);
-	cmd_split = realloc_cmd(cmd_split, i);
-	if (!cmd_split)
+	len = ft_strlen(str) - i;
+	k = 0;
+	new = malloc(sizeof(char) * len + 2);
+	if (!new)
 		return (NULL);
-	cmd_split = realloc_cmd(cmd_split, i);
-	if (!cmd_split)
-		return (NULL);
-	return (cmd_split);
+	while (k < j)
+	{
+		new[k] = *str;
+		k++;
+		str++;
+	}
+	str += i + 1;
+	while (*str)
+	{
+		new[k] = *str;
+		k++;
+		str++;
+	}
+	new[k] = '\0';
+	return (new);
 }

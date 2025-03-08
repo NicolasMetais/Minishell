@@ -51,6 +51,7 @@ void	quote_or_not_free_2(t_quote *ctx, t_free_var *f)
 	ctx->tmp = ctx->str;
 }
 
+<<<<<<< HEAD
 
 void	quote_or_not_free(t_quote *ctx, t_free_var *f)
 {
@@ -65,6 +66,8 @@ void	quote_or_not_free(t_quote *ctx, t_free_var *f)
 	ctx->tmp = ctx->str;
 }
 
+=======
+>>>>>>> origin/new_parsing
 void	cmd_tab_handle_quote_failed(char **tmp, t_pipe_var *ctx)
 {
 	free_split(tmp);

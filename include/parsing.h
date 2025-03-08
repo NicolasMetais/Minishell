@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/06 02:18:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:33:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ typedef struct s_utils
 	int		j;
 }			t_utils;
 
+typedef struct s_realloc_get_bool
+{
+	int	i;
+	int	len;
+	int	*new;
+}				t_r_get_bool;
+
 typedef struct s_pignouf
 {
 	int		i;
@@ -56,6 +63,34 @@ typedef struct s_pignouf
 	int		len;
 	char	*new;
 }				t_pignouf;
+
+typedef struct s_get_line_index
+{
+	int	j;
+	int	i;
+	int	tab_len;
+}				t_index;
+
+typedef struct s_get_file_handle_un_word_var
+{
+	char	*tmp;
+	char	c;
+	int		i;
+	int		j;
+}				t_un_word_var;
+// typedef	enum s_type
+// {
+// 	WORD,
+// 	RED,
+// 	PIPE,
+// }			t_type;
+
+// typedef struct s_token
+// {
+// 	t_type			type;
+// 	struct s_token	*next_tk;
+// 	struct s_token	*next_cmd;
+// }				t_token;
 
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
@@ -75,9 +110,11 @@ char		*ft_strndup(char *line, int c);
 char		*ft_strdup_end(char *str, int c);
 int			is_a_sep(char c);
 char		*realloc_line(char *old, int c, int *end);
-char		**get_pipe(char *line);
 char		*ft_strnjoin(char const *s1, char const *s2, int c);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
-char		*ft_pignouf(char *line);
+char		*ft_pignouf_prime(char *line);
+// t_token		*get_token(char *line);
+int			bool_len(int *bool);
+char		*realloc_str_file(char *str, int i, int j);
 
 #endif

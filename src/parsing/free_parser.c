@@ -6,12 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/03 22:48:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:36:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// FREE DOUBLE TABLEAU
 void	free_split(char **split)
 {
 	int	i;
@@ -25,6 +26,7 @@ void	free_split(char **split)
 	free(split);
 }
 
+// FREE DOUBLE TABLEAU SI MALLOC FAIL
 void	free_split_init(char **split, int i)
 {
 	int	n;
@@ -38,15 +40,15 @@ void	free_split_init(char **split, int i)
 	free(split);
 }
 
+// FREE NODE CMD
 void	free_node(t_cmd *cmd)
 {
-	if (cmd->args)
-		free_split(cmd->args);
-	if (cmd->here_doc)
-		free_split(cmd->here_doc);
+	if (cmd->cmd)
+		free_split(cmd->cmd);
 	free(cmd);
 }
 
+// FREE LA LISTE DE COMMANDE
 void	freelist(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -60,6 +62,7 @@ void	freelist(t_cmd *cmd)
 	cmd = NULL;
 }
 
+//FREE LE GLOBAL
 void	free_global(t_glb *glb)
 {
 	if (glb)

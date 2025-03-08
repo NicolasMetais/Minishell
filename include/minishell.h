@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 17:44:33 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:33:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@
 # include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_signal;
+
+# include "parsing.h"
+
+typedef struct s_redirection
+{
+	t_type_red				type;
+	t_boolean				valid;
+	t_boolean				error;
+	struct s_redirection	*next;
+}				t_red;
+
+typedef	struct s_get_red_bool
+{
+	t_red		error;
+	char		c;
+	t_boolean	quote;
+	char		*word;
+	char 		*tmp;
+}				t_bool_red;
 
 typedef struct s_pipe
 {
@@ -126,10 +145,27 @@ void		free_tab(char **tab);
 //KILL
 void		kill_program(t_core *core);
 
+<<<<<<< HEAD
 //A TRIER
+=======
+
+// HANDLE PIPE IN PARSING
+void		handle_pipe(t_pipe_var *ctx);
+void		handle_pipe_realloc_line_and_tab(t_pipe_var *ctx, char **tmp);
+void		handle_pipe_get_cmd(t_pipe_var *ctx);
+char		**get_pipe(char *line);
+t_boolean	pipe_valid(char *line);
+
+// STRUCT INIT PARSING
+
+void	pipe_var_init(t_pipe_var *ctx, char *line);
+void	quote_var_init(t_pipe_var *ctx, char *line);
+void	get_word_init(t_quote *ctx, char *str, int j);
+
+>>>>>>> origin/new_parsing
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
-char		**get_fd(t_cmd *cmd, char **cmd_line_split);
+char		**get_fd(t_cmd *cmd, char **cmd_split, t_red *tab_red);
 char		**get_outfd(t_cmd *cmd, char **cmd_split);
 char		**get_infd(t_cmd *cmd, char **cmd_split);
 char		**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
@@ -151,6 +187,7 @@ void		ndup_failed(t_quote *ctx, t_free_var *f);
 void		quote_or_not_free(t_quote *ctx, t_free_var *f);
 
 void		quote_or_not(t_quote *ctx);
+void		handle_inside_quote(t_quote *ctx);
 void		realloc_line_in_quote(t_quote *ctx, t_free_var *f);
 void		get_word_in_quote(t_quote *ctx, t_free_var *f);
 void		no_quote(t_quote *ctx, t_free_var *f);
@@ -161,5 +198,40 @@ void		realloc_line_handle_quote_failed(t_pipe_var *ctx);
 void		get_word_failed(t_pipe_var *ctx);
 void		reset_handle_quote(t_pipe_var *ctx);
 void		quote_or_not_free_2(t_quote *ctx, t_free_var *f);
+t_boolean	unexpected_token_red(char *cmd_one_line, t_red *tab_red);
+t_boolean	is_double(char *word);
+void		init_bool_red(t_bool_red *ctx, char *word);
+void		turn_true_get_bool(t_bool_red *ctx);
+t_red		*get_tk_red(char *line);
+char		*get_word(char *str, int j);
+void		turn_false_get_bool(t_bool_red *ctx);
+char		*get_one_line_of_cmd_split(char **cmd_split);
+void		free_list_fd(t_file *cmd);
+void    	free_fd(t_file *in, t_file *out);
+void 		free_end_tab(char **cmd_tab, int i);
+void		free_tab_red(t_red *cmd);
+void		get_file_index_init(t_index *index, char **cmd_tab);
+
+void		get_file_increment(t_index *index, char **cmd_tab, t_red **tab_red);
+t_boolean	get_file_increment_false(t_index *index, char **cmd_tab, t_red **tab_red);
+
+char		*realloc_word_red_at_end(char *str, t_red *red_tab);
+char		*get_one_line_of_cmd_split(char **cmd_split);
+
+// SEARCH FILE IN CHAR*
+char		*handle_cmd_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red);
+char		*handle_cmd_file_word_un(t_cmd *cmd, char *str, t_red **tab_red);
+
+// CREATE FILES LIST IN CMD
+void		add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red, int complete);
+t_file		*create_file(char *file, t_file *list, t_type_red type, int complete);
+t_file		*add_to_file_list(t_file *lst, t_file *new);
+
+
+// EXTRACT FILES FROM CHAR**
+char		**extract_file(t_cmd *cmd, char **cmd_tab, t_red **tab_red, t_index *index);
+char		**three_token_in_two_word(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cmd);
+char		**two_token_in_one_word(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cmd);
+char		**simple_token(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cmd);
 
 #endif

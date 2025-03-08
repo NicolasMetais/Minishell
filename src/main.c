@@ -6,27 +6,11 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 17:05:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:35:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// if (tmp->here_doc)
-// {
-// 	for (int i = 0; tmp->here_doc[i]; i++)
-// 		printf("here_doc[%d] = %s\n", i, tmp->here_doc[i]);
-// }
-// printf("in_fd[0] (file descriptor) = %d\n", tmp->in_fd[0]);
-// printf("in_fd[1] (redirection) = %d\n", tmp->in_fd[1]);
-// printf("out_fd[0] (file descriptor) = %d\n", tmp->out_fd[0]);
-// printf("out_fd[1] (redirection) = %d\n", tmp->out_fd[1]);
-// while (global->cmd)
-// {
-// 	for (int i = 0; global->cmd->cmd[i]; i++)
-// 		printf("CMD %s \n", global->cmd->cmd[i]);
-// 	global->cmd = global->cmd->next;
-// }
 
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
@@ -80,13 +64,18 @@ int	empty(char *line)
 }
 
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
-t_boolean	minishell_launch(t_core *core, t_glb *global)
+void	minishell_launch(t_core *core, t_glb *global)
 {
 	int	save;
 
 	save = dup(STDIN_FILENO);
 	funny_stuff();
-	while (1)
+	t_file	*in;
+	t_file	*out;
+	int	i;
+
+	i= 0;
+	while (i < 1)
 	{
 		signal_update();
 		if (!prompt_update(core))
@@ -107,11 +96,15 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 		else if (!core->line)
 		{
 			printf("exit\n");
-			kill_program(core);
-			exit(0);
+
 		}
 		free(core->line);
+		free_fd(in, out);
+		free_global(global);
+		i++;
 	}
+	kill_program(core);
+	exit(0);
 }
 //VAR GLOBALE EXIT
 

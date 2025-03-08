@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/03 22:49:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:33:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,32 @@ void	add_back(t_cmd *head, t_cmd *new)
 	return ;
 }
 
+char **new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
+{
+	cmd->in = NULL;
+	cmd->out = NULL;
+	if (unexpected_token_red
+		(get_one_line_of_cmd_split(cmd_line_split), tab_red))
+		return (free(cmd), free_split(cmd_line_split), NULL);
+	if (tab_red)
+	{
+		cmd_line_split = get_fd(cmd, cmd_line_split, tab_red);
+		if (!cmd_line_split)
+			return (free(cmd), NULL);
+		free_tab_red(tab_red);
+	}
+	return (cmd_line_split);
+}
+
 t_cmd	*new_cmd(char *line_split)
 {
 	t_cmd	*cmd;
+	t_red	*tab_red;
 	char	**cmd_line_split;
 
+	tab_red = get_tk_red(line_split);
+	// if (tab_red->error == true)
+	// 	return (NULL);
 	cmd_line_split = get_quote_dup(line_split);
 	if (!cmd_line_split)
 		return (NULL);
@@ -48,22 +69,6 @@ t_cmd	*new_cmd(char *line_split)
 	cmd->args = cmd_line_split;
 	cmd->next = NULL;
 	return (cmd);
-}
-
-void	check_and_add_cmd_to_list(t_cmd *head, t_cmd *tmp)
-{
-	if (tmp->in_fd[0] == -1 || tmp->out_fd[0] == -1)
-	{
-		free_node(tmp);
-		return ;
-	}
-	if (tmp->in_fd[1] > 2 || tmp->out_fd[1] > 2)
-	{
-		free_node(tmp);
-		return ;
-	}
-	else
-		add_back(head, tmp);
 }
 
 t_cmd	*set_cmd(char **line_split)
@@ -82,7 +87,7 @@ t_cmd	*set_cmd(char **line_split)
 		tmp = new_cmd(line_split[i]);
 		if (!tmp)
 			return (freelist(head), NULL);
-		check_and_add_cmd_to_list(head, tmp);
+		add_back(head, tmp);
 		i++;
 	}
 	return (head);
