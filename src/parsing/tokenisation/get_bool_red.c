@@ -66,7 +66,7 @@ t_red *get_bool(char *word, t_red *red_value)
 		{
 			tmp = new_red_value(&ctx);
 			if (!tmp)
-				return (NULL);							// free red_value
+				return (free_tab_red(red_value), NULL);
 			red_value = add_back_red(red_value, tmp);
 		}
 		if (*ctx.word)
@@ -78,8 +78,16 @@ t_red *get_bool(char *word, t_red *red_value)
 t_red	*get_tk_red(char *line)
 {
 	t_red	*red_value;
+	//t_red	*e;
 
 	red_value = NULL;
+	// e = NULL;
+	// e->error = true;
+	// e->valid = false;
+	// e->type = simple;
+	// e->next= NULL;
 	red_value = get_bool(line, red_value);
+	// if (!red_value)
+	// 	return (e);
 	return (red_value);
 }

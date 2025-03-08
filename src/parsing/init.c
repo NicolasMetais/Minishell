@@ -30,24 +30,12 @@ void	add_back(t_cmd *head, t_cmd *new)
 	return ;
 }
 
-t_cmd	*new_cmd(char *line_split)
+char **new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 {
-	t_cmd	*cmd;
-	t_red	*tab_red;
-	char	**cmd_line_split;
-
-	tab_red = get_tk_red(line_split);
-	//if (tab_red->error == true)
-	//	return (NULL);
-	cmd_line_split = get_quote_dup(line_split);
-	if (!cmd_line_split)
-		return (NULL);
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (free_split(cmd_line_split), NULL);
 	cmd->in = NULL;
 	cmd->out = NULL;
-	if (unexpected_token_red(get_one_line_of_cmd_split(cmd_line_split), tab_red))
+	if (unexpected_token_red
+		(get_one_line_of_cmd_split(cmd_line_split), tab_red))
 		return (free(cmd), free_split(cmd_line_split), NULL);
 	if (tab_red)
 	{
@@ -56,7 +44,27 @@ t_cmd	*new_cmd(char *line_split)
 			return (free(cmd), NULL);
 		free_tab_red(tab_red);
 	}
-	cmd->cmd = cmd_line_split;
+	return (cmd_line_split);
+}
+
+t_cmd	*new_cmd(char *line_split)
+{
+	t_cmd	*cmd;
+	t_red	*tab_red;
+	char	**cmd_line_split;
+
+	tab_red = get_tk_red(line_split);
+	// if (tab_red->error == true)
+	// 	return (NULL);
+	cmd_line_split = get_quote_dup(line_split);
+	if (!cmd_line_split)
+		return (NULL);
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (free_split(cmd_line_split), NULL);
+	cmd->cmd = new_cmd_file(cmd_line_split, cmd, tab_red);
+	if (!cmd->cmd)
+		return (NULL);
 	cmd->next = NULL;
 	return (cmd);
 }

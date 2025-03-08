@@ -1,6 +1,10 @@
 SRCS = 	src/main.c \
 		src/parsing/free_parser.c \
 		src/parsing/handle_file/get_fd.c \
+		src/parsing/handle_file/get_file_utils.c \
+		src/parsing/handle_file/create_file_list.c \
+		src/parsing/handle_file/extract_file.c \
+		src/parsing/handle_file/shearch_file.c \
 		src/parsing/handle_file/realloc_fd.c \
 		src/parsing/handle_file/unexpected_token_redirection.c \
 		src/parsing/handle_file/free_list_fd.c \

@@ -32,7 +32,8 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->cmd_tab = NULL;
 	ctx->valid = false;
 	ctx->quote = false;
-	ctx->str = ft_pignouf(line);
+	ctx->str = ft_pignouf_prime(line);
+	fprintf(stderr, "STR : '%s'\n", ctx->str);
 	ctx->fstr = ctx->str;
 }
 

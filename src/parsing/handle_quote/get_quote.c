@@ -47,6 +47,25 @@ void	get_quote_turn_true(t_pipe_var *ctx)
 	increment(ctx);
 }
 
+char	*get_quote_dup_2(t_pipe_var *ctx)
+{
+	char	*tmp;
+
+	
+	handle_quote(ctx);
+	if (!ctx->cmd_tab)
+		return (NULL);
+	tmp = ctx->str;
+	if (ctx->end == 0 && *ctx->str == ' ')
+	{
+		ctx->str = ft_pignouf_prime(ctx->str);
+		if (!ctx->str)
+			return (free(tmp), NULL);
+		free(tmp);	
+	}
+	return (ctx->str);
+}
+
 char	**get_quote_dup(char *line)
 {
 	t_pipe_var	ctx;
@@ -65,9 +84,8 @@ char	**get_quote_dup(char *line)
 		}
 		if ((*ctx.str == ' ' && ctx.quote == false) || ft_strlen(ctx.str) == 0)
 		{	
-//			skip_space(&ctx);			!!!!!!!!!!!!!!
-			handle_quote(&ctx);
-			if (!ctx.cmd_tab)
+			ctx.str = get_quote_dup_2(&ctx);
+			if (!ctx.str)
 				return (NULL);
 		}
 		else

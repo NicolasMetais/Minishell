@@ -74,7 +74,20 @@ typedef struct s_pignouf
 	char	*new;
 }				t_pignouf;
 
+typedef struct s_get_line_index
+{
+	int	j;
+	int	i;
+	int	tab_len;
+}				t_index;
 
+typedef struct s_get_file_handle_un_word_var
+{
+	char	*tmp;
+	char	c;
+	int		i;
+	int		j;
+}				t_un_word_var;
 // typedef	enum s_type
 // {
 // 	WORD,
@@ -109,7 +122,7 @@ int			is_a_sep(char c);
 char		*realloc_line(char *old, int c, int *end);
 char		*ft_strnjoin(char const *s1, char const *s2, int c);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
-char		*ft_pignouf(char *line);
+char		*ft_pignouf_prime(char *line);
 // t_token		*get_token(char *line);
 int			bool_len(int *bool);
 char		*realloc_str_file(char *str, int i, int j);

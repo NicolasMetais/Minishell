@@ -17,10 +17,13 @@ void	free_list_fd(t_file *cmd)
 {
 	t_file	*tmp;
 
+	tmp = cmd;
 	while (cmd)
 	{
 		tmp = cmd->next;
 		free(cmd->file);
+		fprintf(stderr, "FREE address : %p \n", cmd);
+
 		free(cmd);
 		cmd = tmp;
 	}

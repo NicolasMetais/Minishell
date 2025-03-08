@@ -79,6 +79,8 @@ void	minishell_launch(t_core *core, t_glb *global)
 		in = global->cmd->in;
 		while (global && global->cmd)
 		{		
+			out = global->cmd->out;
+			in = global->cmd->in;
 			printf("INFILE\n");
 			while (global->cmd->in)
 			{
@@ -99,6 +101,9 @@ void	minishell_launch(t_core *core, t_glb *global)
 			printf("COMMANDE\n");
 			for (int j = 0; global->cmd->cmd[j]; j++)
 				printf("%s \n", global->cmd->cmd[j]);
+			free_fd(in, out);
+			in = NULL;
+			out = NULL;
 			global->cmd = global->cmd->next;
 		}
 		if (core->line)

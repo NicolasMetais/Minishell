@@ -201,5 +201,28 @@ void		free_list_fd(t_file *cmd);
 void    	free_fd(t_file *in, t_file *out);
 void 		free_end_tab(char **cmd_tab, int i);
 void		free_tab_red(t_red *cmd);
+void		get_file_index_init(t_index *index, char **cmd_tab);
+
+void		get_file_increment(t_index *index, char **cmd_tab, t_red **tab_red);
+t_boolean	get_file_increment_false(t_index *index, char **cmd_tab, t_red **tab_red);
+
+char		*realloc_word_red_at_end(char *str, t_red *red_tab);
+char		*get_one_line_of_cmd_split(char **cmd_split);
+
+// SEARCH FILE IN CHAR*
+char		*handle_cmd_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red);
+char		*handle_cmd_file_word_un(t_cmd *cmd, char *str, t_red **tab_red);
+
+// CREATE FILES LIST IN CMD
+void		add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red, int complete);
+t_file		*create_file(char *file, t_file *list, t_type_red type, int complete);
+t_file		*add_to_file_list(t_file *lst, t_file *new);
+
+
+// EXTRACT FILES FROM CHAR**
+char		**extract_file(t_cmd *cmd, char **cmd_tab, t_red **tab_red, t_index *index);
+char		**three_token_in_two_word(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cmd);
+char		**two_token_in_one_word(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cmd);
+char		**simple_token(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cmd);
 
 #endif
