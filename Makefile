@@ -3,6 +3,7 @@ SRCS = 	src/main.c \
 		src/parsing/handle_file/get_fd.c \
 		src/parsing/handle_file/realloc_fd.c \
 		src/parsing/handle_file/unexpected_token_redirection.c \
+		src/parsing/handle_file/free_list_fd.c \
 		src/parsing/tokenisation/get_bool_red.c \
 		src/parsing/tokenisation/get_bool_red_utils.c \
 		src/parsing/init.c \

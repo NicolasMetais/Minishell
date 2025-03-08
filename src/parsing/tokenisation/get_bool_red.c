@@ -72,7 +72,7 @@ t_red *get_bool(char *word, t_red *red_value)
 		if (*ctx.word)
 			ctx.word++;
 	}
-	return (red_value);
+	return (free(ctx.tmp), red_value);
 }
 
 t_red	*get_tk_red(char *line)

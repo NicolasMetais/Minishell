@@ -50,6 +50,7 @@ typedef	struct s_get_red_bool
 	char		c;
 	t_boolean	quote;
 	char		*word;
+	char 		*tmp;
 }				t_bool_red;
 
 typedef struct s_pipe
@@ -195,5 +196,10 @@ void		turn_true_get_bool(t_bool_red *ctx);
 t_red		*get_tk_red(char *line);
 char		*get_word(char *str, int j);
 void		turn_false_get_bool(t_bool_red *ctx);
+char		*get_one_line_of_cmd_split(char **cmd_split);
+void		free_list_fd(t_file *cmd);
+void    	free_fd(t_file *in, t_file *out);
+void 		free_end_tab(char **cmd_tab, int i);
+void		free_tab_red(t_red *cmd);
 
 #endif

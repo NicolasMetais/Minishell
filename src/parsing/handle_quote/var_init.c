@@ -33,7 +33,6 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->valid = false;
 	ctx->quote = false;
 	ctx->str = ft_pignouf(line);
-	//
 	ctx->fstr = ctx->str;
 }
 

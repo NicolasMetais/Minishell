@@ -32,6 +32,7 @@ typedef struct s_commande
 	char				**cmd;
 	t_file				*in;	
 	t_file				*out;
+	int					error;
 	struct s_commande	*next;
 }				t_cmd;
 

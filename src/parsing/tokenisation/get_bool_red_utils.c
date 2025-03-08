@@ -44,6 +44,7 @@ void	init_bool_red(t_bool_red *ctx, char *word)
 	ctx->error.type = simple;
 	ctx->error.valid = false;
 	ctx->word = ft_strdup(word);
+	ctx->tmp = ctx->word;
 	ctx->quote = false;
 	ctx->c = 0;
 }

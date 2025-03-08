@@ -17,29 +17,24 @@ void	error_token_red(char *cmd_one_line, t_red *tab_red)
 {
 	char	c;
 	int		i;
-	t_red	*tmp;
 
 	i = 0;
 	c = *cmd_one_line;
-	tmp = tab_red;
-	while (*cmd_one_line == c && tmp->valid == true)
-	{	
-		i++;
-		tmp = tmp->next;
-	}
-	if (i > 2)
-		ft_printf("minishell: syntax error near unexpected token `%c%c'", c, c);
+	if (tab_red->type == double_)
+		ft_printf("minishell: syntax error near unexpected token `%c%c'\n", c, c);
 	else
-		ft_printf("minishell: syntax error near unexpected token `%c'", c);
+		ft_printf("minishell: syntax error near unexpected token `%c'\n", c);
 }
 
 t_boolean	unexpected_token_red(char *cmd_one_line, t_red *tab_red)
 {
 	int		i;
 	t_red	*tmp;
+	char	*fstr;
 
 	i = 0;
 	tmp = tab_red;
+	fstr = cmd_one_line;
 	while (*cmd_one_line)
 	{
 		if (is_redirection_char(*cmd_one_line) && tmp->valid == true)
@@ -49,9 +44,9 @@ t_boolean	unexpected_token_red(char *cmd_one_line, t_red *tab_red)
 			cmd_one_line++;
 			tmp = tmp->next;
 			if (is_redirection_char(*cmd_one_line) && tmp->valid == true)
-				return(error_token_red(cmd_one_line, tmp), true);
+				return(error_token_red(cmd_one_line, tmp), free(fstr), true);
 		}
 		cmd_one_line++;
 	}
-	return (false);
+	return (free(fstr), false);
 }
