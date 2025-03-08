@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/08 20:33:11 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:46:28 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,9 @@ t_cmd	*new_cmd(char *line_split)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (free_split(cmd_line_split), NULL);
-	cmd->here_doc = NULL;
-	cmd_line_split = get_fd(cmd, cmd_line_split);
-	if (!cmd_line_split)
-		return (free_split(cmd_line_split), NULL);
-	cmd->args = cmd_line_split;
+	cmd->args = new_cmd_file(cmd_line_split, cmd, tab_red);
+	if (!cmd->args)
+		return (NULL);
 	cmd->next = NULL;
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 10:38:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/03 21:30:55 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:47:21 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	quote_or_not_free_2(t_quote *ctx, t_free_var *f)
 	ctx->tmp = ctx->str;
 }
 
-<<<<<<< HEAD
 
 void	quote_or_not_free(t_quote *ctx, t_free_var *f)
 {
@@ -66,8 +65,6 @@ void	quote_or_not_free(t_quote *ctx, t_free_var *f)
 	ctx->tmp = ctx->str;
 }
 
-=======
->>>>>>> origin/new_parsing
 void	cmd_tab_handle_quote_failed(char **tmp, t_pipe_var *ctx)
 {
 	free_split(tmp);

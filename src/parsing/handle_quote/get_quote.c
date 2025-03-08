@@ -6,13 +6,12 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 07:50:50 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/03 21:07:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:47:04 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-<<<<<<< HEAD
 void	simple_word(t_quote *ctx, t_free_var *f)
 {
 	f->tmp = ft_strndup(ctx->str, ctx->i);
@@ -134,8 +133,6 @@ char	*get_word(char *str, int j)
 	return (ctx.word);
 }
 
-=======
->>>>>>> origin/new_parsing
 void	handle_quote(t_pipe_var *ctx)
 {
 	char	**tmp;

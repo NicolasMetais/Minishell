@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 20:33:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:41:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,6 @@ void		free_tab(char **tab);
 //KILL
 void		kill_program(t_core *core);
 
-<<<<<<< HEAD
-//A TRIER
-=======
 
 // HANDLE PIPE IN PARSING
 void		handle_pipe(t_pipe_var *ctx);
@@ -162,7 +159,6 @@ void	pipe_var_init(t_pipe_var *ctx, char *line);
 void	quote_var_init(t_pipe_var *ctx, char *line);
 void	get_word_init(t_quote *ctx, char *str, int j);
 
->>>>>>> origin/new_parsing
 t_boolean	is_redirection_char(char s);
 t_boolean	is_redirection(char	*s);
 char		**get_fd(t_cmd *cmd, char **cmd_split, t_red *tab_red);

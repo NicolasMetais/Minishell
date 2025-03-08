@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/08 20:33:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:45:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,27 @@
 
 #include "boolean.h"
 
+typedef enum s_type_red
+{
+	double_,
+	simple,
+}			t_type_red;
+
+typedef struct s_file
+{
+	t_type_red		type;
+	t_boolean		complete;
+	char			*file;
+	struct s_file	*next;
+}				t_file;
+
 typedef struct s_commande
 {
 	char				**args;
 	char				**here_doc;
-	int					in_fd[2];
-	int					out_fd[2];
+	t_file				*in;	
+	t_file				*out;
+	int					error;
 	int					args_nb;
 	struct s_commande	*next;
 }				t_cmd;

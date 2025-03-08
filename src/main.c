@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 20:35:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 20:43:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,15 @@ int	empty(char *line)
 }
 
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
-void	minishell_launch(t_core *core, t_glb *global)
+t_boolean	minishell_launch(t_core *core, t_glb *global)
 {
 	int	save;
 
 	save = dup(STDIN_FILENO);
 	funny_stuff();
-	t_file	*in;
-	t_file	*out;
 	int	i;
 
-	i= 0;
+	i = 0;
 	while (i < 1)
 	{
 		signal_update();
@@ -99,7 +97,6 @@ void	minishell_launch(t_core *core, t_glb *global)
 
 		}
 		free(core->line);
-		free_fd(in, out);
 		free_global(global);
 		i++;
 	}
