@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:54:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 22:38:59 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:44:10 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_boolean	export(t_core *core, t_glb *global)
 		return (print_env_alpha(core));
 	if (global->cmd->args[1][0] == '-')
 	{
-		if (invalid_option(global, "export: "))
+		if (invalid_option(global, "export: ", core))
 			return (true);
 		else
 			return (false);
@@ -130,7 +130,7 @@ t_boolean	export(t_core *core, t_glb *global)
 			marked_or_env(global->cmd->args[i], core);
 		else
 		{
-			if (!not_valid_id(global->cmd->args[i], "export: "))
+			if (!not_valid_id(global->cmd->args[i], "export: ", core))
 				return (false);
 		}
 	}

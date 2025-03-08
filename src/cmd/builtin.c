@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/04 14:06:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:44:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_boolean	builtin_or_not(t_core *core, t_glb *global)
 	}
 	if ((ft_strcmp(global->cmd->args[0], "pwd") == 0))
 	{
-		if (!pwd(global))
+		if (!pwd(global, core))
 			return (false);
 		return (true);
 	}

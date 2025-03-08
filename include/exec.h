@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/07 16:01:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 17:55:58 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void		free_all(t_glb *global);
 t_boolean	env_parse(t_exec *exec, t_core *core);
 t_boolean	args_parse(t_glb *global);
 
-int			env_exec(t_exec *exec);
-t_boolean	fork_process(t_exec *exec, pid_t pid);
+int			env_exec(t_exec *exec, t_core *core);
+t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core);
 void		fd_setup(t_glb *global, int *pipe_fd);
 
 void		here_doc(t_glb *global);
-t_boolean	fork_setup(t_exec *exec);
+t_boolean	fork_setup(t_exec *exec, t_core *core);
 
 #endif

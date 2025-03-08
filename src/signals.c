@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 02:26:02 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:23:33 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,11 @@ void	handle_sigint(int sig)
 	g_signal = sig;
 	if (g_signal == SIGINT)
 	{
-		g_signal = 0;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-
-void	handle_sigint_child(int sig)
-{
-	fflush(stderr);
-	g_signal = sig;
-	if (g_signal == SIGINT)
-	{
-		g_signal = 0;
-		write(1, "\n", 1);
+		if (isatty(STDIN_FILENO))
+			rl_redisplay();
 	}
 }
 
@@ -44,7 +33,7 @@ void	signal_update(void)
 
 	sign_int.sa_handler = handle_sigint;
 	sigemptyset(&sign_int.sa_mask);
-	sign_int.sa_flags = SA_RESTART;
+	sign_int.sa_flags = 0;
 	sigaction(SIGINT, &sign_int, NULL);
 	sign_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sign_quit.sa_mask);
@@ -60,10 +49,11 @@ void	signal_reset(void)
 {
 	struct sigaction	sign_def;
 
-	sign_def.sa_handler = handle_sigint_child;
+	sign_def.sa_handler = SIG_DFL;
 	sigemptyset(&sign_def.sa_mask);
-	sign_def.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sign_def, NULL);
+	sign_def.sa_flags = 0;
+	if (sigaction(SIGINT, &sign_def, NULL) < 0)
+		perror("sigaction");
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
 }

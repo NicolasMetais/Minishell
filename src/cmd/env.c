@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 22:34:03 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:38:20 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_boolean	env(t_core *core, t_glb *global)
 		if ((int)ft_strlen(core->env_dup[i]) > 4096)
 		{
 			ft_putendl_fd("/usr/bin/env: Argument list too long", 2);
-			exit_code = 126;
+			core->exit_code = 126;
 			return (true);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 00:42:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 17:44:33 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 //LIBFT
 # include "libft.h"
 //C LIBS
+# include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -33,11 +34,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_signal;
-
-extern unsigned int exit_code;
 
 typedef struct s_pipe
 {
@@ -85,6 +84,7 @@ typedef struct s_core
 	char			*path;
 	char			**splitted_path;
 	char			**env_dup;
+	int				exit_code;
 	t_env			*env;
 	t_env			*mark;
 }	t_core;
@@ -139,7 +139,7 @@ char		*remove_double_quote(char *line, int *end);
 void		increment(t_pipe_var *ctx);
 t_boolean	is_in_quote(char *str);
 t_boolean 	quote_inside(char *str, int i);
-t_boolean	 space_in_quote(char *str);
+t_boolean	space_in_quote(char *str);
 t_boolean	is_empty(char *str);
 
 void		free_var_init(t_quote *ctx, t_free_var *f);

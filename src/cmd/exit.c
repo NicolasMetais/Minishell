@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 22:34:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:42:21 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ t_boolean	exit_custom(t_core *core, t_glb *global)
 		{
 			if (!ft_isdigit(global->cmd->args[1][i++]))
 			{
-				status = only_num_arg(global, "exit: ");
+				status = only_num_arg(global, "exit: ", core);
 				break ;
 			}
 		}
 		if (global->cmd->args_nb > 2 && !status)
-			status = too_many_args("exit: ");
+			status = too_many_args("exit: ", core);
 	}
 	if (status == 0 && global->cmd->args_nb > 1)
 		status = ft_atol(global->cmd->args[1]);

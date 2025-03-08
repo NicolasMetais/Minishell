@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:11:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/02 13:55:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:49:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_boolean	marked_or_env(char *var, t_core *core)
 			return (add_var(var, core, false));
 		if (!(ft_isalnum(var[i])) && !(var[i] == '_'))
 		{
-			not_valid_id(var, "export: ");
+			not_valid_id(var, "export: ", core);
 			return (false);
 		}
 	}

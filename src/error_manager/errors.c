@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 22:50:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:46:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 //TOUTES LES FONCTIONS D'ERREURS LEAK A CAUSE DES JOIN DE SES MORTS
 
 //FLAG INVALIDE
-t_boolean	invalid_option(t_glb *global, char *cmd)
+t_boolean	invalid_option(t_glb *global, char *cmd, t_core *core)
 {
 	char	*custom_error;
 
@@ -27,12 +27,12 @@ t_boolean	invalid_option(t_glb *global, char *cmd)
 		return (free(custom_error), false);
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
-	exit_code = 2;
+	core->exit_code = 2;
 	return (true);
 }
 
 //TROP D'ARG
-t_boolean	too_many_args(char *cmd)
+t_boolean	too_many_args(char *cmd, t_core *core)
 {
 	char	*custom_error;
 
@@ -41,12 +41,12 @@ t_boolean	too_many_args(char *cmd)
 		return (false);
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
-	exit_code = 1;
+	core->exit_code = 1;
 	return (true);
 }
 
 //PERROR MODULABLE
-t_boolean	funct_error(char *cmd, char *addvalue)
+t_boolean	funct_error(char *cmd, char *addvalue, t_core *core)
 {
 	char	*custom_error;
 
@@ -55,12 +55,12 @@ t_boolean	funct_error(char *cmd, char *addvalue)
 		return (false);
 	perror(custom_error);
 	free(custom_error);
-	exit_code = 1;
+	core->exit_code = 1;
 	return (true);
 }
 
 //COMMAND NOT FOUND
-t_boolean	cmd_not_found(char *cmd)
+t_boolean	cmd_not_found(char *cmd, t_core *core)
 {
 	char	*custom_error;
 
@@ -69,11 +69,11 @@ t_boolean	cmd_not_found(char *cmd)
 		return (false);
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
-	exit_code = 127;
+	core->exit_code = 127;
 	return (true);
 }
 
-int	only_num_arg(t_glb *global, char *cmd)
+int	only_num_arg(t_glb *global, char *cmd, t_core *core)
 {
 	char	*custom_error;
 
@@ -83,6 +83,6 @@ int	only_num_arg(t_glb *global, char *cmd)
 		return (false);
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
-	exit_code = 2;
+	core->exit_code = 2;
 	return (2);
 }

@@ -6,14 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:32:22 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/04 15:49:12 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:38:05 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //JE PRINT L'EXIT CODE A LA PLACE DE $? DANS TOUTES LES STRINGS DU SHELL
-t_boolean	replace_exit_code(char **tocut, int j)
+t_boolean	replace_exit_code(char **tocut, int j, t_core *core)
 {
 	char	*code;
 	char	*new;
@@ -21,7 +21,7 @@ t_boolean	replace_exit_code(char **tocut, int j)
 	if (j < (int)ft_strlen(*tocut)
 		&& (*tocut)[j + 1] == '?')
 	{
-		code = ft_itoa(exit_code);
+		code = ft_itoa(core->exit_code);
 		if (!code)
 			return (false);
 		new = write_var(code, *tocut, j, 2);
@@ -113,7 +113,7 @@ char	**var_manager(t_core *core, char **new_line, t_boolean *replace)
 		{
 			if (new_line[i][j] == '$')
 			{
-				if (replace_exit_code(&new_line[i], j)
+				if (replace_exit_code(&new_line[i], j, core)
 					|| replace_var_env(core, &new_line[i], j))
 				{
 					j = -1;

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 02:21:53 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 17:05:27 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->prompt = NULL;
 	core->new_line = NULL;
 	core->mark = NULL;
+	core->exit_code = 0;
 	return (true);
 }
 
@@ -87,9 +88,9 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 	funny_stuff();
 	while (1)
 	{
+		signal_update();
 		if (!prompt_update(core))
 			core->prompt = NULL;
-		signal_update();
 		core->line = readline(core->prompt);
 		if (core->line && !empty(core->line))
 		{
@@ -103,7 +104,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 				return (false);
 			free_global(global);
 		}
- 		else if (!core->line)
+		else if (!core->line)
 		{
 			printf("exit\n");
 			kill_program(core);
@@ -113,7 +114,6 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 	}
 }
 //VAR GLOBALE EXIT
-unsigned int	exit_code = 0;
 
 volatile sig_atomic_t	g_signal = 0;
 

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 22:40:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:49:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,18 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_glb *global, t_gc *gc)
 	if (cd->ishome)
 	{
 		if (!cd->home)
-			return (free_gc(gc), env_not_set("HOME", "cd: "));
+			return (free_gc(gc), env_not_set("HOME", "cd: ", core));
 		folder = cd->home;
 	}
 	if (cd->undo)
 	{
 		if (!cd->oldpwd)
-			return (free_gc(gc), env_not_set("OLDPWD", "cd: "));
+			return (free_gc(gc), env_not_set("OLDPWD", "cd: ", core));
 		folder = cd->oldpwd;
 	}
 	status = chdir(folder);
 	if (status < 0)
-		return (funct_error("cd: ", folder));
+		return (funct_error("cd: ", folder, core));
 	if (!update_pwd(core, cd, gc))
 		return (false);
 	return (true);
@@ -133,11 +133,11 @@ t_boolean	cd_init(t_core *core, t_glb *global)
 						&& ft_strlen(global->cmd->args[1]) == 2)
 				cd.ishome = true;
 			else
-				return (invalid_option(global, "cd: "));
+				return (invalid_option(global, "cd: ", core));
 		}
 	}
 	if (global->cmd->args_nb > 2)
-		return (too_many_args("cd: "));
+		return (too_many_args("cd: ", core));
 	if (ft_strcmp(global->cmd->args[1], "~") == 0 || global->cmd->args_nb == 1)
 		cd.ishome = true;
 	if (!cd_exec(core, &cd, global, gc))
