@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 20:43:36 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 22:50:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 
 	save = dup(STDIN_FILENO);
 	funny_stuff();
-	int	i;
-
-	i = 0;
-	while (i < 1)
+	while (1)
 	{
 		signal_update();
 		if (!prompt_update(core))
@@ -94,14 +91,12 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 		else if (!core->line)
 		{
 			printf("exit\n");
-
+			kill_program(core);
+			exit(0);
 		}
 		free(core->line);
-		free_global(global);
-		i++;
 	}
-	kill_program(core);
-	exit(0);
+	return (true);
 }
 //VAR GLOBALE EXIT
 
@@ -114,7 +109,6 @@ int	main(int ac, char **av, char **env)
 	t_core	core;
 	t_glb	global;
 
-	core.env = NULL;
 	if (ac == 1)
 	{
 		if (env[0])

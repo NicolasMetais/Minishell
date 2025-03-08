@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 10:38:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/08 20:47:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/08 21:57:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,6 @@ void	quote_or_not_free_2(t_quote *ctx, t_free_var *f)
 		free(ctx->str);
 	}
 	free(f->word);
-	f->str = NULL;
-	f->word = NULL;
-	ctx->tmp = ctx->str;
-}
-
-
-void	quote_or_not_free(t_quote *ctx, t_free_var *f)
-{
-	free(f->word);	
-	free(f->str);
-	if (ctx->k == 0)
-	{	
-		free(ctx->str);
-	}
 	f->str = NULL;
 	f->word = NULL;
 	ctx->tmp = ctx->str;

@@ -3,120 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 14:37:28 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/14 09:04:46 by jbayonne         ###   ########.fr       */
+/*   Created: 2024/11/15 20:31:48 by nmetais           #+#    #+#             */
+/*   Updated: 2025/03/08 22:49:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/libft.h"
 #include <stdlib.h>
-#include <stdio.h>
 
-static int	ft_count_nico(char const *lastring, char c)
+static	size_t	wordcount(char const *s, char c)
 {
-	int	k;
-	int	c_nico;
-
-	c_nico = 0;
-	while (*lastring)
-	{
-		k = 1;
-		while (*lastring && *lastring == c)
-			lastring++;
-		while (*lastring && *lastring != c)
-		{
-			lastring++;
-			if (k == 1)
-			{
-				k = 0;
-				c_nico++;
-			}
-		}
-	}
-	return (c_nico);
-}
-
-static int	safe_malloc(char **nico, int i, int tchico)
-{
-	nico[i] = malloc(sizeof(char) * tchico + 1);
-	if (!nico[i])
-	{
-		while (i >= 0)
-			free(nico[i--]);
-		free(nico);
-		return (1);
-	}
-	return (0);
-}
-
-static int	catnico(const char *lastring, char **nico, int i, int tchico)
-{
-	int	j;
-
-	j = 0;
-	if (safe_malloc(nico, i, tchico))
-		return (1);
-	while (tchico)
-	{
-		nico[i][j] = *lastring;
-		tchico--;
-		lastring++;
-		j++;
-	}
-	nico[i][j] = '\0';
-	return (0);
-}
-
-static int	fill_nico(char const *lastring, char **nico, char c)
-{
-	int	i;	
-	int	tchico;
+	size_t	i;
+	size_t	word;
+	size_t	bol;
 
 	i = 0;
-	while (*lastring)
+	word = 0;
+	bol = 0;
+	while (s[i])
 	{
-		tchico = 0;
-		while (*lastring && *lastring == c)
-			lastring++;
-		while (*lastring && *lastring != c)
-		{
-			tchico++;
-			lastring++;
-		}
-		if (tchico)
-		{
-			if (catnico(lastring - tchico, nico, i, tchico))
-				return (1);
-			i++;
-		}
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			word++;
+		i++;
+		bol = 1;
 	}
-	return (0);
+	return (word);
+}
+
+static char	**freeme(char **str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return (NULL);
+}
+
+static	void	findtheword(char **findword, size_t *wordsize, char c)
+{
+	size_t	i;
+
+	*findword = *findword + *wordsize;
+	*wordsize = 0;
+	while (**findword && **findword == c)
+		(*findword)++;
+	i = 0;
+	while ((*findword)[i])
+	{
+		if ((*findword)[i] == c)
+			return ;
+		(*wordsize)++;
+		i++;
+	}
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**nico;
-	int		len_nico;
+	size_t	i;
+	char	**str;
+	size_t	wordsize;
+	char	*findword;
 
-	len_nico = ft_count_nico(s, c);
-	nico = malloc(sizeof(char *) * (len_nico + 1));
-	if (!nico)
+	i = 0;
+	wordsize = 0;
+	str = ft_calloc(sizeof(char *), wordcount(s, c) + 1);
+	if (!str)
 		return (NULL);
-	if (fill_nico(s, nico, c))
-		return (NULL);
-	nico[len_nico] = NULL;
-	return (nico);
+	findword = (char *)s;
+	while (i < wordcount(s, c))
+	{
+		findtheword(&findword, &wordsize, c);
+		str[i] = ft_calloc(sizeof(char), wordsize + 1);
+		if (!str[i])
+			return (freeme(str));
+		ft_strlcpy(str[i], findword, wordsize + 1);
+		i++;
+	}
+	str[i] = 0;
+	return (str);
 }
-
-/*
-int	main(void)
+/* 
+int main(void)
 {
-	char	**array;
-	char	list[] = "  salut la team c'est nico  ";
+ 	char **result = ft_split("1", ' ');
+	int i = 0;
 
-	array = ft_split(list, ' ');
-	for (int i = 0; array[i]; i++)
-		printf("%s\n", array[i]);
-	return (0);
-}*/
+ 
+ 	while (result[i])
+ 	{
+		printf("%s", result[i]);
+ 		free(result[i]);
+ 		i++;
+ 	}
+ 	free(result);
+
+} */
