@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 20:41:03 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 01:49:47 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@
 # include <sys/wait.h>
 
 extern volatile sig_atomic_t	g_signal;
-
-# include "parsing.h"
 
 typedef struct s_redirection
 {
@@ -144,7 +142,6 @@ void		free_tab(char **tab);
 
 //KILL
 void		kill_program(t_core *core);
-
 
 // HANDLE PIPE IN PARSING
 void		handle_pipe(t_pipe_var *ctx);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 22:50:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 01:52:50 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 				main_exec(global, core);
 			if (dup2(save, STDIN_FILENO) < 0)
 				return (false);
-			free_global(global);
 		}
 		else if (!core->line)
 		{
@@ -94,14 +93,13 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			kill_program(core);
 			exit(0);
 		}
+		free_global(global);
 		free(core->line);
 	}
 	return (true);
 }
-//VAR GLOBALE EXIT
 
 volatile sig_atomic_t	g_signal = 0;
-
 
 //DUPLICATION DE LA VARIABLE D'ENV
 int	main(int ac, char **av, char **env)

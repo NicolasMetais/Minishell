@@ -6,14 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/08 20:45:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:29:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include "boolean.h"
+# include "minishell.h"
 
 typedef enum s_type_red
 {
@@ -33,7 +33,7 @@ typedef struct s_commande
 {
 	char				**args;
 	char				**here_doc;
-	t_file				*in;	
+	t_file				*in;
 	t_file				*out;
 	int					error;
 	int					args_nb;

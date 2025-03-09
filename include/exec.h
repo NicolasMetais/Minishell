@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 17:55:58 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 01:04:47 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ typedef struct s_exec
 	char		*path;
 	char		**splitted_path;
 	char		**env;
+	t_file		*in;
+	t_file		*out;
+	t_boolean	file_or_not;
 	t_boolean	absolute_path;
 	t_cmd		*cmd;
 }	t_exec;

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:23:33 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 01:34:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	signal_reset(void)
 	sign_def.sa_handler = SIG_DFL;
 	sigemptyset(&sign_def.sa_mask);
 	sign_def.sa_flags = 0;
-	if (sigaction(SIGINT, &sign_def, NULL) < 0)
-		perror("sigaction");
+	sigaction(SIGINT, &sign_def, NULL);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
 }
