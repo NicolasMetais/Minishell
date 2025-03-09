@@ -52,12 +52,12 @@ SRCS = 	src/main.c \
 		src/free/free_env.c \
 		src/free/free.c \
 		src/free/garbage_collector.c \
-		src/exec/fork.c \
-		src/exec/exec.c \
-		src/exec/free_exec.c \
-		src/exec/here_doc.c \
-		src/exec/main_exec.c \
-		src/exec/dup.c \
+		src/exec1/fork.c \
+		src/exec1/exec.c \
+		src/exec1/free_exec.c \
+		src/exec1/here_doc.c \
+		src/exec1/main_exec.c \
+		src/exec1/dup.c \
 
 OBJS = $(SRCS:.c=.o)
 
