@@ -64,7 +64,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -Ilibft/include -Iinclude -g3
 
 NAME = minishell
 
@@ -73,7 +73,7 @@ LIB = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline  -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(@D)

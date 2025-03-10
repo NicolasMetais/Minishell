@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 10:31:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/03 21:30:03 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 18:23:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->valid = false;
 	ctx->quote = false;
 	ctx->str = ft_pignouf_prime(line);
-	fprintf(stderr, "STR : '%s'\n", ctx->str);
 	ctx->fstr = ctx->str;
 }
 

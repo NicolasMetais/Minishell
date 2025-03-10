@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 02:10:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 20:33:20 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	update_exit_code(t_exec *exec, t_core *core, pid_t *child_pid)
 	pid_t	pid;
 
 	i = 0;
-	while (i < exec->nb_cmd)
+	(void)exec;
+	while (child_pid[i] > 0)
 	{
 		pid = waitpid(child_pid[i], &status, 0);
-		fprintf(stderr, "[%d] parent: waited for child %d\n", getpid(), pid);
 		if (pid > 0 && WIFEXITED(status))
 		{
 			exit_status = WEXITSTATUS(status);
@@ -57,7 +57,7 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	pid_t	*child_pid;
 
 	i = 0;
-	child_pid = malloc(sizeof(pid_t) * exec->nb_cmd);
+	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
 	if (!child_pid)
 		return (false);
 	while (i < exec->nb_cmd)
@@ -72,7 +72,6 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 			child_pid[i] = pid;
 		if (!fork_process(exec, pid, core, i))
 			return (false);
-		fprintf(stderr, "%s\n", exec->cmd->args[0]);
 		exec->cmd = exec->cmd->next;
 		i++;
 	}
