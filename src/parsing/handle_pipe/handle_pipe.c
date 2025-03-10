@@ -70,7 +70,7 @@ void	handle_pipe(t_pipe_var *ctx)
 	{
 		handle_pipe_get_cmd(ctx);
 		if (!ctx->tmp)
-			exit (-1); // pb de malloc
+			exit (-1);
 		handle_pipe_realloc_line_and_tab(ctx, tmp);
 		if (ctx->cmd_tab == NULL)
 			return ;

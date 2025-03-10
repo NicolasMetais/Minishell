@@ -14,12 +14,12 @@
 
 char	*un_next(t_cmd *cmd, char *str, t_red *tab_red, t_un_word_var *var)
 {
-	char    *file;
+	char	*file;
 
 	file = ft_strndup(str, var->i);
 	if (!file)
 		return (free(var->tmp), NULL);
-	add_file_to_cmd(file, var->c, cmd, tab_red, 1);
+	add_file_to_cmd(file, var->c, cmd, tab_red);
 	if (cmd->error == 1)
 		return (free(var->tmp), NULL);
 	if (tab_red->type == double_)
@@ -30,16 +30,35 @@ char	*un_next(t_cmd *cmd, char *str, t_red *tab_red, t_un_word_var *var)
 	return (str);
 }
 
-void    t_un_word_var_init(t_un_word_var *var, char *str)
+void	t_un_word_var_init(t_un_word_var *var, char *str)
 {
 	var->i = 0;
 	var->tmp = str;
 	var->j = 0;
 }
 
+char	*loop_cmd_file_utils(t_red **tab_red, int *i, char *str)
+{
+	while (*str && !(is_redirection_char(*str) && (*tab_red)->valid == true))
+	{	
+		if (is_redirection_char(*str) && (*tab_red)->valid == false)
+		{
+			if ((*tab_red)->type == double_)
+			{
+				i++;
+				str++;
+			}
+			*tab_red = (*tab_red)->next;
+		}
+		str++;
+		i++;
+	}
+	return (str);
+}
+
 char	*handle_cmd_file_word_un(t_cmd *cmd, char *str, t_red **tab_red)
 {
-	t_un_word_var   var;
+	t_un_word_var	var;
 	t_red			*tmp_red;
 
 	tmp_red = *tab_red;
@@ -55,27 +74,14 @@ char	*handle_cmd_file_word_un(t_cmd *cmd, char *str, t_red **tab_red)
 	str++;
 	if ((*tab_red)->next)
 		*tab_red = (*tab_red)->next;
-	while (*str && !(is_redirection_char(*str) && (*tab_red)->valid == true))
-	{	
-		if (is_redirection_char(*str) && (*tab_red)->valid == false)
-		{
-			if ((*tab_red)->type == double_)
-			{
-				var.i++;
-				str++;
-			}
-			*tab_red = (*tab_red)->next;
-		}
-		str++;
-		var.i++;
-	}
+	str = loop_cmd_file_utils(tab_red, &var.i, str);
 	str = un_next(cmd, str, tmp_red, &var);
 	if (!str)
 		return (NULL);
 	return (free(var.tmp), str);
 }
 
-char	*handle_cmd_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red)
+char	*handle_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red)
 {
 	char	*file;
 	char	*tmp;
@@ -87,22 +93,9 @@ char	*handle_cmd_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red)
 	tmp_red = *tab_red;
 	if ((*tab_red)->next)
 		*tab_red = (*tab_red)->next;
-	while (*str && !(is_redirection_char(*str) && (*tab_red)->valid == true))
-	{	
-		if (is_redirection_char(*str) && (*tab_red)->valid == false)
-		{
-			if ((*tab_red)->type == double_)
-			{
-				i++;
-				str++;
-			}
-			*tab_red = (*tab_red)->next;
-		}
-		str++;
-		i++;
-	}
+	str = loop_cmd_file_utils(tab_red, &i, str);
 	file = ft_strndup(str, i);
-	add_file_to_cmd(file, c, cmd, tmp_red, 1);
+	add_file_to_cmd(file, c, cmd, tmp_red);
 	if (cmd->error == 1)
 		return (free(tmp), NULL);
 	str = realloc_line(tmp, i, NULL);

@@ -23,14 +23,14 @@ t_boolean	is_double(char *word)
 	return (false);
 }
 
-void    turn_true_get_bool(t_bool_red *ctx)
+void	turn_true_get_bool(t_bool_red *ctx)
 {
 	ctx->c = *ctx->word;
 	ctx->quote = true;
 	ctx->word++;
 }
 
-void    turn_false_get_bool(t_bool_red *ctx)
+void	turn_false_get_bool(t_bool_red *ctx)
 {
 	ctx->quote = false;
 	ctx->c = 0;
@@ -58,4 +58,3 @@ int	bool_len(int *bool)
 		i++;
 	return (i);
 }
-

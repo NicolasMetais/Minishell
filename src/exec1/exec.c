@@ -78,7 +78,7 @@ int	env_exec(t_exec *exec, t_core *core)
 	}
 	else
 		status = exec_shell(exec, exec->cmd->args[0], core);
-	perror("Minishellu");
+	perror("Minishell");
 	core->exit_code = errno;
 	return (core->exit_code);
 }

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	error_token_red(char *cmd_one_line, t_red *tab_red)
 {
 	char	c;
@@ -21,7 +20,8 @@ void	error_token_red(char *cmd_one_line, t_red *tab_red)
 	i = 0;
 	c = *cmd_one_line;
 	if (tab_red->type == double_)
-		ft_printf("minishell: syntax error near unexpected token `%c%c'\n", c, c);
+		ft_printf("minishell: syntax error near unexpected token `%c%c'\n",
+			c, c);
 	else
 		ft_printf("minishell: syntax error near unexpected token `%c'\n", c);
 }
@@ -44,7 +44,7 @@ t_boolean	unexpected_token_red(char *cmd_one_line, t_red *tab_red)
 			cmd_one_line++;
 			tmp = tmp->next;
 			if (is_redirection_char(*cmd_one_line) && tmp->valid == true)
-				return(error_token_red(cmd_one_line, tmp), free(fstr), true);
+				return (error_token_red(cmd_one_line, tmp), free(fstr), true);
 		}
 		cmd_one_line++;
 	}

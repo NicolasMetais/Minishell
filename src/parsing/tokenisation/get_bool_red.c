@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_red *new_red_value(t_bool_red *ctx)
+t_red	*new_red_value(t_bool_red *ctx)
 {
 	t_red	*new;
 
@@ -42,13 +42,13 @@ t_red	*add_back_red(t_red *red_value, t_red *new)
 	if (!red_value)
 		return (new);
 	tmp = red_value;
-	while(tmp->next)
+	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 	return (red_value);
 }
 
-t_red *get_bool(char *word, t_red *red_value)
+t_red	*get_bool(char *word, t_red *red_value)
 {
 	t_bool_red	ctx;
 	t_red		*tmp;
@@ -78,16 +78,8 @@ t_red *get_bool(char *word, t_red *red_value)
 t_red	*get_tk_red(char *line)
 {
 	t_red	*red_value;
-	//t_red	*e;
 
 	red_value = NULL;
-	// e = NULL;
-	// e->error = true;
-	// e->valid = false;
-	// e->type = simple;
-	// e->next= NULL;
 	red_value = get_bool(line, red_value);
-	// if (!red_value)
-	// 	return (e);
 	return (red_value);
 }

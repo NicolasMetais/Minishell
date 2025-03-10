@@ -30,13 +30,10 @@ void	add_back(t_cmd *head, t_cmd *new)
 	return ;
 }
 
-char **new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
+char	**new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 {
 	cmd->in = NULL;
 	cmd->out = NULL;
-	if (unexpected_token_red
-		(get_one_line_of_cmd_split(cmd_line_split), tab_red))
-		return (free(cmd), free_split(cmd_line_split), NULL);
 	if (tab_red)
 	{
 		cmd_line_split = get_fd(cmd, cmd_line_split, tab_red);
@@ -54,8 +51,6 @@ t_cmd	*new_cmd(char *line_split)
 	char	**cmd_line_split;
 
 	tab_red = get_tk_red(line_split);
-	// if (tab_red->error == true)
-	// 	return (NULL);
 	cmd_line_split = get_quote_dup(line_split);
 	if (!cmd_line_split)
 		return (NULL);
@@ -96,7 +91,10 @@ t_glb	*global_init(char *read_line, char **env)
 	char	**line_split;
 	t_glb	*glb;
 
+	(void)env;
 	if (ft_strlen(read_line) == 0)
+		return (NULL);
+	if (handle_token_error(read_line))
 		return (NULL);
 	line_split = get_pipe(read_line);
 	if (!line_split)
@@ -105,9 +103,6 @@ t_glb	*global_init(char *read_line, char **env)
 	if (!glb)
 		return (NULL);
 	glb->nb_cmd = command_counter(line_split);
-	glb->path = get_all_path(env);
-	if (!glb->path)
-		return (free_split(line_split), free(glb), NULL);
 	glb->cmd = set_cmd(line_split);
 	if (!glb->cmd)
 		return (free_split(line_split), free_global(glb), NULL);

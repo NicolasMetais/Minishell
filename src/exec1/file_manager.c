@@ -40,7 +40,7 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 {
 	while (exec->out)
 	{
-		fprintf(stderr, "ICI\n");
+//		fprintf(stderr, "ICI\n");
 		if (exec->out->file == 0)
 		{
 			exec->fd_outfile = open(exec->out->file, O_APPEND | O_WRONLY
@@ -48,7 +48,7 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 		}
 		else
 		{
-			fprintf(stderr, ":LA\n");
+//			fprintf(stderr, ":LA\n");
 			exec->fd_outfile = open(exec->out->file, O_CREAT | O_WRONLY
 					| O_TRUNC, 0777);
 		}

@@ -22,8 +22,6 @@ void	free_list_fd(t_file *cmd)
 	{
 		tmp = cmd->next;
 		free(cmd->file);
-		fprintf(stderr, "FREE address : %p \n", cmd);
-
 		free(cmd);
 		cmd = tmp;
 	}
@@ -38,7 +36,7 @@ void	free_fd(t_file *in, t_file *out)
 		free_list_fd(out);
 }
 
-void free_end_tab(char **cmd_tab, int i)
+void	free_end_tab(char **cmd_tab, int i)
 {
 	i++;
 	while (cmd_tab[i])

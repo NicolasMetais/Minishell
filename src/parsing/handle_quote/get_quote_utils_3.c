@@ -61,7 +61,7 @@ void	free_var_init(t_quote *ctx, t_free_var *f)
 	f->tmp = NULL;
 }
 
-void get_word_increment(t_quote	*ctx)
+void	get_word_increment(t_quote	*ctx)
 {
 	ctx->k--;
 	if (ctx->k >= 0)
@@ -70,4 +70,3 @@ void get_word_increment(t_quote	*ctx)
 		ctx->i++;
 	}
 }
-

@@ -93,19 +93,6 @@ typedef struct s_get_file_handle_un_word_var
 	int		i;
 	int		j;
 }				t_un_word_var;
-// typedef	enum s_type
-// {
-// 	WORD,
-// 	RED,
-// 	PIPE,
-// }			t_type;
-
-// typedef struct s_token
-// {
-// 	t_type			type;
-// 	struct s_token	*next_tk;
-// 	struct s_token	*next_cmd;
-// }				t_token;
 
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);

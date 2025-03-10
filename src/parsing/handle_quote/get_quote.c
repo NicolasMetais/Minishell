@@ -51,7 +51,6 @@ char	*get_quote_dup_2(t_pipe_var *ctx)
 {
 	char	*tmp;
 
-
 	handle_quote(ctx);
 	if (!ctx->cmd_tab)
 		return (NULL);
@@ -61,7 +60,7 @@ char	*get_quote_dup_2(t_pipe_var *ctx)
 		ctx->str = ft_pignouf_prime(ctx->str);
 		if (!ctx->str)
 			return (free(tmp), NULL);
-		free(tmp);	
+		free(tmp);
 	}
 	return (ctx->str);
 }

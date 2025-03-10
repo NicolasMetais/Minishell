@@ -10,9 +10,12 @@ SRCS = 	src/main.c \
 		src/parsing/handle_file/free_list_fd.c \
 		src/parsing/tokenisation/get_bool_red.c \
 		src/parsing/tokenisation/get_bool_red_utils.c \
+		src/parsing/tokenisation/get_bool_red_utils2.c \
+		src/parsing/tokenisation/get_bool_pipe.c \
+		src/parsing/tokenisation/handle_token_error.c \
+		src/parsing/tokenisation/token_error_utils.c \
 		src/parsing/init.c \
 		src/parsing/utils.c \
-		src/parsing/utils_.c \
 		src/parsing/handle_pipe/get_pipe.c \
 		src/parsing/handle_pipe/handle_pipe.c \
 		src/parsing/handle_quote/get_quote.c \
@@ -64,7 +67,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3
 
 NAME = minishell
 
@@ -73,7 +76,7 @@ LIB = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline  -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline  -fsanitize=address -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(@D)

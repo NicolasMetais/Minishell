@@ -39,7 +39,7 @@ void	update_exit_code(t_exec *exec, t_core *core, pid_t *child_pid)
 	while (i < exec->nb_cmd)
 	{
 		pid = waitpid(child_pid[i], &status, 0);
-		fprintf(stderr, "[%d] parent: waited for child %d\n", getpid(), pid);
+//		fprintf(stderr, "[%d] parent: waited for child %d\n", getpid(), pid);
 		if (pid > 0 && WIFEXITED(status))
 		{
 			exit_status = WEXITSTATUS(status);
@@ -72,7 +72,7 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 			child_pid[i] = pid;
 		if (!fork_process(exec, pid, core, i))
 			return (false);
-		fprintf(stderr, "%s\n", exec->cmd->args[0]);
+//		fprintf(stderr, "%s\n", exec->cmd->args[0]);
 		exec->cmd = exec->cmd->next;
 		i++;
 	}

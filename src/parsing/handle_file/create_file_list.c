@@ -14,7 +14,7 @@
 
 t_file	*add_to_file_list(t_file *lst, t_file *new)
 {
-	t_file *tmp;
+	t_file	*tmp;
 
 	if (!lst)
 	{
@@ -35,7 +35,6 @@ t_file	*init_list(char *file, t_file *list, t_type_red type, int complete)
 	new = malloc(sizeof(t_file));
 	if (!new)
 		return (free_list_fd(list), NULL);
-	fprintf(stderr, "ALLOC FILE : %p, %s \n", new, file);
 	new->type = type;
 	if (complete == 1)
 		new->complete = true;
@@ -47,16 +46,15 @@ t_file	*init_list(char *file, t_file *list, t_type_red type, int complete)
 	return (list);
 }
 
-t_file  *list_complete(char *file, t_file *list, t_type_red type, int complete)
+t_file	*list_complete(char *file, t_file *list, t_type_red type, int comp)
 {
-	t_file *new;
+	t_file	*new;
 
 	new = malloc(sizeof(t_file));
 	if (!new)
 		return (free_list_fd(list), NULL);
-	fprintf(stderr, "ALLOC FILE : %p, %s \n", new, file);
 	new->type = type;
-	if (complete == 1)
+	if (comp == 1)
 		new->complete = true;
 	else
 		new->complete = false;
@@ -72,7 +70,6 @@ t_file	*create_file(char *file, t_file *list, t_type_red type, int complete)
 
 	if (!list)
 	{	
-		fprintf(stderr, "INIT FILE LIST\n");
 		list = init_list(file, list, type, complete);
 		if (!list)
 			return (NULL);
@@ -95,12 +92,12 @@ t_file	*create_file(char *file, t_file *list, t_type_red type, int complete)
 	return (list);
 }
 
-void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red, int complete)
+void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red)
 {
 	cmd->error = 0;
 	if (c == '<')
 	{	
-		cmd->in = create_file(file, cmd->in, tab_red->type, complete);
+		cmd->in = create_file(file, cmd->in, tab_red->type, 1);
 		if (!cmd->in)
 		{
 			cmd->error = 1;
@@ -109,7 +106,7 @@ void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red, int complet
 	}
 	else
 	{
-		cmd->out = create_file(file, cmd->out, tab_red->type, complete);
+		cmd->out = create_file(file, cmd->out, tab_red->type, 1);
 		if (!cmd->out)
 		{	
 			cmd->error = 1;
@@ -117,5 +114,3 @@ void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red, int complet
 		}
 	}
 }
-
-

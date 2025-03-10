@@ -20,8 +20,6 @@ char	**realloc_cmd(char **cmd, int supp)
 	int		len;
 
 	len = command_counter(cmd);
-	if (len == 1)
-		return (cmd);
 	cmd_dup = malloc(sizeof(char *) * len);
 	if (!cmd_dup)
 		return (NULL);
