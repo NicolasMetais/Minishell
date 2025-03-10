@@ -60,7 +60,6 @@ void	freelist(t_cmd *cmd)
 	while (cmd)
 	{
 		tmp = cmd->next;
-		fprintf(stderr, "JE PASSE\n");
 		free_node(cmd);
 		cmd = tmp;
 	}

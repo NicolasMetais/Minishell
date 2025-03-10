@@ -17,7 +17,6 @@ char	*un_next(t_cmd *cmd, char *str, t_red *tab_red, t_un_word_var *var)
 	char	*file;
 
 	file = ft_strndup(str, var->i);
-	fprintf(stderr, "UN WORD FILE %s\n", file);
 	if (!file)
 		return (free(var->tmp), NULL);
 	add_file_to_cmd(file, var->c, cmd, tab_red);
@@ -96,7 +95,6 @@ char	*handle_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red)
 		*tab_red = (*tab_red)->next;
 	str = loop_cmd_file_utils(tab_red, &i, str);
 	file = ft_strndup(str, i);
-	fprintf(stderr, "WORD FILE '%s', %d\n", file, i);
 	add_file_to_cmd(file, c, cmd, tmp_red);
 	if (cmd->error == 1)
 		return (free(tmp), NULL);

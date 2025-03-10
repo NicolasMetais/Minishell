@@ -47,11 +47,10 @@ void	free_pipe_tk(t_pipe_token *tk)
 {
 	t_pipe_token	*tmp;
 
-	tmp = tk->next;
 	while (tk)
 	{
+		tmp = tk->next;
 		free(tk);
 		tk = tmp;
-		tmp = tmp->next;
 	}
 }
