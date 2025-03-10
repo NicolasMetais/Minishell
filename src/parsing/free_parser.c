@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/08 20:44:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:34:17 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	free_split_init(char **split, int i)
 // FREE NODE CMD
 void	free_node(t_cmd *cmd)
 {
+	if (cmd->in)
+		free_list_fd(cmd->in);
+	if (cmd->out)
+		free_list_fd(cmd->out);
 	if (cmd->args)
 		free_split(cmd->args);
 	free(cmd);
@@ -56,6 +60,7 @@ void	freelist(t_cmd *cmd)
 	while (cmd)
 	{
 		tmp = cmd->next;
+		fprintf(stderr, "JE PASSE\n");
 		free_node(cmd);
 		cmd = tmp;
 	}
@@ -69,8 +74,6 @@ void	free_global(t_glb *glb)
 	{
 		if (glb->cmd)
 			freelist(glb->cmd);
-		if (glb->path)
-			free_split(glb->path);
 		free(glb);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shearch_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-08 12:14:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-08 12:14:24 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/08 12:14:24 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/10 23:00:51 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*un_next(t_cmd *cmd, char *str, t_red *tab_red, t_un_word_var *var)
 	char	*file;
 
 	file = ft_strndup(str, var->i);
+	fprintf(stderr, "UN WORD FILE %s\n", file);
 	if (!file)
 		return (free(var->tmp), NULL);
 	add_file_to_cmd(file, var->c, cmd, tab_red);
@@ -45,13 +46,13 @@ char	*loop_cmd_file_utils(t_red **tab_red, int *i, char *str)
 		{
 			if ((*tab_red)->type == double_)
 			{
-				i++;
+				(*i)++;
 				str++;
 			}
 			*tab_red = (*tab_red)->next;
 		}
 		str++;
-		i++;
+		(*i)++;
 	}
 	return (str);
 }
@@ -95,6 +96,7 @@ char	*handle_file_word_deux(char c, t_cmd *cmd, char *str, t_red **tab_red)
 		*tab_red = (*tab_red)->next;
 	str = loop_cmd_file_utils(tab_red, &i, str);
 	file = ft_strndup(str, i);
+	fprintf(stderr, "WORD FILE '%s', %d\n", file, i);
 	add_file_to_cmd(file, c, cmd, tmp_red);
 	if (cmd->error == 1)
 		return (free(tmp), NULL);

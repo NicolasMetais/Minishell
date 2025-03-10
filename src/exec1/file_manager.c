@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 22:43:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:39:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,11 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 	while (exec->out)
 	{
 		if (exec->out->file == 0)
-		{
 			exec->fd_outfile = open(exec->out->file, O_APPEND | O_WRONLY
 					| O_TRUNC, 0777);
-		}
 		else
-		{
 			exec->fd_outfile = open(exec->out->file, O_CREAT | O_WRONLY
 					| O_TRUNC, 0777);
-		}
 		if (exec->fd_outfile < 0)
 		{
 			funct_error("Minishell: ", exec->out->file, core);
@@ -66,6 +62,7 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 
 t_boolean	open_files(t_exec *exec, t_core *core)
 {
+	printf("test\n");
 	if (!infile_manager(exec, core))
 		return (false);
 	if (!outfile_manager(exec, core))

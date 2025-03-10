@@ -6,14 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 01:22:57 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:50:06 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define RED_LIGHT "\033[91m"
+# define NAVY_BLUE "\033[38;2;0;0;128m"
 # define WHITE "\e[0;37m"
 
 //HEADERS

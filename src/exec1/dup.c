@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 22:43:25 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:44:51 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 t_boolean	child_dup(t_exec *exec, int count)
 {
 	close(exec->pipe[0]);
-	exec->fd_outfile = 0;
-	if (exec->nb_cmd > 1 && count == exec->nb_cmd - 1 && exec->fd_outfile)
+	if (exec->nb_cmd >= 1 && count == exec->nb_cmd - 1 && exec->fd_outfile)
 	{
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
 			return (false);

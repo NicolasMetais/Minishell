@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 16:23:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:37:21 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@
 	}
 } */
 
-t_boolean	env_parse(t_exec *exec, t_core *core)
+t_boolean	env_parse(t_core *core)
 {
 	int	i;
 
 	i = 0;
 	rotate_env(core, "PATH");
-	exec->path = ft_strdup(core->env->var);
-	if (!exec->path)
+	core->path = ft_strdup(core->env->var);
+	if (!core->path)
 		return (false);
-	exec->splitted_path = ft_split(exec->path, ':');
-	if (!exec->splitted_path)
+	core->splitted_path = ft_split(core->path, ':');
+	if (!core->splitted_path)
 		return (false);
 	return (true);
 }
@@ -42,7 +42,7 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->fd_infile = 0;
 	exec->fd_outfile = 0;
 	exec->nb_cmd = global->nb_cmd;
-	exec->env_path = global->path;
+	exec->env_path = core->splitted_path;
 	exec->absolute_path = false;
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
@@ -56,9 +56,9 @@ int	main_exec(t_glb *global, t_core *core)
 {
 	t_exec	exec;
 
-	exec_init(&exec, global, core);
-	if (!env_parse(&exec, core))
+	if (!env_parse(core))
 		return (false);
+	exec_init(&exec, global, core);
 	if (exec.file_or_not)
 	{
 		if (!open_files(&exec, core))

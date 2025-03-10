@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 18:56:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:55:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_boolean	prompt_update(t_core *core)
 	core->pwd = ft_get_env(core->env, "PWD");
 	if (!core->pwd)
 		return (false);
-	core->prompt = ft_strjoin(RED_LIGHT, core->pwd);
+	core->prompt = ft_strjoin(NAVY_BLUE, core->pwd);
 	free(core->pwd);
 	if (!core->prompt)
 		return (false);
@@ -81,6 +81,8 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			if (!setup_var(core))
 				return (false);
 			global = global_init(core->line, core->env_dup); // IL FAUT RENOMMER TOUT ET METTRE CA DANS LA STRUCT CORE APRES MERGE
+			if (!global)
+				continue ;
 			if (!builtin(core, global))
 				main_exec(global, core);
 			if (dup2(core->save, STDIN_FILENO) < 0)
@@ -92,6 +94,8 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			kill_program(core);
 			exit(0);
 		}
+		else if (ft_strlen(core->line) == 0)
+			continue ;
 		free_global(global);
 		free(core->line);
 	}

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/09 23:59:11 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:23:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			main_exec(t_glb *global, t_core *core);
 
 void		free_all(t_glb *global);
 
-t_boolean	env_parse(t_exec *exec, t_core *core);
+t_boolean	env_parse(t_core *core);
 t_boolean	args_parse(t_glb *global);
 
 int			env_exec(t_exec *exec, t_core *core);

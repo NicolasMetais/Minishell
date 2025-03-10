@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/09 00:29:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 23:24:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_commande
 typedef struct s_global
 {
 	int			nb_cmd;
-	char		**path;
 	t_boolean	absolute_path;
 	t_cmd		*cmd;
 }				t_glb;
