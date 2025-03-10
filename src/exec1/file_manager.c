@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/09 22:33:44 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 22:43:32 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 {
 	while (exec->out)
 	{
-//		fprintf(stderr, "ICI\n");
 		if (exec->out->file == 0)
 		{
 			exec->fd_outfile = open(exec->out->file, O_APPEND | O_WRONLY
@@ -48,7 +47,6 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 		}
 		else
 		{
-//			fprintf(stderr, ":LA\n");
 			exec->fd_outfile = open(exec->out->file, O_CREAT | O_WRONLY
 					| O_TRUNC, 0777);
 		}
@@ -72,5 +70,10 @@ t_boolean	open_files(t_exec *exec, t_core *core)
 		return (false);
 	if (!outfile_manager(exec, core))
 		return (false);
+	if (exec->fd_infile)
+	{
+		if (dup2(exec->fd_infile, STDIN_FILENO) < 0)
+			return (false);
+	}
 	return (true);
 }

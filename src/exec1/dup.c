@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 01:56:10 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 22:43:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,30 @@
 t_boolean	child_dup(t_exec *exec, int count)
 {
 	close(exec->pipe[0]);
-	(void)count;
+	exec->fd_outfile = 0;
 	if (exec->nb_cmd > 1 && count == exec->nb_cmd - 1 && exec->fd_outfile)
 	{
-//		printf("OUTFILE\n");
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
 			return (false);
 		close(exec->fd_outfile);
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
-//		fprintf(stderr, "STDOUT - REGULAR\n");
 		if (dup2(exec->pipe[1], STDOUT_FILENO) == -1)
 			return (false);
 	}
 	close(exec->pipe[1]);
-	close(exec->fd_infile);
 	return (true);
 }
 
-t_boolean	parent_process(t_exec *exec, int count)
+t_boolean	parent_process(t_exec *exec)
 {
-	(void)count;
 	close(exec->pipe[1]);
-	if (exec->nb_cmd > 1 && count == 0 && exec->fd_infile)
+	if (exec->nb_cmd > 1)
 	{
-//		printf("STDIN - INFILE\n");
-		if (dup2(exec->fd_infile, STDIN_FILENO) < 0)
-			return (false);
-	}
-	else if (exec->nb_cmd > 1)
-	{
-//		printf("STDIN - REGULAR\n");
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (false);
 	}
-	close(exec->fd_infile);
 	close(exec->pipe[0]);
 	return (true);
 }
@@ -68,7 +56,7 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 	}
 	else
 	{
-		if (!parent_process(exec, count))
+		if (!parent_process(exec))
 			return (false);
 	}
 	return (true);
