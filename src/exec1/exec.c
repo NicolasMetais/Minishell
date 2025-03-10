@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 17:59:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 22:06:50 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	env_exec(t_exec *exec, t_core *core)
 	}
 	else
 		status = exec_shell(exec, exec->cmd->args[0], core);
-	perror("Minishell");
+	perror("Minishellu");
 	core->exit_code = errno;
 	return (core->exit_code);
 }

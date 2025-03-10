@@ -58,6 +58,7 @@ SRCS = 	src/main.c \
 		src/exec1/here_doc.c \
 		src/exec1/main_exec.c \
 		src/exec1/dup.c \
+		src/exec1/file_manager.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -72,7 +73,7 @@ LIB = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline  -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(@D)

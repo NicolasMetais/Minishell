@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/09 01:49:47 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 01:22:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_core
 	char			**splitted_path;
 	char			**env_dup;
 	int				exit_code;
+	int				save;
 	t_env			*env;
 	t_env			*mark;
 }	t_core;

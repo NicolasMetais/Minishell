@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/09 01:52:50 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/10 01:23:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ int	empty(char *line)
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 t_boolean	minishell_launch(t_core *core, t_glb *global)
 {
-	int	save;
 
-	save = dup(STDIN_FILENO);
+	core->save = dup(STDIN_FILENO);
 	funny_stuff();
 	while (1)
 	{
@@ -84,7 +83,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			global = global_init(core->line, core->env_dup); // IL FAUT RENOMMER TOUT ET METTRE CA DANS LA STRUCT CORE APRES MERGE
 			if (!builtin(core, global))
 				main_exec(global, core);
-			if (dup2(save, STDIN_FILENO) < 0)
+			if (dup2(core->save, STDIN_FILENO) < 0)
 				return (false);
 		}
 		else if (!core->line)

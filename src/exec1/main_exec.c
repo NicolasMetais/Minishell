@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/09 02:26:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/09 23:59:43 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,46 +36,11 @@ t_boolean	env_parse(t_exec *exec, t_core *core)
 	return (true);
 }
 
-t_boolean	open_files(t_exec *exec, t_core *core)
-{
-	int	fd_infile;
-	int	fd_outfile;
-
-	while (exec->in)
-	{
-		printf("infile\n");
-		fd_infile = open(exec->in->file, O_RDONLY);
-		if (fd_infile < 0)
-		{
-			funct_error("ts :", NULL, core);
-			return (false);
-		}
-		if (!exec->in->next)
-			break ;
-		close(fd_infile);
-		exec->in = exec->in->next;
-	}
-	printf("%d\n", fd_infile);
-	while (exec->out)
-	{
-		printf("outfile\n");
-		fd_outfile = open(exec->out->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (fd_outfile < 0)
-		{
-			funct_error("ts :", NULL, core);
-			return (false);
-		}
-		if (exec->out->next)
-			break ;
-		close(fd_outfile);
-		exec->out = exec->out->next;
-	}
-	return (true);
-}
-
 void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 {
 	exec->file_or_not = false;
+	exec->fd_infile = 0;
+	exec->fd_outfile = 0;
 	exec->nb_cmd = global->nb_cmd;
 	exec->env_path = global->path;
 	exec->absolute_path = false;
