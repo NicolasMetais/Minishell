@@ -3,43 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/10 19:02:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 00:22:00 by jbayonne         ###   ########.fr       */
+/*   Created: 2024/11/12 16:59:49 by nmetais           #+#    #+#             */
+/*   Updated: 2024/12/01 00:04:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include <string.h>
-#include <stdio.h>
+#include "../include/libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned char	*s1_u;
-	unsigned char	*s2_u;
+	size_t	i;
 
-	s1_u = (unsigned char *)s1;
-	s2_u = (unsigned char *)s2;
-	if (n == 0)
+	i = 0;
+	if (n == 0 || (s1[0] == '\0' && s2[0] == '\0'))
 		return (0);
-	while (*s1_u && --n)
-	{
-		if (*s1_u != *s2_u)
-			return (*s1_u - *s2_u);
-		s1_u++;
-		s2_u++;
-	}
-	return (*s1_u - *s2_u);
+	if (s1[0] == '\0')
+		return (-1);
+	if (s2[0] == '\0')
+		return (1);
+	while (s1[i] == s2[i] && i < n - 1 && (s1[i] || s2[i]))
+		i++;
+	return ((unsigned const char)s1[i] - (unsigned const char)s2[i]);
 }
-
 /*
 int main(void)
 {
-	const char		*s1 = "Salut les gens";
-	const char		*s2 = "Salut\n les gens";
-	size_t			n = 1;
-
-	printf("ft_strncmp : %d", ft_strncmp(s1, s2, n));
-	printf("   strncmp : %d", strncmp(s1, s2, n));
+ 	char *big = "abcdef";
+ 	char *little = "abcdefghijklmnop";
+ 	size_t size = 6;
+	
+ 	int i1 = ((strncmp(big, little, size) > 0) ? 1 : 
+	((strncmp(big, little, size) < 0) ? -1 : 0));
+	
+ 	int i2 = ((ft_strncmp(big, little, size) > 0) ? 1 : 
+	((ft_strncmp(big, little, size) < 0) ? -1 : 0));
+ 
+ 	if (i1 == i2)
+ 		printf("OUI");
+	else
+ 	printf("NOPE\n");
+	printf("%d\n", i1);
+	printf("%d\n", i2);
 }*/

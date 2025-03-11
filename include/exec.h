@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/11 05:32:14 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/11 20:10:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_boolean	open_files(t_exec *exec, t_core *core);
 //HERE_DOC
 t_boolean	here_doc_init(t_exec *exec);
 t_boolean	here_doc_manager(t_exec *exec);
+t_boolean	multiple_here_doc(t_exec *exec);
 //BIG EXEC
 int			env_exec(t_exec *exec, t_core *core);
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);

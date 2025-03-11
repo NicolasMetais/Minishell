@@ -6,31 +6,30 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/11 05:30:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/11 22:56:20 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_boolean	here_doc_process(t_exec *exec, int i, t_boolean first_input)
+t_boolean	here_doc_process(t_exec *exec, int i)
 {
 	char	*line;
-	//char	*tmp;
-	//int		size;
+	int		size;
 
-	line = "\0";
-	while (ft_strcmp(line, exec->limiter[i]) != 0)
+	close(exec->pipe[0]);
+	size = ft_strlen(exec->limiter[i]);
+	while (1)
 	{
-		ft_putstr_fd("> ", 2);
+		ft_putstr_fd("here_doc> ", 2);
 		line = get_next_line(0);
 		if (!line)
-			return (false);
-		if (i > 0 && first_input)
+			break ;
+		if (ft_strncmp(line, exec->limiter[i], size) == 0 && line[size] == '\n')
 		{
-			//ICI je doit read sur le PIPE 0 (FAUT REFLECHIR A COMMENT ALLOUER DE LA MEMOIRE DYNAMIQUEMENT)
-			//tmp = malloc(sizeof(char) * ft_strlen(line) + ft_strlen())
+			free(line);
+			break ;
 		}
-		close(exec->pipe[0]);
 		ft_putstr_fd(line, exec->pipe[1]);
 		free(line);
 	}
@@ -38,24 +37,19 @@ t_boolean	here_doc_process(t_exec *exec, int i, t_boolean first_input)
 	return (true);
 }
 
-t_boolean	here_doc(t_exec *exec, int nb_here_doc, t_boolean first_input)
+t_boolean	here_doc(t_exec *exec, int nb_here_doc)
 {
 	pid_t	pid;
 
-	pipe(exec->pipe);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!here_doc_process(exec, nb_here_doc, first_input))
-			return (false);
+		if (!here_doc_process(exec, nb_here_doc))
+			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		close(exec->pipe[1]);
-		if (dup2(exec->pipe[0], STDIN_FILENO))
-			return (false);
-		close(exec->pipe[0]);
 		wait(NULL);
 	}
 	return (true);
@@ -66,20 +60,17 @@ t_boolean	here_doc_manager(t_exec *exec)
 	int	nb_here_doc;
 
 	nb_here_doc = -1;
+	pipe(exec->pipe);
 	while (exec->limiter[++nb_here_doc])
 	{
-		if (nb_here_doc > 0)
-		{
-			if (!here_doc(exec, nb_here_doc, true))
-				return (false);
-		}
-		else
-		{
-			if (!here_doc(exec, nb_here_doc, false))
-				return (false);
-		}
+		if (!here_doc(exec, nb_here_doc))
+			return (false);
 	}
-	return(true);
+	if (dup2(exec->pipe[0], STDIN_FILENO))
+		return (false);
+	close(exec->pipe[0]);
+	close(exec->pipe[1]);
+	return (true);
 }
 
 int	get_here_doc_nb(t_file *in_cpy)
