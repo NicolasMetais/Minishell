@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 23:44:51 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 00:15:53 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_boolean	parent_process(t_exec *exec)
 			return (false);
 	}
 	close(exec->pipe[0]);
+	close(exec->fd_intfile);
 	return (true);
 }
 

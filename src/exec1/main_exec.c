@@ -6,20 +6,12 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/11 04:28:49 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 00:15:01 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	free_cmd(t_pipex *pipex, int i)
-{
-	while (i > 0)
-	{
-		free(pipex->cmd[i]);
-		i--;
-	}
-} */
 
 t_boolean	env_parse(t_core *core)
 {
@@ -67,7 +59,6 @@ int	main_exec(t_glb *global, t_core *core)
 			return (false);
 		if (!here_doc_manager(&exec))
 			return (false);
-		//SI UNE SEULE REDIRECTION OU QUE DES REDIRECTIONS, FERMER TOUT LES FD ET NE RIEN FAIRE ICI
 	}
 	if (!fork_setup(&exec, core))
 		return (false);
