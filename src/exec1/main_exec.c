@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 23:37:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/11 04:28:49 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ int	main_exec(t_glb *global, t_core *core)
 	if (exec.file_or_not)
 	{
 		if (!open_files(&exec, core))
+			return (false);
+		if (!here_doc_init(&exec))
+			return (false);
+		if (!here_doc_manager(&exec))
 			return (false);
 		//SI UNE SEULE REDIRECTION OU QUE DES REDIRECTIONS, FERMER TOUT LES FD ET NE RIEN FAIRE ICI
 	}
