@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 23:23:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/11 05:32:14 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,27 @@ typedef struct s_exec
 	t_file		*out;
 	int			fd_infile;
 	int			fd_outfile;
+	char		**limiter;
 	t_boolean	file_or_not;
 	t_boolean	absolute_path;
 	t_cmd		*cmd;
 }	t_exec;
 
+//START DE L'EXEC
 int			main_exec(t_glb *global, t_core *core);
-
-void		free_all(t_glb *global);
-
+//PARSING
 t_boolean	env_parse(t_core *core);
-t_boolean	args_parse(t_glb *global);
-
+//FILES
+t_boolean	open_files(t_exec *exec, t_core *core);
+//HERE_DOC
+t_boolean	here_doc_init(t_exec *exec);
+t_boolean	here_doc_manager(t_exec *exec);
+//BIG EXEC
 int			env_exec(t_exec *exec, t_core *core);
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);
 void		fd_setup(t_glb *global, int *pipe_fd);
-
-void		here_doc(t_glb *global);
-
-t_boolean	open_files(t_exec *exec, t_core *core);
-
 t_boolean	fork_setup(t_exec *exec, t_core *core);
+
+void		free_all(t_glb *global);
 
 #endif
