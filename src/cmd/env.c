@@ -13,12 +13,12 @@
 #include "minishell.h"
 
 //JE PRINT TOUTES LES VARS D'ENV
-t_boolean	env(t_core *core, t_glb *global)
+t_boolean	env(t_core *core, t_cmd *cmd)
 {
 	int	i;
 
 	i = -1;
-	if (global->cmd->args_nb > 1)
+	if (cmd->args_nb > 1)
 		return (false);
 	while (core->env_dup[++i])
 	{

@@ -38,16 +38,16 @@ typedef struct s_cd
 void		cmd_exec(t_core *core);
 
 //BUILTIN
-int			builtin(t_core *core, t_glb *global);
-t_boolean	env(t_core *core, t_glb *global);
-void		exit_status_display(t_core *core, t_glb *global);
-t_boolean	cd_init(t_core *core, t_glb *global);
-t_boolean	echo_init(t_glb *global);
-t_boolean	pwd(t_glb *global, t_core *core);
-t_boolean	exit_custom(t_core *core, t_glb *global);
-t_boolean	unset(t_core *core, t_glb *global);
+int			builtin(t_core *core, t_cmd *cmd);
+t_boolean	env(t_core *core, t_cmd *cmd);
+void		exit_status_display(t_core *core, t_cmd *cmd);
+t_boolean	cd_init(t_core *core, t_cmd *cmd);
+t_boolean	echo_init(t_cmd *cmd);
+t_boolean	pwd(t_cmd *cmd, t_core *core);
+t_boolean	exit_custom(t_core *core, t_cmd *cmd);
+t_boolean	unset(t_core *core, t_cmd *cmd);
 //EXPORT
-t_boolean	export(t_core *core, t_glb *global);
+t_boolean	export(t_core *core, t_cmd *cmd);
 t_boolean	marked_or_env(char *var, t_core *core);
 t_boolean	add_var(char *var, t_core *core, t_boolean append);
 void		del_marked(char *var, t_core *core);

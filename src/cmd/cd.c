@@ -47,12 +47,12 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 
 
 //J'EXECUTE CD AVEC CHDIR ET L'ARGUMENT (folder) DEPEND DES OPTIONS
-t_boolean	cd_exec(t_core *core, t_cd *cd, t_glb *global, t_gc *gc)
+t_boolean	cd_exec(t_core *core, t_cd *cd, t_cmd *cmd, t_gc *gc)
 {
 	char	*folder;
 	int		status;
 
-	folder = global->cmd->args[1];
+	folder = cmd->args[1];
 	if (cd->ishome)
 	{
 		if (!cd->home)
@@ -116,31 +116,31 @@ t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 
 //JE REGARDE SI J'AI LES OPTIONS -, -- et ~ sinon je balance tout dans chdir
 //JE CHECK LE NB d'ARG
-t_boolean	cd_init(t_core *core, t_glb *global)
+t_boolean	cd_init(t_core *core, t_cmd *cmd)
 {
 	t_cd	cd;
 	t_gc	*gc;
 
 	if (!cd_setup(core, &cd, &gc))
 		return (false);
-	if (global->cmd->args_nb == 2)
+	if (cmd->args_nb == 2)
 	{
-		if (global->cmd->args[1][0] == '-')
+		if (cmd->args[1][0] == '-')
 		{
-			if (ft_strlen(global->cmd->args[1]) == 1)
+			if (ft_strlen(cmd->args[1]) == 1)
 				cd.undo = true;
-			else if (global->cmd->args[1][1] == '-'
-						&& ft_strlen(global->cmd->args[1]) == 2)
+			else if (cmd->args[1][1] == '-'
+						&& ft_strlen(cmd->args[1]) == 2)
 				cd.ishome = true;
 			else
-				return (invalid_option(global, "cd: ", core));
+				return (invalid_option(cmd, "cd: ", core));
 		}
 	}
-	if (global->cmd->args_nb > 2)
+	if (cmd->args_nb > 2)
 		return (too_many_args("cd: ", core));
-	if (ft_strcmp(global->cmd->args[1], "~") == 0 || global->cmd->args_nb == 1)
+	if (ft_strcmp(cmd->args[1], "~") == 0 || cmd->args_nb == 1)
 		cd.ishome = true;
-	if (!cd_exec(core, &cd, global, gc))
+	if (!cd_exec(core, &cd, cmd, gc))
 		return (false);
 	return (true);
 }

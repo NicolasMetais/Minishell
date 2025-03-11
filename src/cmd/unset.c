@@ -37,18 +37,18 @@ void	delete_env(t_core *core)
 }
 //JE VAIS CHERCHER LA VAR D'ENV ET JE LA DELETE SI ELLE EXISTE
 //NOT A VALID IDENTIFIER
-t_boolean	unset(t_core *core, t_glb *global)
+t_boolean	unset(t_core *core, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (global->cmd->args_nb > 1)
+	if (cmd->args_nb > 1)
 	{
-		while (global->cmd->args[++i])
+		while (cmd->args[++i])
 		{
-			if (env_exist(core, global->cmd->args[i]))
+			if (env_exist(core, cmd->args[i]))
 			{
-				rotate_env(core, global->cmd->args[i]);
+				rotate_env(core, cmd->args[i]);
 				delete_env(core);
 				update_env_dup(core);
 			}

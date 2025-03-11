@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+t_boolean is_builtin(t_cmd *cmd)
+{
+	if ((ft_strcmp(cmd->args[0], "cd") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "echo") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "pwd") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "exit") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "env") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "export") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "unset") == 0))
+		return (true);
+	return (false);
+}
+
 t_boolean	child_dup(t_exec *exec, int count)
 {
 	close(exec->pipe[0]);
@@ -49,8 +68,16 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 		signal_reset();
 		if (!child_dup(exec, count))
 			return (false);
-		if (!env_exec(exec, core))
-			return (false);
+		if (is_builtin(exec->cmd))
+		{
+			if (!(builtin(core, exec->cmd)))
+				return (false);
+		}
+		else
+		{
+			if (!env_exec(exec, core))
+				return (false);
+		}
 		exit(core->exit_code);
 	}
 	else

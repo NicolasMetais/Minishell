@@ -14,11 +14,11 @@
 //TOUTES LES FONCTIONS D'ERREURS LEAK A CAUSE DES JOIN DE SES MORTS
 
 //FLAG INVALIDE
-t_boolean	invalid_option(t_glb *global, char *cmd, t_core *core)
+t_boolean	invalid_option(t_cmd *cmd_tab, char *cmd, t_core *core)
 {
 	char	*custom_error;
 
-	custom_error = ft_strjoin(cmd, ft_substr(global->cmd->args[1],
+	custom_error = ft_strjoin(cmd, ft_substr(cmd_tab->args[1],
 				0, 2));
 	if (!custom_error)
 		return (false);
@@ -73,11 +73,11 @@ t_boolean	cmd_not_found(char *cmd, t_core *core)
 	return (true);
 }
 
-int	only_num_arg(t_glb *global, char *cmd, t_core *core)
+int	only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core)
 {
 	char	*custom_error;
 
-	custom_error = ft_strjoin(global->cmd->args[1], ": numeric argument required");
+	custom_error = ft_strjoin(cmd_tab->args[1], ": numeric argument required");
 	custom_error = ft_strjoin(cmd, custom_error);
 	if (!custom_error)
 		return (false);

@@ -13,14 +13,14 @@
 #include "minishell.h"
 
 //JE PRINT LA VAR D'ENV PWD ET JE GERE LES OPTIONS -, --
-t_boolean	pwd(t_glb *global, t_core *core)
+t_boolean	pwd(t_cmd *cmd, t_core *core)
 {
 	char	*pwd;
 
-	if (global->cmd->args_nb > 1 && global->cmd->args[1][0] == '-')
+	if (cmd->args_nb > 1 && cmd->args[1][0] == '-')
 	{
-		if (ft_strcmp(global->cmd->args[1], "--") != 0)
-			return (invalid_option(global, "pwd: ", core));
+		if (ft_strcmp(cmd->args[1], "--") != 0)
+			return (invalid_option(cmd, "pwd: ", core));
 	}
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);

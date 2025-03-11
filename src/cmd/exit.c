@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 //EXIT DOIT AFFICHER DES ERREUR SI ON L'UTILISE MAL MAIS DOIT EXIT QUAND MEME
-t_boolean	exit_custom(t_core *core, t_glb *global)
+t_boolean	exit_custom(t_core *core, t_cmd *cmd)
 {
 	unsigned int	status;
 	int				i;
@@ -21,23 +21,23 @@ t_boolean	exit_custom(t_core *core, t_glb *global)
 	i = 0;
 	status = 0;
 	printf("exit\n");
-	if (global->cmd->args_nb > 1)
+	if(cmd->args_nb > 1)
 	{
-		if ((global->cmd->args[1][0] == '-') || (global->cmd->args[1][0] == '+'))
+		if ((cmd->args[1][0] == '-') || (cmd->args[1][0] == '+'))
 			i++;
-		while (global->cmd->args[1][i])
+		while (cmd->args[1][i])
 		{
-			if (!ft_isdigit(global->cmd->args[1][i++]))
+			if (!ft_isdigit(cmd->args[1][i++]))
 			{
-				status = only_num_arg(global, "exit: ", core);
+				status = only_num_arg(cmd, "exit: ", core);
 				break ;
 			}
 		}
-		if (global->cmd->args_nb > 2 && !status)
+		if (cmd->args_nb > 2 && !status)
 			status = too_many_args("exit: ", core);
 	}
-	if (status == 0 && global->cmd->args_nb > 1)
-		status = ft_atol(global->cmd->args[1]);
+	if (status == 0 && cmd->args_nb > 1)
+		status = ft_atol(cmd->args[1]);
 	kill_program(core);
 	exit(status);
 }

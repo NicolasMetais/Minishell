@@ -109,28 +109,28 @@ t_boolean	isempty(char **tab)
 //EXPORT DOIT CREER DE NOUVELLES VAR D'ENV 
 //ET DES VARIABLE MARQUEE SI ON PRECISE PAS DE =
 //SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV + MARQUEE TRIEE ALPHABETIQUEMENT
-t_boolean	export(t_core *core, t_glb *global)
+t_boolean	export(t_core *core, t_cmd *cmd)
 {
 	int			i;
 
 	i = 0;
-	if (isempty(global->cmd->args) || global->cmd->args_nb == 1)
+	if (isempty(cmd->args) ||cmd->args_nb == 1)
 		return (print_env_alpha(core));
-	if (global->cmd->args[1][0] == '-')
+	if (cmd->args[1][0] == '-')
 	{
-		if (invalid_option(global, "export: ", core))
+		if (invalid_option(cmd, "export: ", core))
 			return (true);
 		else
 			return (false);
 	}
-	while (global->cmd->args[++i])
+	while (cmd->args[++i])
 	{
-		if (global->cmd->args[i][0] == '_'
-			|| ft_isalpha(global->cmd->args[i][0]))
-			marked_or_env(global->cmd->args[i], core);
+		if (cmd->args[i][0] == '_'
+			|| ft_isalpha(cmd->args[i][0]))
+			marked_or_env(cmd->args[i], core);
 		else
 		{
-			if (!not_valid_id(global->cmd->args[i], "export: ", core))
+			if (!not_valid_id(cmd->args[i], "export: ", core))
 				return (false);
 		}
 	}

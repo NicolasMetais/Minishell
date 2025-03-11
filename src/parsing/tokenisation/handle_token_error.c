@@ -76,7 +76,7 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red *red, char *str)
 
 t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 {
-	t_bool_pipe	var;
+	t_bool_pipe		var;
 
 	init_var_token_error(&var, str);
 	if (!var.word)
@@ -96,13 +96,15 @@ t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 		{
 			if (is_red_error(pipe, red, &var))
 				return (free(var.tmp), true);
-		}		
+		}
+		if (ft_strlen(var.word) == 0)
+			break ;
 		var.word++;
 	}
 	return (free(var.tmp), false);
 }
 
-t_boolean	handle_token_error(char *readline)
+t_boolean	handle_token_error(char *readline, int *error)
 {
 	t_red			*tk_red;
 	t_red			*red_tmp;
@@ -113,12 +115,18 @@ t_boolean	handle_token_error(char *readline)
 	str = ft_strdup(readline);
 	if (!str)
 		return (true);
-	tk_red = get_tk_red(readline);
-	tk_pipe = get_tk_pipe(readline);
+	tk_red = get_tk_red(readline, error);
+	if (*error == 1)
+		return (true);
+	tk_pipe = get_tk_pipe(readline, error);
+	if (*error == 1)
+		return (true);
 	red_tmp = tk_red;
 	pipe_tmp = tk_pipe;
 	if (token_error(tk_pipe, tk_red, str))
 		return (free(str), free_pipe_tk(pipe_tmp), free_tab_red(red_tmp), true);
 	free(str);
+	free_pipe_tk(pipe_tmp);
+	free_tab_red(red_tmp);
 	return (false);
 }

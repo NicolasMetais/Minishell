@@ -14,12 +14,13 @@
 # define ERRORS_H
 
 # include "boolean.h"
+# include "parsing.h"
 
 //ERROR MODULABLE PROTECTED FUNCTIONS
-t_boolean	invalid_option(t_glb *global, char *cmd, t_core *core);
+t_boolean	invalid_option(t_cmd *cmd_tab, char *cmd, t_core *core);
 t_boolean	too_many_args(char *cmd, t_core *core);
 t_boolean	cmd_not_found(char *cmd, t_core *core);
-int			only_num_arg(t_glb *global, char *cmd, t_core *core);
+int			only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core);
 int			not_valid_id(char *arg, char *cmd, t_core *core);
 int			env_not_set(char *arg, char *cmd, t_core *core);
 

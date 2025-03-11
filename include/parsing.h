@@ -45,6 +45,8 @@ typedef struct s_global
 	int			nb_cmd;
 	t_boolean	absolute_path;
 	t_cmd		*cmd;
+	t_file		*all_in;
+	t_file		*all_out;
 }				t_glb;
 
 typedef struct s_free_var

@@ -49,8 +49,12 @@ t_cmd	*new_cmd(char *line_split)
 	t_cmd	*cmd;
 	t_red	*tab_red;
 	char	**cmd_line_split;
+	int		error;
 
-	tab_red = get_tk_red(line_split);
+	error = 0;
+	tab_red = get_tk_red(line_split, &error);
+	if (error == 1)
+		return (NULL);
 	cmd_line_split = get_quote_dup(line_split);
 	if (!cmd_line_split)
 		return (NULL);
@@ -90,11 +94,13 @@ t_glb	*global_init(char *read_line, char **env)
 {
 	char	**line_split;
 	t_glb	*glb;
+	int		error;
 
 	(void)env;
+	error = 0;
 	if (ft_strlen(read_line) == 0)
 		return (NULL);
-	if (handle_token_error(read_line))
+	if (handle_token_error(read_line, &error))
 		return (NULL);
 	line_split = get_pipe(read_line);
 	if (!line_split)
@@ -106,6 +112,8 @@ t_glb	*global_init(char *read_line, char **env)
 	glb->cmd = set_cmd(line_split);
 	if (!glb->cmd)
 		return (free_split(line_split), free_global(glb), NULL);
+	glb->all_in = get_all_in(glb->cmd);
+	glb->all_out = get_all_out(glb->cmd);
 	free_split(line_split);
 	return (glb);
 }

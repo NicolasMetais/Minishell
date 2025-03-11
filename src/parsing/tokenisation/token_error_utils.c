@@ -30,7 +30,7 @@ void	turn_false_tok_error(t_bool_pipe *var)
 void	turn_true_tok_error(t_bool_pipe *var)
 {
 	var->quote = true;
-	var->c = 0;
+	var->c = *var->word;
 	var->word++;
 }
 

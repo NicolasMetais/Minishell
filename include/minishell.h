@@ -158,7 +158,8 @@ void			free_tab(char **tab);
 //KILL
 void			kill_program(t_core *core);
 
-// HANDLE PIPE IN PARSING
+// HANDLE PIPE IN PARSINGt_file	*get_all_out(t_cmd *cmd)
+
 void			handle_pipe(t_pipe_var *ctx);
 void			handle_pipe_realloc_line_and_tab(t_pipe_var *ctx, char **tmp);
 void			handle_pipe_get_cmd(t_pipe_var *ctx);
@@ -206,11 +207,10 @@ void			realloc_line_handle_quote_failed(t_pipe_var *ctx);
 void			get_word_failed(t_pipe_var *ctx);
 void			reset_handle_quote(t_pipe_var *ctx);
 void			quote_or_not_free_2(t_quote *ctx, t_free_var *f);
-t_boolean		unexpected_token_red(char *cmd_one_line, t_red *tab_red);
 t_boolean		is_double(char *word);
 void			init_bool_red(t_bool_red *ctx, char *word);
 void			turn_true_get_bool(t_bool_red *ctx);
-t_red			*get_tk_red(char *line);
+t_red			*get_tk_red(char *line, int *error);
 char			*get_word(char *str, int j);
 void			turn_false_get_bool(t_bool_red *ctx);
 char			*get_one_line_of_cmd_split(char **cmd_split);
@@ -219,7 +219,7 @@ void    		free_fd(t_file *in, t_file *out);
 void 			free_end_tab(char **cmd_tab, int i);
 void			free_tab_red(t_red *cmd);
 void			get_file_index_init(t_index *index, char **cmd_tab);
-t_pipe_token	*get_tk_pipe(char *line);
+t_pipe_token	*get_tk_pipe(char *line, int *error);
 
 void			get_file_increment(t_index *index, char **cmd_tab, t_red **tab_red);
 t_boolean		get_file_incr_false(t_index *index, char **cmd_tab, t_red **tab_red);
@@ -235,6 +235,8 @@ char			*handle_cmd_file_word_un(t_cmd *cmd, char *str, t_red **tab_red);
 void			add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red);
 t_file			*create_file(char *file, t_file *list, t_type_red type, int complete);
 t_file			*add_to_file_list(t_file *lst, t_file *new);
+t_file			*get_all_out(t_cmd *cmd);
+t_file			*get_all_in(t_cmd *cmd);
 
 
 // EXTRACT FILES FROM CHAR**
@@ -245,7 +247,7 @@ char			**simple_token(char **cmd_tab, t_index *index, t_red **tab_red, t_cmd *cm
 
 // HANDLE TOKEN ERROR
 
-t_boolean   	handle_token_error(char *readline);
+t_boolean   	handle_token_error(char *readline, int *error);
 t_boolean		token_error(t_pipe_token *pipe, t_red *red, char *str);
 void   			turn_true_pipe_bool(t_bool_pipe *ctx);
 void   			turn_false_pipe_bool(t_bool_pipe *ctx);

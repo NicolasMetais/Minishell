@@ -83,8 +83,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			global = global_init(core->line, core->env_dup); // IL FAUT RENOMMER TOUT ET METTRE CA DANS LA STRUCT CORE APRES MERGE
 			if (!global)
 				continue ;
-			if (!builtin(core, global))
-				main_exec(global, core);
+			main_exec(global, core);
 			if (dup2(core->save, STDIN_FILENO) < 0)
 				return (false);
 		}

@@ -48,7 +48,7 @@ t_pipe_token	*add_back_pipe(t_pipe_token *pipe_value, t_pipe_token *new)
 	return (pipe_value);
 }
 
-t_pipe_token	*get_bool_pipe(char *word, t_pipe_token *pipe_value)
+t_pipe_token	*get_bool_pipe(char *word, t_pipe_token *pipe_value, int *error)
 {
 	t_bool_pipe			ctx;
 	t_pipe_token		*tmp;
@@ -66,7 +66,10 @@ t_pipe_token	*get_bool_pipe(char *word, t_pipe_token *pipe_value)
 		{
 			tmp = new_pipe_value(&ctx);
 			if (!tmp)
+			{
+				*error = 1;
 				return (free_pipe_tk(pipe_value), NULL);
+			}
 			pipe_value = add_back_pipe(pipe_value, tmp);
 		}
 		if (*ctx.word)
@@ -75,11 +78,11 @@ t_pipe_token	*get_bool_pipe(char *word, t_pipe_token *pipe_value)
 	return (free(ctx.tmp), pipe_value);
 }
 
-t_pipe_token	*get_tk_pipe(char *line)
+t_pipe_token	*get_tk_pipe(char *line, int *error)
 {
 	t_pipe_token	*pipe_value;
 
 	pipe_value = NULL;
-	pipe_value = get_bool_pipe(line, pipe_value);
+	pipe_value = get_bool_pipe(line, pipe_value, error);
 	return (pipe_value);
 }
