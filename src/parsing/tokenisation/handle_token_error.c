@@ -74,6 +74,7 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red *red, char *str)
 	return (false);
 }
 
+
 t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 {
 	t_bool_pipe		var;
@@ -83,10 +84,7 @@ t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 		return (true);
 	while (*var.word)
 	{
-		if (*var.word == var.c)
-			turn_false_tok_error(&var);
-		if (var.c == 0 && (*var.word == '\'' || *var.word == '"'))
-			turn_true_tok_error(&var);
+		turn_token_error(&var);
 		if (*var.word == '|' && pipe->valid == true && var.quote == false)
 		{
 			if (pipe_error(pipe, var.word, str))

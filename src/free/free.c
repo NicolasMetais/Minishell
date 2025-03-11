@@ -20,7 +20,6 @@ void	kill_program(t_core *core)
 	free_env(core);
 }
 
-
 //FREE D'UN DOUBLE TABLEAU
 void	free_tab(char **tab)
 {

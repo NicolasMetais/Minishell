@@ -75,7 +75,6 @@ t_boolean	new_marked(char *var, t_core *core)
 		last->next = new;
 		new->next = core->mark;
 	}
-
 	return (true);
 }
 

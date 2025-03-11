@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_boolean is_builtin(t_cmd *cmd)
+t_boolean	is_builtin(t_cmd *cmd)
 {
 	if ((ft_strcmp(cmd->args[0], "cd") == 0))
 		return (true);

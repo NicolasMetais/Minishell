@@ -40,11 +40,8 @@ t_boolean	update_pwd(t_core *core, t_cd *cd, t_gc *gc)
 		return (false);
 	if (!update_env_dup(core))
 		return (false);
-	free_gc(gc);
-	return (true);
+	return (free_gc(gc), true);
 }
-
-
 
 //J'EXECUTE CD AVEC CHDIR ET L'ARGUMENT (folder) DEPEND DES OPTIONS
 t_boolean	cd_exec(t_core *core, t_cd *cd, t_cmd *cmd, t_gc *gc)
@@ -91,7 +88,6 @@ t_boolean	add_new_env(t_core *core, char *add)
 //INIT D'UNE STRUCTURE AVEC PLEIN D'OPTIONS
 t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 {
-
 	*gc = NULL;
 	cd->pwd = ft_get_env(core->env, "PWD");
 	if (!cd->pwd)

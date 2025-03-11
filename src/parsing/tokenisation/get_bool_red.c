@@ -58,10 +58,7 @@ t_red	*get_bool(char *word, t_red *red_value, int *error)
 		return (NULL);
 	while (*ctx.word)
 	{
-		if (*ctx.word == ctx.c)
-			turn_false_get_bool(&ctx);
-		if (*ctx.word == '"' || *ctx.word == '\'')
-			turn_true_get_bool(&ctx);
+		turn_bool_red(&ctx);
 		if (is_redirection_char(*ctx.word))
 		{
 			tmp = new_red_value(&ctx);

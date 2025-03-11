@@ -62,7 +62,6 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 
 t_boolean	open_files(t_exec *exec, t_core *core)
 {
-	printf("test\n");
 	if (!infile_manager(exec, core))
 		return (false);
 	if (!outfile_manager(exec, core))

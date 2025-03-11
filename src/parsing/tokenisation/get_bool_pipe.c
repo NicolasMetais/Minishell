@@ -58,10 +58,7 @@ t_pipe_token	*get_bool_pipe(char *word, t_pipe_token *pipe_value, int *error)
 		return (NULL);
 	while (*ctx.word)
 	{
-		if (*ctx.word == ctx.c)
-			turn_false_pipe_bool(&ctx);
-		if (*ctx.word == '"' || *ctx.word == '\'')
-			turn_true_pipe_bool(&ctx);
+		turn_pipe_bool(&ctx);
 		if (*ctx.word == '|')
 		{
 			tmp = new_pipe_value(&ctx);

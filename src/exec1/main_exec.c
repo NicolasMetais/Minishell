@@ -67,5 +67,5 @@ int	main_exec(t_glb *global, t_core *core)
 	}
 	if (!fork_setup(&exec, core))
 		return (false);
-	return (true);
+	return (free(core->path), free_split(core->splitted_path), true);
 }

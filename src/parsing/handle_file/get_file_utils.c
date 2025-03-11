@@ -37,13 +37,11 @@ char	*get_one_line_of_cmd_split(char **cmd_split)
 	return (cmd_one_line);
 }
 
-char	*realloc_word_red_at_end(char *str, t_red *red_tab)
+char	*realloc_word_red_at_end(char *str, t_red *red_tab, int i)
 {
 	char	*new;
 	char	*tmp;
-	int		i;
 
-	i = -1;
 	tmp = str;
 	if (red_tab->type == simple)
 	{
@@ -62,6 +60,7 @@ char	*realloc_word_red_at_end(char *str, t_red *red_tab)
 		new[++i] = *str;
 		str++;
 	}
+	i++;
 	new[i] = '\0';
 	return (free(tmp), new);
 }

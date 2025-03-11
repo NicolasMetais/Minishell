@@ -29,8 +29,9 @@ t_boolean	absolute_path(t_exec *exec, char *to_check)
 	return (false);
 }
 
-void	execve_error(t_core *core)
+void	execve_error(t_core *core, char *tester)
 {
+	free(tester);
 	perror("Minishell");
 	core->exit_code = errno;
 	exit(errno);
@@ -57,11 +58,12 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 		if (checker == 0)
 		{
 			if (execve(tester, exec->cmd->args, exec->env) == -1)
-				execve_error(core);
+				execve_error(core, tester);
 		}
+		free(tester);
 		j++;
 	}
-	return (false);
+	return (free(slash), false);
 }
 
 int	env_exec(t_exec *exec, t_core *core)

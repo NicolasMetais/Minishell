@@ -76,5 +76,5 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		i++;
 	}
 	update_exit_code(exec, core, child_pid);
-	return (true);
+	return (free(child_pid), true);
 }

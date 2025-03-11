@@ -21,7 +21,7 @@ t_boolean	exit_custom(t_core *core, t_cmd *cmd)
 	i = 0;
 	status = 0;
 	printf("exit\n");
-	if(cmd->args_nb > 1)
+	if (cmd->args_nb > 1)
 	{
 		if ((cmd->args[1][0] == '-') || (cmd->args[1][0] == '+'))
 			i++;

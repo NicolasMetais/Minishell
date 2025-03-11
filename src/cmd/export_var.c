@@ -88,7 +88,6 @@ t_boolean	re_write_var(t_core *core, char *var, char *var_name)
 t_boolean	update_var(t_core *core, char *var, char *var_name
 		, t_boolean append)
 {
-
 	if (env_exist(core, var_name))
 	{
 		rotate_env(core, var_name);

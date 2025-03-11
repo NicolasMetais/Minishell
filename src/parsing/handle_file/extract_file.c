@@ -63,7 +63,7 @@ char	**three_token(char **tab, t_index *index, t_red **tab_red, t_cmd *cmd)
 			return (NULL);
 		index->tab_len = command_counter(tab);
 	}
-	tab[index->i] = realloc_word_red_at_end(tab[index->i], tmp);
+	tab[index->i] = realloc_word_red_at_end(tab[index->i], tmp, -1);
 	if (!tab[index->i])
 		return (free_split(tab), free_end_tab(tab, index->i), NULL);
 	return (tab);

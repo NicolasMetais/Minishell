@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 //ID INVALIDE
 int	not_valid_id(char *arg, char *cmd, t_core *core)
 {

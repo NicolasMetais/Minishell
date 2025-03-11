@@ -35,6 +35,7 @@ void	delete_env(t_core *core)
 	last->next = next;
 	return ;
 }
+
 //JE VAIS CHERCHER LA VAR D'ENV ET JE LA DELETE SI ELLE EXISTE
 //NOT A VALID IDENTIFIER
 t_boolean	unset(t_core *core, t_cmd *cmd)

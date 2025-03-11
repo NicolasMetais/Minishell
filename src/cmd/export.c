@@ -105,7 +105,6 @@ t_boolean	isempty(char **tab)
 	return (empty);
 }
 
-
 //EXPORT DOIT CREER DE NOUVELLES VAR D'ENV 
 //ET DES VARIABLE MARQUEE SI ON PRECISE PAS DE =
 //SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV + MARQUEE TRIEE ALPHABETIQUEMENT
@@ -114,7 +113,7 @@ t_boolean	export(t_core *core, t_cmd *cmd)
 	int			i;
 
 	i = 0;
-	if (isempty(cmd->args) ||cmd->args_nb == 1)
+	if (isempty(cmd->args) || cmd->args_nb == 1)
 		return (print_env_alpha(core));
 	if (cmd->args[1][0] == '-')
 	{
