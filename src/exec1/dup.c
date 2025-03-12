@@ -52,7 +52,6 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 			return (false);
 		if (is_builtin(exec->cmd))
 		{
-			fprintf(stderr, "ICI\n");
 			if (!(builtin(core, exec->cmd)))
 				return (false);
 		}

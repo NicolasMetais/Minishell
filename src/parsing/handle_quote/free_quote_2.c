@@ -22,9 +22,9 @@ void	realloc_line_handle_quote_failed(t_pipe_var *ctx)
 
 void	get_word_failed(t_pipe_var *ctx)
 {
-	free_split(ctx->cmd_tab);
+	if (ctx->cmd_tab)
+		free_split(ctx->cmd_tab);
 	ctx->cmd_tab = NULL;
-	free(ctx->str - ctx->c);
 	if (ctx->fstr)
 		free(ctx->fstr);
 }

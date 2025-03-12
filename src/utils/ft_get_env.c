@@ -17,12 +17,10 @@ char	*ft_get_env(t_env *env, char *name)
 {
 	t_env	*copy;
 	int		size;
-	int		i;
 	char	*cut;
 
 	if (!env || !name)
 		return (NULL);
-	i = -1;
 	copy = env;
 	size = ft_strlen(name);
 	while (1)

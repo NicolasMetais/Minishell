@@ -48,7 +48,6 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 	out_cpy = exec->out;
 	while (out_cpy)
 	{
-		printf("OUTFILE ICI\n");
 		if (out_cpy->file == 0)
 			exec->fd_outfile = open(out_cpy->file, O_APPEND | O_WRONLY
 					| O_TRUNC, 0777);

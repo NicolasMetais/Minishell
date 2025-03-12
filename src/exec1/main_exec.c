@@ -15,9 +15,6 @@
 
 t_boolean	env_parse(t_core *core)
 {
-	int	i;
-
-	i = 0;
 	rotate_env(core, "PATH");
 	core->path = ft_strdup(core->env->var);
 	if (!core->path)

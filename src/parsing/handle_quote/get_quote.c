@@ -59,7 +59,7 @@ char	*get_quote_dup_2(t_pipe_var *ctx)
 	{
 		ctx->str = ft_pignouf_prime(ctx->str);
 		if (!ctx->str)
-			return (free(tmp), NULL);
+			return (free_split(ctx->cmd_tab), free(tmp), NULL);
 		free(tmp);
 	}
 	return (ctx->str);

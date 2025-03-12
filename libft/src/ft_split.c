@@ -17,17 +17,14 @@ static	size_t	wordcount(char const *s, char c)
 {
 	size_t	i;
 	size_t	word;
-	size_t	bol;
 
 	i = 0;
 	word = 0;
-	bol = 0;
 	while (s[i])
 	{
 		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
 			word++;
 		i++;
-		bol = 1;
 	}
 	return (word);
 }

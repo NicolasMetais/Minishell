@@ -57,10 +57,10 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 		checker = access(tester, F_OK | X_OK);
 		if (checker == 0)
 		{
-			fprintf(stderr, "%s\n", exec->cmd->args[0]);
 			if (execve(tester, exec->cmd->args, exec->env) == -1)
 				execve_error(core, tester);
 		}
+		fprintf(stderr, "tester : %s\n", tester);
 		free(tester);
 		j++;
 	}
@@ -70,17 +70,16 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 int	env_exec(t_exec *exec, t_core *core)
 {
 	char	*slash;
-	int		status;
 
 	if (!absolute_path(exec, exec->cmd->args[0]))
 	{
 		slash = ft_strjoin("/", exec->cmd->args[0]);
 		if (!slash)
 			return (false);
-		status = exec_shell(exec, slash, core);
+		exec_shell(exec, slash, core);
 	}
 	else
-		status = exec_shell(exec, exec->cmd->args[0], core);
+		exec_shell(exec, exec->cmd->args[0], core);
 	perror("minishell");
 	core->exit_code = errno;
 	return (core->exit_code);

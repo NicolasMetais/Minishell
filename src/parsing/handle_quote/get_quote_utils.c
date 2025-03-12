@@ -14,9 +14,6 @@
 
 t_boolean	pipe_valid(char *line)
 {
-	char	*tmp;
-
-	tmp = line;
 	if (*line != '\0')
 		line++;
 	while (*line && *line == ' ')
@@ -61,11 +58,13 @@ char	*ft_pignouf_prime(char *line)
 	var.len = ft_strlen(line) - 1;
 	while (line[var.i] == ' ')
 		var.i++;
-	while (line[var.len] == ' ')
+	while (line[var.len] == ' ' && var.len != 0)
 	{
 		var.len--;
 		var.j++;
 	}
+	if (var.len == 0)
+		return (NULL);
 	var.new = malloc(sizeof(char) * (ft_strlen(line) - (var.i + var.j)) + 1);
 	if (!var.new)
 		return (NULL);

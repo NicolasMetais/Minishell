@@ -76,7 +76,6 @@ void	rewrite_line(t_core *core, int arg_nb, int count)
 
 	i = -1;
 	k = 0;
-	printf("LEN %zu\n ARG NB %d\n COUNT %d\n", ft_strlen(core->line), arg_nb, count);
 	if (arg_nb == 0 || count == 0)
     	return ;
 	free(core->line);

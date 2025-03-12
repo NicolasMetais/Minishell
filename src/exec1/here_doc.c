@@ -84,7 +84,6 @@ int	get_here_doc_nb(t_file *in_cpy)
 			size++;
 		in_cpy = in_cpy->next;
 	}
-	fprintf(stderr, "%d\n", size);
 	return (size);
 }
 

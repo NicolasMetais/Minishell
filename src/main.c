@@ -14,9 +14,6 @@
 
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
-	int		i;
-
-	i = -1;
 	core->ac = ac;
 	core->av = av;
 	core->pwd = NULL;

@@ -16,9 +16,7 @@
 t_gc	*new_gc(void *data)
 {
 	t_gc	*lst;
-	int		i;
 
-	i = 0;
 	lst = malloc(sizeof(t_gc));
 	if (!lst)
 		return (NULL);
