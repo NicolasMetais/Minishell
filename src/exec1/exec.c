@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 19:40:03 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 21:24:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	execve_error(t_core *core, t_exec *exec)
 		permission_denied(exec->cmd->args[0], core);
 	else
 	{
-		fprintf(stderr, "ici\n");
 		core->exit_code = core->errorno;
 		perror("minishell");
 	}
@@ -75,6 +74,8 @@ int	env_exec(t_exec *exec, t_core *core)
 {
 	char	*slash;
 
+	if (!exec->cmd->args[0])
+		exit(0);
 	if (!absolute_path(exec, exec->cmd->args[0]))
 	{
 		slash = ft_strjoin("/", exec->cmd->args[0]);

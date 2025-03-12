@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 15:32:20 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 21:09:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,29 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 	return (true);
 }
 
+void	count_files(t_exec *exec)
+{
+	t_file	*in;
+	t_file	*out;
+
+	in = exec->in;
+	out = exec->out;
+	while (in)
+	{
+		exec->nb_files++;
+		if (!in->next)
+			break ;
+		in = in->next;
+	}
+	while (out)
+	{
+		exec->nb_files++;
+		if (!out->next)
+			break ;
+		out = out->next;
+	}
+}
+
 t_boolean	open_files(t_exec *exec, t_core *core)
 {
 	if (!infile_manager(exec, core))
@@ -78,6 +101,15 @@ t_boolean	open_files(t_exec *exec, t_core *core)
 	{
 		if (dup2(exec->fd_infile, STDIN_FILENO) < 0)
 			return (false);
+		close(exec->fd_infile);
 	}
+	if (exec->here_doc)
+	{
+		if (!here_doc_init(exec))
+			return (false);
+		if (!here_doc_manager(exec))
+			return (false);
+	}
+	count_files(exec);
 	return (true);
 }

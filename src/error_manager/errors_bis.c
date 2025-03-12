@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 13:10:59 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 17:02:17 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 20:26:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ t_boolean	permission_denied(char *cmd, t_core *core)
 	tmp = ft_strjoin("minishell: ", cmd);
 	if (!tmp)
 		return (false);
-	custom_error = ft_strjoin(tmp, ": command not found");
+	custom_error = ft_strjoin(tmp, ": permission denied");
 	free(tmp);
 	if (!custom_error)
 		return (false);
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
-	core->exit_code = 127;
+	core->exit_code = 126;
 	return (true);
 }

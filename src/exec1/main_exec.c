@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 18:15:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 21:12:02 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->out = global->all_out;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
+	exec->nb_files = 0;
 }
 
 t_boolean	builtin_files(t_exec *exec, t_cmd *cmd, t_core *core)
 {
-	(void)exec;
 	if (exec->fd_outfile)
 	{
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
@@ -69,14 +69,8 @@ int	main_exec(t_glb *global, t_core *core)
 	{
 		if (!open_files(&exec, core))
 			return (false);
-		if (exec.here_doc)
-		{
-			if (!here_doc_init(&exec))
-				return (false);
-			if (!here_doc_manager(&exec))
-				return (false);
-		}
 	}
+	//if (exec.nb_files ==)
 	if (global->nb_cmd == 1 && is_builtin(global->cmd))
 	{
 		if (!builtin_files(&exec, global->cmd, core))
