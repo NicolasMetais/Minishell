@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 14:54:18 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 02:06:06 by nmetais          ###   ########.fr       */
+/*   Created: 2025/03/12 00:51:02 by nmetais           #+#    #+#             */
+/*   Updated: 2025/03/12 02:47:16 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//JE PRINT LA VAR D'ENV PWD ET JE GERE LES OPTIONS -, --
-t_boolean	pwd(t_cmd *cmd, t_core *core)
+void	exit_program(t_core *core)
 {
-	char	*pwd;
+	printf("exit\n");
+	kill_program(core);
+	exit(0);
+}
 
-	if (cmd->args_nb > 1 && cmd->args[1][0] == '-')
-	{
-		if (ft_strcmp(cmd->args[1], "--") != 0)
-			return (invalid_option(cmd, "pwd: ", core));
-	}
-	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
-	free(pwd);
+t_boolean	main_setup(t_core *core, t_glb **global)
+{
+	add_history(core->line);
+	if (!setup_var(core))
+		return (false);
+	*global = global_init(core->line, core->env_dup);
+	return (true);
+}
+
+t_boolean	restore_stdio(t_core *core)
+{
+	if (dup2(core->save, STDIN_FILENO) < 0)
+		return (false);
+	if (dup2(core->save1, STDOUT_FILENO) < 0)
+		return (false);
 	return (true);
 }

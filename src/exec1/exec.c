@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 20:33:50 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 04:44:55 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 		checker = access(tester, F_OK | X_OK);
 		if (checker == 0)
 		{
+			fprintf(stderr, "%s\n", exec->cmd->args[0]);
 			if (execve(tester, exec->cmd->args, exec->env) == -1)
 				execve_error(core, tester);
 		}
@@ -80,7 +81,7 @@ int	env_exec(t_exec *exec, t_core *core)
 	}
 	else
 		status = exec_shell(exec, exec->cmd->args[0], core);
-	perror("");
+	perror("minishell");
 	core->exit_code = errno;
 	return (core->exit_code);
 }

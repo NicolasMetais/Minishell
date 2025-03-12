@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 13:10:59 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:47:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 02:37:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 int	not_valid_id(char *arg, char *cmd, t_core *core)
 {
 	char	*custom_error;
+	char	*tmp;
 
 	custom_error = ft_strjoin(arg, ": not a valid identifier");
-	custom_error = ft_strjoin(cmd, custom_error);
 	if (!custom_error)
 		return (false);
-	ft_putendl_fd(custom_error, 2);
+	tmp = ft_strjoin(cmd, custom_error);
 	free(custom_error);
+	if (!tmp)
+		return (false);
+	ft_putendl_fd(tmp, 2);
+	free(tmp);
 	core->exit_code = 1;
 	return (true);
 }
@@ -30,13 +34,17 @@ int	not_valid_id(char *arg, char *cmd, t_core *core)
 int	env_not_set(char *arg, char *cmd, t_core *core)
 {
 	char	*custom_error;
+	char	*tmp;
 
 	custom_error = ft_strjoin(arg, " not set");
-	custom_error = ft_strjoin(cmd, custom_error);
 	if (!custom_error)
 		return (false);
-	ft_putendl_fd(custom_error, 2);
+	tmp = ft_strjoin(cmd, custom_error);
 	free(custom_error);
+	if (!tmp)
+		return (false);
+	ft_putendl_fd(tmp, 2);
+	free(tmp);
 	core->exit_code = 1;
 	return (true);
 }

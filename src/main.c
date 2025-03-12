@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 23:55:36 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 04:09:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,37 +66,30 @@ int	empty(char *line)
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 t_boolean	minishell_launch(t_core *core, t_glb *global)
 {
-
 	core->save = dup(STDIN_FILENO);
-	funny_stuff();
+	core->save1 = dup(STDOUT_FILENO);
 	while (1)
 	{
 		signal_update();
 		if (!prompt_update(core))
 			core->prompt = NULL;
+		free(core->line);
 		core->line = readline(core->prompt);
 		if (core->line && !empty(core->line))
 		{
-			add_history(core->line);
-			if (!setup_var(core))
+			if (!main_setup(core, &global))
 				return (false);
-			global = global_init(core->line, core->env_dup); // IL FAUT RENOMMER TOUT ET METTRE CA DANS LA STRUCT CORE APRES MERGE
 			if (!global)
 				continue ;
 			main_exec(global, core);
-			if (dup2(core->save, STDIN_FILENO) < 0)
+			if (!restore_stdio(core))
 				return (false);
 		}
 		else if (!core->line)
-		{
-			printf("exit\n");
-			kill_program(core);
-			exit(0);
-		}
+			exit_program(core);
 		else if (ft_strlen(core->line) == 0)
 			continue ;
 		free_global(global);
-		free(core->line);
 	}
 	return (true);
 }
@@ -107,8 +100,9 @@ volatile sig_atomic_t	g_signal = 0;
 int	main(int ac, char **av, char **env)
 {
 	t_core	core;
-	t_glb	global;
+	t_glb	*global;
 
+	global = NULL;
 	if (ac == 1)
 	{
 		if (env[0])
@@ -123,7 +117,7 @@ int	main(int ac, char **av, char **env)
 		}
 		if (!core_init(&core, ac, av))
 			return (free_env(&core), false);
-		minishell_launch(&core, &global);
+		minishell_launch(&core, global);
 	}
 	else
 		printf("error\n");

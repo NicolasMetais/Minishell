@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/11 22:56:20 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 00:42:02 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	get_here_doc_nb(t_file *in_cpy)
 			size++;
 		in_cpy = in_cpy->next;
 	}
+	fprintf(stderr, "%d\n", size);
 	return (size);
 }
 

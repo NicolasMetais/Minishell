@@ -6,11 +6,30 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:44:36 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 01:06:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_boolean	is_builtin(t_cmd *cmd)
+{
+	if ((ft_strcmp(cmd->args[0], "cd") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "echo") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "pwd") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "exit") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "env") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "export") == 0))
+		return (true);
+	if ((ft_strcmp(cmd->args[0], "unset") == 0))
+		return (true);
+	return (false);
+}
 
 //DEUXIEME CHECKER DE BUILTIN
 t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core)

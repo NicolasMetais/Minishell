@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/11 05:30:12 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 02:19:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_boolean	infile_manager(t_exec *exec, t_core *core)
 	{
 		if (in_cpy->type == 0)
 		{
+			exec->here_doc = true;
 			in_cpy = in_cpy->next;
 			continue ;
 		}
@@ -47,6 +48,7 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 	out_cpy = exec->out;
 	while (out_cpy)
 	{
+		printf("OUTFILE ICI\n");
 		if (out_cpy->file == 0)
 			exec->fd_outfile = open(out_cpy->file, O_APPEND | O_WRONLY
 					| O_TRUNC, 0777);

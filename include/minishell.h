@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 23:50:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 03:55:26 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_core
 	char			**env_dup;
 	int				exit_code;
 	int				save;
+	int				save1;
 	t_env			*env;
 	t_env			*mark;
 }	t_core;
@@ -132,6 +133,10 @@ int				ft_strcmp(char *s1, char *s2);
 int				get_env_size(t_env	*env);
 t_boolean		env_exist(t_core *core, char *var);
 long long		ft_atol(const char *nptr);
+//MAIN UTILS
+void			exit_program(t_core *core);
+t_boolean		main_setup(t_core *core, t_glb **global);
+t_boolean		restore_stdio(t_core *core);
 
 //ENV VARIABLE CONVERSIONS
 t_boolean		setup_var(t_core *core);
@@ -154,6 +159,7 @@ void			emergency_free_tab(char **tab, int i);
 void			emergency_free_env_var(t_env *env);
 void			free_env(t_core *core);
 void			free_tab(char **tab);
+void			free_loop(t_glb *global, t_core *core);
 
 //KILL
 void			kill_program(t_core *core);

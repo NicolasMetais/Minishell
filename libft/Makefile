@@ -67,16 +67,16 @@ OBJS_B = $(addprefix $(OBJ_DIR_B)/,$(BONUS:%.c=%.o))
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
-		$(CC) $(CFLAGS) -I. -c $< -o $@
+		@$(CC) $(CFLAGS) -I. -c $< -o $@
 
 $(OBJ_DIR_B)/%.o : $(SRC_DIR_B)/%.c
 		@mkdir -p $(OBJ_DIR_B)
-		$(CC) $(CFLAGS) -I. -c $< -o $@
+		@$(CC) $(CFLAGS) -I. -c $< -o $@
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 bonus : $(BOBO)
 

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 00:15:01 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 02:31:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_boolean	env_parse(t_core *core)
 void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 {
 	exec->file_or_not = false;
+	exec->here_doc = false;
 	exec->fd_infile = 0;
 	exec->fd_outfile = 0;
 	exec->nb_cmd = global->nb_cmd;
@@ -39,9 +40,22 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
 	exec->in = global->cmd->in;
-	exec->out = global->cmd->out;
+	exec->out = global->all_out;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
+}
+
+t_boolean	builtin_files(t_exec *exec, t_cmd *cmd, t_core *core)
+{
+	(void)exec;
+	if (exec->fd_outfile)
+	{
+		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
+			return (false);
+		close(exec->fd_outfile);
+	}
+	builtin(core, cmd);
+	return (true);
 }
 
 int	main_exec(t_glb *global, t_core *core)
@@ -55,12 +69,23 @@ int	main_exec(t_glb *global, t_core *core)
 	{
 		if (!open_files(&exec, core))
 			return (false);
-		if (!here_doc_init(&exec))
-			return (false);
-		if (!here_doc_manager(&exec))
+		if (exec.here_doc)
+		{
+			if (!here_doc_init(&exec))
+				return (false);
+			if (!here_doc_manager(&exec))
+				return (false);
+		}
+	}
+	if (global->nb_cmd == 1 && is_builtin(global->cmd))
+	{
+		if (!builtin_files(&exec, global->cmd, core))
 			return (false);
 	}
-	if (!fork_setup(&exec, core))
-		return (false);
+	else
+	{
+		if (!fork_setup(&exec, core))
+			return (false);
+	}
 	return (free(core->path), free_split(core->splitted_path), true);
 }
