@@ -94,6 +94,8 @@ t_glb	*global_init(char *read_line, char **env)
 {
 	char	**line_split;
 	t_glb	*glb;
+	t_file	*in;
+	t_file	*out;
 	int		error;
 
 	(void)env;
@@ -114,6 +116,20 @@ t_glb	*global_init(char *read_line, char **env)
 		return (free_split(line_split), free_global(glb), NULL);
 	glb->all_in = get_all_in(glb->cmd);
 	glb->all_out = get_all_out(glb->cmd);
+	in = glb->all_in;
+	out = glb->all_out;
+	fprintf(stderr, "INFILE\n");
+	while (in)
+	{
+		fprintf(stderr, "file : %s, type :%d\n", in->file, in->type);
+		in = in->next;
+	}
+	fprintf(stderr, "\nOUTFILE\n");
+	while (out)
+	{
+		fprintf(stderr, "file : %s, type :%d\n", out->file, out->type);
+		out = out->next;
+	}
 	free_split(line_split);
 	return (glb);
 }

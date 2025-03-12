@@ -16,17 +16,14 @@
 t_boolean	child_dup(t_exec *exec, int count)
 {
 	close(exec->pipe[0]);
-	fprintf(stderr, "NB CMD %d\n %COUNT d\n FD OUTFILE %d\n", exec->nb_cmd, count, exec->fd_outfile);
 	if (exec->nb_cmd >= 1 && count == exec->nb_cmd - 1 && exec->fd_outfile)
 	{
-		fprintf(stderr, "OUTFILE\n");
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
 			return (false);
 		close(exec->fd_outfile);
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
-		fprintf(stderr, "LA\n");
 		if (dup2(exec->pipe[1], STDOUT_FILENO) == -1)
 			return (false);
 	}

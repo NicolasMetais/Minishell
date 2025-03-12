@@ -43,10 +43,6 @@ void	free_split_init(char **split, int i)
 // FREE NODE CMD
 void	free_node(t_cmd *cmd)
 {
-	if (cmd->in)
-		free_list_fd(cmd->in);
-	if (cmd->out)
-		free_list_fd(cmd->out);
 	if (cmd->args)
 		free_split(cmd->args);
 	free(cmd);
@@ -73,6 +69,10 @@ void	free_global(t_glb *glb)
 	{
 		if (glb->cmd)
 			freelist(glb->cmd);
+		if (glb->all_in)
+			free_list_fd(glb->all_in);
+		if (glb->all_out)
+			free_list_fd(glb->all_out);
 		free(glb);
 	}
 }
