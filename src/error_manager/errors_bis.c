@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 13:10:59 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 02:37:19 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 20:26:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,23 @@ int	env_not_set(char *arg, char *cmd, t_core *core)
 	ft_putendl_fd(tmp, 2);
 	free(tmp);
 	core->exit_code = 1;
+	return (true);
+}
+
+t_boolean	permission_denied(char *cmd, t_core *core)
+{
+	char	*custom_error;
+	char	*tmp;
+
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		return (false);
+	custom_error = ft_strjoin(tmp, ": permission denied");
+	free(tmp);
+	if (!custom_error)
+		return (false);
+	ft_putendl_fd(custom_error, 2);
+	free(custom_error);
+	core->exit_code = 126;
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:32:22 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 03:55:17 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 16:27:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_boolean	replace_exit_code(char **tocut, int j, t_core *core)
 			return (false);
 		free(new);
 		free(code);
+		core->exit_code = 0;
 		return (true);
 	}
 	else

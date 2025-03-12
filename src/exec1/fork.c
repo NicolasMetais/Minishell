@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/10 22:43:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 21:23:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 	return (true);
 } */
 
-void	update_exit_code(t_exec *exec, t_core *core, pid_t *child_pid)
+void	update_exit_code(t_core *core, pid_t *child_pid)
 {
 	int		status;
 	int		i;
@@ -36,7 +36,6 @@ void	update_exit_code(t_exec *exec, t_core *core, pid_t *child_pid)
 	pid_t	pid;
 
 	i = 0;
-	(void)exec;
 	while (child_pid[i] > 0)
 	{
 		pid = waitpid(child_pid[i], &status, 0);
@@ -75,6 +74,6 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		exec->cmd = exec->cmd->next;
 		i++;
 	}
-	update_exit_code(exec, core, child_pid);
+	update_exit_code(core, child_pid);
 	return (free(child_pid), true);
 }

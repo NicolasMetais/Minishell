@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 04:44:55 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 21:35:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,18 @@ t_boolean	absolute_path(t_exec *exec, char *to_check)
 	return (false);
 }
 
-void	execve_error(t_core *core, char *tester)
+void	execve_error(t_core *core, t_exec *exec)
 {
-	free(tester);
-	perror("Minishell");
-	core->exit_code = errno;
-	exit(errno);
+	if (core->errorno == ENOENT)
+		cmd_not_found(exec->cmd->args[0], core);
+	else if (core->errorno == EACCES)
+		permission_denied(exec->cmd->args[0], core);
+	else
+	{
+		core->exit_code = core->errorno;
+		perror("minishell");
+	}
+	exit(core->exit_code);
 }
 
 t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
@@ -43,8 +49,9 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 	char	*tester;
 	int		j;
 
-	j = 0;
-	while (exec->env_path[j])
+	j = -1;
+	(void)core;
+	while (exec->env_path[++j])
 	{
 		if (!exec->absolute_path)
 		{
@@ -56,13 +63,9 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 			tester = slash;
 		checker = access(tester, F_OK | X_OK);
 		if (checker == 0)
-		{
-			if (execve(tester, exec->cmd->args, exec->env) == -1)
-				execve_error(core, tester);
-		}
-		fprintf(stderr, "tester : %s\n", tester);
-		free(tester);
-		j++;
+			execve(tester, exec->cmd->args, exec->env);
+		if (!exec->absolute_path)
+			free(tester);
 	}
 	return (free(slash), false);
 }
@@ -71,6 +74,8 @@ int	env_exec(t_exec *exec, t_core *core)
 {
 	char	*slash;
 
+	if (!exec->cmd->args[0])
+		exit(0);
 	if (!absolute_path(exec, exec->cmd->args[0]))
 	{
 		slash = ft_strjoin("/", exec->cmd->args[0]);
@@ -79,8 +84,10 @@ int	env_exec(t_exec *exec, t_core *core)
 		exec_shell(exec, slash, core);
 	}
 	else
+	{
 		exec_shell(exec, exec->cmd->args[0], core);
-	perror("minishell");
-	core->exit_code = errno;
+	}
+	core->errorno = errno;
+	execve_error(core, exec);
 	return (core->exit_code);
 }
