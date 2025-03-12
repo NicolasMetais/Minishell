@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:46:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 16:43:33 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,13 @@ t_boolean	funct_error(char *cmd, char *addvalue, t_core *core)
 t_boolean	cmd_not_found(char *cmd, t_core *core)
 {
 	char	*custom_error;
+	char	*tmp;
 
-	custom_error = ft_strjoin(cmd, "command not found");
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		return (false);
+	custom_error = ft_strjoin(tmp, ": command not found");
+	free(tmp);
 	if (!custom_error)
 		return (false);
 	ft_putendl_fd(custom_error, 2);

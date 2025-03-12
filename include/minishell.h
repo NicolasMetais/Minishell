@@ -6,14 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 03:55:26 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 16:03:27 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define NAVY_BLUE "\033[38;2;0;0;128m"
+# define LIGHT_BLUE "\033[38;2;100;149;237m"
 # define WHITE "\e[0;37m"
 
 //HEADERS
@@ -116,6 +116,7 @@ typedef struct s_core
 	char			**splitted_path;
 	char			**env_dup;
 	int				exit_code;
+	int				errorno;
 	int				save;
 	int				save1;
 	t_env			*env;

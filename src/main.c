@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 04:09:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 18:14:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_boolean	prompt_update(t_core *core)
 	core->pwd = ft_get_env(core->env, "PWD");
 	if (!core->pwd)
 		return (false);
-	core->prompt = ft_strjoin(NAVY_BLUE, core->pwd);
+	core->prompt = ft_strjoin(LIGHT_BLUE, core->pwd);
 	free(core->pwd);
 	if (!core->prompt)
 		return (false);

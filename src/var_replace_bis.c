@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 13:25:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 03:58:25 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:33:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	rewrite_line(t_core *core, int arg_nb, int count)
 
 	i = -1;
 	k = 0;
-	printf("LEN %zu\n ARG NB %d\n COUNT %d\n", ft_strlen(core->line), arg_nb, count);
 	if (arg_nb == 0 || count == 0)
     	return ;
 	free(core->line);

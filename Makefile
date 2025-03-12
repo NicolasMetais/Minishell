@@ -28,7 +28,6 @@ SRCS = 	src/main.c \
 		src/parsing/handle_quote/var_init.c \
 		src/parsing/handle_quote/free_quote.c \
 		src/parsing/handle_quote/free_quote_2.c \
-		src/welcome.c \
 		src/signals.c \
 		src/init_env.c \
 		src/var_replace.c \
