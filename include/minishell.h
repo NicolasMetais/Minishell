@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 16:03:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 22:30:16 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ char			**get_outfd(t_cmd *cmd, char **cmd_split);
 char			**get_infd(t_cmd *cmd, char **cmd_split);
 char			**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
 char			**realloc_fd_out(t_cmd *cmd, char **cmd_split, int i);
-t_glb			*global_init(char *read_line, char **env);
+t_glb			*global_init(t_core *core);
 char			*remove_double_quote(char *line, int *end);
 void			increment(t_pipe_var *ctx);
 t_boolean		is_in_quote(char *str);
