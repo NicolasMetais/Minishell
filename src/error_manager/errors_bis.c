@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 13:10:59 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 20:26:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 05:16:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ int	not_valid_id(char *arg, char *cmd, t_core *core)
 	free(custom_error);
 	if (!tmp)
 		return (false);
-	ft_putendl_fd(tmp, 2);
+	custom_error = ft_strjoin("minishell: ", tmp);
 	free(tmp);
+	if (!custom_error)
+		return (false);
+	ft_putendl_fd(custom_error, 2);
+	free(custom_error);
 	core->exit_code = 1;
 	return (true);
 }
@@ -43,8 +47,12 @@ int	env_not_set(char *arg, char *cmd, t_core *core)
 	free(custom_error);
 	if (!tmp)
 		return (false);
-	ft_putendl_fd(tmp, 2);
+	custom_error = ft_strjoin("minishell: ", tmp);
 	free(tmp);
+	if (!custom_error)
+		return (false);
+	ft_putendl_fd(custom_error, 2);
+	free(custom_error);
 	core->exit_code = 1;
 	return (true);
 }

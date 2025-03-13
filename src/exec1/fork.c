@@ -6,27 +6,11 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 21:23:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 04:54:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* t_boolean	here_doc_or_not(t_exec *exec)
-{
-	if (pipex->here_doc == true)
-		here_doc(pipex);
-	else
-	{ 
-	if (exec->cmd->in_fd[0] == 3)
-	{
-		if (dup2(exec->cmd->in_fd[0], STDIN_FILENO) == -1)
-			return (false);
-	}
-	close(pipex->input_fd);
-	}
-	return (true);
-} */
 
 void	update_exit_code(t_core *core, pid_t *child_pid)
 {

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 20:37:04 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 00:42:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_exec
 	int			fd_outfile;
 	char		**limiter;
 	int			nb_files;
+	t_boolean	trigger;
 	t_boolean	here_doc;
 	t_boolean	file_or_not;
 	t_boolean	absolute_path;

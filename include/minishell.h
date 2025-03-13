@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 16:03:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 04:45:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_env
 typedef struct s_core
 {
 	int				ac;
+	int				nb_dollars;
 	char			**av;
 	char			*pwd;
 	char			*prompt;
@@ -123,9 +124,6 @@ typedef struct s_core
 	t_env			*mark;
 }	t_core;
 
-//DON'T FORGET TO DELETE BEFORE PUSH
-void			funny_stuff(void);
-
 //UTILS
 t_boolean		update_env_dup(t_core *core);
 char			*ft_get_env(t_env *env, char *name);
@@ -140,10 +138,13 @@ t_boolean		main_setup(t_core *core, t_glb **global);
 t_boolean		restore_stdio(t_core *core);
 
 //ENV VARIABLE CONVERSIONS
-t_boolean		setup_var(t_core *core);
 char			*delete_var(char *tocut, int start, int end);
 char			*write_var(char *code, char *tocut, int j, int size);
 void			rewrite_line(t_core *core, int arg_nb, int count);
+
+//NEW EXPANSION DE VAR
+int			expansion_var(t_core *core);
+int			*is_dollar(t_core *core, int *pos);
 
 //ENV VAR INIT
 t_boolean		duplicate_env(t_core *core, char **todup);
