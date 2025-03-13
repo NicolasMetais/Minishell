@@ -29,7 +29,7 @@ t_boolean	infile_manager(t_exec *exec, t_core *core)
 			exec->fd_infile = open(in_cpy->file, O_RDONLY);
 		if (exec->fd_infile < 0)
 		{
-			funct_error("Minishell: ", in_cpy->file, core);
+			funct_error("minishell: ", in_cpy->file, core);
 			core->exit_code = errno;
 			return (false);
 		}
@@ -56,7 +56,7 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 					| O_TRUNC, 0777);
 		if (exec->fd_outfile < 0)
 		{
-			funct_error("Minishell: ", out_cpy->file, core);
+			funct_error("minishell: ", out_cpy->file, core);
 			core->exit_code = errno;
 			return (false);
 		}

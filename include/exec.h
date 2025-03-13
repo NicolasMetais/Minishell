@@ -56,6 +56,8 @@ int			env_exec(t_exec *exec, t_core *core);
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);
 void		fd_setup(t_glb *global, int *pipe_fd);
 t_boolean	fork_setup(t_exec *exec, t_core *core);
+//  UTILS EXEC
+t_boolean	is_a_directory(char *arg);
 
 void		free_all(t_glb *global);
 

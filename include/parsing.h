@@ -33,6 +33,7 @@ typedef struct s_commande
 {
 	char				**args;
 	char				**here_doc;
+	t_boolean			is_a_directory;
 	t_file				*in;
 	t_file				*out;
 	int					error;

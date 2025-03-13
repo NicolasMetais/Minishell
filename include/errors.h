@@ -24,6 +24,7 @@ int			only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core);
 int			not_valid_id(char *arg, char *cmd, t_core *core);
 int			env_not_set(char *arg, char *cmd, t_core *core);
 t_boolean	permission_denied(char *cmd, t_core *core);
+t_boolean	error_directory(char *cmd, t_core *core);
 
 //PERROR MODULABLE
 t_boolean	funct_error(char *cmd, char *addvalue, t_core *core);

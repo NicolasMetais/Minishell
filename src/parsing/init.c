@@ -64,6 +64,7 @@ t_cmd	*new_cmd(char *line_split)
 	cmd->args = new_cmd_file(cmd_line_split, cmd, tab_red);
 	if (!cmd->args)
 		return (NULL);
+	cmd->is_a_directory = is_a_directory(cmd->args[0]);
 	cmd->next = NULL;
 	return (cmd);
 }

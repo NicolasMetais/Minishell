@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 t_boolean	env_parse(t_core *core)
 {
 	rotate_env(core, "PATH");
@@ -67,7 +66,6 @@ int	main_exec(t_glb *global, t_core *core)
 		if (!open_files(&exec, core))
 			return (false);
 	}
-	//if (exec.nb_files ==)
 	if (global->nb_cmd == 1 && is_builtin(global->cmd))
 	{
 		if (!builtin_files(&exec, global->cmd, core))

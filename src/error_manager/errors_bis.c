@@ -66,3 +66,21 @@ t_boolean	permission_denied(char *cmd, t_core *core)
 	core->exit_code = 126;
 	return (true);
 }
+
+t_boolean	error_directory(char *cmd, t_core *core)
+{
+	char 	*custom_error;
+	char	*tmp;
+
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		return (false);
+	custom_error = ft_strjoin(tmp, ": Is a directory");
+	free(tmp);
+	if (!custom_error)
+		return (false);
+	ft_putendl_fd(custom_error, 2);
+	free(custom_error);
+	core->exit_code = 126;
+	return (true);
+}

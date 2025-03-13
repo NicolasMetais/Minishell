@@ -31,7 +31,9 @@ t_boolean	absolute_path(t_exec *exec, char *to_check)
 
 void	execve_error(t_core *core, t_exec *exec)
 {
-	if (core->errorno == ENOENT)
+	if (exec->cmd->is_a_directory)
+		error_directory(exec->cmd->args[0], core);
+	else if (core->errorno == ENOENT)
 		cmd_not_found(exec->cmd->args[0], core);
 	else if (core->errorno == EACCES)
 		permission_denied(exec->cmd->args[0], core);
