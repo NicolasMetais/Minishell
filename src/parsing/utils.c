@@ -57,7 +57,7 @@ t_boolean	is_a_directory(char *arg)
 	{
 		if (*arg != '/' && *arg != '.')
 			return (false);
-		if	(*arg == '.')
+		if (*arg == '.')
 			i++;
 		if (i > 2)
 			return (false);

@@ -75,6 +75,5 @@ char	*ft_pignouf_prime(char *line)
 		var.i++;
 		var.j++;
 	}
-	var.new[var.j] = '\0';
-	return (var.new);
+	return (var.new[var.j] = '\0', var.new);
 }

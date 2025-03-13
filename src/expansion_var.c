@@ -100,7 +100,6 @@ t_boolean	replace_var_env(t_core *core, char **tocut, int j)
 	return (false);
 }
 
-
 char	**expansion_manager(t_core *core, char **new_line, int *pos)
 {
 	int	i;

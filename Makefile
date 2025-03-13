@@ -13,6 +13,7 @@ SRCS = 	src/main.c \
 		src/parsing/tokenisation/get_bool_pipe.c \
 		src/parsing/tokenisation/handle_token_error.c \
 		src/parsing/tokenisation/token_error_utils.c \
+		src/parsing/tokenisation/quote_error.c \
 		src/parsing/cat_fd_list.c \
 		src/parsing/init.c \
 		src/parsing/utils.c \

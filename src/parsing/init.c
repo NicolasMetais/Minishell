@@ -117,5 +117,5 @@ t_glb	*global_init(t_core *core)
 		return (free_split(line_split), free(glb), NULL);
 	glb->all_in = get_all_in(glb->cmd);
 	glb->all_out = get_all_out(glb->cmd);
-	return (free_split(line_split),	glb);
+	return (free_split(line_split), glb);
 }

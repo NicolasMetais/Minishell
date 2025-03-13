@@ -75,8 +75,6 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 	}
 	else
 	{
-		printf("|%s|\n", exec->cmd->args[0]);
-
 		if (!fork_setup(exec, core))
 			return (false);
 	}

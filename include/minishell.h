@@ -143,8 +143,8 @@ char			*write_var(char *code, char *tocut, int j, int size);
 void			rewrite_line(t_core *core, int arg_nb, int count);
 
 //NEW EXPANSION DE VAR
-int			expansion_var(t_core *core);
-int			*is_dollar(t_core *core, int *pos);
+int				expansion_var(t_core *core);
+int				*is_dollar(t_core *core, int *pos);
 
 //ENV VAR INIT
 t_boolean		duplicate_env(t_core *core, char **todup);
@@ -229,6 +229,7 @@ void			free_tab_red(t_red *cmd);
 void			get_file_index_init(t_index *index, char **cmd_tab);
 t_pipe_token	*get_tk_pipe(char *line, int *error);
 
+// TOKEN FILE UTILS
 void			get_file_increment(t_index *index, char **cmd_tab,
 					t_red **tab_red);
 t_boolean		get_file_incr_false(t_index *index, char **cmd_tab,
@@ -277,5 +278,6 @@ t_boolean		redirection_error(t_pipe_token *pipe, t_red *red, char *str);
 void			turn_pipe_bool(t_bool_pipe *ctx);
 void			turn_bool_red(t_bool_red *ctx);
 void			turn_token_error(t_bool_pipe *var);
+t_boolean		quote_error(char *str);
 
 #endif

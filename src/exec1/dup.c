@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 t_boolean	child_dup(t_exec *exec, int count)
 {
 	close(exec->pipe[0]);

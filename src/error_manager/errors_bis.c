@@ -77,7 +77,7 @@ t_boolean	permission_denied(char *cmd, t_core *core)
 
 t_boolean	error_directory(char *cmd, t_core *core)
 {
-	char 	*custom_error;
+	char	*custom_error;
 	char	*tmp;
 
 	tmp = ft_strjoin("minishell: ", cmd);
