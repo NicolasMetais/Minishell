@@ -31,6 +31,13 @@ void	get_word_failed(t_pipe_var *ctx)
 
 void	reset_handle_quote(t_pipe_var *ctx)
 {
+	if (ft_strlen(ctx->str) == 1 && (*ctx->str == '"' || *ctx->str == '\''))
+	{
+		free(ctx->str);
+		free_split(ctx->cmd_tab);
+		ctx->cmd_tab = NULL;
+		ctx->end = 1;
+	}
 	ctx->c = 0;
 	free(ctx->fstr);
 	ctx->fstr = NULL;

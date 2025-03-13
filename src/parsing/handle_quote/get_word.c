@@ -21,6 +21,8 @@ char	*extract_word(t_quote *ctx)
 		if (!ctx->str)
 			return (free(ctx->tmp), free(ctx->word), NULL);
 		ctx->k--;
+		if (ft_strlen(ctx->str) == 1 && (*ctx->str ==  '\'' || *ctx->str == '"'))
+			ctx->k--;
 		if (ctx->k == 0)
 			free(ctx->str);
 		ctx->c = 0;

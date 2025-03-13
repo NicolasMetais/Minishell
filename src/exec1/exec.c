@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 05:51:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:00:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ t_boolean	absolute_path(t_exec *exec, char *to_check)
 
 void	execve_error(t_core *core, t_exec *exec)
 {
-	if (core->errorno == ENOENT)
+	if (exec->cmd->is_a_directory)
+		error_directory(exec->cmd->args[0], core);
+	else if (core->errorno == ENOENT)
 		cmd_not_found(exec->cmd->args[0], core);
 	else if (core->errorno == EACCES)
 		permission_denied(exec->cmd->args[0], core);

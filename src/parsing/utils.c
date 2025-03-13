@@ -45,3 +45,30 @@ t_boolean	is_redirection_char(char s)
 		return (true);
 	return (false);
 }
+
+t_boolean	is_a_directory(char *arg)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (*arg)
+	{
+		if (*arg != '/' && *arg != '.')
+			return (false);
+		if	(*arg == '.')
+			i++;
+		if (i > 2)
+			return (false);
+		if (*arg == '/')
+		{
+			i = 0;
+			j = 1;
+		}
+		arg++;
+	}
+	if (j == 0)
+		return (false);
+	return (true);
+}

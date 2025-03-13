@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/10 23:24:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 22:29:51 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_commande
 {
 	char				**args;
 	char				**here_doc;
+	t_boolean			is_a_directory;
 	t_file				*in;
 	t_file				*out;
 	int					error;
@@ -116,7 +117,6 @@ char		*realloc_line(char *old, int c, int *end);
 char		*ft_strnjoin(char const *s1, char const *s2, int c);
 char		*ft_strjoin_custom(char const *s1, char const *s2);
 char		*ft_pignouf_prime(char *line);
-// t_token		*get_token(char *line);
 int			bool_len(int *bool);
 char		*realloc_str_file(char *str, int i, int j);
 

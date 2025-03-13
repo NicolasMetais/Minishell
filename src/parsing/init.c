@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/12 02:22:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/12 22:29:13 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_cmd	*new_cmd(char *line_split)
 	cmd->args = new_cmd_file(cmd_line_split, cmd, tab_red);
 	if (!cmd->args)
 		return (NULL);
+	cmd->is_a_directory = is_a_directory(cmd->args[0]);
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -90,19 +91,21 @@ t_cmd	*set_cmd(char **line_split)
 	return (head);
 }
 
-t_glb	*global_init(char *read_line, char **env)
+t_glb	*global_init(t_core *core)
 {
 	char	**line_split;
 	t_glb	*glb;
 	int		error;
 
-	(void)env;
 	error = 0;
-	if (ft_strlen(read_line) == 0)
+	if (ft_strlen(core->line) == 0)
 		return (NULL);
-	if (handle_token_error(read_line, &error))
+	if (handle_token_error(core->line, &error))
+	{
+		core->exit_code = 2;
 		return (NULL);
-	line_split = get_pipe(read_line);
+	}
+	line_split = get_pipe(core->line);
 	if (!line_split)
 		return (NULL);
 	glb = malloc(sizeof(t_glb));
@@ -114,6 +117,5 @@ t_glb	*global_init(char *read_line, char **env)
 		return (free_split(line_split), free(glb), NULL);
 	glb->all_in = get_all_in(glb->cmd);
 	glb->all_out = get_all_out(glb->cmd);
-	free_split(line_split);
-	return (glb);
+	return (free_split(line_split),	glb);
 }

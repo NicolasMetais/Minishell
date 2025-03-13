@@ -6,12 +6,11 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 01:08:11 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:01:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_boolean	env_parse(t_core *core)
 {
@@ -96,5 +95,15 @@ int	main_exec(t_glb *global, t_core *core)
 	}
 	if (!launch_fork(&exec, core))
 		return (false);
+	if (global->nb_cmd == 1 && is_builtin(global->cmd))
+	{
+		if (!builtin_files(&exec, global->cmd, core))
+			return (false);
+	}
+	else
+	{
+		if (!fork_setup(&exec, core))
+			return (false);
+	}
 	return (free(core->path), free_split(core->splitted_path), true);
 }
