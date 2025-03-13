@@ -30,6 +30,7 @@ SRCS = 	src/main.c \
 		src/parsing/handle_quote/free_quote_2.c \
 		src/signals.c \
 		src/init_env.c \
+		src/expansion_var.c \
 		src/var_replace.c \
 		src/var_replace_bis.c \
 		src/cmd/cd.c \
@@ -67,7 +68,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -fsanitize=address -g3 #
 
 NAME = minishell
 

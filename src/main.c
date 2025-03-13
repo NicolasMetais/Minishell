@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 18:14:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 05:00:23 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->new_line = NULL;
 	core->mark = NULL;
 	core->exit_code = 0;
+	core->line = NULL;
 	return (true);
 }
 
@@ -75,7 +76,9 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			core->prompt = NULL;
 		free(core->line);
 		core->line = readline(core->prompt);
-		if (core->line && !empty(core->line))
+		if (!core->line)
+			exit_program(core);
+		else if (core->line && !empty(core->line))
 		{
 			if (!main_setup(core, &global))
 				return (false);
@@ -85,8 +88,6 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			if (!restore_stdio(core))
 				return (false);
 		}
-		else if (!core->line)
-			exit_program(core);
 		else if (ft_strlen(core->line) == 0)
 			continue ;
 		free_global(global);
@@ -117,7 +118,8 @@ int	main(int ac, char **av, char **env)
 		}
 		if (!core_init(&core, ac, av))
 			return (free_env(&core), false);
-		minishell_launch(&core, global);
+		if (!minishell_launch(&core, global))
+			return (false);
 	}
 	else
 		printf("error\n");

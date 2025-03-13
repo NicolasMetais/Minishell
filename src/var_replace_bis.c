@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 13:25:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 15:33:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 04:41:50 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	rewrite_line(t_core *core, int arg_nb, int count)
 	i = -1;
 	k = 0;
 	if (arg_nb == 0 || count == 0)
-    	return ;
+		return ;
 	free(core->line);
 	core->line = malloc(sizeof(char) * (count + (arg_nb - 1) + 1));
 	if (!core->line)
@@ -87,8 +87,34 @@ void	rewrite_line(t_core *core, int arg_nb, int count)
 		j = -1;
 		while (core->new_line[i][++j])
 			core->line[k++] = core->new_line[i][j];
-		if (core->new_line[i + 1] != NULL)
-			core->line[k++] = ' ';
 	}
 	core->line[k] = '\0';
+}
+
+int	*is_dollar(t_core *core, int *pos)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	core->nb_dollars = 0;
+	while (core->line[++i])
+	{
+		if (core->line[i] == '$')
+			core->nb_dollars++;
+	}
+	if (core->nb_dollars == 0)
+		return (NULL);
+	pos = malloc(sizeof(int) * core->nb_dollars);
+	if (!pos)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (core->line[++i])
+	{
+		if (core->line[i] == '$')
+			pos[j++] = i;
+	}
+	return (pos);
 }

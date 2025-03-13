@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 16:43:33 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 05:28:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,24 @@
 t_boolean	invalid_option(t_cmd *cmd_tab, char *cmd, t_core *core)
 {
 	char	*custom_error;
+	char	*wrong_str;
+	char	*tmp;
 
-	custom_error = ft_strjoin(cmd, ft_substr(cmd_tab->args[1],
-				0, 2));
+	wrong_str = ft_substr(cmd_tab->args[1], 0, 2);
+	if (!wrong_str)
+		return (false);
+	custom_error = ft_strjoin(cmd, wrong_str);
+	free(wrong_str);
 	if (!custom_error)
 		return (false);
-	custom_error = ft_strjoin(custom_error, ": invalid option");
+	tmp = ft_strjoin(custom_error, ": invalid option");
+	free(custom_error);
+	if (!tmp)
+		return (false);
+	custom_error = ft_strjoin("minishell: ", tmp);
+	free(tmp);
 	if (!custom_error)
-		return (free(custom_error), false);
+		return (false);
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
 	core->exit_code = 2;
@@ -35,12 +45,17 @@ t_boolean	invalid_option(t_cmd *cmd_tab, char *cmd, t_core *core)
 t_boolean	too_many_args(char *cmd, t_core *core)
 {
 	char	*custom_error;
+	char	*tmp;
 
 	custom_error = ft_strjoin(cmd, "too many arguments");
 	if (!custom_error)
 		return (false);
-	ft_putendl_fd(custom_error, 2);
+	tmp = ft_strjoin("minishell: ", custom_error);
 	free(custom_error);
+	if (!tmp)
+		return (false);
+	ft_putendl_fd(tmp, 2);
+	free(tmp);
 	core->exit_code = 1;
 	return (true);
 }
@@ -81,13 +96,21 @@ t_boolean	cmd_not_found(char *cmd, t_core *core)
 int	only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core)
 {
 	char	*custom_error;
+	char	*tmp;
 
-	custom_error = ft_strjoin(cmd_tab->args[1], ": numeric argument required");
-	custom_error = ft_strjoin(cmd, custom_error);
+	tmp = ft_strjoin(cmd_tab->args[1], ": numeric argument required");
+	if (!tmp)
+		return (false);
+	custom_error = ft_strjoin(cmd, tmp);
+	free(tmp);
 	if (!custom_error)
 		return (false);
-	ft_putendl_fd(custom_error, 2);
+	tmp = ft_strjoin("minishell: ", custom_error);
 	free(custom_error);
+	if (!tmp)
+		return (false);
+	ft_putendl_fd(tmp, 2);
+	free(tmp);
 	core->exit_code = 2;
 	return (2);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   var_replace.c                                      :+:      :+:    :+:   */
+/*   expansion_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 14:32:22 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 16:27:42 by nmetais          ###   ########.fr       */
+/*   Created: 2025/03/13 02:10:30 by nmetais           #+#    #+#             */
+/*   Updated: 2025/03/13 04:51:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ t_boolean	replace_var_env(t_core *core, char **tocut, int j)
 	char	*var;
 	char	*data;
 
-	i = j + 1;
+	i = 0;
 	if (j < (int)ft_strlen(*tocut)
-		&& ((*tocut)[j + 1] == '_' || ft_isalpha((*tocut)[j + 1])))
+		&& ((*tocut)[j] == '_' || ft_isalpha((*tocut)[j])))
 	{
 		while ((*tocut)[i] && ((*tocut)[i] == '_' || ft_isalnum((*tocut)[i])))
 			i++;
-		var = ft_substr(*tocut, j + 1, i - (j + 1));
+		var = ft_substr(*tocut, j, i - j);
 		if (!var)
 			return (false);
 		data = ft_get_env(core->env, var);
@@ -91,64 +91,61 @@ t_boolean	replace_var_env(t_core *core, char **tocut, int j)
 			return (free(var), free(data), false);
 		return (free(var), free(data), true);
 	}
-	if (j < (int)ft_strlen(*tocut) && ft_isdigit((*tocut)[j + 1]))
+	if (j < (int)ft_strlen(*tocut) && ft_isdigit((*tocut)[j]))
 	{
-		if (!insert_del(NULL, tocut, j, j + 2))
+		if (!insert_del(NULL, tocut, j, j + 1))
 			return (false);
 		return (true);
 	}
 	return (false);
 }
 
-//EXTENSION DE VARIABLE $? et $VARIABLE
-char	**var_manager(t_core *core, char **new_line, t_boolean *replace)
+
+char	**expansion_manager(t_core *core, char **new_line, int *pos)
 {
 	int	i;
-	int	j;
 
-	i = -1;
-	while (new_line[++i])
+	if (pos[0] == 0)
+		i = 0;
+	else
+		i = 1;
+	while (new_line[i])
 	{
-		j = -1;
-		while (new_line[i][++j])
+		if (!replace_exit_code(&new_line[i], 0, core))
 		{
-			if (new_line[i][j] == '$')
-			{
-				if (replace_exit_code(&new_line[i], j, core)
-					|| replace_var_env(core, &new_line[i], j))
-				{
-					j = -1;
-					*replace = true;
-				}
-			}
+			if (!replace_var_env(core, &new_line[i], 0))
+				return (NULL);
 		}
+		i++;
 	}
 	return (new_line);
 }
 
-t_boolean	setup_var(t_core *core)
+int	expansion_var(t_core *core)
 {
-	t_boolean	replace;
-	int			i;
-	int			j;
-	int			count;
+	int	*pos;
+	int	i;
+	int	j;
+	int	count;
 
+	i = -1;
 	count = 0;
-	replace = false;
-	core->new_line = ft_split(core->line, ' ');
+	pos = NULL;
+	pos = is_dollar(core, pos);
+	if (!pos)
+		return (2);
+	core->new_line = ft_split(core->line, '$');
 	if (!core->new_line)
-		return (false);
-	core->new_line = var_manager(core, core->new_line, &replace);
-	i = 0;
-	while (core->new_line[i])
+		return (free(pos), 0);
+	core->new_line = expansion_manager(core, core->new_line, pos);
+	while (core->new_line[++i])
 	{
 		j = 0;
 		while (core->new_line[i][j])
 			j++;
 		count += j;
-		i++;
 	}
 	rewrite_line(core, i, count);
 	free_tab(core->new_line);
-	return (true);
+	return (free(pos), 1);
 }
