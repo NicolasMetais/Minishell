@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 05:51:37 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:23:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 {
 	if (pid == 0)
 	{
+		fprintf(stderr, "child\n");
 		signal_reset();
 		if (!child_dup(exec, count))
 			return (false);

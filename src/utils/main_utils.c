@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 00:51:02 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 16:01:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:27:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_boolean	main_setup(t_core *core, t_glb **global)
 	add_history(core->line);
 	if (!expansion_var(core))
 		return (false);
-	*global = global_init(core->line, core->env_dup);
+	*global = global_init(core);
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 16:00:24 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:48:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,21 @@ int	env_exec(t_exec *exec, t_core *core)
 
 	if (!exec->cmd->args[0])
 		exit(0);
-	if (!absolute_path(exec, exec->cmd->args[0]))
+	if (ft_strlen(exec->cmd->args[0]) == 0)
+		core->errorno = ENOENT;
+	else if (!absolute_path(exec, exec->cmd->args[0]))
 	{
 		slash = ft_strjoin("/", exec->cmd->args[0]);
 		if (!slash)
 			return (false);
 		exec_shell(exec, slash);
+		core->errorno = errno;
 	}
 	else
 	{
 		exec_shell(exec, exec->cmd->args[0]);
+		core->errorno = errno;
 	}
-	core->errorno = errno;
 	execve_error(core, exec);
 	return (core->exit_code);
 }
