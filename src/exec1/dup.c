@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 17:56:01 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 18:45:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,7 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 	g_signal = 1;
 	if (pid == 0)
 	{
-		//temporaire c'est normer sans les comms
-		if (ft_strcmp(exec->cmd->args[0], "./minishell") == 0)
-		{
-			sa.sa_handler = SIG_IGN;
-			sigemptyset(&sa.sa_mask);
-			sa.sa_flags = 0;
-			sigaction(SIGINT, &sa, NULL);
-		}
-		//signal_reset();
+		signal_reset();
 		if (!child_dup(exec, count))
 			return (false);
 		if (is_builtin(exec->cmd))

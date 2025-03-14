@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 17:50:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 18:44:06 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 			if (!global)
 				continue ;
 			main_exec(global, core);
- 			if (!restore_stdio(core))
+			if (!restore_stdio(core))
 				return (false);
 		}
 		else if (ft_strlen(core->line) == 0)

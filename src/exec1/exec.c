@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 15:31:17 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 18:46:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_boolean	exec_shell(t_exec *exec, char *slash)
 int	env_exec(t_exec *exec, t_core *core)
 {
 	char	*slash;
+	struct sigaction sa;
 
 	if (!exec->cmd->args[0])
 		exit(0);
@@ -86,6 +87,14 @@ int	env_exec(t_exec *exec, t_core *core)
 		slash = ft_strjoin("/", exec->cmd->args[0]);
 		if (!slash)
 			return (false);
+		if (ft_strcmp(exec->cmd->args[0], "./minishell") == 0)
+		{
+			sa.sa_handler = SIG_IGN;
+			sigemptyset(&sa.sa_mask);
+			sa.sa_flags = 0;
+			sigaction(SIGINT, &sa, NULL);
+			g_signal = 1;
+		}
 		exec_shell(exec, slash);
 		core->errorno = errno;
 	}
