@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 08:26:51 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 08:36:05 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_boolean	child_stdin(t_exec *exec)
 		{
 			if (!exec->cmd->in->next)
 				break ;
-				exec->cmd->in = exec->cmd->in->next;
+			exec->cmd->in = exec->cmd->in->next;
 		}
-			exec->fd_infile = open(exec->cmd->file, O_RDONLY);
+			exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
 		if (exec->fd_infile < 0)
 			return (false);
 		if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
@@ -44,7 +44,7 @@ t_boolean	child_stdout(t_exec *exec)
 		{
 			if (!exec->cmd->out)
 				break ;
-				exec->cmd->out = exec->cmd->out->next;
+			exec->cmd->out = exec->cmd->out->next;
 		}
 		if (exec->cmd->out->type == 0)
 			exec->fd_outfile = open(exec->cmd->out->file, O_APPEND | O_WRONLY
@@ -66,11 +66,13 @@ t_boolean	child_stdout(t_exec *exec)
 }
 
 
-t_boolean	child_dup(t_exec *exec, t_cmd *cmd)
+t_boolean	child_dup(t_exec *exec)
 {
 
-	child_stdin(exec);
-	child_stdout(exec);
+	if (!child_stdin(exec))
+		return (false);
+	if (!child_stdout(exec))
+		return (false);
 	close(exec->fd_outfile);
 	close(exec->fd_infile);
 	close(exec->pipe[0]);
@@ -85,7 +87,7 @@ t_boolean	parent_process(t_exec *exec)
 	return (true);
 }
 
-t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
+t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core)
 {
 	//struct sigaction	sa;
 
@@ -101,7 +103,7 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 			sigaction(SIGINT, &sa, NULL);
 		}
 		signal_reset(); */
-		if (!child_dup(exec, exec->cmd, count))
+		if (!child_dup(exec))
 			return (false);
 		if (is_builtin(exec->cmd))
 		{
