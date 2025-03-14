@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 17:27:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 19:01:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		i++;
 	}
 	update_exit_code(core, child_pid);
-	signal_update();
 	g_signal = 0;
 	return (free(child_pid), true);
 }

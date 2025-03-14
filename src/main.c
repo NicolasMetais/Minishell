@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 18:44:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 19:01:05 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 	core->save1 = dup(STDOUT_FILENO);
 	while (1)
 	{
-		setup_signal();
 		if (!prompt_update(core))
 			core->prompt = NULL;
 		free(core->line);
@@ -115,7 +114,6 @@ int	main(int ac, char **av, char **env)
 		}
 		if (!core_init(&core, ac, av))
 			return (free_env(&core), false);
-		signal_update();
 		if (!minishell_launch(&core, global))
 			return (false);
 	}
