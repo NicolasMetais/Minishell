@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_token_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-10 14:23:47 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-10 14:23:47 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/10 14:23:47 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/14 17:21:23 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	redirection_error_2(t_red *red, char *str)
 		ft_printf("minishell: syntax error near unexpected token `%c'\n", c);
 }
 
-t_boolean	redirection_error(t_pipe_token *pipe, t_red *red, char *str)
+t_boolean	redirection_error(t_pipe_token *pipe, t_red **red, char *str)
 {
 	str++;
-	if (red->next)
-		red = red->next;
+	if ((*red)->next)
+		*red = (*red)->next;
 	while (*str && (*str == ' ' && (*str != '\'' && *str != '"')))
 		str++;
 	if (!*str)
@@ -61,9 +61,9 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red *red, char *str)
 		ft_printf("minishell: syntax error near unexpected token `newline'\n");
 		return (true);
 	}
-	if (is_redirection_char(*str) && red->valid == true)
+	if (is_redirection_char(*str) && (*red)->valid == true)
 	{	
-		redirection_error_2(red, str);
+		redirection_error_2(*red, str);
 		return (true);
 	}
 	if (*str == '|' && pipe->valid == true)
@@ -92,7 +92,7 @@ t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 		}
 		if (is_redirection_char(*var.word) && var.quote == false)
 		{
-			if (is_red_error(pipe, red, &var))
+			if (is_red_error(pipe, &red, &var))
 				return (free(var.tmp), true);
 		}
 		if (ft_strlen(var.word) == 0)
@@ -121,6 +121,8 @@ t_boolean	handle_token_error(char *readline, int *error)
 		return (true);
 	red_tmp = tk_red;
 	pipe_tmp = tk_pipe;
+	while (red_tmp)
+		red_tmp = red_tmp->next;
 	if (token_error(tk_pipe, tk_red, str))
 		return (free(str), free_pipe_tk(pipe_tmp), free_tab_red(red_tmp), true);
 	free(str);

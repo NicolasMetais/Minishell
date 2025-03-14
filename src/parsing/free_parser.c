@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/14 05:36:20 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:12:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	free_global(t_glb *glb)
 	{
 		if (glb->cmd)
 			freelist(glb->cmd);
-		if (glb->all_in)
-			free_list_fd(glb->all_in);
-		if (glb->all_out)
-			free_list_fd(glb->all_out);
+		// if (glb->all_in)
+		// 	free_list_fd(glb->all_in);
+		// if (glb->all_out)
+		// 	free_list_fd(glb->all_out);
 		free(glb);
 	}
 }

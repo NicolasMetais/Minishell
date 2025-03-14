@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 08:33:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:23:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,10 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->absolute_path = false;
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
-	exec->all_in = global->all_in;
-	exec->all_out = global->all_out;
+	//exec->all_in = global->all_in;
+	//exec->all_out = global->all_out;
 	exec->in = global->cmd->in;
 	exec->out = global->cmd->out;
-	//C'est dans ces vars au dessus ou il n'y a pas les bonnes choses
-	//faudrais avoir tout les infiles et heredoc de la commande dans le global->cmd->in et oufile dans global->cmd->out 
-	//et faire un global->cmd->in->next pour trouver ceux du pipe d'apres
-	//ca faciliterais grandement l'exec comme on l'as fait ! (et les here_doc marche pas mais c'est fine ca ira vite)
 	exec->trigger = false;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;

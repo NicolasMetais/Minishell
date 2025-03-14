@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 08:20:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 17:27:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,21 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
 	if (!child_pid)
 		return (false);
+	if (pipe(exec->pipe) == -1)
+		return (false);
 	while (i < exec->nb_cmd)
 	{
 		core->exit_code = 0;
-		if (pipe(exec->pipe) == -1)
-			return (false);
+
 		pid = fork();
 		if (pid == -1)
 			return (false);
 		if (pid > 0)
-			child_pid[i++] = pid;
-		if (!fork_process(exec, pid, core))
+			child_pid[i] = pid;
+		if (!fork_process(exec, pid, core, i))
 			return (false);
 		exec->cmd = exec->cmd->next;
+		i++;
 	}
 	update_exit_code(core, child_pid);
 	signal_update();

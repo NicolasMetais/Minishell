@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_error_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-10 19:59:28 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-10 19:59:28 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/10 19:59:28 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/14 17:21:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	turn_true_tok_error(t_bool_pipe *var)
 	var->word++;
 }
 
-t_boolean	is_red_error(t_pipe_token *pipe, t_red *red, t_bool_pipe *ctx)
+t_boolean	is_red_error(t_pipe_token *pipe, t_red **red, t_bool_pipe *ctx)
 {
-	if (red->type == double_)
+	if ((*red)->type == double_)
 		ctx->word++;
 	if (redirection_error(pipe, red, ctx->word))
 		return (true);

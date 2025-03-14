@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 01:52:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 16:53:22 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,9 +272,9 @@ void			turn_false_pipe_bool(t_bool_pipe *ctx);
 void			init_var_token_error(t_bool_pipe *var, char *str);
 void			turn_false_tok_error(t_bool_pipe *var);
 void			turn_true_tok_error(t_bool_pipe *var);
-t_boolean		is_red_error(t_pipe_token *pipe, t_red *red, t_bool_pipe *ctx);
+t_boolean		is_red_error(t_pipe_token *pipe, t_red **red, t_bool_pipe *ctx);
 void			free_pipe_tk(t_pipe_token *tk);
-t_boolean		redirection_error(t_pipe_token *pipe, t_red *red, char *str);
+t_boolean		redirection_error(t_pipe_token *pipe, t_red **red, char *str);
 void			turn_pipe_bool(t_bool_pipe *ctx);
 void			turn_bool_red(t_bool_red *ctx);
 void			turn_token_error(t_bool_pipe *var);

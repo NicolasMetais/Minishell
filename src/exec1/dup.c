@@ -6,46 +6,44 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 08:36:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 17:56:01 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_boolean	child_stdin(t_exec *exec)
+t_boolean	child_stdin(t_exec *exec, int count)
 {
 	if (exec->cmd->in)
 	{
-		while (exec->cmd->in)
-		{
-			if (!exec->cmd->in->next)
-				break ;
+		while (exec->cmd->in->next)
 			exec->cmd->in = exec->cmd->in->next;
-		}
-			exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
+		//fprintf(stderr, "INFILE %s\n" ,exec->cmd->in->file);
+		exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
 		if (exec->fd_infile < 0)
 			return (false);
 		if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
 			return (false);
 	}
-	else
+	else if (count != 0)
 	{
+		//fprintf(stderr, "ICI\n");
+		fprintf(stderr, "%s\n", exec->cmd->args[0]);
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (false);
+		close(exec->pipe[0]);
 	}
+	//fprintf(stderr, "JE SUIS LIBRE\n");
 	return (true);
 }
 
 t_boolean	child_stdout(t_exec *exec)
 {
+
 	if (exec->cmd->out)
 	{
-		while (exec->cmd->out)
-		{
-			if (!exec->cmd->out)
-				break ;
+		while (exec->cmd->out->next)
 			exec->cmd->out = exec->cmd->out->next;
-		}
 		if (exec->cmd->out->type == 0)
 			exec->fd_outfile = open(exec->cmd->out->file, O_APPEND | O_WRONLY
 					| O_APPEND, 0644);
@@ -59,24 +57,32 @@ t_boolean	child_stdout(t_exec *exec)
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
+		fprintf(stderr, "%s\n", exec->cmd->args[0]);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) == -1)
 			return (false);
+		close(exec->pipe[1]);
 	}
-	return (false);
+
+	return (true);
 }
 
 
-t_boolean	child_dup(t_exec *exec)
+t_boolean	child_dup(t_exec *exec, int count)
 {
 
-	if (!child_stdin(exec))
+	if (!child_stdin(exec, count))
 		return (false);
 	if (!child_stdout(exec))
 		return (false);
-	close(exec->fd_outfile);
-	close(exec->fd_infile);
-	close(exec->pipe[0]);
-	close(exec->pipe[1]);
+	if (exec->fd_infile > 0)
+		close(exec->fd_infile);
+	if (exec->fd_outfile > 0)
+		close(exec->fd_outfile);
+	if (exec->pipe[1] > 0)
+		close(exec->pipe[1]);
+	if (exec->pipe[0] > 0)
+		close(exec->pipe[0]);
+
 	return (true);
 }
 
@@ -87,7 +93,7 @@ t_boolean	parent_process(t_exec *exec)
 	return (true);
 }
 
-t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core)
+t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 {
 	//struct sigaction	sa;
 
@@ -95,15 +101,15 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core)
 	if (pid == 0)
 	{
 		//temporaire c'est normer sans les comms
-/* 		if (ft_strcmp(exec->cmd->args[0], "./minishell") == 0)
+		if (ft_strcmp(exec->cmd->args[0], "./minishell") == 0)
 		{
 			sa.sa_handler = SIG_IGN;
 			sigemptyset(&sa.sa_mask);
 			sa.sa_flags = 0;
 			sigaction(SIGINT, &sa, NULL);
 		}
-		signal_reset(); */
-		if (!child_dup(exec))
+		//signal_reset();
+		if (!child_dup(exec, count))
 			return (false);
 		if (is_builtin(exec->cmd))
 		{

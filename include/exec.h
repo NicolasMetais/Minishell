@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 08:20:33 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:39:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_boolean	multiple_here_doc(t_exec *exec);
 //BIG EXEC
 t_boolean	is_builtin(t_cmd *cmd);
 int			env_exec(t_exec *exec, t_core *core);
-t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core);
+t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);
 void		fd_setup(t_glb *global, int *pipe_fd);
 t_boolean	fork_setup(t_exec *exec, t_core *core);
 //  UTILS EXEC
