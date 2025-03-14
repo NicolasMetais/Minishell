@@ -6,13 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 17:27:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 19:39:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_exit_code(t_core *core, pid_t *child_pid)
+void	update_exit_code(t_core *core ,pid_t *child_pid)
 {
 	int		status;
 	int		i;
@@ -44,23 +44,21 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	if (!child_pid)
 		return (false);
 	if (pipe(exec->pipe) == -1)
-		return (false);
+		return (free(child_pid), false);
 	while (i < exec->nb_cmd)
 	{
 		core->exit_code = 0;
-
 		pid = fork();
 		if (pid == -1)
-			return (false);
+			return (free(child_pid), false);
 		if (pid > 0)
 			child_pid[i] = pid;
 		if (!fork_process(exec, pid, core, i))
-			return (false);
+			return (free(child_pid), false);
 		exec->cmd = exec->cmd->next;
 		i++;
 	}
 	update_exit_code(core, child_pid);
-	signal_update();
 	g_signal = 0;
-	return (free(child_pid), true);
+	return (free(child_pid), false);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 18:45:12 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 19:39:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@ t_boolean	child_stdin(t_exec *exec, int count)
 	{
 		while (exec->cmd->in->next)
 			exec->cmd->in = exec->cmd->in->next;
-		//fprintf(stderr, "INFILE %s\n" ,exec->cmd->in->file);
+		fprintf(stderr, "INFILE %s\n" ,exec->cmd->in->file);
 		exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
 		if (exec->fd_infile < 0)
 			return (false);
 		if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
 			return (false);
+		close(exec->fd_outfile);
 	}
 	else if (count != 0)
 	{
-		//fprintf(stderr, "ICI\n");
+		fprintf(stderr, "ICI\n");
 		fprintf(stderr, "%s\n", exec->cmd->args[0]);
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (false);
 		close(exec->pipe[0]);
 	}
-	//fprintf(stderr, "JE SUIS LIBRE\n");
+	fprintf(stderr, "JE SUIS LIBRE\n");
 	return (true);
 }
 
@@ -54,6 +55,7 @@ t_boolean	child_stdout(t_exec *exec)
 			return (false);
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
 			return (false);
+		close(exec->fd_outfile);
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
@@ -74,10 +76,6 @@ t_boolean	child_dup(t_exec *exec, int count)
 		return (false);
 	if (!child_stdout(exec))
 		return (false);
-	if (exec->fd_infile > 0)
-		close(exec->fd_infile);
-	if (exec->fd_outfile > 0)
-		close(exec->fd_outfile);
 	if (exec->pipe[1] > 0)
 		close(exec->pipe[1]);
 	if (exec->pipe[0] > 0)
@@ -95,12 +93,9 @@ t_boolean	parent_process(t_exec *exec)
 
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 {
-	//struct sigaction	sa;
-
 	g_signal = 1;
 	if (pid == 0)
 	{
-		signal_reset();
 		if (!child_dup(exec, count))
 			return (false);
 		if (is_builtin(exec->cmd))
