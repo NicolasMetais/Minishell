@@ -1,4 +1,8 @@
-SRCS = 	src/main.c \
+NAME = minishell
+LIB = libft/libft.a
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
+SRCS =	src/main.c \
 		src/parsing/free_parser.c \
 		src/parsing/handle_file/get_fd.c \
 		src/parsing/handle_file/get_file_utils.c \
@@ -62,40 +66,33 @@ SRCS = 	src/main.c \
 		src/exec1/main_exec.c \
 		src/exec1/dup.c \
 		src/exec1/file_manager.c \
-		src/exec1/pipe.c \
+		src/exec1/pipe.c
 
-OBJS = $(SRCS:.c=.o)
+OBJ_DIR = obj
 
-CC = cc
-
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3 #
-
-NAME = minishell
-
-LIB = libft/libft.a
+OBJS = $(patsubst %.c,%.o,$(SRCS))
+OBJS := $(patsubst src/%, $(OBJ_DIR)/src/%, $(OBJS))
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	@$(CC) $(OBJS) $(LIB) -lreadline  -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
 
 $(LIB):
-	@$(MAKE) -C $(@D)
+	$(MAKE) -C libft
 
-.c.o:
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-bonus:
-	make
+$(OBJ_DIR)/src/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS)
-	make clean -C ./libft
+	rm -rf $(OBJ_DIR)
+	$(MAKE) clean -C libft
 
-fclean: clean 
+fclean: clean
 	rm -f $(NAME)
-	make fclean -C ./libft
+	$(MAKE) fclean -C libft
 
-re:	fclean all
+re: fclean all
 
-.PHONY: all clean fclean re .c.o
+.PHONY: all clean fclean re bonus
