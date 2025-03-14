@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 15:32:17 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 19:24:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ t_boolean	here_doc_init(t_exec *exec)
 			if (!exec->limiter[i])
 				return (free_tab(exec->limiter), false);
 			i++;
+			exec->here_doc = true;
 		}
 		if (!in_cpy->next)
 			break ;

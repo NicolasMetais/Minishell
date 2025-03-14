@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 16:31:49 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 08:18:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,28 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->absolute_path = false;
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
+	exec->all_in = global->all_in;
+	exec->all_out = global->all_out;
 	exec->in = global->cmd->in;
-	exec->out = global->all_out;
+	exec->out = global->cmd->out;
+	//C'est dans cette var qu'il y a pas les bonnes chose
+	//faudrais avoir tout les infiles, outfile et heredoc de la commande dans le global->cmd->in et faire un global->cmd->in->next pour trouver ceux du pipe d'apres
+	//ca faciliterais grandement l'exec comme on l'as fait ! (et les here_doc marche pas mais c'est fine ca ira vite)
+	printf("FILE IN %s\n", exec->in->next->file);
+	printf("FILE OUT %s\n", exec->out->next->file);
+	exec->test[0] = ft_strdup("test");
+	exec->test[1] = ft_strdup("out");
+	exec->test[2] = ft_strdup("pou");
+	exec->test[3] = ft_strdup("outi");
 	exec->trigger = false;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
-	exec->nb_files = 0;
-}
-
-t_boolean	builtin_files(t_exec *exec, t_cmd *cmd, t_core *core)
-{
-	if (exec->fd_outfile)
-	{
-		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
-			return (false);
-		close(exec->fd_outfile);
-	}
-	builtin(core, cmd);
-	return (true);
 }
 
 t_boolean	launch_fork(t_exec *exec, t_core *core)
 {
-	if (exec->nb_cmd == 1 && is_builtin(exec->cmd))
-	{
-		if (!builtin_files(exec, exec->cmd, core))
-			return (false);
-	}
-	else if (exec->nb_cmd > 1 && (ft_strcmp(exec->cmd->args[0], "export")
-			|| ft_strcmp(exec->cmd->args[0], "unset")))
+	if (exec->nb_cmd > 1 && (ft_strcmp(exec->cmd->args[0], "export") == 0
+			|| ft_strcmp(exec->cmd->args[0], "unset") == 0))
 	{
 		if (!builtin(core, exec->cmd))
 			return (false);
@@ -75,8 +68,6 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 	}
 	else
 	{
-		printf("|%s|\n", exec->cmd->args[0]);
-
 		if (!fork_setup(exec, core))
 			return (false);
 	}
@@ -92,7 +83,7 @@ int	main_exec(t_glb *global, t_core *core)
 	exec_init(&exec, global, core);
 	if (exec.file_or_not)
 	{
-		if (!open_files(&exec, core))
+		if (!parse_files(&exec, core))
 			return (false);
 	}
 	if (!launch_fork(&exec, core))

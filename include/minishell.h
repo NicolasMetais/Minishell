@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 16:00:13 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 01:52:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_boolean		create_empty_env(t_core *core);
 //SIGNALS
 void			signal_update(void);
 void			signal_reset(void);
+void			setup_signal(void);
 
 //FREE
 void			emergency_free_tab(char **tab, int i);

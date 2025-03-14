@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 03:38:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 08:13:51 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_boolean	infile_manager(t_exec *exec, t_core *core)
 {
 	t_file	*in_cpy;
 
-	in_cpy = exec->in;
+	in_cpy = exec->all_in;
 	while (in_cpy)
 	{
 		if (in_cpy->type == 0)
@@ -33,9 +33,9 @@ t_boolean	infile_manager(t_exec *exec, t_core *core)
 			core->exit_code = errno;
 			return (false);
 		}
+		close(exec->fd_infile);
 		if (!in_cpy->next)
 			break ;
-		close(exec->fd_infile);
 		in_cpy = in_cpy->next;
 	}
 	return (true);
@@ -45,7 +45,7 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 {
 	t_file	*out_cpy;
 
-	out_cpy = exec->out;
+	out_cpy = exec->all_out;
 	while (out_cpy)
 	{
 		if (out_cpy->file == 0)
@@ -60,49 +60,22 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 			core->exit_code = errno;
 			return (false);
 		}
+		close(exec->fd_outfile);
 		if (!out_cpy->next)
 			break ;
-		close(exec->fd_outfile);
 		out_cpy = out_cpy->next;
 	}
 	return (true);
 }
 
-void	count_files(t_exec *exec)
-{
-	t_file	*in;
-	t_file	*out;
 
-	in = exec->in;
-	out = exec->out;
-	while (in)
-	{
-		exec->nb_files++;
-		if (!in->next)
-			break ;
-		in = in->next;
-	}
-	while (out)
-	{
-		exec->nb_files++;
-		if (!out->next)
-			break ;
-		out = out->next;
-	}
-}
-
-t_boolean	open_files(t_exec *exec, t_core *core)
+t_boolean	parse_files(t_exec *exec, t_core *core)
 {
+	(void)core;
 	if (!infile_manager(exec, core))
 		return (false);
 	if (!outfile_manager(exec, core))
 		return (false);
-	if (exec->fd_infile)
-	{
-		if (dup2(exec->fd_infile, STDIN_FILENO) < 0)
-			return (false);
-		close(exec->fd_infile);
-	}
 	if (exec->here_doc)
 	{
 		if (!here_doc_init(exec))
@@ -110,6 +83,5 @@ t_boolean	open_files(t_exec *exec, t_core *core)
 		if (!here_doc_manager(exec))
 			return (false);
 	}
-	count_files(exec);
 	return (true);
 }

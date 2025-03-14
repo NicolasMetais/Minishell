@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 02:10:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 04:51:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:02:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ t_boolean	replace_exit_code(char **tocut, int j, t_core *core)
 	char	*new;
 
 	if (j < (int)ft_strlen(*tocut)
-		&& (*tocut)[j + 1] == '?')
+		&& (*tocut)[j] == '?')
 	{
 		code = ft_itoa(core->exit_code);
 		if (!code)
 			return (false);
-		new = write_var(code, *tocut, j, 2);
+		new = write_var(code, *tocut, j, 1);
 		if (!new)
 			return (false);
 		free(*tocut);

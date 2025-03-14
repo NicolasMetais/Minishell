@@ -6,23 +6,37 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/09 23:03:42 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/14 01:56:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //GESTION DU SIGINT (Ctrl + c)
-void	handle_sigint(int sig)
+
+void	handle_sigint(int sig, siginfo_t *info, void *test)
 {
-	g_signal = sig;
-	if (g_signal == SIGINT)
+	(void)test;
+	write(1, "\n", 1);
+	if (g_signal == 0 && sig == SIGINT && getpid() == info->si_pid)
 	{
-		write(1, "\n", 1);
+		printf("SIPID %d\n PID %d\n", info->si_pid, getpid());
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		if (isatty(STDIN_FILENO))
-			rl_redisplay();
+		rl_redisplay();
 	}
+}
+void setup_signal(void)
+{
+	struct sigaction sa;
+    
+    sa.sa_handler = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+    
+	sa.sa_sigaction = &handle_sigint;
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGINT, &sa, NULL); 
 }
 
 void	signal_update(void)
@@ -31,9 +45,9 @@ void	signal_update(void)
 	struct sigaction	sign_quit;
 	struct sigaction	sign_z;
 
-	sign_int.sa_handler = handle_sigint;
+	sign_int.sa_sigaction = &handle_sigint;
 	sigemptyset(&sign_int.sa_mask);
-	sign_int.sa_flags = 0;
+	sign_int.sa_flags = SA_SIGINFO;
 	sigaction(SIGINT, &sign_int, NULL);
 	sign_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sign_quit.sa_mask);
@@ -47,12 +61,11 @@ void	signal_update(void)
 
 void	signal_reset(void)
 {
-	struct sigaction	sign_def;
+	struct sigaction sa;
 
-	sign_def.sa_handler = SIG_DFL;
-	sigemptyset(&sign_def.sa_mask);
-	sign_def.sa_flags = 0;
-	sigaction(SIGINT, &sign_def, NULL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
+	sa.sa_handler = SIG_DFL;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
