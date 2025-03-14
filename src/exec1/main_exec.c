@@ -35,8 +35,6 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->absolute_path = false;
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
-	//exec->all_in = global->all_in;
-	//exec->all_out = global->all_out;
 	exec->in = global->cmd->in;
 	exec->out = global->cmd->out;
 	exec->trigger = false;
