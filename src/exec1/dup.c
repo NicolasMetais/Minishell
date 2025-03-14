@@ -18,7 +18,6 @@ t_boolean	child_stdin(t_exec *exec, int count)
 	{
 		while (exec->cmd->in->next)
 			exec->cmd->in = exec->cmd->in->next;
-		fprintf(stderr, "INFILE %s\n" ,exec->cmd->in->file);
 		exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
 		if (exec->fd_infile < 0)
 			return (false);
@@ -29,11 +28,8 @@ t_boolean	child_stdin(t_exec *exec, int count)
 	{
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (false);
-		else
-			fprintf(stderr, "INFILE %s\n" ,exec->cmd->in->file);
 		close(exec->pipe[0]);
 	}
-	fprintf(stderr, "JE SUIS LIBRE\n");
 	return (true);
 }
 
@@ -57,12 +53,10 @@ t_boolean	child_stdout(t_exec *exec)
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
-		fprintf(stderr, "%s\n", exec->cmd->args[0]);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) == -1)
 			return (false);
 		close(exec->pipe[1]);
 	}
-
 	return (true);
 }
 
@@ -82,12 +76,16 @@ t_boolean	child_dup(t_exec *exec, int count)
 		close(exec->pipe[1]);
 	if (exec->pipe[0] > 0)
 		close(exec->pipe[0]);
-
 	return (true);
 }
 
 t_boolean	parent_process(t_exec *exec)
 {
+	if (ft_strcmp(exec->cmd->args[0], "./minishell") == 0)
+	{
+		g_signal = 1;
+		signal_update();
+	}
 	close(exec->pipe[1]);
 	close(exec->pipe[0]);
 	return (true);
@@ -95,8 +93,6 @@ t_boolean	parent_process(t_exec *exec)
 
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 {
-
-	g_signal = 1;
 	if (pid == 0)
 	{
 		if (!child_dup(exec, count))

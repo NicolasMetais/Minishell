@@ -16,15 +16,17 @@
 void	handle_sigint(int sig, siginfo_t *info, void *test)
 {
 	(void)test;
+	if (g_signal == 1)
+		return ;
 	write(1, "\n", 1);
 	if (g_signal == 0 && sig == SIGINT && getpid() == info->si_pid)
 	{
-		printf("SIPID %d\n PID %d\n", info->si_pid, getpid());
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
+
 void setup_signal(void)
 {
 	struct sigaction sa;
@@ -33,9 +35,8 @@ void setup_signal(void)
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
     sigaction(SIGINT, &sa, NULL);
-    
 	sa.sa_sigaction = &handle_sigint;
-    sa.sa_flags = SA_SIGINFO;
+    sa.sa_flags = SA_RESTART;
     sigaction(SIGINT, &sa, NULL); 
 }
 

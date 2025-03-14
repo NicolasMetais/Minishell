@@ -68,6 +68,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 	core->save1 = dup(STDOUT_FILENO);
 	while (1)
 	{
+		signal_update();
 		if (!prompt_update(core))
 			core->prompt = NULL;
 		free(core->line);
@@ -91,7 +92,7 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 	return (true);
 }
 
-volatile sig_atomic_t	g_signal = 0;
+volatile sig_atomic_t	g_signal;
 
 //DUPLICATION DE LA VARIABLE D'ENV
 int	main(int ac, char **av, char **env)
@@ -100,6 +101,7 @@ int	main(int ac, char **av, char **env)
 	t_glb	*global;
 
 	global = NULL;
+	g_signal = 0;
 	if (ac == 1)
 	{
 		if (env[0])
