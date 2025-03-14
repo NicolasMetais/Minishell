@@ -24,7 +24,7 @@ typedef struct s_exec
 {
 	int			nb_cmd;
 	char		**env_path;
-	int			pipe[2];
+	int			**pipe;
 	char		*path;
 	char		**splitted_path;
 	char		**env;
@@ -61,7 +61,12 @@ void		fd_setup(t_glb *global, int *pipe_fd);
 t_boolean	fork_setup(t_exec *exec, t_core *core);
 //  UTILS EXEC
 t_boolean	is_a_directory(char *arg);
-
 void		free_all(t_glb *global);
+void		close_pipes(t_exec *exec);
+
+// PIPE
+void	close_pipes(t_exec *exec);
+int		**pipe_array(t_exec *exec);
+void	free_pipe(t_exec *exec);
 
 #endif

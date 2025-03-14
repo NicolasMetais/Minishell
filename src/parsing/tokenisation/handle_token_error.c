@@ -121,8 +121,6 @@ t_boolean	handle_token_error(char *readline, int *error)
 		return (true);
 	red_tmp = tk_red;
 	pipe_tmp = tk_pipe;
-	while (red_tmp)
-		red_tmp = red_tmp->next;
 	if (token_error(tk_pipe, tk_red, str))
 		return (free(str), free_pipe_tk(pipe_tmp), free_tab_red(red_tmp), true);
 	free(str);

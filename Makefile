@@ -62,12 +62,13 @@ SRCS = 	src/main.c \
 		src/exec1/main_exec.c \
 		src/exec1/dup.c \
 		src/exec1/file_manager.c \
+		src/exec1/pipe.c \
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3 #
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3 #
 
 NAME = minishell
 
@@ -76,7 +77,7 @@ LIB = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	@$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
+	@$(CC) $(OBJS) $(LIB) -lreadline  -o $(NAME)
 
 $(LIB):
 	@$(MAKE) -C $(@D)

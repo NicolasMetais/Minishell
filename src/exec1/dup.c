@@ -26,14 +26,13 @@ t_boolean	child_stdin(t_exec *exec, int count)
 	}
 	else if (count != 0)
 	{
-		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+		if (dup2(exec->pipe[count - 1][0], STDIN_FILENO) < 0)
 			return (false);
-		close(exec->pipe[0]);
 	}
 	return (true);
 }
 
-t_boolean	child_stdout(t_exec *exec)
+t_boolean	child_stdout(t_exec *exec, int count)
 {
 
 	if (exec->cmd->out)
@@ -53,29 +52,26 @@ t_boolean	child_stdout(t_exec *exec)
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
-		if (dup2(exec->pipe[1], STDOUT_FILENO) == -1)
+
+		if (dup2(exec->pipe[count][1], STDOUT_FILENO) == -1)
 			return (false);
-		close(exec->pipe[1]);
 	}
 	return (true);
 }
-
 
 t_boolean	child_dup(t_exec *exec, int count)
 {
 
 	if (!child_stdin(exec, count))
 		return (false);
-	if (!child_stdout(exec))
+	if (!child_stdout(exec, count))
 		return (false);
+	if (exec->pipe)
+		close_pipes(exec);
 	if (exec->fd_infile > 0)
 		close(exec->fd_infile);
 	if (exec->fd_outfile > 0)
 		close(exec->fd_outfile);
-	if (exec->pipe[1] > 0)
-		close(exec->pipe[1]);
-	if (exec->pipe[0] > 0)
-		close(exec->pipe[0]);
 	return (true);
 }
 
@@ -86,8 +82,6 @@ t_boolean	parent_process(t_exec *exec)
 		g_signal = 1;
 		signal_update();
 	}
-	close(exec->pipe[1]);
-	close(exec->pipe[0]);
 	return (true);
 }
 

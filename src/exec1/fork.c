@@ -20,6 +20,7 @@ void	update_exit_code(t_core *core, pid_t *child_pid)
 	pid_t	pid;
 
 	i = 0;
+	status = 0;
 	while (child_pid[i] > 0)
 	{
 		pid = waitpid(child_pid[i], &status, 0);
@@ -48,11 +49,13 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
 	if (!child_pid)
 		return (false);
+	exec->pipe = pipe_array(exec);
+	if (!exec->pipe)
+		return (false);
 	while (i < exec->nb_cmd)
 	{
 		core->exit_code = 0;
-		if (pipe(exec->pipe) == -1)
-			return (false);pid = fork();
+		pid = fork();
 		if (pid == -1)
 			return (false);
 		if (pid > 0)
@@ -63,6 +66,7 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		exec->cmd = exec->cmd->next;
 		i++;
 	}
+	close_pipes(exec);
 	update_exit_code(core, child_pid);
-	return (free(child_pid), true);
+	return (free_pipe(exec), free(child_pid), true);
 }
