@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 19:01:19 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/15 11:44:06 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	update_exit_code(t_core *core, pid_t *child_pid)
 		pid = waitpid(child_pid[i], &status, 0);
 		if (pid > 0 && WIFEXITED(status))
 		{
-			fprintf(stderr, "[%d] succesfully end\n", pid);
 			exit_status = WEXITSTATUS(status);
 			if (exit_status != 0)
 				core->exit_code = exit_status;
@@ -39,6 +38,19 @@ void	update_exit_code(t_core *core, pid_t *child_pid)
 	wait(NULL);
 }
 
+pid_t	*fork_pipe_pid(t_exec *exec)
+{
+	pid_t	*child_pid;
+
+	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
+	if (!child_pid)
+		return (NULL);
+	exec->pipe = pipe_array(exec);
+	if (!exec->pipe)
+		return (NULL);
+	return (child_pid);
+}
+
 t_boolean	fork_setup(t_exec *exec, t_core *core)
 {
 	int		i;
@@ -46,11 +58,8 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	pid_t	*child_pid;
 
 	i = 0;
-	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
+	child_pid = fork_pipe_pid(exec);
 	if (!child_pid)
-		return (false);
-	exec->pipe = pipe_array(exec);
-	if (!exec->pipe)
 		return (false);
 	while (i < exec->nb_cmd)
 	{
@@ -62,10 +71,10 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 			child_pid[i] = pid;
 		if (!fork_process(exec, pid, core, i))
 			return (false);
-		fprintf(stderr, "parent [%d], create '%s' child [%d]\n", getpid(), exec->cmd->args[0], pid);
 		exec->cmd = exec->cmd->next;
 		i++;
 	}
+	child_pid[i] = 0;
 	close_pipes(exec);
 	update_exit_code(core, child_pid);
 	return (free_pipe(exec), free(child_pid), true);

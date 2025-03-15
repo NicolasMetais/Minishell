@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-14 21:56:42 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/15 11:44:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	**pipe_array(t_exec *exec)
 		 	return (free_failed_pipe(array, i), NULL);
 		i++;
 	}
-	fprintf (stderr, "nb_pipe : %d\n", i);
 	return (array);
 }
 

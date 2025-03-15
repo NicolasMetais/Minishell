@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 15:39:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/15 11:52:43 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_exec
 	int			nb_cmd;
 	char		**env_path;
 	int			**pipe;
+	int			*pipe_here_doc;
 	char		*path;
 	char		**splitted_path;
 	char		**env;
@@ -35,7 +36,6 @@ typedef struct s_exec
 	int			fd_infile;
 	int			fd_outfile;
 	char		**limiter;
-	char		*test[4];
 	t_boolean	trigger;
 	t_boolean	here_doc;
 	t_boolean	file_or_not;
