@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 19:06:26 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 00:55:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,20 @@ t_boolean	child_stdin(t_exec *exec, int count)
 	{
 		while (exec->cmd->in->next)
 			exec->cmd->in = exec->cmd->in->next;
-		exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
-		if (exec->fd_infile < 0)
-			return (false);
-		if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
-			return (false);
+		if (exec->cmd->in->type == 0)
+		{
+			if (dup2(exec->pipe_here_doc[exec->here_doc][0],
+				STDIN_FILENO) == -1)
+				return (false);
+		}
+		else
+		{
+			exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
+			if (exec->fd_infile < 0)
+				return (false);
+			if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
+				return (false);
+		}
 	}
 	else if (count != 0)
 	{
@@ -82,6 +91,8 @@ t_boolean	parent_process(t_exec *exec)
 		g_signal = 1;
 		signal_update();
 	}
+	if (incr_here_doc(exec->cmd) && exec->count != 0)
+	exec->here_doc++;
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/15 11:44:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 00:52:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,48 @@ pid_t	*fork_pipe_pid(t_exec *exec)
 	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
 	if (!child_pid)
 		return (NULL);
-	exec->pipe = pipe_array(exec);
+	exec->pipe = create_pipe_array(exec->nb_cmd);
 	if (!exec->pipe)
 		return (NULL);
 	return (child_pid);
 }
 
+t_boolean	incr_here_doc(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	while (tmp->next)
+		tmp = tmp->next;
+	if (tmp->in && tmp->in->type == 0)
+		return (true);
+	return (false);
+}
+
 t_boolean	fork_setup(t_exec *exec, t_core *core)
 {
-	int		i;
 	pid_t	pid;
 	pid_t	*child_pid;
 
-	i = 0;
 	child_pid = fork_pipe_pid(exec);
 	if (!child_pid)
 		return (false);
-	while (i < exec->nb_cmd)
+	while (exec->count < exec->nb_cmd)
 	{
 		core->exit_code = 0;
 		pid = fork();
 		if (pid == -1)
 			return (false);
 		if (pid > 0)
-			child_pid[i] = pid;
-		if (!fork_process(exec, pid, core, i))
+		{
+			child_pid[exec->count] = pid;
+		}
+		if (!fork_process(exec, pid, core, exec->count))
 			return (false);
 		exec->cmd = exec->cmd->next;
-		i++;
+		exec->count++;
 	}
-	child_pid[i] = 0;
+	child_pid[exec->count] = 0;
 	close_pipes(exec);
 	update_exit_code(core, child_pid);
 	return (free_pipe(exec), free(child_pid), true);

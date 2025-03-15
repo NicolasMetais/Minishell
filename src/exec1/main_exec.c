@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 15:23:57 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 00:51:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,19 @@ t_boolean	env_parse(t_core *core)
 void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 {
 	exec->file_or_not = false;
+	exec->limiter = NULL;
 	exec->here_doc = false;
 	exec->fd_infile = 0;
 	exec->fd_outfile = 0;
+	exec->here_doc = 0;
 	exec->nb_cmd = global->nb_cmd;
 	exec->env_path = core->splitted_path;
 	exec->absolute_path = false;
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
 	exec->in = global->cmd->in;
+	exec->count = 0;
 	exec->out = global->cmd->out;
-	exec->trigger = false;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
 }

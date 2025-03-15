@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/15 11:44:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 00:51:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ void	free_failed_pipe(int **array, int n)
 	free(array);
 }
 
-int	**pipe_array(t_exec *exec)
+int	**create_pipe_array(int pipe_nb)
 {
 	int	**array;
 	int	i;
 
-	array = malloc(sizeof(int *) * (exec->nb_cmd - 1));
+	array = malloc(sizeof(int *) * (pipe_nb));
 	if (!array)
 		return (0);
 	i = 0;
-	while (i < exec->nb_cmd - 1) 
+	while (i < pipe_nb) 
 	{
 		array[i] = malloc(sizeof(int) * 3);
 		if (!array[i])
