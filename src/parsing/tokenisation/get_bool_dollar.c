@@ -55,7 +55,6 @@ t_tk_dollar	*add_back_dollar(t_tk_dollar *dollar_value, t_tk_dollar *new)
 t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 {
 	t_get_dollar_bool	ctx;
-	t_tk_dollar			*tmp;
 
 	init_get_dollar_bool(&ctx, str);
 	while (*ctx.line)
@@ -68,15 +67,14 @@ t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 			break ;
 		if (*ctx.line == '$')
 		{
-			tmp = new_dollar_value(ctx);
-			if (!tmp)
+			ctx.tmp = new_dollar_value(ctx);
+			if (!ctx.tmp)
 			{
 				(*error) = 1;
 				return (NULL);
 			}
-			dollar = add_back_dollar(dollar, tmp);
+			dollar = add_back_dollar(dollar, ctx.tmp);
 		}
-
 		if (*ctx.line != '\'' && *ctx.line != '"')
 			ctx.line++;
 	}
@@ -86,15 +84,8 @@ t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 t_tk_dollar	*get_tk_dollar(char *line, int *error)
 {
 	t_tk_dollar	*dollar;
-	t_tk_dollar	*tmp;
 
 	dollar = NULL;
 	dollar = get_bool_tk_dollar(line, dollar, error);
-	tmp = dollar;
-	while (tmp)
-	{
-		printf("dollar valid : %d\n", tmp->valid);
-		tmp = tmp->next;
-	}
 	return (dollar);
 }

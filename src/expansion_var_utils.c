@@ -12,45 +12,50 @@
 
 #include "minishell.h"
 
-// void	init_var_expand(t_expand_var *ctx)
-// {
-// 	ctx->error = 0;
-// 	ctx->tmp = NULL;
-// 	ctx->new_line = NULL;
-// }
+void    free_tk_dollar(t_tk_dollar *dollar)
+{
+    t_tk_dollar *tmp;
 
-// char	*dynamic_copy(char *old, char c)
-// {
-// 	int		i;
-// 	int		len;
-// 	char	*new;
+    while (dollar)
+    {
+        tmp = dollar->next;
+        free(dollar);
+        dollar = NULL;
+        dollar = tmp;
+    }
+}
+
+void	init_var_expand(t_expand_var *ctx)
+{
+	ctx->error = 0;
+	ctx->tmp = NULL;
+	ctx->new_line = NULL;
+}
+
+char	*dynamic_copy(char *old, char c)
+{
+	int		i;
+	int		len;
+	char	*new;
 	
-// 	i = 0;
-// 	len =  ft_strlen(old);
-// 	new = malloc(sizeof(char) * len + 2);
-// 	if (!new)
-// 		return (NULL);
-// 	while (i < len)
-// 	{
-// 		new[i] = old[i];
-// 		i++;
-// 	}
-// 	new[i] = c;
-// 	new[i + 1] = '\0';
-// 	free(old);
-// 	return (new);
-// }
+	i = 0;
+	len =  ft_strlen(old);
+	new = malloc(sizeof(char) * len + 2);
+	if (!new)
+		return (NULL);
+	while (i < len)
+	{
+		new[i] = old[i];
+		i++;
+	}
+	new[i] = c;
+	new[i + 1] = '\0';
+	free(old);
+	return (new);
+}
 
-// void free_tk_dollar(t_tk_dollar *dollar)
-// {
-//     t_tk_dollar *tmp;
-    
-//     tmp = NULL;
-//     while (dollar)
-//     {
-//         tmp = dollar->next;
-//         free(dollar);
-//         dollar = tmp;
-//         tmp = tmp->next;
-//     }
-//}
+void	get_variable_incr(int *i, t_core *core)
+{
+	(*i) += 1;
+	core->line++;
+}

@@ -46,20 +46,21 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }				t_red;
 
+typedef struct s_tk_dollar
+{
+	t_boolean			valid;
+	struct s_tk_dollar	*next;
+}				t_tk_dollar;
+
 typedef struct s_expand_var
 {
 	int			error;
 	char		*new_line;
 	char		*tmp;
 	int			i;
+	t_tk_dollar	*tmp_d;
+	t_tk_dollar	*dollar;
 }				t_expand_var;
-
-
-typedef struct s_tk_dollar
-{
-	t_boolean			valid;
-	struct s_tk_dollar	*next;
-}				t_tk_dollar;
 
 typedef struct s_pipe_token
 {
@@ -82,6 +83,8 @@ typedef struct s_get_tk_bool
 	char		c_simp;
 	char		*line;
 	t_boolean	quote;
+	t_tk_dollar			*tmp;
+
 }				t_get_dollar_bool;
 
 typedef struct s_get_pipe_bool
@@ -170,13 +173,15 @@ char			*expansion_var(t_core *core);
 int				*is_dollar(t_core *core, int *pos);
 char			*dynamic_copy(char *old, char c);
 void			init_var_expand(t_expand_var *ctx);
+void			get_variable_incr(int *i, t_core *core);
+
 
 //ENV VAR INIT
 t_boolean		duplicate_env(t_core *core, char **todup);
 t_env			*new_env(char *todup);
 t_env			*lstlast_env(t_env *lst);
 t_boolean		create_empty_env(t_core *core);
-void 		free_tk_dollar(t_tk_dollar *dollar);
+void 			free_tk_dollar(t_tk_dollar *dollar);
 
 
 //SIGNALS

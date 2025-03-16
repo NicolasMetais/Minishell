@@ -23,7 +23,7 @@ char	*get_variable_utils(char *old, t_core *core, int i)
 		return (free(old), NULL);
 	if (*tmp == '?')
 	{
-		var = ft_strdup(ft_itoa(core->exit_code));
+		var = ft_itoa(core->exit_code);
 		if (!var)
 			return (NULL);
 	}
@@ -48,17 +48,12 @@ char	*get_variable(char *old, t_core *core, t_tk_dollar *dollar)
 		|| *core->line == '?'))
 	{
 		if (*core->line == '?')
-		{
-			core->line++;
-			i++;	
-		}
+			get_variable_incr(&i, core);
 		else
 		{
 			while(*core->line && (ft_isalnum(*core->line) || *core->line == '_'))
-			{
-					core->line++;
-					i++;
-			}
+				get_variable_incr(&i, core);
+
 		}	
 		new = get_variable_utils(old, core, i);
 		if (!new)
@@ -72,67 +67,44 @@ char	*get_variable(char *old, t_core *core, t_tk_dollar *dollar)
 	}
 }
 
-char	*dynamic_copy(char *old, char c)
+char	*get_new_line(t_expand_var *ctx, t_core *core, t_tk_dollar **dollar)
 {
-	int		i;
-	int		len;
 	char	*new;
-	
-	i = 0;
-	len =  ft_strlen(old);
-	new = malloc(sizeof(char) * len + 2);
-	if (!new)
-		return (NULL);
-	while (i < len)
-	{
-		new[i] = old[i];
-		i++;
-	}
-	new[i] = c;
-	new[i + 1] = '\0';
-	free(old);
-	return (new);
-}
 
-void	init_var_expand(t_expand_var *ctx)
-{
-	ctx->error = 0;
-	ctx->tmp = NULL;
-	ctx->new_line = NULL;
+	if (*core->line == '$')
+		*dollar = (*dollar)->next;
+	new = dynamic_copy(ctx->new_line, *core->line);
+	if (!new)
+		return (free(ctx->tmp), NULL);
+	core->line++;
+	return (new);
 }
 
 char	*expansion_var(t_core *core)
 {
-	t_tk_dollar		*dollar;
 	t_expand_var	ctx;
 
 	init_var_expand(&ctx);
-	dollar = get_tk_dollar(core->line, &ctx.error);
+	ctx.dollar = get_tk_dollar(core->line, &ctx.error);
 	if (ctx.error == 1)
 		return (NULL);
-	ctx.new_line = NULL;
+	ctx.tmp_d = ctx.dollar;
 	while (*core->line)
 	{
 		ctx.tmp = ctx.new_line;
-		if (*core->line == '$' && dollar->valid == true)
+		if (*core->line == '$' && ctx.dollar->valid == true)
 		{
-			printf("ici\n");
-			ctx.new_line = get_variable(ctx.new_line, core, dollar);
+			ctx.new_line = get_variable(ctx.new_line, core, ctx.dollar);
 			if (!ctx.new_line)
 				return (free(ctx.tmp), NULL);
-			dollar = dollar->next;
+			ctx.dollar = ctx.dollar->next;
 		}
 		else
 		{
-			if (*core->line == '$')
-				dollar = dollar->next;
-			ctx.new_line = dynamic_copy(ctx.new_line, *core->line);
+			ctx.new_line = get_new_line(&ctx, core, &ctx.dollar);
 			if (!ctx.new_line)
 				return (free(ctx.tmp), NULL);
-			core->line++;
 		}
-		if (!*core->line)
-			break ;
 	}
-	return (ctx.new_line);
+	return (free_tk_dollar(ctx.tmp_d), ctx.new_line);
 }
