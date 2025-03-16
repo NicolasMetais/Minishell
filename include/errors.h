@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 02:14:11 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 18:52:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 21:17:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ t_boolean	funct_error(char *cmd, char *addvalue, t_core *core);
 t_boolean   is_a_file(char *str);
 t_boolean	file_name_argument(char *cmd, t_core *core);
 t_boolean   only_point(char *str);
+
+// EXEC
+void	execve_error(t_core *core, t_exec *exec, char *tmp);
 
 
 #endif

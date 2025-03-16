@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 14:16:59 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 21:41:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ void	execve_error(t_core *core, t_exec *exec, char *tmp)
 		permission_denied(tmp, core);
 	else
 	{
+		fprintf(stderr, "errno == %d", errno);
 		core->exit_code = core->errorno;
 		perror("minishell");
 	}
-	free_pipe(exec->nb_cmd - 1, exec->pipe);
-	free_pipe(exec->nb_pipe_here_doc, exec->pipe_here_doc);
+	if (exec->nb_cmd > 1)
+		free_pipe(exec->nb_cmd - 1, exec->pipe);
+	kill_program(core);
+	free_global(core->glb);
 	exit(core->exit_code);
 }
 
@@ -82,7 +85,6 @@ int	env_exec(t_exec *exec, t_core *core)
 	char	*slash;
 	char	*tmp;
 
-	
 	if (!exec->cmd->args[0])
 		exit(0);
 	tmp = ft_strdup(exec->cmd->args[0]);
@@ -104,6 +106,5 @@ int	env_exec(t_exec *exec, t_core *core)
 		core->errorno = errno;
 	}
 	execve_error(core, exec, tmp);
-	free(tmp);
-	return (core->exit_code);
+	return (free(tmp), core->exit_code);
 }

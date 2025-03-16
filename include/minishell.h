@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 18:43:55 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 21:01:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ typedef struct s_get_tk_bool
 	char		c_simp;
 	char		*line;
 	t_boolean	quote;
-	t_tk_dollar			*tmp;
-
+	t_tk_dollar	*tmp;
 }				t_get_dollar_bool;
 
 typedef struct s_get_pipe_bool
@@ -146,6 +145,7 @@ typedef struct s_core
 	int				errorno;
 	int				save;
 	int				save1;
+	t_glb			*glb;
 	t_env			*env;
 	t_env			*mark;
 }	t_core;

@@ -83,14 +83,14 @@ OBJS := $(patsubst src/%, $(OBJ_DIR)/src/%, $(OBJS))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
+	@$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C libft
 
 $(OBJ_DIR)/src/%.o: src/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

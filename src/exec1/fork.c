@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 18:28:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 19:23:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ pid_t	*fork_pipe_pid(t_exec *exec)
 	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
 	if (!child_pid)
 		return (NULL);
-	exec->pipe = create_pipe_array(exec->nb_cmd);
-	if (!exec->pipe)
-		return (NULL);
+	if (exec->nb_cmd > 1)
+	{
+		exec->pipe = create_pipe_array(exec->nb_cmd - 1);
+		if (!exec->pipe)
+			return (NULL);
+	}
 	return (child_pid);
 }
 

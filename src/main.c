@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 14:24:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 22:56:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 				return (false);
 			if (!global)
 				continue ;
-			if (global->nb_cmd != 1 && !builtin(core, global->cmd))
-				main_exec(global, core);
+			if (!main_exec(global, core))
+				return (false);
 			if (!restore_stdio(core))
 				return (false);
 		}
@@ -121,5 +121,5 @@ int	main(int ac, char **av, char **env)
 			return (false);
 	}
 	else
-		printf("error\n");
+		ft_putendl_fd("Too many args", 2);
 }

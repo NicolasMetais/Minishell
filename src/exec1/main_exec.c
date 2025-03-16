@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 16:54:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 19:04:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,17 @@ int	main_exec(t_glb *global, t_core *core)
 {
 	t_exec	exec;
 
-
 	if (!env_parse(core))
 		return (false);
 	exec_init(&exec, global, core);
 	if (exec.file_or_not)
 	{
 		if (!parse_files(&exec, core))
+		{
 			return (false);
+		}
 	}
-	else if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
+	if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
 	{
 		if (!builtin(core, exec.cmd))
 			return (false);		

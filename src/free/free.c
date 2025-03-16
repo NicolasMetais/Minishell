@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 05:40:11 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 06:20:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 20:56:27 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	kill_program(t_core *core)
 {
 	close(core->save);
 	close(core->save1);
+	free(core->line);
 	if (core->env)
 		free_tab(core->env_dup);
 	free_env(core);

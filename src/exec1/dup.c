@@ -6,13 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 18:29:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 21:37:10 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_boolean	child_stdin(t_exec *exec, int count)
+t_boolean	child_stdin(t_exec *exec, int count, int fd)
 {
 	if (exec->cmd->in)
 	{
@@ -26,10 +26,7 @@ t_boolean	child_stdin(t_exec *exec, int count)
 		}
 		else
 		{
-			exec->fd_infile = open(exec->cmd->in->file, O_RDONLY);
-			if (exec->fd_infile < 0)
-				return (false);
-			if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
+			if (dup2(fd, STDIN_FILENO) == -1)
 				return (false);
 		}
 	}
@@ -41,39 +38,41 @@ t_boolean	child_stdin(t_exec *exec, int count)
 	return (true);
 }
 
-t_boolean	child_stdout(t_exec *exec, int count)
+t_boolean	child_stdout(t_exec *exec, int count, int fd)
 {
-
-	if (exec->cmd->out)
+	if (fd > 0)
 	{
-		while (exec->cmd->out->next)
-			exec->cmd->out = exec->cmd->out->next;
-		if (exec->cmd->out->type == 0)
-			exec->fd_outfile = open(exec->cmd->out->file, O_APPEND | O_WRONLY
-					| O_APPEND, 0644);
-		else
-			exec->fd_outfile = open(exec->cmd->out->file, O_CREAT | O_WRONLY
-					| O_TRUNC, 0644);
-		if (exec->fd_outfile < 0)
-			return (false);
-		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
+		fprintf(stderr, "fd == %d\n", fd);
+		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (false);
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
-
 		if (dup2(exec->pipe[count][1], STDOUT_FILENO) == -1)
 			return (false);
 	}
 	return (true);
 }
 
-t_boolean	child_dup(t_exec *exec, int count)
+t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 {
+	int	fd_out;
+	int	fd_in;
 
-	if (!child_stdin(exec, count))
+	fd_out = outfile_manager(exec, core);
+	if (fd_out == -1)
+		return (false);	
+	fd_in = infile_manager(exec, core);
+	if (fd_in == -1)
+	{
+		if (fd_out > 0)
+			close(fd_out);
+		fprintf(stderr, "errno == %d", errno);
+		return (false);	
+	}
+	if (!child_stdin(exec, count, fd_in))
 		return (false);
-	if (!child_stdout(exec, count))
+	if (!child_stdout(exec, count, fd_out))
 		return (false);
 	if (exec->pipe_here_doc)
 		close_pipes_here(exec);
@@ -88,7 +87,7 @@ t_boolean	child_dup(t_exec *exec, int count)
 
 t_boolean	parent_process(t_exec *exec)
 {
-	if (ft_strcmp(exec->cmd->args[0], "./minishell") == 0)
+	if (ft_strncmp(exec->cmd->args[0], "./", 2) == 0)
 	{
 		g_signal = 1;
 		signal_update();
@@ -102,8 +101,8 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 {
 	if (pid == 0)
 	{
-		if (!child_dup(exec, count))
-			return (false);
+		if (!child_dup(exec, count, core))
+			execve_error(core, exec, exec->cmd->args[0]);
 		if (is_builtin(exec->cmd))
 		{
 			if (!(builtin(core, exec->cmd)))
