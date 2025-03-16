@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 00:52:08 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 18:28:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ pid_t	*fork_pipe_pid(t_exec *exec)
 
 t_boolean	incr_here_doc(t_cmd *cmd)
 {
-	t_cmd	*tmp;
+	t_file	*infile;
 
-	tmp = cmd;
-	while (tmp->next)
-		tmp = tmp->next;
-	if (tmp->in && tmp->in->type == 0)
+	infile = cmd->in;
+	while (infile && infile->next)
+		infile = infile->next;
+	if (infile && infile->type == 0)
 		return (true);
 	return (false);
 }
@@ -78,16 +78,14 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		if (pid == -1)
 			return (false);
 		if (pid > 0)
-		{
 			child_pid[exec->count] = pid;
-		}
 		if (!fork_process(exec, pid, core, exec->count))
 			return (false);
 		exec->cmd = exec->cmd->next;
 		exec->count++;
 	}
 	child_pid[exec->count] = 0;
-	close_pipes(exec);
+	close_free_pipes(exec);
 	update_exit_code(core, child_pid);
-	return (free_pipe(exec), free(child_pid), true);
+	return (free(child_pid), true);
 }

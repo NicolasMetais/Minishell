@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 00:52:13 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 16:41:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,11 @@ t_boolean	outfile_manager(t_exec *exec, t_core *core)
 
 t_boolean	parse_files(t_exec *exec, t_core *core)
 {
-	int	i;
-
-	i = 0;
 	if (ishere_doc(exec))
 	{
 		if (!here_doc_init(exec))
 			return (false);
-		if (!here_doc_manager(exec, &i))
+	if (!here_doc_manager(exec))
 			return (false);
 	}
 	if (!infile_manager(exec, core))

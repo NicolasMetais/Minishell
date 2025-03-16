@@ -1,7 +1,7 @@
 NAME = minishell
 LIB = libft/libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -fsanitize=address -g3
 SRCS =	src/main.c \
 		src/parsing/free_parser.c \
 		src/parsing/handle_file/get_fd.c \
@@ -63,6 +63,7 @@ SRCS =	src/main.c \
 		src/exec1/exec.c \
 		src/exec1/free_exec.c \
 		src/exec1/here_doc.c \
+		src/exec1/here_doc_node.c \
 		src/exec1/here_doc_init.c \
 		src/exec1/main_exec.c \
 		src/exec1/dup.c \
@@ -77,7 +78,7 @@ OBJS := $(patsubst src/%, $(OBJ_DIR)/src/%, $(OBJS))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C libft

@@ -6,11 +6,25 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/16 00:51:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 18:24:28 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_pipes_here(t_exec *exec)
+{
+	int	n;
+
+	n = 0;
+	while (n < exec->nb_pipe_here_doc)
+	{
+		//printf("%p\n", exec->pipe_here_doc[n]);
+		close(exec->pipe_here_doc[n][0]);
+		close(exec->pipe_here_doc[n][1]);
+		n++;
+	}
+}
 
 void	close_pipes(t_exec *exec)
 {
@@ -48,28 +62,28 @@ int	**create_pipe_array(int pipe_nb)
 	if (!array)
 		return (0);
 	i = 0;
-	while (i < pipe_nb) 
+	while (i < pipe_nb)
 	{
 		array[i] = malloc(sizeof(int) * 3);
 		if (!array[i])
 			return (free_failed_pipe(array, i), NULL);
 		array[i][2] = 0;
 		if (pipe(array[i]) == -1)
-		 	return (free_failed_pipe(array, i), NULL);
+			return (free_failed_pipe(array, i), NULL);
 		i++;
 	}
 	return (array);
 }
 
-void	free_pipe(t_exec *exec)
+void	free_pipe(int nb_pipe, int **pipe)
 {
 	int	i;
 
     i = 0;
-	while (i < exec->nb_cmd - 1)
+	while (i < nb_pipe)
 	{
-		free(exec->pipe[i]);
+		free(pipe[i]);
 		i++;
 	}
-	free(exec->pipe);
+	free(pipe);
 }

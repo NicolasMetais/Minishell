@@ -6,63 +6,21 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:59:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 00:51:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 18:08:51 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_here_doc_nb(t_exec *exec)
-{
-	t_cmd	*cmd;
-	t_file	*infile;
-	int		size;
-
-	cmd = exec->cmd;
-	size = 0;
-	while (cmd)
-	{
-		infile = cmd->in;
-		while (infile)
-		{
-			if (infile->type == 0)
-				size++;
-			infile = infile->next;
-		}
-		cmd = cmd->next;
-	}
-	return (size);
-}
-
-t_boolean	ishere_doc(t_exec *exec)
-{
-	t_cmd	*cmd;
-	t_file	*infile;
-
-	cmd = exec->cmd;
-	infile = exec->cmd->in;
-	while (cmd)
-	{
-		infile = cmd->in;
-		while (infile)
-		{
-			if (infile->type == 0)
-				return (true);
-			infile = infile->next;
-		}
-		cmd = cmd->next;
-	}
-	return (false);
-}
 
 t_boolean	here_doc_pipe(t_exec *exec)
 {
-	t_cmd	*cmd;
-	t_file	*infile;
-	int		size;
+	t_cmd		*cmd;
+	t_file		*infile;
+	t_here_doc	*here;
 
+	here = exec->here;
 	cmd = exec->cmd;
-	size = 0;
 	while (cmd)
 	{
 		infile = cmd->in;
@@ -70,28 +28,43 @@ t_boolean	here_doc_pipe(t_exec *exec)
 		{
 			if (infile->type == 0)
 			{
-				size++;
-				break ;
+				if (infile->next == NULL)
+					pipe(here->pipe_here);
+				else
+					here->pipe_here = NULL;
+				here = here->next;
 			}
 			infile = infile->next;
 		}
 		cmd = cmd->next;
 	}
-	exec->pipe_here_doc = create_pipe_array(size);
-	if (!exec->pipe_here_doc)
-		return (false);
 	return (true);
 }
 
-t_boolean	here_doc_limiter(t_exec *exec, int *i)
+t_boolean	create_here(t_exec *exec, t_file *infile)
 {
-	t_cmd	*cmd;
-	t_file	*infile;
+	char		*file;
+	t_here_doc	*here;
+
+	here = exec->here;
+	file = ft_strdup(infile->file);
+	if (!file)
+		return (free_here_doc(exec->here), false);
+	if (!exec->here)
+		exec->here = new_here_doc(file);
+	else
+		hereadd_back(&exec->here, new_here_doc(file));
+	if (!exec->here)
+		return (free_here_doc(here), false);
+	return (true);
+}
+
+t_boolean	here_doc_limiter(t_exec *exec)
+{
+	t_cmd		*cmd;
+	t_file		*infile;
 
 	cmd = exec->cmd;
-	exec->limiter = malloc(sizeof(char *) * (exec->nb_here_doc + 1));
-	if (!exec->limiter)
-		return (false);
 	while (cmd)
 	{
 		infile = cmd->in;
@@ -99,28 +72,22 @@ t_boolean	here_doc_limiter(t_exec *exec, int *i)
 		{
 			if (infile->type == 0)
 			{
-				exec->limiter[*i] = ft_strdup(infile->file);
-				if (!exec->limiter[*i])
-					return (free_tab(exec->limiter), false);
-				(*i)++;
+				if (!create_here(exec, infile))
+					return (false);
 			}
 			infile = infile->next;
 		}
 		cmd = cmd->next;
 	}
-	exec->limiter[*i] = NULL;
 	return (true);
 }
 
 t_boolean	here_doc_init(t_exec *exec)
 {
-	int	i;
-
-	i = 0;
 	exec->nb_here_doc = get_here_doc_nb(exec);
-	if (!here_doc_pipe(exec))
+	if (!here_doc_limiter(exec))
 		return (false);
-	if (!here_doc_limiter(exec, &i))
+	if (!here_doc_pipe(exec))
 		return (false);
 	return (true);
 }

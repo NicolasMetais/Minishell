@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 00:51:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 16:54:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->in = global->cmd->in;
 	exec->count = 0;
 	exec->out = global->cmd->out;
+	exec->here = NULL;
+	exec->nb_pipe_here_doc = 0;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
 }
@@ -68,6 +70,7 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 int	main_exec(t_glb *global, t_core *core)
 {
 	t_exec	exec;
+
 
 	if (!env_parse(core))
 		return (false);
