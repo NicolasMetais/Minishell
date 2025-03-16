@@ -172,7 +172,7 @@ void			rewrite_line(t_core *core, int arg_nb, int count);
 char			*expansion_var(t_core *core);
 int				*is_dollar(t_core *core, int *pos);
 char			*dynamic_copy(char *old, char c);
-void			init_var_expand(t_expand_var *ctx);
+void			init_var_expand(t_expand_var *ctx, t_core *core);
 void			get_variable_incr(int *i, t_core *core);
 
 
@@ -236,6 +236,7 @@ void			join_custom_failed(t_quote *ctx, t_free_var *f);
 void			ndup_failed(t_quote *ctx, t_free_var *f);
 void			quote_or_not_free(t_quote *ctx, t_free_var *f);
 
+void			add_back(t_cmd *head, t_cmd *new);
 void			quote_or_not(t_quote *ctx);
 void			handle_inside_quote(t_quote *ctx);
 void			realloc_line_in_quote(t_quote *ctx, t_free_var *f);

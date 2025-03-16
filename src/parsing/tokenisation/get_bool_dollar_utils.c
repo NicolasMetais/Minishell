@@ -22,7 +22,6 @@ void	init_get_dollar_bool(t_get_dollar_bool *ctx, char *str)
 
 void	get_bool_dollar_turn_true(t_get_dollar_bool *ctx)
 {
-	printf("turn true-> %s\n", ctx->line);
 	if (*ctx->line == '\'')
 		ctx->c_simp = *ctx->line;
 	else
@@ -34,7 +33,6 @@ void	get_bool_dollar_turn_true(t_get_dollar_bool *ctx)
 
 void	get_bool_dollar_turn_false(t_get_dollar_bool *ctx)
 {
-	printf("turn false-> %s\n", ctx->line);
 	if (*ctx->line == '\'')
 		ctx->c_simp = 0;
 	else

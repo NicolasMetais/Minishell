@@ -33,9 +33,15 @@ void	quote_error_turn_false(t_boolean *in, int *db, int *simp, char str)
 t_boolean	quote_error_bis(int db, int simp)
 {
 	if (simp % 2 != 0)
+	{
+		printf("minishell: missing closing quote`''\n");
 		return (true);
+	}
 	if (db % 2 != 0)
+	{
+		printf("minishell: missing closing quote`\"'\n");
 		return (true);
+	}
 	return (false);
 }
 
@@ -47,6 +53,8 @@ t_boolean	quote_error(char *str)
 	t_boolean	in;
 
 	c = 0;
+	simp = 0;
+	db = 0;
 	in = false;
 	while (*str)
 	{
@@ -61,9 +69,8 @@ t_boolean	quote_error(char *str)
 			quote_error_turn_false(&in, &db, &simp, *str);
 			c = 0;
 		}
-		if (!*str)
-			break ;
-		str++;
+		if (*str)
+			str++;
 	}
 	return (quote_error_bis(db, simp));
 }

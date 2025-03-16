@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+void	add_back(t_cmd *head, t_cmd *new)
+{
+	t_cmd	*tmp;
+
+	if (head == NULL)
+	{
+		head = new;
+		tmp = NULL;
+		return ;
+	}
+	tmp = head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+	tmp = NULL;
+	return ;
+}
+
 int	command_counter(char **line_split)
 {
 	int	i;

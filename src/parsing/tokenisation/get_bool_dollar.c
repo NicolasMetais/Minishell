@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 t_tk_dollar	*new_dollar_value(t_get_dollar_bool ctx)
 {
 	t_tk_dollar	*new;
@@ -52,14 +51,21 @@ t_tk_dollar	*add_back_dollar(t_tk_dollar *dollar_value, t_tk_dollar *new)
 	return (dollar_value);
 }
 
-t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
+void	get_bool_tk_dollar_incr(t_get_dollar_bool *ctx)
+{
+	if (*ctx->line != '\'' && *ctx->line != '"')
+		ctx->line++;
+}
+
+t_tk_dollar	*get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 {
 	t_get_dollar_bool	ctx;
 
 	init_get_dollar_bool(&ctx, str);
 	while (*ctx.line)
 	{
-		if ((ctx.c_simp == 0 && *ctx.line == '\'') || (ctx.c_db == 0 && *ctx.line == '"'))
+		if ((ctx.c_simp == 0 && *ctx.line == '\'')
+			|| (ctx.c_db == 0 && *ctx.line == '"'))
 			get_bool_dollar_turn_true(&ctx);
 		if (*ctx.line == ctx.c_db || *ctx.line == ctx.c_simp)
 			get_bool_dollar_turn_false(&ctx);
@@ -75,8 +81,7 @@ t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 			}
 			dollar = add_back_dollar(dollar, ctx.tmp);
 		}
-		if (*ctx.line != '\'' && *ctx.line != '"')
-			ctx.line++;
+		get_bool_tk_dollar_incr(&ctx);
 	}
 	return (dollar);
 }

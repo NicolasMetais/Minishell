@@ -12,24 +12,6 @@
 
 #include "minishell.h"
 
-void	add_back(t_cmd *head, t_cmd *new)
-{
-	t_cmd	*tmp;
-
-	if (head == NULL)
-	{
-		head = new;
-		tmp = NULL;
-		return ;
-	}
-	tmp = head;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new;
-	tmp = NULL;
-	return ;
-}
-
 char	**new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 {
 	cmd->in = NULL;
@@ -91,20 +73,31 @@ t_cmd	*set_cmd(char **line_split)
 	return (head);
 }
 
+t_boolean	check_error(t_core *core)
+{
+	int	error;
+
+	error = 0;
+	if (ft_strlen(core->line) == 0)
+		return (true);
+	if (handle_token_error(core->line, &error))
+	{
+		core->exit_code = 2;
+		return (true);
+	}
+	return (false);
+}
+
 t_glb	*global_init(t_core *core)
 {
 	char	**line_split;
 	t_glb	*glb;
-	int		error;
 
-	error = 0;
-	if (ft_strlen(core->line) == 0)
+	if (check_error(core))
 		return (NULL);
-	if (handle_token_error(core->line, &error))
-	{
-		core->exit_code = 2;
+	core->line = expansion_var(core);
+	if (!core->line)
 		return (NULL);
-	}
 	line_split = get_pipe(core->line);
 	if (!line_split)
 		return (NULL);

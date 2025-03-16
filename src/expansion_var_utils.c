@@ -12,24 +12,26 @@
 
 #include "minishell.h"
 
-void    free_tk_dollar(t_tk_dollar *dollar)
+void	free_tk_dollar(t_tk_dollar *dollar)
 {
-    t_tk_dollar *tmp;
+	t_tk_dollar	*tmp;
 
-    while (dollar)
-    {
-        tmp = dollar->next;
-        free(dollar);
-        dollar = NULL;
-        dollar = tmp;
-    }
+	while (dollar)
+	{
+		tmp = dollar->next;
+		free(dollar);
+		dollar = NULL;
+		dollar = tmp;
+	}
 }
 
-void	init_var_expand(t_expand_var *ctx)
+void	init_var_expand(t_expand_var *ctx, t_core *core)
 {
 	ctx->error = 0;
 	ctx->tmp = NULL;
 	ctx->new_line = NULL;
+	ctx->dollar = get_tk_dollar(core->line, &ctx->error);
+	ctx->tmp_d = ctx->dollar;
 }
 
 char	*dynamic_copy(char *old, char c)
@@ -37,9 +39,9 @@ char	*dynamic_copy(char *old, char c)
 	int		i;
 	int		len;
 	char	*new;
-	
+
 	i = 0;
-	len =  ft_strlen(old);
+	len = ft_strlen(old);
 	new = malloc(sizeof(char) * len + 2);
 	if (!new)
 		return (NULL);

@@ -23,9 +23,6 @@ t_boolean	main_setup(t_core *core, t_glb **global)
 {
 
 	add_history(core->line);
-	core->line = expansion_var(core);
-	if (!core->line)
-		return (false);
 	*global = global_init(core);
 	return (true);
 }

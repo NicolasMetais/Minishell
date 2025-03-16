@@ -44,16 +44,16 @@ char	*get_variable(char *old, t_core *core, t_tk_dollar *dollar)
 
 	i = 0;
 	core->line++;
-	if (dollar->valid == true && (ft_isalpha(*core->line) || *core->line == '_' 
-		|| *core->line == '?'))
+	if (dollar->valid == true && (ft_isalpha(*core->line) || *core->line == '_'
+			|| *core->line == '?'))
 	{
 		if (*core->line == '?')
 			get_variable_incr(&i, core);
 		else
 		{
-			while(*core->line && (ft_isalnum(*core->line) || *core->line == '_'))
+			while (*core->line && (ft_isalnum(*core->line)
+					|| *core->line == '_'))
 				get_variable_incr(&i, core);
-
 		}	
 		new = get_variable_utils(old, core, i);
 		if (!new)
@@ -61,10 +61,8 @@ char	*get_variable(char *old, t_core *core, t_tk_dollar *dollar)
 		return (free(old), new);
 	}
 	else
-	{
 		core->line--;
-		return (old);
-	}
+	return (old);
 }
 
 char	*get_new_line(t_expand_var *ctx, t_core *core, t_tk_dollar **dollar)
@@ -84,11 +82,9 @@ char	*expansion_var(t_core *core)
 {
 	t_expand_var	ctx;
 
-	init_var_expand(&ctx);
-	ctx.dollar = get_tk_dollar(core->line, &ctx.error);
+	init_var_expand(&ctx, core);
 	if (ctx.error == 1)
 		return (NULL);
-	ctx.tmp_d = ctx.dollar;
 	while (*core->line)
 	{
 		ctx.tmp = ctx.new_line;
