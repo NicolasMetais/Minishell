@@ -78,7 +78,8 @@ typedef struct s_get_red_bool
 
 typedef struct s_get_tk_bool
 {
-	char		c;
+	char		c_db;
+	char		c_simp;
 	char		*line;
 	t_boolean	quote;
 }				t_get_dollar_bool;

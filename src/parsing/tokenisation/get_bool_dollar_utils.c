@@ -14,23 +14,32 @@
 
 void	init_get_dollar_bool(t_get_dollar_bool *ctx, char *str)
 {
-	ctx->c = 0;
+	ctx->c_simp = 0;
+	ctx->c_db = 0;
 	ctx->quote = false;
 	ctx->line = str;
 }
 
 void	get_bool_dollar_turn_true(t_get_dollar_bool *ctx)
 {
-	printf("turn true\n");
-	ctx->quote = true;
-	ctx->c = *ctx->line;
+	printf("turn true-> %s\n", ctx->line);
+	if (*ctx->line == '\'')
+		ctx->c_simp = *ctx->line;
+	else
+		ctx->c_db = *ctx->line;
+	if (ctx->c_simp != 0 && ctx->c_db == 0)
+		ctx->quote = true;
 	ctx->line++;
 }
 
 void	get_bool_dollar_turn_false(t_get_dollar_bool *ctx)
 {
-	printf("turn false\n");
-	ctx->quote = false;
-	ctx->c = 0;
+	printf("turn false-> %s\n", ctx->line);
+	if (*ctx->line == '\'')
+		ctx->c_simp = 0;
+	else
+		ctx->c_db = 0;
+	if (ctx->c_simp == 0)
+		ctx->quote = false;
 	ctx->line++;
 }

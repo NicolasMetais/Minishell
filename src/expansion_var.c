@@ -114,19 +114,25 @@ char	*expansion_var(t_core *core)
 	while (*core->line)
 	{
 		ctx.tmp = ctx.new_line;
-		if (*core->line == '$')
+		if (*core->line == '$' && dollar->valid == true)
 		{
+			printf("ici\n");
 			ctx.new_line = get_variable(ctx.new_line, core, dollar);
 			if (!ctx.new_line)
 				return (free(ctx.tmp), NULL);
 			dollar = dollar->next;
 		}
-		ctx.new_line = dynamic_copy(ctx.new_line, *core->line);
-		if (!ctx.new_line)
-			return (free(ctx.tmp), NULL);
+		else
+		{
+			if (*core->line == '$')
+				dollar = dollar->next;
+			ctx.new_line = dynamic_copy(ctx.new_line, *core->line);
+			if (!ctx.new_line)
+				return (free(ctx.tmp), NULL);
+			core->line++;
+		}
 		if (!*core->line)
 			break ;
-		core->line++;
 	}
 	return (ctx.new_line);
 }

@@ -31,6 +31,8 @@ t_tk_dollar	*new_dollar_value(t_get_dollar_bool ctx)
 		new->valid = false;
 	else if (*ctx.line == ' ')
 		new->valid = false;
+	else if (*ctx.line == '$')
+		new->valid = false;
 	else
 		new->valid = true;
 	new->next = NULL;
@@ -58,10 +60,12 @@ t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 	init_get_dollar_bool(&ctx, str);
 	while (*ctx.line)
 	{
-		if (ctx.c == 0 && *ctx.line == '\'')
+		if ((ctx.c_simp == 0 && *ctx.line == '\'') || (ctx.c_db == 0 && *ctx.line == '"'))
 			get_bool_dollar_turn_true(&ctx);
-		if (*ctx.line == ctx.c)
+		if (*ctx.line == ctx.c_db || *ctx.line == ctx.c_simp)
 			get_bool_dollar_turn_false(&ctx);
+		if (!*ctx.line)
+			break ;
 		if (*ctx.line == '$')
 		{
 			tmp = new_dollar_value(ctx);
@@ -72,9 +76,9 @@ t_tk_dollar *get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 			}
 			dollar = add_back_dollar(dollar, tmp);
 		}
-		if (!*ctx.line)
-			break ;
-		ctx.line++;
+
+		if (*ctx.line != '\'' && *ctx.line != '"')
+			ctx.line++;
 	}
 	return (dollar);
 }
