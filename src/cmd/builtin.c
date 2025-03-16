@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/12 01:06:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 03:09:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	builtin(t_core *core, t_cmd *cmd)
 	int			error;
 	int			i;
 
+	printf("test\n");
 	i = 0;
 	while (cmd->args[i])
 		i++;

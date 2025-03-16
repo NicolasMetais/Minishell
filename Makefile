@@ -68,6 +68,8 @@ SRCS =	src/main.c \
 		src/exec1/exec.c \
 		src/exec1/free_exec.c \
 		src/exec1/here_doc.c \
+		src/exec1/here_doc_node.c \
+		src/exec1/here_doc_init.c \
 		src/exec1/main_exec.c \
 		src/exec1/dup.c \
 		src/exec1/file_manager.c \

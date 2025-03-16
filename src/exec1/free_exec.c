@@ -6,35 +6,30 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 18:32:18 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/05 16:05:14 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 18:06:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	free_all(t_pipex *pipex)
+void	free_here_doc(t_here_doc *here)
 {
-	size_t	i;
-	size_t	j;
+	t_here_doc	*tmp_here;
 
-	i = 0;
-	while (pipex->env_path[i])
+	while (here)
 	{
-		free(pipex->env_path[i]);
-		i++;
+		tmp_here = here->next;
+		free(here->limiter);
+		free(here->pipe_here);
+		free(here);
+		here = tmp_here;
 	}
-	free (pipex->env_path);
-	i = 0;
-	while (pipex->cmd[i])
-	{
-		j = 0;
-			while (pipex->cmd[i][j])
-			{
-				free(pipex->cmd[i][j]);
-				j++;
-			}
-		free(pipex->cmd[i]);
-		i++;
-	}
-	free(pipex->cmd);
-} */
+}
+
+void	close_free_pipes(t_exec *exec)
+{
+	close_pipes(exec);
+	close_pipes_here(exec);
+	free_here_doc(exec->here);
+	free_pipe(exec->nb_cmd - 1, exec->pipe);
+}

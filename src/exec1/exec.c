@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/14 18:46:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 14:16:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	execve_error(t_core *core, t_exec *exec, char *tmp)
 		core->exit_code = core->errorno;
 		perror("minishell");
 	}
+	free_pipe(exec->nb_cmd - 1, exec->pipe);
+	free_pipe(exec->nb_pipe_here_doc, exec->pipe_here_doc);
 	exit(core->exit_code);
 }
 

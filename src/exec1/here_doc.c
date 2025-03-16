@@ -6,109 +6,117 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/15 11:53:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 18:26:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_boolean	here_doc_process(t_exec *exec, int i)
+t_boolean	here_doc(t_here_doc *here_doc)
 {
 	char	*line;
 	int		size;
 
-	close(exec->pipe_here_doc[0]);
-	size = ft_strlen(exec->limiter[i]);
+	size = ft_strlen(here_doc->limiter);
 	while (1)
 	{
 		ft_putstr_fd("here_doc> ", 2);
 		line = get_next_line(0);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, exec->limiter[i], size) == 0 && line[size] == '\n')
+		if (ft_strncmp(line, here_doc->limiter, size) == 0
+			&& line[size] == '\n')
 		{
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, exec->pipe_here_doc[1]);
+		if (here_doc->pipe_here)
+			ft_putstr_fd(line, here_doc->pipe_here[1]);
 		free(line);
 	}
-	close(exec->pipe_here_doc[1]);
+	if (here_doc->pipe_here)
+		close(here_doc->pipe_here[1]);
 	return (true);
 }
 
-t_boolean	here_doc(t_exec *exec, int nb_here_doc)
+t_boolean	here_doc_array(t_exec *exec)
 {
-	pid_t	pid;
+	int			i;
+	t_here_doc	*here;
 
-	pid = fork();
-	if (pid == 0)
+	i = 0;
+	here = exec->here;
+	exec->pipe_here_doc = malloc(sizeof(int *) * (exec->nb_pipe_here_doc + 1));
+	if (!exec->pipe_here_doc)
+		return (false);
+	while (here)
 	{
-		if (!here_doc_process(exec, nb_here_doc))
-			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
+		if (here->pipe_here)
+			exec->pipe_here_doc[i++] = here->pipe_here;
+		here = here->next;
 	}
-	else
-		wait(NULL);
+	exec->pipe_here_doc[i] = NULL;
 	return (true);
 }
 
 t_boolean	here_doc_manager(t_exec *exec)
 {
-	int	nb_here_doc;
+	t_here_doc	*here;
 
-	nb_here_doc = -1;
-	pipe(exec->pipe_here_doc);
-	while (exec->limiter[++nb_here_doc])
+	here = exec->here;
+	while (here)
 	{
-		if (!here_doc(exec, nb_here_doc))
+		if (!here_doc(here))
 			return (false);
+		if (here->pipe_here)
+			exec->nb_pipe_here_doc++;
+		here = here->next;
 	}
-	if (dup2(exec->pipe_here_doc[0], STDIN_FILENO))
+	if (!here_doc_array(exec))
 		return (false);
-	close(exec->pipe_here_doc[0]);
-	close(exec->pipe_here_doc[1]);
+	exec->tmp_pipe_here_doc = exec->pipe_here_doc;
 	return (true);
 }
 
-int	get_here_doc_nb(t_file *in_cpy)
+t_boolean	ishere_doc(t_exec *exec)
 {
+	t_cmd	*cmd;
+	t_file	*infile;
+
+	cmd = exec->cmd;
+	infile = exec->cmd->in;
+	while (cmd)
+	{
+		infile = cmd->in;
+		while (infile)
+		{
+			if (infile->type == 0)
+				return (true);
+			infile = infile->next;
+		}
+		cmd = cmd->next;
+	}
+	return (false);
+}
+
+int	get_here_doc_nb(t_exec *exec)
+{
+	t_cmd	*cmd;
+	t_file	*infile;
 	int		size;
 
+	cmd = exec->cmd;
 	size = 0;
-	while (in_cpy)
+	while (cmd)
 	{
-		if (in_cpy->type == 0)
-			size++;
-		in_cpy = in_cpy->next;
+		infile = cmd->in;
+		while (infile)
+		{
+			if (infile->type == 0)
+				size++;
+			infile = infile->next;
+		}
+		cmd = cmd->next;
 	}
 	return (size);
-}
-
-t_boolean	here_doc_init(t_exec *exec)
-{
-	t_file	*in_cpy;
-	int		i;
-
-	i = 0;
-	in_cpy = exec->in;
-	exec->limiter = malloc(sizeof(char *) * (get_here_doc_nb(in_cpy) + 1));
-	if (!exec->limiter)
-		return (false);
-	while (in_cpy)
-	{
-		if (in_cpy->type == 0)
-		{
-			exec->limiter[i] = ft_strdup(in_cpy->file);
-			if (!exec->limiter[i])
-				return (free_tab(exec->limiter), false);
-			i++;
-			exec->here_doc = true;
-		}
-		if (!in_cpy->next)
-			break ;
-		in_cpy = in_cpy->next;
-	}
-	exec->limiter[i] = NULL;
-	return (true);
 }
