@@ -39,18 +39,3 @@ long long	ft_atol(const char *nptr)
 		res = res * (-1);
 	return (res);
 }
-/*
-int main(void)
-{
- 	char *n = "2147483655";
- 	int i1 = atoi(n);
- 	int i2 = ft_atoi(n);
- 
- 	if (i1 == i2)
- 		printf("YEP\n");
-	else
- 	printf("NO\n");
-	printf("atoi %d\n", i1);
-	printf("ft atoi%d\n", i2);
-
-}*/
