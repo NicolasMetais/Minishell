@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/16 19:23:12 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 23:28:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_glb	*global_init(t_core *core)
 	char	**line_split;
 	t_glb	*glb;
 	char	*tmp;
-	
+
 	tmp = core->line;
 	if (check_error(core))
 		return (NULL);

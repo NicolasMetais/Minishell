@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 21:37:10 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 23:32:26 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_boolean	child_stdin(t_exec *exec, int count, int fd)
 		{
 			if (dup2(fd, STDIN_FILENO) == -1)
 				return (false);
+			close(fd);
 		}
 	}
 	else if (count != 0)
@@ -42,9 +43,9 @@ t_boolean	child_stdout(t_exec *exec, int count, int fd)
 {
 	if (fd > 0)
 	{
-		fprintf(stderr, "fd == %d\n", fd);
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (false);
+		close(fd);
 	}
 	else if (exec->nb_cmd > 1 && exec->cmd->next)
 	{
@@ -61,14 +62,13 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 
 	fd_out = outfile_manager(exec, core);
 	if (fd_out == -1)
-		return (false);	
+		return (false);
 	fd_in = infile_manager(exec, core);
 	if (fd_in == -1)
 	{
 		if (fd_out > 0)
 			close(fd_out);
-		fprintf(stderr, "errno == %d", errno);
-		return (false);	
+		return (false);
 	}
 	if (!child_stdin(exec, count, fd_in))
 		return (false);
@@ -78,10 +78,6 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 		close_pipes_here(exec);
 	if (exec->pipe)
 		close_pipes(exec);
-	if (exec->fd_infile > 0)
-		close(exec->fd_infile);
-	if (exec->fd_outfile > 0)
-		close(exec->fd_outfile);
 	return (true);
 }
 
