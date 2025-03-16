@@ -82,8 +82,8 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 }
 
 t_boolean	parent_process(t_exec *exec)
-{
-	if (ft_strncmp(exec->cmd->args[0], "./", 2) == 0)
+{	
+	if (exec->cmd->args[0] && ft_strncmp(exec->cmd->args[0], "./", 2) == 0)
 	{
 		g_signal = 1;
 		signal_update();
