@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/16 23:28:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/16 23:33:38 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ t_glb	*global_init(t_core *core)
 	glb->cmd = set_cmd(line_split);
 	if (!glb->cmd)
 		return (free_split(line_split), free(glb), NULL);
-	return (free_split(line_split),	glb);
+	return (free_split(line_split), glb);
 }
