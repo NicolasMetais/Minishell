@@ -28,5 +28,9 @@ t_boolean	error_directory(char *cmd, t_core *core);
 
 //PERROR MODULABLE
 t_boolean	funct_error(char *cmd, char *addvalue, t_core *core);
+t_boolean   is_a_file(char *str);
+t_boolean	file_name_argument(char *cmd, t_core *core);
+t_boolean   only_point(char *str);
+
 
 #endif

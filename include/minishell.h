@@ -46,6 +46,21 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }				t_red;
 
+typedef struct s_expand_var
+{
+	int			error;
+	char		*new_line;
+	char		*tmp;
+	int			i;
+}				t_expand_var;
+
+
+typedef struct s_tk_dollar
+{
+	t_boolean			valid;
+	struct s_tk_dollar	*next;
+}				t_tk_dollar;
+
 typedef struct s_pipe_token
 {
 	t_boolean				valid;
@@ -60,6 +75,13 @@ typedef struct s_get_red_bool
 	char		*word;
 	char		*tmp;
 }				t_bool_red;
+
+typedef struct s_get_tk_bool
+{
+	char		c;
+	char		*line;
+	t_boolean	quote;
+}				t_get_dollar_bool;
 
 typedef struct s_get_pipe_bool
 {
@@ -143,14 +165,18 @@ char			*write_var(char *code, char *tocut, int j, int size);
 void			rewrite_line(t_core *core, int arg_nb, int count);
 
 //NEW EXPANSION DE VAR
-int			expansion_var(t_core *core);
-int			*is_dollar(t_core *core, int *pos);
+char			*expansion_var(t_core *core);
+int				*is_dollar(t_core *core, int *pos);
+char			*dynamic_copy(char *old, char c);
+void			init_var_expand(t_expand_var *ctx);
 
 //ENV VAR INIT
 t_boolean		duplicate_env(t_core *core, char **todup);
 t_env			*new_env(char *todup);
 t_env			*lstlast_env(t_env *lst);
 t_boolean		create_empty_env(t_core *core);
+void 		free_tk_dollar(t_tk_dollar *dollar);
+
 
 //SIGNALS
 void			signal_update(void);
@@ -262,6 +288,14 @@ char			**two_token_in_one_word(char **cmd_tab, t_index *index,
 char			**simple_token(char **cmd_tab, t_index *index, t_red **tab_red,
 					t_cmd *cmd);
 
+// DOLLAR SIGN
+
+void		get_bool_dollar_turn_false(t_get_dollar_bool *ctx);
+void		get_bool_dollar_turn_true(t_get_dollar_bool *ctx);
+void		init_get_dollar_bool(t_get_dollar_bool *ctx, char *str);
+t_tk_dollar	*get_tk_dollar(char *line, int *error);
+
+
 // HANDLE TOKEN ERROR
 
 t_boolean		handle_token_error(char *readline, int *error);
@@ -278,5 +312,7 @@ t_boolean		redirection_error(t_pipe_token *pipe, t_red **red, char *str);
 void			turn_pipe_bool(t_bool_pipe *ctx);
 void			turn_bool_red(t_bool_red *ctx);
 void			turn_token_error(t_bool_pipe *var);
+t_boolean		quote_error(char *str);
+
 
 #endif

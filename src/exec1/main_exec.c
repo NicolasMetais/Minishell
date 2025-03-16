@@ -75,12 +75,12 @@ int	main_exec(t_glb *global, t_core *core)
 		if (!parse_files(&exec, core))
 			return (false);
 	}
-	if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
+	else if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
 	{
 		if (!builtin(core, exec.cmd))
 			return (false);		
 	}
-	if (!launch_fork(&exec, core))
+	else if (!launch_fork(&exec, core))
 		return (false);
 	return (free(core->path), free_split(core->splitted_path), true);
 }

@@ -12,140 +12,121 @@
 
 #include "minishell.h"
 
-//JE PRINT L'EXIT CODE A LA PLACE DE $? DANS TOUTES LES STRINGS DU SHELL
-t_boolean	replace_exit_code(char **tocut, int j, t_core *core)
+char	*get_variable_utils(char *old, t_core *core, int i)
 {
-	char	*code;
-	char	*new;
-
-	if (j < (int)ft_strlen(*tocut)
-		&& (*tocut)[j] == '?')
-	{
-		code = ft_itoa(core->exit_code);
-		if (!code)
-			return (false);
-		new = write_var(code, *tocut, j, 1);
-		if (!new)
-			return (false);
-		free(*tocut);
-		(*tocut) = ft_strdup(new);
-		if (!tocut)
-			return (false);
-		free(new);
-		free(code);
-		core->exit_code = 0;
-		return (true);
-	}
-	else
-		return (false);
-}
-
-//JE DECIDE SI J'ECRIS OU SI JE DELETE LA VAR
-t_boolean	insert_del(char *data, char **tocut, int j, int i)
-{
-	char	*new;
-
-	if (data)
-	{
-		new = write_var(data, *tocut, j, i - j);
-		if (!new)
-			return (false);
-		free(*tocut);
-		(*tocut) = ft_strdup(new);
-		free(new);
-		if (!tocut)
-			return (false);
-	}
-	else
-	{
-		new = delete_var(*tocut, j, i - j);
-		if (!new)
-			return (false);
-		free(*tocut);
-		(*tocut) = ft_strdup(new);
-		free(new);
-		if (!tocut)
-			return (false);
-	}
-	return (true);
-}
-
-//JE VERIFIE QUE LA VAR EST DE LA BONNE FORME
-t_boolean	replace_var_env(t_core *core, char **tocut, int j)
-{
-	int		i;
 	char	*var;
-	char	*data;
+	char	*tmp;
+	char	*new;
+
+	tmp = ft_strndup(core->line, i);
+	if (!tmp)
+		return (free(old), NULL);
+	if (*tmp == '?')
+	{
+		var = ft_strdup(ft_itoa(core->exit_code));
+		if (!var)
+			return (NULL);
+	}
+	else
+		var = ft_get_env(core->env, tmp);
+	free(tmp);
+	new = ft_strjoin_custom(old, var);
+	free(var);
+	if (!new)
+		return (free(old), NULL);
+	return (new);
+}
+
+char	*get_variable(char *old, t_core *core, t_tk_dollar *dollar)
+{
+	char	*new;
+	int		i;
 
 	i = 0;
-	if (j < (int)ft_strlen(*tocut)
-		&& ((*tocut)[j] == '_' || ft_isalpha((*tocut)[j])))
+	core->line++;
+	if (dollar->valid == true && (ft_isalpha(*core->line) || *core->line == '_' 
+		|| *core->line == '?'))
 	{
-		while ((*tocut)[i] && ((*tocut)[i] == '_' || ft_isalnum((*tocut)[i])))
-			i++;
-		var = ft_substr(*tocut, j, i - j);
-		if (!var)
-			return (false);
-		data = ft_get_env(core->env, var);
-		if (!insert_del(data, tocut, j, i))
-			return (free(var), free(data), false);
-		return (free(var), free(data), true);
+		if (*core->line == '?')
+		{
+			core->line++;
+			i++;	
+		}
+		else
+		{
+			while(*core->line && (ft_isalnum(*core->line) || *core->line == '_'))
+			{
+					core->line++;
+					i++;
+			}
+		}	
+		new = get_variable_utils(old, core, i);
+		if (!new)
+			return (NULL);
+		return (free(old), new);
 	}
-	if (j < (int)ft_strlen(*tocut) && ft_isdigit((*tocut)[j]))
+	else
 	{
-		if (!insert_del(NULL, tocut, j, j + 1))
-			return (false);
-		return (true);
+		core->line--;
+		return (old);
 	}
-	return (false);
 }
 
-
-char	**expansion_manager(t_core *core, char **new_line, int *pos)
+char	*dynamic_copy(char *old, char c)
 {
-	int	i;
-
-	if (pos[0] == 0)
-		i = 0;
-	else
-		i = 1;
-	while (new_line[i])
+	int		i;
+	int		len;
+	char	*new;
+	
+	i = 0;
+	len =  ft_strlen(old);
+	new = malloc(sizeof(char) * len + 2);
+	if (!new)
+		return (NULL);
+	while (i < len)
 	{
-		if (!replace_exit_code(&new_line[i], 0, core))
-		{
-			if (!replace_var_env(core, &new_line[i], 0))
-				return (NULL);
-		}
+		new[i] = old[i];
 		i++;
 	}
-	return (new_line);
+	new[i] = c;
+	new[i + 1] = '\0';
+	free(old);
+	return (new);
 }
 
-int	expansion_var(t_core *core)
+void	init_var_expand(t_expand_var *ctx)
 {
-	int	*pos;
-	int	i;
-	int	j;
-	int	count;
+	ctx->error = 0;
+	ctx->tmp = NULL;
+	ctx->new_line = NULL;
+}
 
-	i = -1;
-	count = 0;
-	pos = NULL;
-	pos = is_dollar(core, pos);
-	if (!pos)
-		return (2);
-	core->new_line = ft_split(core->line, '$');
-	if (!core->new_line)
-		return (free(pos), 0);
-	core->new_line = expansion_manager(core, core->new_line, pos);
-	while (core->new_line[++i])
+char	*expansion_var(t_core *core)
+{
+	t_tk_dollar		*dollar;
+	t_expand_var	ctx;
+
+	init_var_expand(&ctx);
+	dollar = get_tk_dollar(core->line, &ctx.error);
+	if (ctx.error == 1)
+		return (NULL);
+	ctx.new_line = NULL;
+	while (*core->line)
 	{
-		j = 0;
-		while (core->new_line[i][j])
-			j++;
-		count += j;
+		ctx.tmp = ctx.new_line;
+		if (*core->line == '$')
+		{
+			ctx.new_line = get_variable(ctx.new_line, core, dollar);
+			if (!ctx.new_line)
+				return (free(ctx.tmp), NULL);
+			dollar = dollar->next;
+		}
+		ctx.new_line = dynamic_copy(ctx.new_line, *core->line);
+		if (!ctx.new_line)
+			return (free(ctx.tmp), NULL);
+		if (!*core->line)
+			break ;
+		core->line++;
 	}
-	rewrite_line(core, i, count);
-	free_tab(core->new_line);
-	return (free(pos), 1);
+	return (ctx.new_line);
 }

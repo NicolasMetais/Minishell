@@ -83,7 +83,10 @@ t_boolean	cmd_not_found(char *cmd, t_core *core)
 	tmp = ft_strjoin("minishell: ", cmd);
 	if (!tmp)
 		return (false);
-	custom_error = ft_strjoin(tmp, ": command not found");
+	if (!is_a_file(cmd))
+		custom_error = ft_strjoin(tmp, ": command not found");
+	else
+		custom_error = ft_strjoin(tmp, ": No such file or directory");
 	free(tmp);
 	if (!custom_error)
 		return (false);

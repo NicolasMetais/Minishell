@@ -29,14 +29,16 @@ t_boolean	absolute_path(t_exec *exec, char *to_check)
 	return (false);
 }
 
-void	execve_error(t_core *core, t_exec *exec)
+void	execve_error(t_core *core, t_exec *exec, char *tmp)
 {
 	if (exec->cmd->is_a_directory)
-		error_directory(exec->cmd->args[0], core);
+		error_directory(tmp, core);
+	else if (only_point(tmp))
+		file_name_argument(tmp, core);
 	else if (core->errorno == ENOENT)
-		cmd_not_found(exec->cmd->args[0], core);
+		cmd_not_found(tmp, core);
 	else if (core->errorno == EACCES)
-		permission_denied(exec->cmd->args[0], core);
+		permission_denied(tmp, core);
 	else
 	{
 		core->exit_code = core->errorno;
@@ -76,9 +78,14 @@ t_boolean	exec_shell(t_exec *exec, char *slash)
 int	env_exec(t_exec *exec, t_core *core)
 {
 	char	*slash;
+	char	*tmp;
 
+	
 	if (!exec->cmd->args[0])
 		exit(0);
+	tmp = ft_strdup(exec->cmd->args[0]);
+	if (!tmp)
+		core->errorno = ENOBUFS;
 	if (ft_strlen(exec->cmd->args[0]) == 0)
 		core->errorno = ENOENT;
 	else if (!absolute_path(exec, exec->cmd->args[0]))
@@ -94,6 +101,7 @@ int	env_exec(t_exec *exec, t_core *core)
 		exec_shell(exec, exec->cmd->args[0]);
 		core->errorno = errno;
 	}
-	execve_error(core, exec);
+	execve_error(core, exec, tmp);
+	free(tmp);
 	return (core->exit_code);
 }

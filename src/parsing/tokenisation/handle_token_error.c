@@ -74,7 +74,6 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red **red, char *str)
 	return (false);
 }
 
-
 t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 {
 	t_bool_pipe		var;
@@ -122,6 +121,8 @@ t_boolean	handle_token_error(char *readline, int *error)
 	red_tmp = tk_red;
 	pipe_tmp = tk_pipe;
 	if (token_error(tk_pipe, tk_red, str))
+		return (free(str), free_pipe_tk(pipe_tmp), free_tab_red(red_tmp), true);
+	if (quote_error(str))
 		return (free(str), free_pipe_tk(pipe_tmp), free_tab_red(red_tmp), true);
 	free(str);
 	free_pipe_tk(pipe_tmp);

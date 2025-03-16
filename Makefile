@@ -1,7 +1,7 @@
 NAME = minishell
 LIB = libft/libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3
 SRCS =	src/main.c \
 		src/parsing/free_parser.c \
 		src/parsing/handle_file/get_fd.c \
@@ -11,12 +11,15 @@ SRCS =	src/main.c \
 		src/parsing/handle_file/shearch_file.c \
 		src/parsing/handle_file/realloc_fd.c \
 		src/parsing/handle_file/free_list_fd.c \
+		src/parsing/tokenisation/get_bool_dollar.c \
+		src/parsing/tokenisation/get_bool_dollar_utils.c \
 		src/parsing/tokenisation/get_bool_red.c \
 		src/parsing/tokenisation/get_bool_red_utils.c \
 		src/parsing/tokenisation/get_bool_red_utils2.c \
 		src/parsing/tokenisation/get_bool_pipe.c \
 		src/parsing/tokenisation/handle_token_error.c \
 		src/parsing/tokenisation/token_error_utils.c \
+		src/parsing/tokenisation/quote_error.c \
 		src/parsing/cat_fd_list.c \
 		src/parsing/init.c \
 		src/parsing/utils.c \
@@ -35,7 +38,7 @@ SRCS =	src/main.c \
 		src/signals.c \
 		src/init_env.c \
 		src/expansion_var.c \
-		src/expansion_var_bis.c \
+		src/expansion_var_utils.c \
 		src/cmd/cd.c \
 		src/cmd/echo.c \
 		src/cmd/exit.c \
@@ -56,6 +59,8 @@ SRCS =	src/main.c \
 		src/utils/env_exist.c \
 		src/error_manager/errors.c \
 		src/error_manager/errors_bis.c \
+		src/error_manager/errors_bis_bis.c \
+		src/error_manager/error_manager_utils.c \
 		src/free/free_env.c \
 		src/free/free.c \
 		src/free/garbage_collector.c \
@@ -76,7 +81,7 @@ OBJS := $(patsubst src/%, $(OBJ_DIR)/src/%, $(OBJS))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C libft

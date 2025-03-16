@@ -72,6 +72,8 @@ char	**get_quote_dup(char *line)
 	quote_var_init(&ctx, line);
 	if (!ctx.str)
 		return (NULL);
+	if (ft_strlen(ctx.str) == 1)
+		return (realloc_add_to_tab(ctx.cmd_tab, ctx.str));
 	while (ctx.end == 0)
 	{	
 		if (ctx.i == 0 && (*ctx.str == '"' || *ctx.str == '\''))
