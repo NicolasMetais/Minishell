@@ -83,6 +83,15 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 		close(core->save);
 		close(core->save1);
 	}
+	if (!exec->cmd->args[0])
+	{
+		free_random(exec, core);
+		kill_program(core);
+		free_global(core->glb);
+		exit(1);
+	}
+	if (exec->nb_pipe_here_doc > 0)
+		free_here_doc_node(exec->here_tmp);
 	return (true);
 }
 
@@ -103,7 +112,9 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 	if (pid == 0)
 	{
 		if (!child_dup(exec, count, core))
+		{
 			execve_error(core, exec, exec->cmd->args[0]);
+		}
 		if (is_builtin(exec->cmd))
 		{
 			if (!(builtin(core, exec->cmd, 1)))

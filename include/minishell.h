@@ -138,6 +138,10 @@ typedef struct s_core
 	char			**av;
 	char			*pwd;
 	char			*prompt;
+	int				**pipe_here_doc;
+	int				nb_here_doc;
+	int				nb_pipe_here_doc;
+	t_here_doc		*here;
 	char			*line;
 	char			**new_line;
 	char			*path;
@@ -192,12 +196,14 @@ void			signal_reset(void);
 void			setup_signal(void);
 
 //FREE
+void			core_close_pipes_here(t_core *core);
 void			free_random(t_exec *exec, t_core *core);
 void			emergency_free_tab(char **tab, int i);
 void			emergency_free_env_var(t_env *env);
 void			free_env(t_core *core);
 void			free_tab(char **tab);
 void			free_loop(t_glb *global, t_core *core);
+void			open_file_failed(char *cmd);
 
 //KILL
 void			kill_program(t_core *core);

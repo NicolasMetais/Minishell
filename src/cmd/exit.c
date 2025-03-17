@@ -39,6 +39,8 @@ t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork)
 	}
 	if (status == 0 && cmd->args_nb > 1)
 		status = ft_atol(cmd->args[1]);
+	free_global(core->glb);
+	free_tab(core->splitted_path);
 	kill_program(core);
 	exit(status);
 }

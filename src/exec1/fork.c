@@ -86,5 +86,7 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	exec->child_pid[exec->count] = 0;
 	close_free_pipes(exec);
 	update_exit_code(core, exec->child_pid);
+	if (exec->nb_pipe_here_doc > 0)
+		free_here_doc_node(exec->here_tmp);
 	return (free(exec->child_pid), true);
 }

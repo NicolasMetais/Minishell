@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	core_close_pipes_here(t_core *core)
+{
+	int	n;
+
+	n = 0;
+	while (n < core->nb_pipe_here_doc)
+	{
+		close(core->pipe_here_doc[n][0]);
+		close(core->pipe_here_doc[n][1]);
+		n++;
+	}
+}
+
 //FREE DE TOUT LE PROGRAMME
 void	kill_program(t_core *core)
 {
@@ -28,9 +41,8 @@ void	kill_program(t_core *core)
 
 void	free_random(t_exec *exec, t_core *core)
 {
-	free(core->path);
-	core->path = NULL;
 	free(exec->child_pid);
+	free_tab(core->splitted_path);
 	exec->child_pid = NULL;
 }
 

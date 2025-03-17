@@ -59,7 +59,7 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red **red, char *str)
 		str++;
 	if (!*str)
 	{
-		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
 		return (true);
 	}
 	if (is_redirection_char(*str) && (*red)->valid == true)
@@ -69,7 +69,7 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red **red, char *str)
 	}
 	if (*str == '|' && pipe->valid == true)
 	{
-		ft_printf("minishell: syntax error near unexpected token `|'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
 		return (true);
 	}
 	return (false);

@@ -23,7 +23,10 @@ t_boolean	here_doc(t_here_doc *here_doc)
 		ft_putstr_fd("here_doc> ", 2);
 		line = get_next_line(0);
 		if (!line)
+		{
+			free(line);
 			break ;
+		}
 		if (ft_strncmp(line, here_doc->limiter, size) == 0
 			&& line[size] == '\n')
 		{
@@ -31,10 +34,7 @@ t_boolean	here_doc(t_here_doc *here_doc)
 			break ;
 		}
 		if (here_doc->pipe_here)
-		{
 			ft_putstr_fd(line, here_doc->pipe_here[1]);
-		}
-		free(line);
 	}
 	return (true);
 }

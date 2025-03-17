@@ -49,7 +49,8 @@ int	infile_manager(t_exec *exec, t_core *core)
 			fd = __open_infile(tmp_file->file, core);
 			if (fd == -1)
 			{
-				cmd_not_found(tmp_file->file, core);
+				open_file_failed(tmp_file->file);
+				free_random(exec, core);
 				kill_program(core);
 				free_global(core->glb);
 				exit(1);
@@ -72,12 +73,15 @@ int	outfile_manager(t_exec *exec, t_core *core)
 	tmp_file = exec->cmd->out;
 	fd = -2;
 	while (tmp_file)
-	{	
+	{
 		fd = __open_outfile(tmp_file);
 		if (fd < 0)
 		{
-			core->exit_code = 1;
-			return (false);
+			open_file_failed(tmp_file->file);
+			free_random(exec, core);
+			kill_program(core);
+			free_global(core->glb);
+			exit(1);
 		}
 		if (!tmp_file->next)
 			break ;
@@ -96,6 +100,10 @@ t_boolean	parse_files(t_exec *exec, t_core *core)
 			return (false);
 		if (!here_doc_manager(exec))
 			return (false);
+		core->here = exec->here;
+		core->nb_here_doc = exec->nb_here_doc;
+		core->nb_pipe_here_doc = exec->nb_pipe_here_doc;
+		core->pipe_here_doc = exec->pipe_here_doc;
 	}
 	return (true);
 }

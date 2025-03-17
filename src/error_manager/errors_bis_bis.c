@@ -37,3 +37,20 @@ t_boolean	file_name_argument(char *cmd, t_core *core)
 		core->exit_code = 127;
 	return (true);
 }
+
+void	open_file_failed(char *cmd)
+{
+	char	*custom_error;
+	char	*tmp;
+
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		return ;
+	custom_error = ft_strjoin(tmp, ": No such file or directory");
+	free(tmp);
+	if (!custom_error)
+		return ;
+	ft_putendl_fd(custom_error, 2);
+	free(custom_error);
+	return ;
+}

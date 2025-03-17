@@ -15,6 +15,7 @@
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
 	core->ac = ac;
+	core->glb = NULL;
 	core->av = av;
 	core->pwd = NULL;
 	core->prompt = NULL;
@@ -22,6 +23,7 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->mark = NULL;
 	core->exit_code = 0;
 	core->line = NULL;
+	env_parse(core);
 	return (true);
 }
 
@@ -89,6 +91,8 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 		else if (ft_strlen(core->line) == 0)
 			continue ;
 		free_global(global);
+		core->glb = NULL;
+		global = NULL;
 	}
 	return (true);
 }

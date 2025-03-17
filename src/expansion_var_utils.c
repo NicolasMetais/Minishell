@@ -61,3 +61,16 @@ void	get_variable_incr(int *i, t_core *core)
 	(*i) += 1;
 	core->line++;
 }
+
+t_boolean	env_parse(t_core *core)
+{
+	rotate_env(core, "PATH");
+	core->path = ft_strdup(core->env->var);
+	if (!core->path)
+		return (false);
+	core->splitted_path = ft_split(core->path, ':');
+	if (!core->splitted_path)
+		return (false);
+	free(core->path);
+	return (true);
+}

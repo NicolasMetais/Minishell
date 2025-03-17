@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+void	free_here_doc_node(t_here_doc *here)
+{
+	t_here_doc	*tmp;
+
+	while (here)
+	{
+		tmp = here->next;
+		free(here->limiter);
+		free(here->pipe_here);
+		free(here);
+		here = tmp;
+	}
+}
+
 t_here_doc	*new_here_doc(char *file)
 {
 	t_here_doc	*new;

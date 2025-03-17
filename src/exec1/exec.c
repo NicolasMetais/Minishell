@@ -58,24 +58,24 @@ void	execve_error(t_core *core, t_exec *exec, char *tmp)
 	}
 	if (exec->nb_cmd > 1)
 		free_pipe(exec->nb_cmd - 1, exec->pipe);
-	free_random(exec, core);
 	kill_program(core);
+	free_random(exec, core);
 	free_global(core->glb);
 	exit(core->exit_code);
 }
 
-t_boolean	exec_shell(t_exec *exec, char *slash)
+t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 {
 	int		checker;
 	char	*tester;
 	int		j;
 
 	j = -1;
-	while (exec->env_path[++j])
+	while (core->splitted_path[++j])
 	{
 		if (!exec->absolute_path)
 		{
-			tester = ft_strjoin(exec->env_path[j], slash);
+			tester = ft_strjoin(core->splitted_path[j], slash);
 			if (!tester)
 				return (false);
 		}
@@ -110,12 +110,12 @@ int	env_exec(t_exec *exec, t_core *core)
 		slash = ft_strjoin("/", exec->cmd->args[0]);
 		if (!slash)
 			return (false);
-		exec_shell(exec, slash);
+		exec_shell(exec, slash, core);
 		core->errorno = errno;
 	}
 	else
 	{
-		exec_shell(exec, exec->cmd->args[0]);
+		exec_shell(exec, exec->cmd->args[0], core);
 		core->errorno = errno;
 	}
 	free(slash);

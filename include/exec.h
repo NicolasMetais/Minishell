@@ -50,6 +50,7 @@ typedef struct s_exec
 	t_boolean	absolute_path;
 	t_cmd		*cmd;
 	t_here_doc	*here;
+	t_here_doc	*here_tmp;
 }	t_exec;
 
 //START DE L'EXEC
@@ -87,5 +88,8 @@ void		close_pipes_here(t_exec *exec);
 void		close_pipes(t_exec *exec);
 int			**create_pipe_array(int pipe_nb);
 void		free_pipe(int nb_pipe, int **pipe);
+
+void		free_here_doc_node(t_here_doc *here);
+t_boolean	env_parse(t_core *core);
 
 #endif
