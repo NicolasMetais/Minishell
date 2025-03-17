@@ -15,7 +15,9 @@
 t_tk_dollar	*new_dollar_value(t_get_dollar_bool ctx)
 {
 	t_tk_dollar	*new;
+	char		c;
 
+	c = 0;
 	new = malloc(sizeof(t_tk_dollar));
 	if (!new)
 		return (NULL);
@@ -26,14 +28,7 @@ t_tk_dollar	*new_dollar_value(t_get_dollar_bool ctx)
 		return (new);
 	}
 	ctx.line++;
-	if (ctx.quote == true)
-		new->valid = false;
-	else if (*ctx.line == ' ')
-		new->valid = false;
-	else if (*ctx.line == '$')
-		new->valid = false;
-	else
-		new->valid = true;
+	set_new_tk_dollar_as_valid(new, ctx);
 	new->next = NULL;
 	return (new);
 }
@@ -54,7 +49,10 @@ t_tk_dollar	*add_back_dollar(t_tk_dollar *dollar_value, t_tk_dollar *new)
 void	get_bool_tk_dollar_incr(t_get_dollar_bool *ctx)
 {
 	if (*ctx->line != '\'' && *ctx->line != '"')
+	{
 		ctx->line++;
+		ctx->k++;
+	}
 }
 
 t_tk_dollar	*get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
@@ -89,8 +87,15 @@ t_tk_dollar	*get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 t_tk_dollar	*get_tk_dollar(char *line, int *error)
 {
 	t_tk_dollar	*dollar;
+	t_tk_dollar	*tmp;
 
 	dollar = NULL;
 	dollar = get_bool_tk_dollar(line, dollar, error);
+	tmp = dollar;
+	while (tmp)
+	{
+		printf("valid : %d\n", tmp->valid);
+		tmp = tmp->next;
+	}
 	return (dollar);
 }

@@ -18,6 +18,7 @@ void	init_get_dollar_bool(t_get_dollar_bool *ctx, char *str)
 	ctx->c_db = 0;
 	ctx->quote = false;
 	ctx->line = str;
+	ctx->k = 0;
 }
 
 void	get_bool_dollar_turn_true(t_get_dollar_bool *ctx)
@@ -29,6 +30,7 @@ void	get_bool_dollar_turn_true(t_get_dollar_bool *ctx)
 	if (ctx->c_simp != 0 && ctx->c_db == 0)
 		ctx->quote = true;
 	ctx->line++;
+	ctx->k++;
 }
 
 void	get_bool_dollar_turn_false(t_get_dollar_bool *ctx)
@@ -40,4 +42,28 @@ void	get_bool_dollar_turn_false(t_get_dollar_bool *ctx)
 	if (ctx->c_simp == 0)
 		ctx->quote = false;
 	ctx->line++;
+	ctx->k++;
+}
+
+void	set_new_tk_dollar_as_valid(t_tk_dollar *new, t_get_dollar_bool ctx)
+{
+	char c;
+
+	c = 0;
+	if (ctx.k >= 2)
+	{
+		ctx.line -= 2;
+		c = *ctx.line;
+		ctx.line += 2;
+	}
+	if (ctx.quote == true)
+		new->valid = false;
+	else if (*ctx.line == ' ')
+		new->valid = false;
+	else if (*ctx.line == '$')
+		new->valid = false;
+	if (c == '\'' && *ctx.line == '\'')
+			new->valid = false;
+	else
+		new->valid = true;
 }

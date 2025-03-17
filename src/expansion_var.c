@@ -26,6 +26,7 @@ char	*get_variable_utils(char *old, t_core *core, int i)
 		var = ft_itoa(core->exit_code);
 		if (!var)
 			return (NULL);
+		core->exit_code = 0;
 	}
 	else
 		var = ft_get_env(core->env, tmp);
