@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:55:14 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:40:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 		close_pipes_here(exec);
 	if (exec->pipe)
 		close_pipes(exec);
-	close(core->save);
-	close(core->save1);
+	if (g_signal == 1)
+	{
+		close(core->save);
+		close(core->save1);
+	}
 	return (true);
 }
 

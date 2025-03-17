@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:51:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:53:17 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 		child_dup(exec, 0, core);
 		if (!builtin(core, exec->cmd, 0))
 			return (false);
-		free_random(exec, core);
+/* 		free_random(exec, core);
 		free_global(core->glb);
 		if (core->env)
 			free_tab(core->env_dup);
 		free_env(core);
-		free(core->prompt);
+		free(core->prompt); */
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 05:40:11 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:31:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:53:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	kill_program(t_core *core)
 
 void	free_random(t_exec *exec, t_core *core)
 {
-	free_tab(core->splitted_path);
 	free(core->path);
 	core->path = NULL;
 	free(exec->child_pid);

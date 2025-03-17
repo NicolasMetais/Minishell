@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:18:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:20:16 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_exec
 	int			count;
 	char		**env_path;
 	char		*path;
-	char		**splitted_path;
 	char		**env;
 	char		**limiter;
 	int			**tmp_pipe_here_doc;
@@ -55,8 +54,6 @@ typedef struct s_exec
 
 //START DE L'EXEC
 int			main_exec(t_glb *global, t_core *core);
-//PARSING
-t_boolean	env_parse(t_core *core);
 //FILES
 t_boolean	parse_files(t_exec *exec, t_core *core);
 int			outfile_manager(t_exec *exec, t_core *core);
