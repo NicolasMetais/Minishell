@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 19:04:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:51:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,17 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->out = global->cmd->out;
 	exec->here = NULL;
 	exec->nb_pipe_here_doc = 0;
+	exec->nb_here_doc = 0;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
 }
 
 t_boolean	launch_fork(t_exec *exec, t_core *core)
 {
-	if (exec->nb_cmd > 1 && (ft_strcmp(exec->cmd->args[0], "export") == 0
-			|| ft_strcmp(exec->cmd->args[0], "unset") == 0))
+	if (is_builtin(exec->cmd) && exec->nb_cmd == 1)
 	{
-		if (!builtin(core, exec->cmd))
-			return (false);
-		exec->env = core->env_dup;
-		exec->cmd = exec->cmd->next;
-		exec->nb_cmd = exec->nb_cmd - 1;
-		if (!fork_setup(exec, core))
+		child_dup(exec, 0, core);
+		if (!builtin(core, exec->cmd, 0))
 			return (false);
 	}
 	else
@@ -77,16 +73,9 @@ int	main_exec(t_glb *global, t_core *core)
 	if (exec.file_or_not)
 	{
 		if (!parse_files(&exec, core))
-		{
 			return (false);
-		}
 	}
-	if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
-	{
-		if (!builtin(core, exec.cmd))
-			return (false);		
-	}
-	else if (!launch_fork(&exec, core))
+	if (!launch_fork(&exec, core))
 		return (false);
 	return (free(core->path), free_split(core->splitted_path), true);
 }

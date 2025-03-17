@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 19:04:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:44:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_boolean	here_doc(t_here_doc *here_doc)
 		}
 		free(line);
 	}
-	if (here_doc->pipe_here)
-		close(here_doc->pipe_here[1]);
 	return (true);
 }
 

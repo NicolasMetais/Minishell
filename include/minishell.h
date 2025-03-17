@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 21:01:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:21:49 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 //LIBFT
 # include "libft.h"
 //C LIBS
+# include "sys/stat.h"
 # include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>

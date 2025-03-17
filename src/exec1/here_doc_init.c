@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:59:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 18:08:51 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:31:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ t_boolean	here_doc_pipe(t_exec *exec)
 t_boolean	create_here(t_exec *exec, t_file *infile)
 {
 	char		*file;
-	t_here_doc	*here;
+	t_exec		*here;
 
-	here = exec->here;
+	here = exec;
 	file = ft_strdup(infile->file);
 	if (!file)
-		return (free_here_doc(exec->here), false);
+		return (free_here_doc(here), false);
 	if (!exec->here)
 		exec->here = new_here_doc(file);
 	else

@@ -6,21 +6,22 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:42:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:49:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //EXIT DOIT AFFICHER DES ERREUR SI ON L'UTILISE MAL MAIS DOIT EXIT QUAND MEME
-t_boolean	exit_custom(t_core *core, t_cmd *cmd)
+t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork)
 {
 	unsigned int	status;
 	int				i;
 
 	i = 0;
 	status = 0;
-	printf("exit\n");
+	if (fork == 0)
+		printf("exit\n");
 	if (cmd->args_nb > 1)
 	{
 		if ((cmd->args[1][0] == '-') || (cmd->args[1][0] == '+'))
