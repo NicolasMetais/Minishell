@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 17:50:10 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 13:49:15 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(void)
 	const char	*str = "";
 	int			c = '\n';
 
-	printf("ft_strchr :%p\n", ft_strrchr(str, c));
-	printf("   strchr :%p\n", strrchr(str, c));
+
 }
 */

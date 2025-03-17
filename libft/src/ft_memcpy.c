@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 13:43:41 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/14 05:31:11 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:49 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,11 @@ int	main(void)
 	int		*arr1;
 
 	arr1 = 0;
-	printf("   memcpy : %s\n", (char *)memcpy(((void*)0), ((void*)0), 3));	
-	printf("ft_memcpy : %s\n\n", (char *)ft_memcpy(((void*)0), ((void*)0), 3));	
 	
 	arr1 = memcpy(arr1, arr, sizeof(int) * 10);	
 	for (int i = 0; arr[i]; i++)	
-		printf("   memcpy : %d, ", arr[i]);	
-
-	printf("\n");
 
 	arr1 = ft_memcpy(arr1, arr, sizeof(int) * 10);	
 	for (int i = 0; arr[i]; i++)	
-		printf("ft_memcpy : %d, ", arr[i]);	
 
 }*/

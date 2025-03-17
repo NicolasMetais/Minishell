@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:48:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/28 18:11:25 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:34:50 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	main(void)
 	fd = open("test", O_RDONLY);
 	s = get_next_line(fd);
 
-	printf("%s", s);
 	free(s);
 
 	return (0);

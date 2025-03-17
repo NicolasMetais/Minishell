@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 11:32:53 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/26 11:12:13 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,5 @@ int	main(void)
 {
 	int	i;
 
-	i = ft_printf(NULL);
-		printf(" %d ", i);
-//	i = printf(" %u ", 0);
-//		printf(" %d ", i);
+
 }*/

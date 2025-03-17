@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 19:24:10 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 13:48:45 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:55 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,5 @@ int main(void)
 	int c = -97;
 	int a = 85;
 
-	printf("%p\n", ft_memchr(arr, a, sizeof(int) * 12));
-	printf("%p\n\n", memchr(arr, a, sizeof(int) * 12));
-
-	printf("%p\n", ft_memchr(str, c, 15));
-	printf("%p\n", memchr(str, c, 15));
 
 }*/

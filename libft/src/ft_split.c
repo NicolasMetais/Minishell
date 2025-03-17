@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:31:48 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 22:49:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:22 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int main(void)
  
  	while (result[i])
  	{
-		printf("%s", result[i]);
  		free(result[i]);
  		i++;
  	}

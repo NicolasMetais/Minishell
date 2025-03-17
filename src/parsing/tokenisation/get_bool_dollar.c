@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bool_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-15 20:09:57 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-15 20:09:57 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/15 20:09:57 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/17 01:33:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ t_tk_dollar	*get_tk_dollar(char *line, int *error)
 	dollar = get_bool_tk_dollar(line, dollar, error);
 	tmp = dollar;
 	while (tmp)
-	{
-		printf("valid : %d\n", tmp->valid);
 		tmp = tmp->next;
-	}
 	return (dollar);
 }

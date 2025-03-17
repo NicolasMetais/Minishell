@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 02:52:57 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 04:03:28 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 void	handle_sigint(int sig, siginfo_t *info, void *test)
 {
 	(void)test;
+	(void)info;
 	if (g_signal == 1)
 		return ;
 	write(1, "\n", 1);
-	if (g_signal == 0 && sig == SIGINT && getpid() == info->si_pid)
+	if (g_signal == 0 && sig == SIGINT)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();

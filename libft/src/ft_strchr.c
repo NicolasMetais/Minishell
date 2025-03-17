@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 17:33:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/14 09:07:56 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,5 @@ int	main(void)
 {
 	const char	*str ="oa\no";
 
-	printf("ft_strchr :%p\n", ft_strchr(str, 'z'+256));
-	printf("   strchr :%p\n", strchr(str, 'z'+256));
 }
 */

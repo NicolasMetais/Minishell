@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:58:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/14 09:08:39 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:34:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(void)
 	char 		*buffer; 
 	
 	buffer = ft_strtrim("  a aaa", " a");
-	printf("%s", buffer);
 	free(buffer);
 	return (0);
 }*/

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/16 18:24:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 01:34:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	close_pipes_here(t_exec *exec)
 	n = 0;
 	while (n < exec->nb_pipe_here_doc)
 	{
-		//printf("%p\n", exec->pipe_here_doc[n]);
 		close(exec->pipe_here_doc[n][0]);
 		close(exec->pipe_here_doc[n][1]);
 		n++;

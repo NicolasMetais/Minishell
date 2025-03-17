@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:17:48 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/29 16:15:06 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:34:32 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,8 @@ int main(void)
 	ft_lstadd_back(head, ft_lstnew(s2));
 	ft_lstadd_back(head, ft_lstnew(s3));
 
-	printf("%s",(char *)(*head)->content);
-	printf("%s",(char *)((*head)->next)->content);
-	printf("%s\n",(char *)(((*head)->next)->next)->content);
 
 	chipsboosted = ft_lstmap(chips, ft_, (*del));
 
-	printf("%s\n",(char *)chipsboosted->content);
-	printf("%s\n",(char *)((chipsboosted->next)->content));
-	printf("%s\n",(char *)(((chipsboosted->next)->next)->content));
 
 }*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:22:01 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 23:50:47 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:04 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ int	main(void)
 	char	*ptr1;
 
 	ptr = ft_strnstr(big, little, 5);
-	printf("ft_strnstr : %p\n", ptr); 
 	ptr1 = strnstr(big, little, 5);
-	printf("   strnstr : %p\n", ptr1); 
-	printf("       big : %p\n", big); 
 	
 }*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 16:06:00 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 18:58:18 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:14 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,4 @@ int main(void)
 
 	a = ft_strlcat(dst, src, sizeof(char) * 0);	
 	b = strlcat(dst1, src1, sizeof(char) * 0);	
-	printf("     ft_strlcat : %d\n", a);
-	printf("ft_strlcat dest : %s\n\n", dst);
-	printf("        strlcat : %d\n", b);
-	printf("   strlcat dest : %s\n", dst1);
 }*/

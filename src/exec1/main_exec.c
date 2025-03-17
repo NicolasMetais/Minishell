@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 00:56:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 03:43:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->out = global->cmd->out;
 	exec->here = NULL;
 	exec->nb_pipe_here_doc = 0;
+	exec->nb_here_doc = 0;
+	exec->pipe_here_doc = NULL;
+	exec->pipe = NULL;
 	if (exec->in || exec->out)
 		exec->file_or_not = true;
 }
@@ -57,6 +60,12 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 		exec->cmd = exec->cmd->next;
 		exec->nb_cmd = exec->nb_cmd - 1;
 		if (!fork_setup(exec, core))
+			return (false);
+	}
+	else if (is_builtin(exec->cmd) && exec->nb_cmd == 1)
+	{
+		child_dup(exec, 0, core);
+		if (!builtin(core, exec->cmd))
 			return (false);
 	}
 	else
@@ -77,13 +86,6 @@ int	main_exec(t_glb *global, t_core *core)
 	if (exec.file_or_not)
 	{
 		if (!parse_files(&exec, core))
-		{
-			return (false);
-		}
-	}
-	if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
-	{
-		if (!builtin(core, exec.cmd))
 			return (false);
 	}
 	if (!launch_fork(&exec, core))

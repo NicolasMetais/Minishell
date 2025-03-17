@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 21:17:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 03:33:01 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_boolean	ishere_doc(t_exec *exec);
 t_here_doc	*new_here_doc(char *file);
 void		hereadd_back(t_here_doc **lst, t_here_doc *new);
 //BIG EXEC
+t_boolean	child_dup(t_exec *exec, int count, t_core *core);
 t_boolean	is_builtin(t_cmd *cmd);
 int			env_exec(t_exec *exec, t_core *core);
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);
@@ -82,7 +83,7 @@ void		free_all(t_glb *global);
 void		close_pipes(t_exec *exec);
 
 // PIPE
-void		free_here_doc(t_here_doc *here);
+void		free_here_doc(t_exec *exec);
 void		close_free_pipes(t_exec *exec);
 void		close_pipes_here(t_exec *exec);
 void		close_pipes(t_exec *exec);

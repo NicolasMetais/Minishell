@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:00:06 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/12 22:18:00 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,5 @@ int main(void)
 	const int arr1[20] = {0,1,2,4,4,5,6,7,8,9,10,11,12};
 	const	char *str = "Je su9s une array de char et voila la suite iiiipgalement";
 	const	char *str1 = "Je suis une array de char et voila la suite";
-
-	printf("ft_memcmp :%d\n", ft_memcmp(arr, arr1, sizeof(int) * 10));
-	printf("   memcmp :%d\n\n", memcmp(arr, arr1, sizeof(int) * 10));
-
-	printf("ft_memcmp :%d\n", ft_memcmp(str, str1, 0));
-	printf("   memcmp :%d\n", memcmp(str, str1, 0));
-	printf("ft_memcmp :%d\n", ft_memcmp(tmp, tmp2, sizeof(char) * 5));
-	printf("   memcmp :%d\n", memcmp(tmp, tmp2, sizeof(char)*5));
 
 }*/	

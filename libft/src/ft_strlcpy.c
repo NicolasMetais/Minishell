@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 15:09:17 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 13:49:38 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,4 @@ int	main(void)
 	char *str1 = "0123456";
 	char dst1[100];
 	
-	printf("     ft_strlcpy = %zu\n", ft_strlcpy(dst, str, 25));
-	printf("ft_strlcpy dest = %s", dst);
-	printf("\n\n");
-	printf("        strlcpy = %zu\n", strlcpy(dst1, str1, 25));
-	printf("   strlcpy dest = %s", dst1);
 }*/

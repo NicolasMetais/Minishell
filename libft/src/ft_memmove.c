@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 12:29:22 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/14 03:48:06 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ int    main(void)
 	nu = NULL;
 	nul = NULL;
 	ptr = ft_memmove(nu, nul, 7);
-    printf("%s", ptr);
     return (0);
 }*/

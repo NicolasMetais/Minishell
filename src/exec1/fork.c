@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 19:23:57 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 03:54:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	child_pid = fork_pipe_pid(exec);
 	if (!child_pid)
 		return (false);
+	g_signal = 1;
 	while (exec->count < exec->nb_cmd)
 	{
 		core->exit_code = 0;

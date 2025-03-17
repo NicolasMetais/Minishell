@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/14 15:12:03 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 02:05:05 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void	free_global(t_glb *glb)
 		if (glb->cmd)
 			freelist(glb->cmd);
 		free(glb);
+		glb = NULL;
 	}
 }

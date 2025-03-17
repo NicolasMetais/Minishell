@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:59:49 by nmetais           #+#    #+#             */
-/*   Updated: 2024/12/01 00:04:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,5 @@ int main(void)
 	((ft_strncmp(big, little, size) < 0) ? -1 : 0));
  
  	if (i1 == i2)
- 		printf("OUI");
 	else
- 	printf("NOPE\n");
-	printf("%d\n", i1);
-	printf("%d\n", i2);
 }*/

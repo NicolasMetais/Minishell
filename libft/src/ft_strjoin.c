@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:43:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/11 12:55:39 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:35:17 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,4 @@ int	main(void)
 	char 	*buffer;
 
 	buffer = ft_strjoin(s1, s2);
-	printf("%s\n", s1);	
-	printf("%s\n", s2);	
-	printf("%s", buffer);	
 }*/
