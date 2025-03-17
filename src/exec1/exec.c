@@ -41,7 +41,6 @@ void	execve_error(t_core *core, t_exec *exec, char *tmp)
 		permission_denied(tmp, core);
 	else
 	{
-		fprintf(stderr, "errno == %d", errno);
 		core->exit_code = core->errorno;
 		perror("minishell");
 	}
@@ -77,7 +76,7 @@ t_boolean	exec_shell(t_exec *exec, char *slash)
 		if (!exec->absolute_path)
 			free(tester);
 	}
-	return (free(slash), false);
+	return (false);
 }
 
 int	env_exec(t_exec *exec, t_core *core)
@@ -85,6 +84,7 @@ int	env_exec(t_exec *exec, t_core *core)
 	char	*slash;
 	char	*tmp;
 
+	slash = NULL;
 	if (!exec->cmd->args[0])
 		exit(0);
 	tmp = ft_strdup(exec->cmd->args[0]);
@@ -105,6 +105,8 @@ int	env_exec(t_exec *exec, t_core *core)
 		exec_shell(exec, exec->cmd->args[0]);
 		core->errorno = errno;
 	}
+	free(slash);
+	slash = NULL;
 	execve_error(core, exec, tmp);
 	return (free(tmp), core->exit_code);
 }

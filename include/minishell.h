@@ -81,6 +81,7 @@ typedef struct s_get_tk_bool
 {
 	char		c_db;
 	char		c_simp;
+	int			k;
 	char		*line;
 	t_boolean	quote;
 	t_tk_dollar	*tmp;
@@ -262,6 +263,7 @@ void			free_end_tab(char **cmd_tab, int i);
 void			free_tab_red(t_red *cmd);
 void			get_file_index_init(t_index *index, char **cmd_tab);
 t_pipe_token	*get_tk_pipe(char *line, int *error);
+void			set_new_tk_dollar_as_valid(t_tk_dollar *new, t_get_dollar_bool ctx);
 
 void			get_file_increment(t_index *index, char **cmd_tab,
 					t_red **tab_red);
