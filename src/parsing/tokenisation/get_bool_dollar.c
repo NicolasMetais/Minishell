@@ -87,12 +87,8 @@ t_tk_dollar	*get_bool_tk_dollar(char *str, t_tk_dollar *dollar, int *error)
 t_tk_dollar	*get_tk_dollar(char *line, int *error)
 {
 	t_tk_dollar	*dollar;
-	t_tk_dollar	*tmp;
 
 	dollar = NULL;
 	dollar = get_bool_tk_dollar(line, dollar, error);
-	tmp = dollar;
-	while (tmp)
-		tmp = tmp->next;
 	return (dollar);
 }

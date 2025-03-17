@@ -62,8 +62,10 @@ void	set_new_tk_dollar_as_valid(t_tk_dollar *new, t_get_dollar_bool ctx)
 		new->valid = false;
 	else if (*ctx.line == '$')
 		new->valid = false;
-	if (c == '\'' && *ctx.line == '\'')
-			new->valid = false;
+	else if (c == '\'' && *ctx.line == '\'')
+		new->valid = false;
+	else if (!ft_isalpha(*ctx.line) && *ctx.line != '_' && *ctx.line != '?')
+		new->valid = false;
 	else
 		new->valid = true;
 }
