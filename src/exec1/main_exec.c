@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 19:04:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 00:56:22 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	main_exec(t_glb *global, t_core *core)
 	if (is_builtin(exec.cmd) && exec.nb_cmd == 1)
 	{
 		if (!builtin(core, exec.cmd))
-			return (false);		
+			return (false);
 	}
-	else if (!launch_fork(&exec, core))
+	if (!launch_fork(&exec, core))
 		return (false);
 	return (free(core->path), free_split(core->splitted_path), true);
 }

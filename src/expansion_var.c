@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 02:10:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 00:21:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*get_variable(char *old, t_core *core, t_tk_dollar *dollar)
 			while (*core->line && (ft_isalnum(*core->line)
 					|| *core->line == '_'))
 				get_variable_incr(&i, core);
-		}	
+		}
 		new = get_variable_utils(old, core, i);
 		if (!new)
 			return (NULL);

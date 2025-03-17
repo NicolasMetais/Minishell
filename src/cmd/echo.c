@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:46:08 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 19:37:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 00:43:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	flag_check(t_cmd *cmd, t_boolean *flag)
 }
 
 //PRINTF POUR EXEC ECHO
-t_boolean	echo_init(t_cmd *cmd)
+t_boolean	echo_init(t_cmd *cmd, t_core *core)
 {
 	int			i;
 	t_boolean	flag;
@@ -50,10 +50,18 @@ t_boolean	echo_init(t_cmd *cmd)
 	i = flag_check(cmd, &flag);
 	while (cmd->args[i])
 	{
-		printf("%s ", cmd->args[i]);
+		if (write(1, cmd->args[i], ft_strlen(cmd->args[i])) < 0)
+		{
+			perror("echo");
+			core->exit_code = 1;
+			return (true);
+		}
 		i++;
 	}
-	if (!flag)
-		printf("\n");
+	if (!flag && write(1, "\n", 1) < 0)
+	{
+		perror("echo");
+		core->exit_code = 1;
+	}
 	return (true);
 }
