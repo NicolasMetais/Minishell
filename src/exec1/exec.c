@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 21:41:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 15:10:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,24 @@ t_boolean	absolute_path(t_exec *exec, char *to_check)
 	return (false);
 }
 
+int	is_directory(const char *path)
+{
+	struct stat	buf;
+
+	if (stat(path, &buf) == 0)
+		return (S_ISDIR(buf.st_mode));
+	return (0);
+}
+
 void	execve_error(t_core *core, t_exec *exec, char *tmp)
 {
-	if (exec->cmd->is_a_directory)
-		error_directory(tmp, core);
-	else if (only_point(tmp))
+	if (only_point(tmp))
 		file_name_argument(tmp, core);
+	else if (is_directory(exec->cmd->args[0]) > 0)
+	{
+		core->errorno = errno;
+		error_directory(tmp, core);
+	}
 	else if (core->errorno == ENOENT)
 		cmd_not_found(tmp, core);
 	else if (core->errorno == EACCES)

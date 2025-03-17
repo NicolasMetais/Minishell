@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 00:51:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 15:13:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ t_boolean	is_builtin(t_cmd *cmd)
 }
 
 //DEUXIEME CHECKER DE BUILTIN
-t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core)
+t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core, t_boolean fork)
 {
 	if ((ft_strcmp(cmd->args[0], "exit") == 0))
 	{
-		if (!exit_custom(core, cmd))
+		if (!exit_custom(core, cmd, fork))
 			return (false);
 		return (true);
 	}
@@ -62,7 +62,7 @@ t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core)
 }
 
 //CHECKER DE BUILTIN
-t_boolean	builtin_or_not(t_core *core, t_cmd *cmd)
+t_boolean	builtin_or_not(t_core *core, t_cmd *cmd, t_boolean fork)
 {
 	if ((ft_strcmp(cmd->args[0], "cd") == 0))
 	{
@@ -82,12 +82,12 @@ t_boolean	builtin_or_not(t_core *core, t_cmd *cmd)
 			return (false);
 		return (true);
 	}
-	if (builtin_the_sec(cmd, core))
+	if (builtin_the_sec(cmd, core, fork))
 		return (true);
 	return (false);
 }
 
-int	builtin(t_core *core, t_cmd *cmd)
+int	builtin(t_core *core, t_cmd *cmd, t_boolean fork)
 {
 	int			error;
 	int			i;
@@ -96,6 +96,6 @@ int	builtin(t_core *core, t_cmd *cmd)
 	while (cmd->args[i])
 		i++;
 	cmd->args_nb = i;
-	error = builtin_or_not(core, cmd);
+	error = builtin_or_not(core, cmd, fork);
 	return (error);
 }

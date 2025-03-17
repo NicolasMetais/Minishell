@@ -6,7 +6,11 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/17 03:43:09 by nmetais          ###   ########.fr       */
+=======
+/*   Updated: 2025/03/17 14:51:39 by nmetais          ###   ########.fr       */
+>>>>>>> debug
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +55,10 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 
 t_boolean	launch_fork(t_exec *exec, t_core *core)
 {
-	if (exec->nb_cmd > 1 && (ft_strcmp(exec->cmd->args[0], "export") == 0
-			|| ft_strcmp(exec->cmd->args[0], "unset") == 0))
+	if (is_builtin(exec->cmd) && exec->nb_cmd == 1)
 	{
-		if (!builtin(core, exec->cmd))
-			return (false);
-		exec->env = core->env_dup;
-		exec->cmd = exec->cmd->next;
-		exec->nb_cmd = exec->nb_cmd - 1;
-		if (!fork_setup(exec, core))
+		child_dup(exec, 0, core);
+		if (!builtin(core, exec->cmd, 0))
 			return (false);
 	}
 	else if (is_builtin(exec->cmd) && exec->nb_cmd == 1)
