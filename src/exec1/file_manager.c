@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 22:43:01 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:31:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	infile_manager(t_exec *exec, t_core *core)
 			fd = __open_infile(tmp_file->file, core);
 			if (fd == -1)
 			{
-				perror("minishell");
+				cmd_not_found(tmp_file->file, core);
 				kill_program(core);
 				free_global(core->glb);
 				exit(1);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 04:58:13 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/18 15:40:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:06:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ void	free_env(t_core *core)
 	{
 		next = current->next;
 		free(current->name);
+		current->name = NULL;
 		free(current->var);
+		current->var = NULL;
 		free(current);
+		current = NULL;
 		current = next;
 		i++;
 	}
@@ -78,8 +81,11 @@ void	free_mark(t_core *core)
 	{
 		next = current->next;
 		free(current->name);
+		current->name = NULL;
 		free(current->var);
+		current->var = NULL;
 		free(current);
+		current = NULL;
 		current = next;
 		i++;
 	}

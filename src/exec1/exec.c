@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:10:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:33:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	execve_error(t_core *core, t_exec *exec, char *tmp)
 	}
 	if (exec->nb_cmd > 1)
 		free_pipe(exec->nb_cmd - 1, exec->pipe);
+	free_random(exec, core);
 	kill_program(core);
 	free_global(core->glb);
 	exit(core->exit_code);

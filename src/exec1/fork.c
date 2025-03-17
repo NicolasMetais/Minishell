@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:26 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:20:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,19 @@ void	update_exit_code(t_core *core, pid_t *child_pid)
 		i++;
 	}
 	g_signal = 0;
-	wait(NULL);
 }
 
-pid_t	*fork_pipe_pid(t_exec *exec)
+void	fork_pipe_pid(t_exec *exec)
 {
-	pid_t	*child_pid;
-
-	child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
-	if (!child_pid)
-		return (NULL);
+	exec->child_pid = malloc(sizeof(pid_t) * (exec->nb_cmd + 1));
+	if (!exec->child_pid)
+		return ;
 	if (exec->nb_cmd > 1)
 	{
 		exec->pipe = create_pipe_array(exec->nb_cmd - 1);
 		if (!exec->pipe)
-			return (NULL);
+			free(exec->child_pid);
 	}
-	return (child_pid);
 }
 
 t_boolean	incr_here_doc(t_cmd *cmd)
@@ -69,10 +65,9 @@ t_boolean	incr_here_doc(t_cmd *cmd)
 t_boolean	fork_setup(t_exec *exec, t_core *core)
 {
 	pid_t	pid;
-	pid_t	*child_pid;
 
-	child_pid = fork_pipe_pid(exec);
-	if (!child_pid)
+	fork_pipe_pid(exec);
+	if (!exec->child_pid)
 		return (false);
 	g_signal = 1;
 	while (exec->count < exec->nb_cmd)
@@ -82,14 +77,14 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		if (pid == -1)
 			return (false);
 		if (pid > 0)
-			child_pid[exec->count] = pid;
+			exec->child_pid[exec->count] = pid;
 		if (!fork_process(exec, pid, core, exec->count))
 			return (false);
 		exec->cmd = exec->cmd->next;
 		exec->count++;
 	}
-	child_pid[exec->count] = 0;
+	exec->child_pid[exec->count] = 0;
 	close_free_pipes(exec);
-	update_exit_code(core, child_pid);
-	return (free(child_pid), true);
+	update_exit_code(core, exec->child_pid);
+	return (free(exec->child_pid), true);
 }

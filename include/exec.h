@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:12:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:18:28 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_exec
 	char		**env;
 	char		**limiter;
 	int			**tmp_pipe_here_doc;
+	int			*child_pid;
 	t_file		*in;
 	t_file		*out;
 	t_boolean	file_or_not;

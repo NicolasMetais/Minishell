@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 20:30:04 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:34:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_boolean	funct_error(char *cmd, char *addvalue, t_core *core)
 	custom_error = ft_strjoin(cmd, addvalue);
 	if (!custom_error)
 		return (false);
-	perror(custom_error);
+	perror("NINHO");
 	free(custom_error);
 	core->exit_code = 1;
 	return (true);
@@ -93,6 +93,8 @@ t_boolean	cmd_not_found(char *cmd, t_core *core)
 	ft_putendl_fd(custom_error, 2);
 	free(custom_error);
 	core->exit_code = 127;
+	free(cmd);
+	cmd = NULL;
 	return (true);
 }
 
