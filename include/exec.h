@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:18:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 17:28:53 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef struct s_commande	t_cmd;
 typedef struct s_here_doc
 {
 	char				*limiter;
-	int					*pipe_here;
+	t_boolean			is_pipe;
+	int					pipe_here[2];
 	struct s_here_doc	*next;
 }		t_here_doc;
 
@@ -40,7 +41,6 @@ typedef struct s_exec
 	int			count;
 	char		**env_path;
 	char		*path;
-	char		**splitted_path;
 	char		**env;
 	char		**limiter;
 	int			**tmp_pipe_here_doc;
@@ -51,26 +51,28 @@ typedef struct s_exec
 	t_boolean	absolute_path;
 	t_cmd		*cmd;
 	t_here_doc	*here;
+	t_here_doc	*here_tmp;
 }	t_exec;
 
 //START DE L'EXEC
 int			main_exec(t_glb *global, t_core *core);
-//PARSING
-t_boolean	env_parse(t_core *core);
 //FILES
 t_boolean	parse_files(t_exec *exec, t_core *core);
 int			outfile_manager(t_exec *exec, t_core *core);
 int			infile_manager(t_exec *exec, t_core *core);
 
-
 //HERE_DOC
+void		print_error(void);
+void		here_doc_cleanup(t_core *core, t_exec *exec);
+void		close_node_pipe(t_here_doc *here);
 int			get_here_doc_nb(t_exec *exec);
 t_boolean	incr_here_doc(t_cmd *cmd);
 t_boolean	here_doc_init(t_exec *exec);
-t_boolean	here_doc_manager(t_exec *exec);
+t_boolean	here_doc_manager(t_exec *exec, t_core *core);
 t_boolean	ishere_doc(t_exec *exec);
 t_here_doc	*new_here_doc(char *file);
 void		hereadd_back(t_here_doc **lst, t_here_doc *new);
+
 //BIG EXEC
 t_boolean	child_dup(t_exec *exec, int count, t_core *core);
 t_boolean	is_builtin(t_cmd *cmd);
@@ -78,6 +80,7 @@ int			env_exec(t_exec *exec, t_core *core);
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);
 void		fd_setup(t_glb *global, int *pipe_fd);
 t_boolean	fork_setup(t_exec *exec, t_core *core);
+
 //  UTILS EXEC
 t_boolean	is_a_directory(char *arg);
 void		free_all(t_glb *global);
@@ -90,5 +93,8 @@ void		close_pipes_here(t_exec *exec);
 void		close_pipes(t_exec *exec);
 int			**create_pipe_array(int pipe_nb);
 void		free_pipe(int nb_pipe, int **pipe);
+
+void		free_here_doc_node(t_here_doc *here);
+t_boolean	env_parse(t_core *core);
 
 #endif

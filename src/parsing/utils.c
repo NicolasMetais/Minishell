@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-07 12:52:44 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-07 12:52:44 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/07 12:52:44 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 01:55:53 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_boolean	is_a_directory(char *arg)
 	{
 		if (*arg != '/' && *arg != '.')
 			return (false);
-		if	(*arg == '.')
+		if (*arg == '.')
 			i++;
 		if (i > 2)
 			return (false);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 03:00:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/13 19:40:36 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 17:20:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ t_boolean	env(t_core *core, t_cmd *cmd)
 	int	i;
 
 	(void)cmd;
-/* 	if (cmd->next)
-		return (true); */
 	i = -1;
-	//update_env_dup(core);
 	while (core->env_dup[++i])
 	{
 		if ((int)ft_strlen(core->env_dup[i]) > 4096)

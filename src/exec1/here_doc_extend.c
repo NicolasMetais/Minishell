@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_exist.c                                        :+:      :+:    :+:   */
+/*   here_doc_extend.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 10:00:27 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 02:10:24 by nmetais          ###   ########.fr       */
+/*   Created: 2025/03/18 17:24:46 by nmetais           #+#    #+#             */
+/*   Updated: 2025/03/18 17:28:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//EST-CE QUE LA VAR D'ENV EXISTE
-t_boolean	env_exist(t_core *core, char *var)
+void	here_doc_cleanup(t_core *core, t_exec *exec)
 {
-	t_env	*copy;
+	close(core->save);
+	close(core->save1);
+	close_node_pipe(exec->here);
+	free_here_doc_node(exec->here_tmp);
+	free_global(core->glb, NULL);
+	exit(0);
+}
 
-	if (!core->env || !var)
-		return (false);
-	copy = core->env;
-	while (copy)
-	{
-		if (copy->name && ft_strcmp(copy->name, var) == 0)
-			return (true);
-		copy = copy->next;
-		if (copy == core->env)
-			break ;
-	}
-	return (false);
+void	print_error(void)
+{
+	ft_putendl_fd
+		("\nminishell: warning: here-document delimited by end-of-file", 2);
 }

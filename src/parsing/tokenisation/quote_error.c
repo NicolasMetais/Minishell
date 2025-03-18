@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-15 17:00:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-15 17:00:42 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/15 17:00:42 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 02:12:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,28 @@ t_boolean	quote_error_bis(int db, int simp)
 t_boolean	quote_error(char *str)
 {
 	char		c;
-	int			db;
-	int			simp;
+	t_blue		var;
 	t_boolean	in;
 
 	c = 0;
-	simp = 0;
-	db = 0;
+	var.simp = 0;
+	var.db = 0;
 	in = false;
 	while (*str)
 	{
 		if (c == 0 && (*str == '\'' || *str == '"'))
 		{
-			quote_error_turn_true(&in, &db, &simp, *str);
+			quote_error_turn_true(&in, &var.db, &var.simp, *str);
 			c = *str;
 			str++;
 		}
 		if (*str == c)
 		{
-			quote_error_turn_false(&in, &db, &simp, *str);
+			quote_error_turn_false(&in, &var.db, &var.simp, *str);
 			c = 0;
 		}
 		if (*str)
 			str++;
 	}
-	return (quote_error_bis(db, simp));
+	return (quote_error_bis(var.db, var.simp));
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/17 15:14:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 16:11:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	close_pipes_here(t_exec *exec)
 	while (n < exec->nb_pipe_here_doc)
 	{
 		close(exec->pipe_here_doc[n][0]);
-		close(exec->pipe_here_doc[n][1]);
 		n++;
 	}
 }
@@ -78,7 +77,7 @@ void	free_pipe(int nb_pipe, int **pipe)
 {
 	int	i;
 
-    i = 0;
+	i = 0;
 	while (i < nb_pipe)
 	{
 		free(pipe[i]);

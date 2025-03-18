@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:20:08 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 16:26:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	exec->child_pid[exec->count] = 0;
 	close_free_pipes(exec);
 	update_exit_code(core, exec->child_pid);
+	free_here_doc_node(exec->here_tmp);
 	return (free(exec->child_pid), true);
 }

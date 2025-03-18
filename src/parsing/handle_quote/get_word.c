@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-03 20:24:22 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-03 20:24:22 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/03 20:24:22 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 02:00:32 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*extract_word(t_quote *ctx)
 		if (!ctx->str)
 			return (free(ctx->tmp), free(ctx->word), NULL);
 		ctx->k--;
-		if (ft_strlen(ctx->str) == 1 && (*ctx->str ==  '\'' || *ctx->str == '"'))
+		if (ft_strlen(ctx->str) == 1 && (*ctx->str == '\''
+				|| *ctx->str == '"'))
 			ctx->k--;
 		if (ctx->k == 0)
 			free(ctx->str);

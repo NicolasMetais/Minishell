@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 23:22:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 03:45:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:30:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	exit_program(t_core *core)
 {
 	printf("exit\n");
+	if (core->glb)
+		free_global(core->glb, NULL);
+	free_tab(core->splitted_path);
 	kill_program(core);
 	exit(0);
 }
@@ -26,9 +29,9 @@ t_boolean	is_minishell(t_cmd *cmd)
 
 	i = 0;
 	tmp = cmd;
-	while (tmp)
+	while (tmp && tmp->args[0])
 	{
-		if (ft_strncmp(tmp->args[0], "./minishell", 12) == 0)
+		if (ft_strncmp(tmp->args[0], "./minishell", 11) == 0)
 			i++;
 		if (i > 0)
 			return (true);
@@ -44,7 +47,7 @@ t_boolean	main_setup(t_core *core, t_glb **global)
 	if (*global && (*global)->nb_cmd > 1 && is_minishell((*global)->cmd))
 	{
 		ft_putendl_fd("minishell : ./minishell in a pipe", 2);
-		free_global(*global);
+		free_global(*global, NULL);
 		*global = NULL;
 	}
 	core->glb = *global;

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 02:15:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core, t_boolean fork)
 {
 	if ((ft_strcmp(cmd->args[0], "exit") == 0))
 	{
-		if (!exit_custom(core, cmd, fork))
-			return (false);
+		exit_custom(core, cmd, fork);
 		return (true);
 	}
 	if ((ft_strcmp(cmd->args[0], "env") == 0))

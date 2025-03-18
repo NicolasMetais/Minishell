@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 17:28:22 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,19 @@ t_boolean	here_doc(t_here_doc *here_doc)
 		ft_putstr_fd("here_doc> ", 2);
 		line = get_next_line(0);
 		if (!line)
+		{
+			print_error();
+			free(line);
 			break ;
+		}
 		if (ft_strncmp(line, here_doc->limiter, size) == 0
 			&& line[size] == '\n')
 		{
 			free(line);
 			break ;
 		}
-		if (here_doc->pipe_here)
-		{
+		if (here_doc->is_pipe)
 			ft_putstr_fd(line, here_doc->pipe_here[1]);
-		}
 		free(line);
 	}
 	return (true);
@@ -51,27 +53,41 @@ t_boolean	here_doc_array(t_exec *exec)
 		return (false);
 	while (here)
 	{
-		if (here->pipe_here)
-			exec->pipe_here_doc[i++] = here->pipe_here;
+		if (here->is_pipe)
+		{
+			exec->pipe_here_doc[i] = here->pipe_here;
+			close(exec->pipe_here_doc[i][1]);
+			i++;
+		}
 		here = here->next;
 	}
 	exec->pipe_here_doc[i] = NULL;
 	return (true);
 }
 
-t_boolean	here_doc_manager(t_exec *exec)
+t_boolean	here_doc_manager(t_exec *exec, t_core *core)
 {
 	t_here_doc	*here;
+	pid_t		pid;
 
 	here = exec->here;
-	while (here)
+	g_signal = 1;
+	signal_update();
+	pid = fork();
+	if (pid == 0)
 	{
-		if (!here_doc(here))
-			return (false);
-		if (here->pipe_here)
-			exec->nb_pipe_here_doc++;
-		here = here->next;
+		g_signal = 0;
+		while (here)
+		{
+			if (!here_doc(here))
+				return (false);
+			here = here->next;
+		}
+		here_doc_cleanup(core, exec);
 	}
+	while (wait(NULL) > 0)
+		;
+	g_signal = 0;
 	if (!here_doc_array(exec))
 		return (false);
 	exec->tmp_pipe_here_doc = exec->pipe_here_doc;
@@ -118,6 +134,5 @@ int	get_here_doc_nb(t_exec *exec)
 		}
 		cmd = cmd->next;
 	}
-	printf("%d\n", size);
 	return (size);
 }

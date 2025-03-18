@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:50:12 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/12 22:29:51 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/18 02:07:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ typedef enum s_type_red
 	double_,
 	simple,
 }			t_type_red;
+
+typedef struct s_db_et_simp
+{
+	int			db;
+	int			simp;
+}				t_blue;
 
 typedef struct s_file
 {
@@ -99,7 +105,6 @@ typedef struct s_get_file_handle_un_word_var
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
 void		freelist(t_cmd *cmd);
-void		free_global(t_glb *glb);
 void		free_split_init(char **split, int i);
 int			command_counter(char **line_split);
 char		**get_all_path(char **env);

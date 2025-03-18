@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:33:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:50:48 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,24 @@ void	execve_error(t_core *core, t_exec *exec, char *tmp)
 	}
 	if (exec->nb_cmd > 1)
 		free_pipe(exec->nb_cmd - 1, exec->pipe);
-	free_random(exec, core);
 	kill_program(core);
-	free_global(core->glb);
+	free_random(exec, core);
+	free_global(core->glb, NULL);
 	exit(core->exit_code);
 }
 
-t_boolean	exec_shell(t_exec *exec, char *slash)
+t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 {
 	int		checker;
 	char	*tester;
 	int		j;
 
 	j = -1;
-	while (exec->env_path[++j])
+	while (core->splitted_path[++j])
 	{
 		if (!exec->absolute_path)
 		{
-			tester = ft_strjoin(exec->env_path[j], slash);
+			tester = ft_strjoin(core->splitted_path[j], slash);
 			if (!tester)
 				return (false);
 		}
@@ -110,14 +110,11 @@ int	env_exec(t_exec *exec, t_core *core)
 		slash = ft_strjoin("/", exec->cmd->args[0]);
 		if (!slash)
 			return (false);
-		exec_shell(exec, slash);
-		core->errorno = errno;
+		exec_shell(exec, slash, core);
 	}
 	else
-	{
-		exec_shell(exec, exec->cmd->args[0]);
-		core->errorno = errno;
-	}
+		exec_shell(exec, exec->cmd->args[0], core);
+	core->errorno = errno;
 	free(slash);
 	slash = NULL;
 	execve_error(core, exec, tmp);

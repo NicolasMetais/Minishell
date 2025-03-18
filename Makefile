@@ -68,11 +68,14 @@ SRCS =	src/main.c \
 		src/exec1/exec.c \
 		src/exec1/free_exec.c \
 		src/exec1/here_doc.c \
+		src/exec1/here_doc_extend.c \
 		src/exec1/here_doc_node.c \
 		src/exec1/here_doc_init.c \
 		src/exec1/main_exec.c \
 		src/exec1/dup.c \
+		src/exec1/dup_manage.c \
 		src/exec1/file_manager.c \
+		src/exec1/file_manager_utils.c \
 		src/exec1/pipe.c
 
 OBJ_DIR = obj

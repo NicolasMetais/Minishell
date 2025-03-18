@@ -6,12 +6,18 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:59:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:29 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 17:32:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	define_pipe(t_exec *exec, t_here_doc *here)
+{
+	here->is_pipe = true;
+	exec->nb_pipe_here_doc++;
+	pipe(here->pipe_here);
+}
 
 t_boolean	here_doc_pipe(t_exec *exec)
 {
@@ -29,9 +35,7 @@ t_boolean	here_doc_pipe(t_exec *exec)
 			if (infile->type == 0)
 			{
 				if (infile->next == NULL)
-					pipe(here->pipe_here);
-				else
-					here->pipe_here = NULL;
+					define_pipe(exec, here);
 				here = here->next;
 			}
 			infile = infile->next;

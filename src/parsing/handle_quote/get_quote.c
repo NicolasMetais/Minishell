@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 07:50:50 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/08 21:57:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:57:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ char	*get_quote_dup_2(t_pipe_var *ctx)
 	return (ctx->str);
 }
 
+void	ninho(t_pipe_var *ctx)
+{
+	ctx->quote = false;
+	ctx->i = 0;
+}
+
 char	**get_quote_dup(char *line)
 {
 	t_pipe_var	ctx;
@@ -79,10 +85,7 @@ char	**get_quote_dup(char *line)
 		if (ctx.i == 0 && (*ctx.str == '"' || *ctx.str == '\''))
 			get_quote_turn_true(&ctx);
 		if (ctx.i == *ctx.str)
-		{
-			ctx.quote = false;
-			ctx.i = 0;
-		}
+			ninho(&ctx);
 		if ((*ctx.str == ' ' && ctx.quote == false) || ft_strlen(ctx.str) == 0)
 		{	
 			ctx.str = get_quote_dup_2(&ctx);

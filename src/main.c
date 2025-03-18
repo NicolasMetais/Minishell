@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/16 22:56:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:29:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
 	core->ac = ac;
+	core->glb = NULL;
 	core->av = av;
 	core->pwd = NULL;
 	core->prompt = NULL;
@@ -22,6 +23,7 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->mark = NULL;
 	core->exit_code = 0;
 	core->line = NULL;
+	env_parse(core);
 	return (true);
 }
 
@@ -83,12 +85,10 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 				continue ;
 			if (!main_exec(global, core))
 				return (false);
-			if (!restore_stdio(core))
-				return (false);
 		}
 		else if (ft_strlen(core->line) == 0)
 			continue ;
-		free_global(global);
+		free_global(global, core);
 	}
 	return (true);
 }

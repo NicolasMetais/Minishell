@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_quote_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-12 17:09:02 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-12 17:09:02 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/12 17:09:02 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 02:13:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,18 @@ char	*ft_strndup(char *line, int c)
 	return (dup);
 }
 
+void	pignouf_init(t_pignouf *var, char *line)
+{
+	var->i = 0;
+	var->j = 0;
+	var->len = ft_strlen(line) - 1;
+}
+
 char	*ft_pignouf_prime(char *line)
 {
 	t_pignouf	var;
 
-	var.i = 0;
-	var.j = 0;
-	var.len = ft_strlen(line) - 1;
+	pignouf_init(&var, line);
 	while (line[var.i] == ' ')
 		var.i++;
 	while (line[var.len] == ' ' && var.len != 0)

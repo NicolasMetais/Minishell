@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 06:12:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:12:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 02:15:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		exit_status_display(t_core *core, t_cmd *cmd);
 t_boolean	cd_init(t_core *core, t_cmd *cmd);
 t_boolean	echo_init(t_cmd *cmd, t_core *core);
 t_boolean	pwd(t_cmd *cmd, t_core *core);
-t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork);
+void		exit_custom(t_core *core, t_cmd *cmd, t_boolean fork);
 t_boolean	unset(t_core *core, t_cmd *cmd);
 //EXPORT
 t_boolean	export(t_core *core, t_cmd *cmd);

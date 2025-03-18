@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bool_dollar_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-15 20:32:28 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-15 20:32:28 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/15 20:32:28 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 02:03:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_bool_dollar_turn_false(t_get_dollar_bool *ctx)
 
 void	set_new_tk_dollar_as_valid(t_tk_dollar *new, t_get_dollar_bool ctx)
 {
-	char c;
+	char	c;
 
 	c = 0;
 	if (ctx.k >= 2)

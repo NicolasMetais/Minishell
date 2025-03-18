@@ -6,23 +6,11 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:51:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:27:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_boolean	env_parse(t_core *core)
-{
-	rotate_env(core, "PATH");
-	core->path = ft_strdup(core->env->var);
-	if (!core->path)
-		return (false);
-	core->splitted_path = ft_split(core->path, ':');
-	if (!core->splitted_path)
-		return (false);
-	return (true);
-}
 
 void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 {
@@ -33,7 +21,6 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->fd_outfile = 0;
 	exec->here_doc = 0;
 	exec->nb_cmd = global->nb_cmd;
-	exec->env_path = core->splitted_path;
 	exec->absolute_path = false;
 	exec->cmd = global->cmd;
 	exec->env = core->env_dup;
@@ -46,8 +33,8 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->pipe_here_doc = NULL;
 	exec->pipe = NULL;
 	exec->child_pid = NULL;
-	if (exec->in || exec->out)
-		exec->file_or_not = true;
+	core->pipe_here_doc = NULL;
+	exec->here_tmp = NULL;
 }
 
 t_boolean	launch_fork(t_exec *exec, t_core *core)
@@ -57,12 +44,6 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 		child_dup(exec, 0, core);
 		if (!builtin(core, exec->cmd, 0))
 			return (false);
-		free_random(exec, core);
-		free_global(core->glb);
-		if (core->env)
-			free_tab(core->env_dup);
-		free_env(core);
-		free(core->prompt);
 	}
 	else
 	{
@@ -76,15 +57,13 @@ int	main_exec(t_glb *global, t_core *core)
 {
 	t_exec	exec;
 
-	if (!env_parse(core))
-		return (false);
 	exec_init(&exec, global, core);
-	if (exec.file_or_not)
-	{
-		if (!parse_files(&exec, core))
-			return (false);
-	}
+	if (!parse_files(&exec, core))
+		return (false);
+	exec.here_tmp = exec.here;
 	if (!launch_fork(&exec, core))
+		return (false);
+	if (!restore_stdio(core))
 		return (false);
 	return (true);
 }

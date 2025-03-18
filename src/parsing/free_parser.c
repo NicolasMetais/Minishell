@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/17 02:05:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:49:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	free_split_init(char **split, int i)
 // FREE NODE CMD
 void	free_node(t_cmd *cmd)
 {
-	if (cmd->args)
-		free_split(cmd->args);
 	if (cmd->in)
 		free_list_fd(cmd->in);
 	if (cmd->out)
 		free_list_fd(cmd->out);
+	if (cmd->args)
+		free_split(cmd->args);
 	free(cmd);
 }
 
@@ -67,7 +67,7 @@ void	freelist(t_cmd *cmd)
 }
 
 //FREE LE GLOBAL
-void	free_global(t_glb *glb)
+void	free_global(t_glb *glb, t_core *core)
 {
 	if (glb)
 	{
@@ -76,4 +76,7 @@ void	free_global(t_glb *glb)
 		free(glb);
 		glb = NULL;
 	}
+	if (core)
+		core->glb = NULL;
+	glb = NULL;
 }

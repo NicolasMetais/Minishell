@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_bis _bis.c                                  :+:      :+:    :+:   */
+/*   errors_bis_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-15 19:36:08 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-15 19:36:08 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/15 19:36:08 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 01:37:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_boolean	file_name_argument(char *cmd, t_core *core)
 {
-	char 	*custom_error;
+	char	*custom_error;
 	char	*tmp;
 
 	tmp = ft_strjoin("minishell: ", cmd);
@@ -23,7 +23,7 @@ t_boolean	file_name_argument(char *cmd, t_core *core)
 	if (ft_strlen(cmd) == 1)
 		custom_error = ft_strjoin(tmp, ": filename argument required");
 	else
-		custom_error = ft_strjoin(tmp, ": command not found");	
+		custom_error = ft_strjoin(tmp, ": command not found");
 	free(tmp);
 	if (!custom_error)
 		return (false);
@@ -36,4 +36,21 @@ t_boolean	file_name_argument(char *cmd, t_core *core)
 	else
 		core->exit_code = 127;
 	return (true);
+}
+
+void	open_file_failed(char *cmd)
+{
+	char	*custom_error;
+	char	*tmp;
+
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		return ;
+	custom_error = ft_strjoin(tmp, ": No such file or directory");
+	free(tmp);
+	if (!custom_error)
+		return ;
+	ft_putendl_fd(custom_error, 2);
+	free(custom_error);
+	return ;
 }

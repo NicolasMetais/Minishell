@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:35:50 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 17:19:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,10 @@ typedef struct s_core
 	char			**av;
 	char			*pwd;
 	char			*prompt;
+	int				**pipe_here_doc;
+	int				nb_here_doc;
+	int				nb_pipe_here_doc;
+	t_here_doc		*here;
 	char			*line;
 	char			**new_line;
 	char			*path;
@@ -177,14 +181,12 @@ char			*dynamic_copy(char *old, char c);
 void			init_var_expand(t_expand_var *ctx, t_core *core);
 void			get_variable_incr(int *i, t_core *core);
 
-
 //ENV VAR INIT
 t_boolean		duplicate_env(t_core *core, char **todup);
 t_env			*new_env(char *todup);
 t_env			*lstlast_env(t_env *lst);
 t_boolean		create_empty_env(t_core *core);
-void 			free_tk_dollar(t_tk_dollar *dollar);
-
+void			free_tk_dollar(t_tk_dollar *dollar);
 
 //SIGNALS
 void			signal_update(void);
@@ -192,13 +194,15 @@ void			signal_reset(void);
 void			setup_signal(void);
 
 //FREE
+void			core_close_pipes_here(t_core *core);
 void			free_random(t_exec *exec, t_core *core);
 void			emergency_free_tab(char **tab, int i);
 void			emergency_free_env_var(t_env *env);
 void			free_env(t_core *core);
 void			free_tab(char **tab);
 void			free_loop(t_glb *global, t_core *core);
-
+void			open_file_failed(char *cmd);
+void			free_global(t_glb *global, t_core *core);
 //KILL
 void			kill_program(t_core *core);
 
@@ -265,7 +269,8 @@ void			free_end_tab(char **cmd_tab, int i);
 void			free_tab_red(t_red *cmd);
 void			get_file_index_init(t_index *index, char **cmd_tab);
 t_pipe_token	*get_tk_pipe(char *line, int *error);
-void			set_new_tk_dollar_as_valid(t_tk_dollar *new, t_get_dollar_bool ctx);
+void			set_new_tk_dollar_as_valid(t_tk_dollar *new,
+					t_get_dollar_bool ctx);
 
 void			get_file_increment(t_index *index, char **cmd_tab,
 					t_red **tab_red);
@@ -301,11 +306,10 @@ char			**simple_token(char **cmd_tab, t_index *index, t_red **tab_red,
 
 // DOLLAR SIGN
 
-void		get_bool_dollar_turn_false(t_get_dollar_bool *ctx);
-void		get_bool_dollar_turn_true(t_get_dollar_bool *ctx);
-void		init_get_dollar_bool(t_get_dollar_bool *ctx, char *str);
-t_tk_dollar	*get_tk_dollar(char *line, int *error);
-
+void			get_bool_dollar_turn_false(t_get_dollar_bool *ctx);
+void			get_bool_dollar_turn_true(t_get_dollar_bool *ctx);
+void			init_get_dollar_bool(t_get_dollar_bool *ctx, char *str);
+t_tk_dollar		*get_tk_dollar(char *line, int *error);
 
 // HANDLE TOKEN ERROR
 
@@ -325,5 +329,15 @@ void			turn_bool_red(t_bool_red *ctx);
 void			turn_token_error(t_bool_pipe *var);
 t_boolean		quote_error(char *str);
 
+// FILE MANAGER
+
+void			kill_open_file_failed(t_core *core, t_exec *exec,
+					t_file *tmp_file);
+int				__open_outfile(t_file *tmp);
+int				__open_infile(char *file, t_core *core);
+
+// THE ARNO
+
+void			the_arno(t_glb *glb);
 
 #endif

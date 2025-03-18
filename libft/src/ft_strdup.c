@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 00:25:25 by jbayonne          #+#    #+#             */
-/*   Updated: 2024/11/13 19:32:08 by jbayonne         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:25:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s)
 {
 	char	*buffer;
 	int		i;
-	
+
 	if (!s)
 		return (NULL);
 	i = 0;
