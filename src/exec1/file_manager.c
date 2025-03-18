@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 17:22:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:04:05 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	infile_manager(t_exec *exec, t_core *core)
 			{
 				open_file_failed(tmp_file->file);
 				free_random(exec, core);
+				free(exec->pipe_here_doc);
+				free_here_doc_node(exec->here_tmp);
 				kill_program(core);
 				free_global(core->glb);
 				exit(1);

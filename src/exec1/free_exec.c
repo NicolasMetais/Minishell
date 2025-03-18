@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 18:32:18 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:27 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:18:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ void	free_here_doc(t_exec *exec)
 
 void	close_free_pipes(t_exec *exec)
 {
-	close_pipes(exec);
 	if (exec->nb_here_doc > 0)
 	{
 		close_pipes_here(exec);
-		free_here_doc(exec);
+		free(exec->pipe_here_doc);
+		//free_pipe(exec->nb_pipe_here_doc, exec->pipe_here_doc);
+
 	}
 	if (exec->nb_cmd > 1)
+	{
+		close_pipes(exec);
 		free_pipe(exec->nb_cmd - 1, exec->pipe);
+	}
+
 }

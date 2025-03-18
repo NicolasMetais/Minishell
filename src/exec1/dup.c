@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 17:40:29 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:59:55 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 t_boolean	child_stdin(t_exec *exec, int count, int fd)
 {
+	t_file	*in;
+	
+	in = exec->cmd->in;
 	if (exec->cmd->in)
 	{
-		while (exec->cmd->in->next)
-			exec->cmd->in = exec->cmd->in->next;
-		if (exec->cmd->in->type == 0)
+		while (in->next)
+			in = in->next;
+		if (in->type == 0)
 		{
 			if (dup2(*exec->tmp_pipe_here_doc[0],
 					STDIN_FILENO) == -1)
@@ -85,13 +88,17 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 	}
 	if (!exec->cmd->args[0])
 	{
+		fprintf(stderr ,"NO ARG\n");
+		free(exec->pipe_here_doc);
+		free_here_doc_node(exec->here_tmp);
+		free_pipe(exec->nb_cmd - 1, exec->pipe);
 		free_random(exec, core);
 		kill_program(core);
 		free_global(core->glb);
 		exit(1);
 	}
-	if (exec->nb_pipe_here_doc > 0)
-		free_here_doc_node(exec->here_tmp);
+	free(exec->pipe_here_doc);
+	free_here_doc_node(exec->here_tmp);
 	return (true);
 }
 
@@ -102,6 +109,7 @@ t_boolean	parent_process(t_exec *exec)
 		g_signal = 1;
 		signal_update();
 	}
+	//fprintf(stderr, "%p\n", exec->tmp_pipe_here_doc);
 	if (incr_here_doc(exec->cmd))
 		exec->tmp_pipe_here_doc++;
 	return (true);

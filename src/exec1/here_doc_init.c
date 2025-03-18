@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 13:59:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:29 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:04:26 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ t_boolean	here_doc_pipe(t_exec *exec)
 			if (infile->type == 0)
 			{
 				if (infile->next == NULL)
+				{
+					here->is_pipe = true;
 					pipe(here->pipe_here);
-				else
-					here->pipe_here = NULL;
+				}
 				here = here->next;
 			}
 			infile = infile->next;

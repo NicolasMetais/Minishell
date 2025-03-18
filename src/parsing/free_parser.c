@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:45:54 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/17 02:05:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:45:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,18 @@ void	free_split_init(char **split, int i)
 // FREE NODE CMD
 void	free_node(t_cmd *cmd)
 {
+	if (cmd->in)
+	{
+		fprintf(stderr, "free in : %s\n", cmd->args[0]);
+		free_list_fd(cmd->in);
+	}
+	if (cmd->out)
+	{
+		fprintf(stderr, "free out : %s\n", cmd->args[0]);
+		free_list_fd(cmd->out);
+	}
 	if (cmd->args)
 		free_split(cmd->args);
-	if (cmd->in)
-		free_list_fd(cmd->in);
-	if (cmd->out)
-		free_list_fd(cmd->out);
 	free(cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 17:54:25 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:46:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_boolean	exec_shell(t_exec *exec, char *slash, t_core *core)
 		checker = access(tester, F_OK | X_OK);
 		if (checker == 0)
 		{
+			fprintf(stderr, "EXECVE ARG %s\n", exec->cmd->args[0]);
 			execve(tester, exec->cmd->args, exec->env);
 		}
 		if (!exec->absolute_path)

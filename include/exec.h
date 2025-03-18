@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 17:20:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:01:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef struct s_commande	t_cmd;
 typedef struct s_here_doc
 {
 	char				*limiter;
-	int					*pipe_here;
+	t_boolean			is_pipe;
+	int					pipe_here[2];
 	struct s_here_doc	*next;
 }		t_here_doc;
 

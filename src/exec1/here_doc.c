@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 15:13:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:31:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_boolean	here_doc(t_here_doc *here_doc)
 		line = get_next_line(0);
 		if (!line)
 		{
+			ft_putendl_fd("\nminishell: warning: here-document delimited by end-of-file", 2);
 			free(line);
 			break ;
 		}
@@ -33,8 +34,11 @@ t_boolean	here_doc(t_here_doc *here_doc)
 			free(line);
 			break ;
 		}
-		if (here_doc->pipe_here)
+		if (here_doc->is_pipe)
+		{
 			ft_putstr_fd(line, here_doc->pipe_here[1]);
+		}
+		free(line);
 	}
 	return (true);
 }
@@ -51,7 +55,7 @@ t_boolean	here_doc_array(t_exec *exec)
 		return (false);
 	while (here)
 	{
-		if (here->pipe_here)
+		if (here->is_pipe)
 			exec->pipe_here_doc[i++] = here->pipe_here;
 		here = here->next;
 	}
@@ -68,7 +72,7 @@ t_boolean	here_doc_manager(t_exec *exec)
 	{
 		if (!here_doc(here))
 			return (false);
-		if (here->pipe_here)
+		if (here->is_pipe)
 			exec->nb_pipe_here_doc++;
 		here = here->next;
 	}
@@ -118,6 +122,5 @@ int	get_here_doc_nb(t_exec *exec)
 		}
 		cmd = cmd->next;
 	}
-	printf("%d\n", size);
 	return (size);
 }

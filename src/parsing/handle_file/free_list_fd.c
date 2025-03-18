@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_list_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-07 22:58:14 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-07 22:58:14 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/07 22:58:14 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/18 00:57:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	free_list_fd(t_file *cmd)
 	t_file	*tmp;
 
 	tmp = cmd;
+	fprintf(stderr, "TMP %p\n", tmp);
 	while (cmd)
 	{
+		fprintf(stderr, "cmd->file %s\n", cmd->file);
 		tmp = cmd->next;
 		free(cmd->file);
 		free(cmd);

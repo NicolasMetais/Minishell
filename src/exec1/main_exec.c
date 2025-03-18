@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 17:53:17 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/18 00:35:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->child_pid = NULL;
 	core->pipe_here_doc = NULL;
 	exec->here_tmp = NULL;
-	if (exec->in || exec->out)
-		exec->file_or_not = true;
 }
 
 t_boolean	launch_fork(t_exec *exec, t_core *core)
@@ -60,12 +58,9 @@ int	main_exec(t_glb *global, t_core *core)
 	t_exec	exec;
 
 	exec_init(&exec, global, core);
-	if (exec.file_or_not)
-	{
-		if (!parse_files(&exec, core))
-			return (false);
-		exec.here_tmp = exec.here;
-	}
+	if (!parse_files(&exec, core))
+		return (false);
+	exec.here_tmp = exec.here;
 	if (!launch_fork(&exec, core))
 		return (false);
 	return (true);
