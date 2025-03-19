@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 16:26:09 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:36:48 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ void	update_exit_code(t_core *core, pid_t *child_pid)
 
 	i = 0;
 	status = 0;
+	(void)core;
 	while (child_pid[i] > 0)
 	{
 		pid = waitpid(child_pid[i], &status, 0);
 		if (pid > 0 && WIFEXITED(status))
 		{
 			exit_status = WEXITSTATUS(status);
+			if (exit_status == SIGINT)
+				core->exit_code = 128 + exit_status;
 			if (exit_status != 0)
 				core->exit_code = exit_status;
 		}
@@ -69,10 +72,10 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 	fork_pipe_pid(exec);
 	if (!exec->child_pid)
 		return (false);
-	g_signal = 1;
+	core->exit_code = 0;
 	while (exec->count < exec->nb_cmd)
 	{
-		core->exit_code = 0;
+		g_signal = 1;
 		pid = fork();
 		if (pid == -1)
 			return (false);

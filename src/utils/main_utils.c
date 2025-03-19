@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 23:22:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 01:30:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:14:38 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exit_program(t_core *core)
 	printf("exit\n");
 	if (core->glb)
 		free_global(core->glb, NULL);
+	core->splitted_path[0] -= 5;
 	free_tab(core->splitted_path);
 	kill_program(core);
 	exit(0);

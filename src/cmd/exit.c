@@ -6,16 +6,16 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 02:15:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:12:03 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//EXIT DOIT AFFICHER DES ERREUR SI ON L'UTILISE MAL MAIS DOIT EXIT QUAND MEME
 static void	free_exit(t_core *core, unsigned int status)
 {
 	free_global(core->glb, NULL);
+	core->splitted_path[0] -= 5;
 	free_tab(core->splitted_path);
 	kill_program(core);
 	exit(status);

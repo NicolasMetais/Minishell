@@ -36,6 +36,7 @@ SRCS =	src/main.c \
 		src/parsing/handle_quote/free_quote.c \
 		src/parsing/handle_quote/free_quote_2.c \
 		src/signals.c \
+		src/signals_deux.c \
 		src/init_env.c \
 		src/expansion_var.c \
 		src/expansion_var_utils.c \

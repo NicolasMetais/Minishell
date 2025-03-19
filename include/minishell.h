@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 17:19:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 05:14:21 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,9 +189,10 @@ t_boolean		create_empty_env(t_core *core);
 void			free_tk_dollar(t_tk_dollar *dollar);
 
 //SIGNALS
-void			signal_update(void);
-void			signal_reset(void);
-void			setup_signal(void);
+void			signal_here_doc(void);
+void			signal_mute(void);
+void			signal_fork(void);
+void			signal_shell(void);
 
 //FREE
 void			core_close_pipes_here(t_core *core);

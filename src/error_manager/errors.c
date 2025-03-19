@@ -6,14 +6,12 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:34:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:35:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//TOUTES LES FONCTIONS D'ERREURS LEAK A CAUSE DES JOIN DE SES MORTS
 
-//FLAG INVALIDE
 t_boolean	invalid_option(t_cmd *cmd_tab, char *cmd, t_core *core)
 {
 	char	*custom_error;
