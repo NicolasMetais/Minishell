@@ -5,45 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-04 16:12:11 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-04 16:12:11 by jbayonne         ###   ########.fr       */
+/*   Created: 2025-03-18 20:36:31 by jbayonne          #+#    #+#             */
+/*   Updated: 2025-03-18 20:36:31 by jbayonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_file(t_cmd *cmd, char **cmd_tab, t_red *tab_red)
+void	get_file_next_in_false(char c, t_red **tab_red)
 {
-	t_index	index;
-
-	get_file_index_init(&index, cmd_tab);
-	while (cmd_tab[index.i] && cmd_tab[index.i][index.j])
+	if (is_redirection_char(c) && (*tab_red)->valid == false)
 	{
-		if (is_redirection_char(cmd_tab[index.i][index.j])
-			&& tab_red->valid == false)
-			if (get_file_incr_false(&index, cmd_tab, &tab_red))
-				break ;
-		if (is_redirection_char(cmd_tab[index.i][index.j])
-			&& tab_red->valid == true)
-		{
-			cmd_tab = extract_file(cmd, cmd_tab, &tab_red, &index);
-			if (!cmd_tab)
-				return (NULL);
-		}
-		else
-			index.j++;
-		get_file_increment(&index, cmd_tab, &tab_red);
+		if ((*tab_red)->next)
+			*tab_red = (*tab_red)->next;
 	}
-	return (cmd_tab);
 }
 
-char	**get_fd(t_cmd *cmd, char **cmd_split, t_red *tab_red)
+void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 {
-	t_red	*tmp;
+	t_get_file_var	var;
+	
+	var.c = ***tab;
+	var.file = NULL;
+	if (get_file_check(tab, current, var.c, cmd))
+		return ;
+	while (**tab && !(is_redirection_char(***tab) && (*tab_red)->valid == true))
+	{
+		get_file_next_in_false(***tab, tab_red);
+		var.file = dynamic_copy(var.file, ***tab);
+		(**tab) = dynamic_delete(**tab);
+		if (((is_redirection_char(***tab) && (*tab_red)->valid == true)
+			|| ft_strlen(**tab) == 0))
+		{
+			if (!var.file)
+				break ;
+			add_file_to_cmd(var.file, var.c, cmd, *current);
+			free(var.file);
+			var.file = NULL;
+			get_file_free_and_incr(tab);
+			break ;
+		}
+	}
+}
 
-	tmp = tab_red;
-	cmd_split = get_file(cmd, cmd_split, tmp);
-	if (!cmd_split)
-		return (free_fd(cmd->in, cmd->out), NULL);
-	return (cmd_split);
+char	*dynamic_incrementaton(char *tmp, char ***tab, t_red **tab_red)
+{
+	if (is_redirection_char(***tab) && (*tab_red)->valid == false)
+	{	
+		if ((*tab_red)->type == double_)
+		{
+			tmp = dynamic_copy(tmp, ***tab);
+			(**tab) = dynamic_delete(**tab);
+		}
+		(*tab_red) = (*tab_red)->next;
+	}
+	tmp = dynamic_copy(tmp, ***tab);
+	(**tab) = dynamic_delete(**tab);
+	return (tmp);
+}
+
+char	**get_fd(char **tab, t_cmd	*cmd, t_red *tab_red)
+{
+	t_fd_var	var;
+
+	fd_var_init(tab, &var);
+	while (tab && *tab)
+	{
+		if (tab_red && is_redirection_char(**tab) && tab_red->valid == true)
+		{
+			var.current = tab_red;
+			if (tab_red->next)
+				tab_red = tab_red->next;
+			get_file(&tab, cmd, &tab_red, &var.current);
+			if (!tab || !*tab)
+				break ;
+			if (is_redirection_char(**tab) && tab_red->valid == true)
+				continue ;
+		}
+		else
+			var.tmp = dynamic_incrementaton(var.tmp, &tab, &tab_red);
+		if ((ft_strlen(*tab) == 0 && var.tmp) || 
+			(tab_red && is_redirection_char(**tab) && tab_red->valid == true))
+			var.new = get_args(&var.tmp, var.new, &tab);
+	}
+	return (free(var.providence), var.new);
 }

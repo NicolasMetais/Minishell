@@ -86,6 +86,7 @@ t_boolean	fork_setup(t_exec *exec, t_core *core)
 		exec->cmd = exec->cmd->next;
 		exec->count++;
 	}
+	fprintf(stderr, "ICIII\n");
 	exec->child_pid[exec->count] = 0;
 	close_free_pipes(exec);
 	update_exit_code(core, exec->child_pid);

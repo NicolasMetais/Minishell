@@ -30,7 +30,6 @@ typedef struct s_db_et_simp
 typedef struct s_file
 {
 	t_type_red		type;
-	t_boolean		complete;
 	char			*file;
 	struct s_file	*next;
 }				t_file;
@@ -101,6 +100,12 @@ typedef struct s_get_file_handle_un_word_var
 	int		i;
 	int		j;
 }				t_un_word_var;
+
+typedef struct s_get_file_var
+{
+	char	c;
+	char	*file;
+}				t_get_file_var;
 
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);

@@ -14,14 +14,22 @@
 
 char	**new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 {
+	int	i;
+
+	i = 0;
 	cmd->in = NULL;
 	cmd->out = NULL;
 	if (tab_red)
 	{
-		cmd_line_split = get_fd(cmd, cmd_line_split, tab_red);
+		cmd_line_split = get_fd(cmd_line_split, cmd, tab_red);
 		if (!cmd_line_split)
 			return (free(cmd), NULL);
 		free_tab_red(tab_red);
+	}
+	while (cmd_line_split[i])
+	{
+		printf("cmd_line_split[%d] : '%s'\n", i ,cmd_line_split[i]);
+		i++;
 	}
 	return (cmd_line_split);
 }
@@ -31,6 +39,7 @@ t_cmd	*new_cmd(char *line_split)
 	t_cmd	*cmd;
 	t_red	*tab_red;
 	char	**cmd_line_split;
+	char	**tmp;
 	int		error;
 
 	error = 0;
@@ -40,6 +49,7 @@ t_cmd	*new_cmd(char *line_split)
 	cmd_line_split = get_quote_dup(line_split);
 	if (!cmd_line_split)
 		return (NULL);
+	tmp = cmd_line_split;
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (free_split(cmd_line_split), NULL);
@@ -48,6 +58,7 @@ t_cmd	*new_cmd(char *line_split)
 		return (NULL);
 	cmd->is_a_directory = is_a_directory(cmd->args[0]);
 	cmd->next = NULL;
+	//free_split(tmp);
 	return (cmd);
 }
 
