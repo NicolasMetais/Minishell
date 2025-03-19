@@ -40,6 +40,8 @@ void	turn_bool_red(t_bool_red *ctx)
 		turn_false_get_bool(ctx);
 	if (*ctx->word == '"' || *ctx->word == '\'')
 		turn_true_get_bool(ctx);
+	if (*ctx->word == ctx->c)
+		turn_false_get_bool(ctx);
 }
 
 void	turn_token_error(t_bool_pipe *var)

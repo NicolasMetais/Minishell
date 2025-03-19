@@ -41,6 +41,7 @@ extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_redirection
 {
+	t_boolean				empty_file;
 	t_type_red				type;
 	t_boolean				valid;
 	t_boolean				error;
@@ -222,7 +223,7 @@ void			get_word_init(t_quote *ctx, char *str, int j);
 
 t_boolean		is_redirection_char(char s);
 t_boolean		is_redirection(char	*s);
-char			**get_fd(t_cmd *cmd, char **cmd_split, t_red *tab_red);
+char			**get_fd(char **tab, t_cmd	*cmd, t_red *tab_red);
 char			**get_outfd(t_cmd *cmd, char **cmd_split);
 char			**get_infd(t_cmd *cmd, char **cmd_split);
 char			**realloc_fd_in(t_cmd *cmd, char **cmd_split, int i);
@@ -288,9 +289,8 @@ char			*handle_cmd_file_word_un(t_cmd *cmd, char *str,
 
 // CREATE FILES LIST IN CMD
 void			add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red);
-t_file			*create_file(char *file, t_file *list, t_type_red type,
-					int complete);
-t_file			*add_to_file_list(t_file *lst, t_file *new);
+t_file			*create_file(char *file, t_file *list, t_type_red type);
+t_file			*add_to_file_list(t_file **lst, t_file *new);
 t_file			*get_all_out(t_cmd *cmd);
 t_file			*get_all_in(t_cmd *cmd);
 

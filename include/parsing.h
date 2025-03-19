@@ -30,7 +30,6 @@ typedef struct s_db_et_simp
 typedef struct s_file
 {
 	t_type_red		type;
-	t_boolean		complete;
 	char			*file;
 	struct s_file	*next;
 }				t_file;

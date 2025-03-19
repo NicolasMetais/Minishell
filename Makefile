@@ -1,14 +1,12 @@
 NAME = minishell
 LIB = libft/libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ilibft/include -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -Ilibft/include -fsanitize=address -Iinclude -g3
 SRCS =	src/main.c \
 		src/parsing/free_parser.c \
 		src/parsing/handle_file/get_fd.c \
 		src/parsing/handle_file/get_file_utils.c \
 		src/parsing/handle_file/create_file_list.c \
-		src/parsing/handle_file/extract_file.c \
-		src/parsing/handle_file/shearch_file.c \
 		src/parsing/handle_file/realloc_fd.c \
 		src/parsing/handle_file/free_list_fd.c \
 		src/parsing/tokenisation/get_bool_dollar.c \
@@ -86,7 +84,7 @@ OBJS := $(patsubst src/%, $(OBJ_DIR)/src/%, $(OBJS))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	@$(CC) $(OBJS) $(LIB) -lreadline -o $(NAME)
+	@$(CC) $(OBJS) $(LIB) -lreadline -fsanitize=address -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C libft

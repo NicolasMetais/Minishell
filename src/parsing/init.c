@@ -14,15 +14,23 @@
 
 char	**new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 {
+	char	**tmp;
+
 	cmd->in = NULL;
 	cmd->out = NULL;
+	tmp = cmd_line_split;
+	printf("tmp1 add : %p\n", tmp);
+	printf("tmp1 bis add : %p\n", *tmp);
 	if (tab_red)
 	{
-		cmd_line_split = get_fd(cmd, cmd_line_split, tab_red);
+		cmd_line_split = get_fd(cmd_line_split, cmd, tab_red);
 		if (!cmd_line_split)
 			return (free(cmd), NULL);
 		free_tab_red(tab_red);
 	}
+	printf("tmp2 add : %p\n", tmp);
+	printf("tmp2 bis add : %p\n", *tmp);
+	free_split(tmp);
 	return (cmd_line_split);
 }
 

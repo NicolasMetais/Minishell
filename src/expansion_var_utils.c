@@ -52,7 +52,8 @@ char	*dynamic_copy(char *old, char c)
 	}
 	new[i] = c;
 	new[i + 1] = '\0';
-	free(old);
+	if (old)
+		free(old);
 	return (new);
 }
 
