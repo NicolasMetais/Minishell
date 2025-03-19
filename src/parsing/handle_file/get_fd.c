@@ -16,7 +16,7 @@
 // * string en string
 //	*tab_red = (*tab_red)->next;
 
-void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current )
+void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 {
 	char	c;
 	char	*file;
@@ -24,10 +24,13 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current )
 	c = ***tab;
 	file = NULL;
 	if ((*current)->type == double_)
-		(**tab)++;
-	(**tab)++;
+		(**tab) = dynamic_delete(**tab);
+	(**tab) = dynamic_delete(**tab);
 	if ((*tab) && ft_strlen(**tab) == 0)
+	{
+		free((**tab));
 		(*tab)++;
+	}
 	while (**tab && !(is_redirection_char(***tab) && (*tab_red)->valid == true))
 	{
 		if (is_redirection_char(***tab) && (*tab_red)->valid == false)
@@ -36,17 +39,19 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current )
 				*tab_red = (*tab_red)->next;
 		}
 		file = dynamic_copy(file, ***tab);
-		(**tab)++;
+		(**tab) = dynamic_delete(**tab);
 		if (((is_redirection_char(***tab) && (*tab_red)->valid == true) || ft_strlen(**tab) == 0))
 		{
 			if (!file)
 				break ;
-			printf("file : %s\n", file);
 			add_file_to_cmd(file, c, cmd, *current);
 			free(file);
 			file = NULL;
 			if (ft_strlen(**tab) == 0)
+			{
+				free((**tab));
 				(*tab)++;
+			}
 			break ;
 		}
 	}
@@ -54,12 +59,14 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current )
 
 char	**get_fd(char **tab, t_cmd	*cmd, t_red *tab_red)
 {
-	char	**new;
-	char	*tmp;
-	t_red	*current;
+	char		**new;
+	char		**providence;
+	char		*tmp;
+	t_red		*current;
 
 	new = NULL;
 	tmp = NULL;
+	providence = tab;
 	while (tab && *tab)
 	{
 		if (tab_red && is_redirection_char(**tab) && tab_red->valid == true)
@@ -78,20 +85,24 @@ char	**get_fd(char **tab, t_cmd	*cmd, t_red *tab_red)
 			if (tab_red && is_redirection_char(**tab) && tab_red->valid == false)
 				tab_red = tab_red->next;
 			tmp = dynamic_copy(tmp, **tab);
-			(*tab)++;
+			(*tab) = dynamic_delete(*tab);
 		}
 		if ((ft_strlen(*tab) == 0 && tmp) || (tab_red && is_redirection_char(**tab) && tab_red->valid == true))
 		{
 			new = realloc_add_to_tab(new, tmp);
 			tmp = NULL;
 			if (ft_strlen(*tab) == 0)
+			{
+				free(*tab);
 				tab++;
+			}
 			while (tab && *tab && ft_strlen(*tab) == 0)
 			{
 				new = realloc_add_to_tab(new, ft_strdup(""));
+				free(*tab);
 				tab++;
 			}
 		}
 	}
-	return (new);
+	return (free(providence), new);
 }

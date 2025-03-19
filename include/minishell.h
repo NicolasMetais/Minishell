@@ -157,6 +157,15 @@ typedef struct s_core
 	t_env			*mark;
 }	t_core;
 
+typedef struct s_get_fd
+{
+	char		**new;
+	char		**providence;
+	char		*tmp;
+	t_red		*current;
+}				t_fd_var;
+
+
 //UTILS
 t_boolean		update_env_dup(t_core *core);
 char			*ft_get_env(t_env *env, char *name);
@@ -203,6 +212,7 @@ void			free_env(t_core *core);
 void			free_tab(char **tab);
 void			free_loop(t_glb *global, t_core *core);
 void			open_file_failed(char *cmd);
+char			*dynamic_delete(char *old);
 void			free_global(t_glb *global, t_core *core);
 //KILL
 void			kill_program(t_core *core);

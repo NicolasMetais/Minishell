@@ -108,15 +108,15 @@ t_red	*get_bool(char *word, t_red *red_value, int *error)
 t_red	*get_tk_red(char *line, int *error)
 {
 	t_red	*red_value;
-//	t_red	*tmp;
+	t_red	*tmp;
 
 	red_value = NULL;
 	red_value = get_bool(line, red_value, error);
-//	tmp = red_value;
-	// while (tmp)
-	// {
-	// 	printf("valid[%p] : %d, type : %d\n", tmp, tmp->valid, tmp->type);
-	// 	tmp = tmp->next;
-	// }
+	tmp = red_value;
+	while (tmp)
+	{
+		printf("valid[%p] : %d, type : %d\n", tmp, tmp->valid, tmp->type);
+		tmp = tmp->next;
+	}
 	return (red_value);
 }

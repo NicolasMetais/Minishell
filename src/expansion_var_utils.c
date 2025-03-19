@@ -34,6 +34,30 @@ void	init_var_expand(t_expand_var *ctx, t_core *core)
 	ctx->tmp_d = ctx->dollar;
 }
 
+char	*dynamic_delete(char *old)
+{
+	char	*new;
+	int		i;
+	int		j;
+	int		len;
+
+	len = ft_strlen(old);
+	new = malloc(sizeof(char) * len);
+	if (!new)
+		return (NULL);
+	i = 0;
+	j = 1;
+	while (i < len - 1)
+	{
+		new[i] = old[j];
+		j++;
+		i++;
+	}
+	new[i] = '\0';
+	free(old);
+	return (new);
+}
+
 char	*dynamic_copy(char *old, char c)
 {
 	int		i;
