@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 18:04:59 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 04:37:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 20:54:26 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_here_doc	*new_here_doc(char *file)
 		return (NULL);
 	new->next = NULL;
 	new->limiter = file;
-	fprintf(stderr, "LIMITER %s\n", file);
 	new->is_pipe = false;
 	return (new);
 }

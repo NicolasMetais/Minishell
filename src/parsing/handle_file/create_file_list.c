@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_file_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-08 12:28:20 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-08 12:28:20 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/08 12:28:20 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/19 21:38:10 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_file	*create_file(char *file, t_file *list, t_type_red type)
 	{	
 		list = init_list(file, list, type);
 		if (!list)
-		
 			return (NULL);
 	}
 	else
@@ -67,7 +66,6 @@ t_file	*create_file(char *file, t_file *list, t_type_red type)
 		if (!new->file)
 			return (NULL);
 		list = add_to_file_list(&list, new);
-
 	}
 	return (list);
 }

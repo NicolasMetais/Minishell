@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:43:51 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/17 04:13:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 21:42:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,53 +32,6 @@ void	init_var_expand(t_expand_var *ctx, t_core *core)
 	ctx->new_line = NULL;
 	ctx->dollar = get_tk_dollar(core->line, &ctx->error);
 	ctx->tmp_d = ctx->dollar;
-}
-
-char	*dynamic_delete(char *old)
-{
-	char	*new;
-	int		i;
-	int		j;
-	int		len;
-
-	len = ft_strlen(old);
-	new = malloc(sizeof(char) * len);
-	if (!new)
-		return (NULL);
-	i = 0;
-	j = 1;
-	while (i < len - 1)
-	{
-		new[i] = old[j];
-		j++;
-		i++;
-	}
-	new[i] = '\0';
-	free(old);
-	return (new);
-}
-
-char	*dynamic_copy(char *old, char c)
-{
-	int		i;
-	int		len;
-	char	*new;
-
-	i = 0;
-	len = ft_strlen(old);
-	new = malloc(sizeof(char) * len + 2);
-	if (!new)
-		return (NULL);
-	while (i < len)
-	{
-		new[i] = old[i];
-		i++;
-	}
-	new[i] = c;
-	new[i + 1] = '\0';
-	if (old)
-		free(old);
-	return (new);
 }
 
 void	get_variable_incr(int *i, t_core *core)

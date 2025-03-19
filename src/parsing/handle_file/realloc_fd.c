@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realloc_cmd.c                                      :+:      :+:    :+:   */
+/*   realloc_fd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-08 14:17:04 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-02-08 14:17:04 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/02/08 14:17:04 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/19 21:45:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ char	**realloc_cmd(char **cmd, int supp)
 	cmd_dup[i] = NULL;
 	return (cmd_dup);
 }
-
-
 
 char	*realloc_str_file(char *str, int i, int j)
 {

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:31:24 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 17:36:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 21:34:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	signal_shell(void)
 {
 	struct sigaction	sa;
 
-	printf("Signal normal\n");
 	sa.sa_sigaction = &handle_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

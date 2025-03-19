@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bool_red_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-10 19:46:21 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-10 19:46:21 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/10 19:46:21 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/19 21:48:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	turn_pipe_bool(t_bool_pipe *ctx)
 		turn_false_pipe_bool(ctx);
 	if (ctx->c == 0 && (*ctx->word == '"' || *ctx->word == '\''))
 		turn_true_pipe_bool(ctx);
-
 }
 
 void	turn_bool_red(t_bool_red *ctx)
@@ -44,6 +43,10 @@ void	turn_bool_red(t_bool_red *ctx)
 	if (ctx->c == 0 && (*ctx->word == '"' || *ctx->word == '\''))
 	{	
 		turn_true_get_bool(ctx);
+	}
+	if (*ctx->word == ctx->c)
+	{
+		turn_false_get_bool(ctx);
 	}
 }
 

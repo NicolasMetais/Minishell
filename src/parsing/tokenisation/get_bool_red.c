@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_bool_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-04 14:35:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-04 14:35:42 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/04 14:35:42 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/19 21:44:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	incr_empty_file(char **tmp, char **str)
-{
-	(*tmp) += 2;
-	(*str) += 2;
-}
 
 t_boolean	is_empty_file(char	*str)
 {
@@ -33,13 +27,8 @@ t_boolean	is_empty_file(char	*str)
 			if (*tmp == *str)
 			{
 				while (ft_strlen(tmp + 1) != 0 && (*tmp == *str))
-				{
-					tmp += 2;
-					str += 2;	
-					printf("tmp : %c\n", *tmp);
-				}
+					incr_empty_file(&tmp, &str);
 				tmp--;
-				printf("tmp : %c\n", *tmp);
 				if (*tmp == ' ' || ft_strlen(tmp + 1) == 0)
 					return (true);
 			}
@@ -125,15 +114,8 @@ t_red	*get_bool(char *word, t_red *red_value, int *error)
 t_red	*get_tk_red(char *line, int *error)
 {
 	t_red	*red_value;
-	t_red	*tmp;
 
 	red_value = NULL;
 	red_value = get_bool(line, red_value, error);
-	tmp = red_value;
-	while (tmp)
-	{
-		printf("valid[%p] : %d, type : %d\n", tmp, tmp->valid, tmp->type);
-		tmp = tmp->next;
-	}
 	return (red_value);
 }

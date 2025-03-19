@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-18 20:36:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-18 20:36:31 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/18 20:36:31 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/19 20:57:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_file_next_in_false(char c, t_red **tab_red)
 void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 {
 	t_get_file_var	var;
-	
+
 	var.c = ***tab;
 	var.file = NULL;
 	if (get_file_check(tab, current, var.c, cmd))
@@ -35,7 +35,7 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 		var.file = dynamic_copy(var.file, ***tab);
 		(**tab) = dynamic_delete(**tab);
 		if (((is_redirection_char(***tab) && (*tab_red)->valid == true)
-			|| ft_strlen(**tab) == 0))
+				|| ft_strlen(**tab) == 0))
 		{
 			if (!var.file)
 				break ;
@@ -84,8 +84,9 @@ char	**get_fd(char **tab, t_cmd	*cmd, t_red *tab_red)
 		}
 		else
 			var.tmp = dynamic_incrementaton(var.tmp, &tab, &tab_red);
-		if ((ft_strlen(*tab) == 0 && var.tmp) || 
-			(tab_red && is_redirection_char(**tab) && tab_red->valid == true))
+		if ((ft_strlen(*tab) == 0 && var.tmp)
+			|| (tab_red && is_redirection_char(**tab)
+				&& tab_red->valid == true))
 			var.new = get_args(&var.tmp, var.new, &tab);
 	}
 	return (free(var.providence), var.new);

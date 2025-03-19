@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 15:31:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 21:36:32 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	infile_manager(t_exec *exec, t_core *core)
 	tmp_file = exec->cmd->in;
 	while (tmp_file)
 	{	
-		if (tmp_file->type == 1 && !is_builtin(exec->cmd))
+		if (tmp_file->type == 1
+			&& (!is_builtin(exec->cmd) && exec->nb_cmd == 1))
 		{
 			fd = __open_infile(tmp_file->file, core);
 			if (fd == -1)
@@ -32,7 +33,7 @@ int	infile_manager(t_exec *exec, t_core *core)
 		close (fd);
 		tmp_file = tmp_file->next;
 	}
-	if (fd < 0)
+	if (fd == -1)
 		open_file_failed(tmp_file->file);
 	return (fd);
 }
@@ -47,14 +48,14 @@ int	outfile_manager(t_exec *exec, t_core *core)
 	while (tmp_file)
 	{
 		fd = __open_outfile(tmp_file);
-		if (fd < 0 && !is_builtin(exec->cmd))
+		if (fd < 0 && (!is_builtin(exec->cmd) && exec->nb_cmd == 1))
 			kill_open_file_failed(core, exec, tmp_file);
 		if (!tmp_file->next)
 			break ;
 		close(fd);
 		tmp_file = tmp_file->next;
 	}
-	if (fd < 0)
+	if (fd == -1)
 		open_file_failed(tmp_file->file);
 	return (fd);
 }

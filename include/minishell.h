@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 05:14:21 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 21:45:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ typedef struct s_get_fd
 	char		*tmp;
 	t_red		*current;
 }				t_fd_var;
-
 
 //UTILS
 t_boolean		update_env_dup(t_core *core);
@@ -353,9 +352,11 @@ void			the_arno(t_glb *glb);
 
 // GETFD UTILS
 
-t_boolean	get_file_check(char ***tab, t_red **current, char c, t_cmd *cmd);
-char		**get_args(char **tmp, char **new, char ***tab);
-void		fd_var_init(char **tab, t_fd_var *var);
-void		get_file_free_and_incr(char ***tab); 
+t_boolean		get_file_check(char ***tab, t_red **current, char c,
+					t_cmd *cmd);
+char			**get_args(char **tmp, char **new, char ***tab);
+void			fd_var_init(char **tab, t_fd_var *var);
+void			get_file_free_and_incr(char ***tab);
+void			incr_empty_file(char **tmp, char **str);
 
 #endif

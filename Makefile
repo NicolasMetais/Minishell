@@ -55,6 +55,7 @@ SRCS =	src/main.c \
 		src/utils/rotate_env.c \
 		src/utils/update_env_tab.c \
 		src/utils/ft_strcmp.c \
+		src/utils/dynamic_memory.c \
 		src/utils/env_exist.c \
 		src/error_manager/errors.c \
 		src/error_manager/errors_bis.c \
