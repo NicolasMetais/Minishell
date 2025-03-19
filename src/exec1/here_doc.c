@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 17:28:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 02:06:08 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,10 @@ t_boolean	here_doc_manager(t_exec *exec, t_core *core)
 
 	here = exec->here;
 	g_signal = 1;
-	signal_update();
 	pid = fork();
 	if (pid == 0)
 	{
-		g_signal = 0;
+		signal_here_doc();
 		while (here)
 		{
 			if (!here_doc(here))

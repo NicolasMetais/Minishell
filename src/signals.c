@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 01:26:26 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/19 02:03:33 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ void	setup_signal(void)
 
 	sa.sa_sigaction = &handle_sigint;
 	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
+}
+
+void	signal_here_doc(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_DFL;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 }
 
