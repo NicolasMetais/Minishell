@@ -12,90 +12,58 @@
 
 #include "minishell.h"
 
-char	*get_one_line_of_cmd_split(char **cmd_split)
+void	get_file_free_and_incr(char ***tab)
 {
-	char	*tmp;
-	char	*cmd_one_line;
-	int		i;
-
-	i = 0;
-	cmd_one_line = NULL;
-	tmp = NULL;
-	while (cmd_split[i])
+	if (ft_strlen(**tab) == 0)
 	{
-		cmd_one_line = ft_strjoin_custom(cmd_one_line, cmd_split[i]);
-		if (!cmd_one_line)
-			return (free(tmp), NULL);
-		if (tmp)
-		{
-			free(tmp);
-			tmp = NULL;
-		}
-		tmp = cmd_one_line;
-		i++;
+		free((**tab));
+		(*tab)++;
 	}
-	return (cmd_one_line);
 }
 
-char	*realloc_word_red_at_end(char *str, t_red *red_tab, int i)
+t_boolean	get_file_check(char ***tab, t_red **current, char c, t_cmd *cmd)
 {
-	char	*new;
-	char	*tmp;
-
-	tmp = str;
-	if (red_tab->type == simple)
+	if ((*current)->type == double_)
+		(**tab) = dynamic_delete(**tab);
+	(**tab) = dynamic_delete(**tab);
+	if ((*current)->empty_file)
+		add_file_to_cmd("", c, cmd, *current);
+	if ((*tab) && ft_strlen(**tab) == 0)
 	{
-		new = malloc(sizeof(char) * ft_strlen(str));
-		if (!new)
-			return (free(str), NULL);
+		free((**tab));
+		(*tab)++;
 	}
-	else
+	if ((*current)->empty_file)
 	{
-		new = malloc(sizeof(char) * ft_strlen(str) - 1);
-		if (!new)
-			return (free(str), NULL);
-	}
-	while (!is_redirection_char(*str))
-	{
-		new[++i] = *str;
-		str++;
-	}
-	i++;
-	new[i] = '\0';
-	return (free(tmp), new);
-}
-
-t_boolean	get_file_incr_false(t_index *index, char **tab, t_red **tab_red)
-{
-	if ((*tab_red)->type == double_)
-		index->j++;
-	index->j++;
-	*tab_red = (*tab_red)->next;
-	if (index->j == (int)ft_strlen(tab[index->i]))
-	{
-		if (index->i < index->tab_len)
-			index->i++;
-		if (index->i >= index->tab_len)
-			return (true);
-		index->j = 0;
+		free((**tab));
+		(*tab)++;
+		return (true);
 	}
 	return (false);
 }
 
-void	get_file_increment(t_index *index, char **cmd_tab, t_red **tab_red)
+char	**get_args(char **tmp, char **new, char ***tab)
 {
-	(void)tab_red;
-	if (index->j == (int)ft_strlen(cmd_tab[index->i]))
+	new = realloc_add_to_tab(new, (*tmp));
+	(*tmp) = NULL;
+	if (ft_strlen(**tab) == 0)
 	{
-		if (index->i < index->tab_len)
-			index->i++;
-		index->j = 0;
+		free((**tab));
+		(*tab)++;
 	}
+	while (*tab && **tab && ft_strlen(**tab) == 0)
+	{
+		new = realloc_add_to_tab(new, ft_strdup(""));
+		free((**tab));
+		(*tab)++;
+	}
+	return (new);
 }
 
-void	get_file_index_init(t_index *index, char **cmd_tab)
+void	fd_var_init(char **tab, t_fd_var *var)
 {
-	index->j = 0;
-	index->i = 0;
-	index->tab_len = command_counter(cmd_tab);
+	var->providence = tab;
+	var->new = NULL;
+	var->tmp = NULL;
+	var->current = NULL;
 }

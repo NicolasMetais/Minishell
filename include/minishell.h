@@ -350,4 +350,11 @@ int				__open_infile(char *file, t_core *core);
 
 void			the_arno(t_glb *glb);
 
+// GETFD UTILS
+
+t_boolean	get_file_check(char ***tab, t_red **current, char c, t_cmd *cmd);
+char		**get_args(char **tmp, char **new, char ***tab);
+void		fd_var_init(char **tab, t_fd_var *var);
+void		get_file_free_and_incr(char ***tab); 
+
 #endif

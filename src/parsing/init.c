@@ -14,6 +14,9 @@
 
 char	**new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 {
+	int	i;
+
+	i = 0;
 	cmd->in = NULL;
 	cmd->out = NULL;
 	if (tab_red)
@@ -22,6 +25,11 @@ char	**new_cmd_file(char **cmd_line_split, t_cmd *cmd, t_red *tab_red)
 		if (!cmd_line_split)
 			return (free(cmd), NULL);
 		free_tab_red(tab_red);
+	}
+	while (cmd_line_split[i])
+	{
+		printf("cmd_line_split[%d] : '%s'\n", i ,cmd_line_split[i]);
+		i++;
 	}
 	return (cmd_line_split);
 }

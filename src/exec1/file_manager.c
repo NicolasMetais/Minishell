@@ -21,7 +21,7 @@ int	infile_manager(t_exec *exec, t_core *core)
 	tmp_file = exec->cmd->in;
 	while (tmp_file)
 	{	
-		if (tmp_file->type == 1)
+		if (tmp_file->type == 1 && !is_builtin(exec->cmd))
 		{
 			fd = __open_infile(tmp_file->file, core);
 			if (fd == -1)
@@ -32,6 +32,8 @@ int	infile_manager(t_exec *exec, t_core *core)
 		close (fd);
 		tmp_file = tmp_file->next;
 	}
+	if (fd < 0)
+		open_file_failed(tmp_file->file);
 	return (fd);
 }
 
@@ -45,13 +47,15 @@ int	outfile_manager(t_exec *exec, t_core *core)
 	while (tmp_file)
 	{
 		fd = __open_outfile(tmp_file);
-		if (fd < 0)
+		if (fd < 0 && !is_builtin(exec->cmd))
 			kill_open_file_failed(core, exec, tmp_file);
 		if (!tmp_file->next)
 			break ;
 		close(fd);
 		tmp_file = tmp_file->next;
 	}
+	if (fd < 0)
+		open_file_failed(tmp_file->file);
 	return (fd);
 }
 

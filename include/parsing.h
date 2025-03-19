@@ -101,6 +101,12 @@ typedef struct s_get_file_handle_un_word_var
 	int		j;
 }				t_un_word_var;
 
+typedef struct s_get_file_var
+{
+	char	c;
+	char	*file;
+}				t_get_file_var;
+
 void		free_split(char **split);
 void		free_node(t_cmd *ctx);
 void		freelist(t_cmd *cmd);

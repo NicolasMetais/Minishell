@@ -12,22 +12,39 @@
 
 #include "minishell.h"
 
+void	incr_empty_file(char **tmp, char **str)
+{
+	(*tmp) += 2;
+	(*str) += 2;
+}
+
 t_boolean	is_empty_file(char	*str)
 {
-	char	c;
+	char	*tmp;
 
 	str++;
-	c = 0;
 	while (*str == ' ' || *str == '\'' || *str == '"')
 	{
 		if (*str == '\'' || *str == '"')
 		{
-			c = *str;
-			str++;
-			if (*str == c)
+			tmp = str + 1;
+			if (*tmp == *str && ft_strlen(tmp + 1) == 0)
 				return (true);
+			if (*tmp == *str)
+			{
+				while (ft_strlen(tmp + 1) != 0 && (*tmp == *str))
+				{
+					tmp += 2;
+					str += 2;	
+					printf("tmp : %c\n", *tmp);
+				}
+				tmp--;
+				printf("tmp : %c\n", *tmp);
+				if (*tmp == ' ' || ft_strlen(tmp + 1) == 0)
+					return (true);
+			}
 			else
-				return (false);
+				break ;
 		}
 		str++;
 	}
