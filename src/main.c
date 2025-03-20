@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 20:54:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:07:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->mark = NULL;
 	core->exit_code = 0;
 	core->line = NULL;
-	env_parse(core);
+	if (!env_parse(core))
+		return (false);
 	core->splitted_path[0] += 5;
 	return (true);
 }

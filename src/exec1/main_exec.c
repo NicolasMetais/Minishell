@@ -6,13 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 00:14:51 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:07:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_init(t_exec *exec, t_glb *global, t_core *core)
+t_boolean	exec_init(t_exec *exec, t_glb *global, t_core *core)
 {
 	exec->file_or_not = false;
 	exec->limiter = NULL;
@@ -35,10 +35,12 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->child_pid = NULL;
 	core->splitted_path[0] -= 5;
 	free_tab(core->splitted_path);
-	env_parse(core);
+	if (!env_parse(core))
+		return (false);
 	core->splitted_path[0] += 5;
 	core->pipe_here_doc = NULL;
 	exec->here_tmp = NULL;
+	return (true);
 }
 
 t_boolean	launch_fork(t_exec *exec, t_core *core)
@@ -61,7 +63,8 @@ int	main_exec(t_glb *global, t_core *core)
 {
 	t_exec	exec;
 
-	exec_init(&exec, global, core);
+	if (!exec_init(&exec, global, core))
+		return (false);
 	if (!parse_files(&exec, core))
 		return (false);
 	exec.here_tmp = exec.here;

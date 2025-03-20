@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 17:35:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:40:06 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_boolean	funct_error(char *cmd, char *addvalue, t_core *core)
 	custom_error = ft_strjoin(cmd, addvalue);
 	if (!custom_error)
 		return (false);
-	perror("NINHO");
+	perror("minishell");
 	free(custom_error);
 	core->exit_code = 1;
 	return (true);
