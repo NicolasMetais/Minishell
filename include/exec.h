@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 02:04:54 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 20:07:33 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int			main_exec(t_glb *global, t_core *core);
 //FILES
 t_boolean	parse_files(t_exec *exec, t_core *core);
 int			outfile_manager(t_exec *exec, t_core *core);
-int			infile_manager(t_exec *exec, t_core *core);
+int			infile_manager(t_exec *exec, t_core *core, int fd_out);
 
 //HERE_DOC
 void		signal_here_doc(void);

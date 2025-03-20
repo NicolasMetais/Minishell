@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:11:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:49:29 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 18:03:39 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_boolean	new_marked(char *var, t_core *core)
 	new->name = ft_strdup(var);
 	if (!new->name)
 		return (free(new), false);
+	new->var = NULL;
 	if (!core->mark)
 	{
 		core->mark = new;

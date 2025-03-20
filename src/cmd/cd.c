@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:49:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 17:26:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_boolean	cd_setup(t_core *core, t_cd *cd, t_gc **gc)
 	if (!cd->oldpwd)
 	{
 		if (!add_new_env(core, "OLDPWD="))
-			return (false);
+			return (free_gc(*gc), false);
 	}
 	add_to_gc(gc, cd->oldpwd);
 	cd->home = ft_get_env(core->env, "HOME");
@@ -129,14 +129,14 @@ t_boolean	cd_init(t_core *core, t_cmd *cmd)
 						&& ft_strlen(cmd->args[1]) == 2)
 				cd.ishome = true;
 			else
-				return (invalid_option(cmd, "cd: ", core));
+				return (free_gc(gc), invalid_option(cmd, "cd: ", core));
 		}
 	}
 	if (cmd->args_nb > 2)
-		return (too_many_args("cd: ", core));
+		return (free_gc(gc), too_many_args("cd: ", core));
 	if (ft_strcmp(cmd->args[1], "~") == 0 || cmd->args_nb == 1)
 		cd.ishome = true;
 	if (!cd_exec(core, &cd, cmd, gc))
-		return (false);
+		return (free_gc(gc), false);
 	return (true);
 }

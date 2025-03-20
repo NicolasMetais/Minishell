@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 04:58:13 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 16:06:24 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 18:02:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,6 @@ void	emergency_free_env_var(t_env *env)
 	}
 }
 
-//FREE DE LA VAR D'ENV
-void	free_env(t_core *core)
-{
-	t_env	*current;
-	t_env	*next;
-	int		i;
-	int		size;
-
-	if (!core->env)
-		return ;
-	i = 0;
-	current = core->env;
-	size = get_env_size(core->env);
-	while (i < size)
-	{
-		next = current->next;
-		free(current->name);
-		current->name = NULL;
-		free(current->var);
-		current->var = NULL;
-		free(current);
-		current = NULL;
-		current = next;
-		i++;
-	}
-}
-
 //FREE DE LA LISTE DE VAR MARQUEE
 void	free_mark(t_core *core)
 {
@@ -89,4 +62,32 @@ void	free_mark(t_core *core)
 		current = next;
 		i++;
 	}
+}
+
+//FREE DE LA VAR D'ENV
+void	free_env(t_core *core)
+{
+	t_env	*current;
+	t_env	*next;
+	int		i;
+	int		size;
+
+	if (!core->env)
+		return ;
+	i = 0;
+	current = core->env;
+	size = get_env_size(core->env);
+	while (i < size)
+	{
+		next = current->next;
+		free(current->name);
+		current->name = NULL;
+		free(current->var);
+		current->var = NULL;
+		free(current);
+		current = NULL;
+		current = next;
+		i++;
+	}
+	free_mark(core);
 }

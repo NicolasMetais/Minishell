@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 16:07:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 19:11:05 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_boolean	core_init(t_core *core, int ac, char **av)
 	core->pwd = NULL;
 	core->prompt = NULL;
 	core->new_line = NULL;
+	core->errorno = 0;
 	core->mark = NULL;
 	core->exit_code = 0;
 	core->line = NULL;

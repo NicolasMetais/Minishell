@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 19:36:08 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/18 01:37:52 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 17:35:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_boolean	file_name_argument(char *cmd, t_core *core)
 		core->exit_code = 2;
 	else
 		core->exit_code = 127;
+	free(cmd);
 	return (true);
 }
 

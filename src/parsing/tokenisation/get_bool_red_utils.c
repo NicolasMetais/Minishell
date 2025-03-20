@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   break_line.c                                       :+:      :+:    :+:   */
+/*   get_bool_red_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbayonne <jbayonne@student.42.fr>          #+#  +:+       +#+        */
+/*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-04 12:56:04 by jbayonne          #+#    #+#             */
-/*   Updated: 2025-03-04 12:56:04 by jbayonne         ###   ########.fr       */
+/*   Created: 2025/03/04 12:56:04 by jbayonne          #+#    #+#             */
+/*   Updated: 2025/03/20 16:52:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	turn_false_get_bool(t_bool_red *ctx)
 {
 	ctx->quote = false;
 	ctx->c = 0;
-	ctx->word++;
+	if (ft_strlen(ctx->word) != 0)
+		ctx->word++;
 }
 
 void	init_bool_red(t_bool_red *ctx, char *word)

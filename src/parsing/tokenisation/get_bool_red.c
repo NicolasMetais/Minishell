@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:35:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/19 21:44:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 18:35:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_boolean	is_empty_file(char	*str)
 				return (true);
 			if (*tmp == *str)
 			{
-				while (ft_strlen(tmp + 1) != 0 && (*tmp == *str))
+				while (tmp && (ft_strlen(tmp + 1) != 0 && (*tmp == *str)))
 					incr_empty_file(&tmp, &str);
 				tmp--;
 				if (*tmp == ' ' || ft_strlen(tmp + 1) == 0)

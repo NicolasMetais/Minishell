@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 01:45:16 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 16:38:39 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 20:09:17 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ t_boolean	child_dup(t_exec *exec, int count, t_core *core)
 
 	fd_out = outfile_manager(exec, core);
 	if (fd_out == -1)
+	{
 		return (false);
-	fd_in = infile_manager(exec, core);
+	}
+	fd_in = infile_manager(exec, core, fd_out);
 	if (fd_in == -1)
 	{
 		if (fd_out > 0)

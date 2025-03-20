@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 21:36:02 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 19:53:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ void	free_builtin_in_fork(t_core *core, t_exec *exec)
 	free_pipe(exec->nb_cmd - 1, exec->pipe);
 	if (exec->nb_pipe_here_doc > 0)
 	{
-		close_pipes_here(exec);
-		free_pipe(exec->nb_pipe_here_doc, exec->pipe_here_doc);
+		//close_pipes_here(exec);
+		//free_pipe(exec->nb_pipe_here_doc, exec->pipe_here_doc);
 	}
+	core->splitted_path[0] -= 5;
+	free(exec->child_pid);
+	free_tab(core->splitted_path);
 	kill_program(core);
+	exit(0);
 }
 
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)

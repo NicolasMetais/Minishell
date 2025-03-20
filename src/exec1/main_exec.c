@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 16:07:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 18:27:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 {
 	if (is_builtin(exec->cmd) && exec->nb_cmd == 1)
 	{
-		child_dup(exec, 0, core);
+		if (!child_dup(exec, 0, core))
+			return (true);
 		if (!builtin(core, exec->cmd, 0))
 			return (false);
 	}
