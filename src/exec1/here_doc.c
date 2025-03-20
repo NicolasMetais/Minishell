@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 17:36:58 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:54:10 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_boolean	here_doc(t_here_doc *here_doc)
 		line = get_next_line(0);
 		if (!line)
 		{
+			printf("ctrl +d\n");
 			print_error();
 			free(line);
 			break ;

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:09:30 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/19 21:46:16 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:59:18 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ char	**get_args(char **tmp, char **new, char ***tab)
 void	fd_var_init(char **tab, t_fd_var *var)
 {
 	var->providence = tab;
-	var->new = NULL;
+	var->new = malloc(sizeof(char *));
+	var->new[0] = NULL;
 	var->tmp = NULL;
 	var->current = NULL;
 }

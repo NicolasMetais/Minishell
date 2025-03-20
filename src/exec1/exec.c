@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 03:12:02 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 00:32:14 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ int	env_exec(t_exec *exec, t_core *core)
 	char	*tmp;
 
 	slash = NULL;
-	if (!exec->cmd->args[0])
-		exit(0);
 	tmp = ft_strdup(exec->cmd->args[0]);
 	if (!tmp)
 		core->errorno = ENOBUFS;

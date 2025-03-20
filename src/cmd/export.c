@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:54:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/08 16:44:10 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 00:06:49 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_boolean	isempty(char **tab)
 //SI PAS D'ARG CA PRINT TOUT LES VAR D'ENV + MARQUEE TRIEE ALPHABETIQUEMENT
 t_boolean	export(t_core *core, t_cmd *cmd)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	if (isempty(cmd->args) || cmd->args_nb == 1)

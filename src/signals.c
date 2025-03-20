@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 20:50:56 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 00:26:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	sigint_fork(int sig, siginfo_t *info, void *test)
 	(void)info;
 	if (g_signal == 1 && sig == SIGINT)
 	{
-		printf("ici\n");
 		write(1, "\n", 1);
 		return ;
 	}

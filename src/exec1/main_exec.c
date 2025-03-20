@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 21:01:53 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/20 00:14:51 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->pipe_here_doc = NULL;
 	exec->pipe = NULL;
 	exec->child_pid = NULL;
+	core->splitted_path[0] -= 5;
+	free_tab(core->splitted_path);
+	env_parse(core);
+	core->splitted_path[0] += 5;
 	core->pipe_here_doc = NULL;
 	exec->here_tmp = NULL;
 }
