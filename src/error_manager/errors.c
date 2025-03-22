@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:57:10 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 16:40:06 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:58:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_boolean	cmd_not_found(char *cmd, t_core *core)
 	return (true);
 }
 
-int	only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core)
+t_boolean	only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core)
 {
 	char	*custom_error;
 	char	*tmp;
@@ -115,5 +115,5 @@ int	only_num_arg(t_cmd *cmd_tab, char *cmd, t_core *core)
 	ft_putendl_fd(tmp, 2);
 	free(tmp);
 	core->exit_code = 2;
-	return (2);
+	return (true);
 }

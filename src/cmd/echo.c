@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:46:08 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 01:09:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 13:20:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,23 @@ int	flag_check(t_cmd *cmd, t_boolean *flag)
 //PRINTF POUR EXEC ECHO
 t_boolean	echo_init(t_cmd *cmd, t_core *core)
 {
+	int			size;
 	int			i;
 	t_boolean	flag;
 
 	(void)core;
+	i = 0;
+	size = 0;
 	flag = false;
 	i = flag_check(cmd, &flag);
+	while (cmd->args[size])
+		size++;
 	while (cmd->args[i])
 	{
-		printf("%s ", cmd->args[i]);
+		printf("%s", cmd->args[i]);
 		i++;
+		if (i < size)
+			printf(" ");
 	}
 	if (!flag)
 		printf("\n");

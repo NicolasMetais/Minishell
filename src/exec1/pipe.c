@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/20 17:00:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 14:36:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_failed_pipe(int **array, int n)
 	int	i;
 
 	i = 0;
-	while (i < n)
+	while (i < n - 1)
 	{
 		close(array[i][0]);
 		close(array[i][1]);
@@ -56,12 +56,14 @@ int	**create_pipe_array(int pipe_nb)
 	int	**array;
 	int	i;
 
+	fprintf(stderr, "%d\n", pipe_nb);
 	array = malloc(sizeof(int *) * (pipe_nb));
 	if (!array)
 		return (0);
 	i = 0;
 	while (i < pipe_nb)
 	{
+		fprintf(stderr, "%d\n", i);
 		array[i] = malloc(sizeof(int) * 3);
 		if (!array[i])
 			return (free_failed_pipe(array, i), NULL);

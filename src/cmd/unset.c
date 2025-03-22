@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 09:36:19 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 00:07:58 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:27:24 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_boolean	unset(t_core *core, t_cmd *cmd)
 			{
 				rotate_env(core, cmd->args[i]);
 				delete_env(core);
-				update_env_dup(core);
+				if (update_env_dup(core) == 2)
+					return (false);
 			}
 		}
 	}

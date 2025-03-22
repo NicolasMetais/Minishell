@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 12:33:37 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:26:38 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <limits.h>
 
 extern volatile sig_atomic_t	g_signal;
 
@@ -166,7 +167,7 @@ typedef struct s_get_fd
 }				t_fd_var;
 
 //UTILS
-t_boolean		update_env_dup(t_core *core);
+int				update_env_dup(t_core *core);
 char			*ft_get_env(t_env *env, char *name);
 t_env			*rotate_env(t_core *core, char *var_name);
 int				ft_strcmp(char *s1, char *s2);

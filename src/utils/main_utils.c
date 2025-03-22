@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 23:22:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 17:14:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 14:57:40 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ t_boolean	main_setup(t_core *core, t_glb **global)
 		ft_putendl_fd("minishell : ./minishell in a pipe", 2);
 		free_global(*global, NULL);
 		*global = NULL;
+	}
+	if ((*global)->nb_cmd > 250)
+	{
+		free_global(*global, NULL);
+		*global = NULL;
+		ft_putendl_fd("minishell: pipes: Too many pipes", 2);
 	}
 	core->glb = *global;
 	return (true);

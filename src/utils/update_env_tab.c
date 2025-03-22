@@ -6,14 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 03:47:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/02 13:52:18 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:26:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //JE LIT TOUT LA LISTE CHAINEE D'ENV ET J'UPDATE LE CHAR ** POUR EXECVE
-t_boolean	update_env_dup(t_core *core)
+int	update_env_dup(t_core *core)
 {
 	t_env	*copy;
 	int		i;
@@ -23,12 +23,12 @@ t_boolean	update_env_dup(t_core *core)
 	i = 0;
 	core->env_dup = malloc(sizeof(char *) * (get_env_size(core->env) + 1));
 	if (!core->env)
-		return (false);
+		return (2);
 	while (copy)
 	{
 		core->env_dup[i] = ft_strdup(core->env->var);
 		if (!core->env_dup[i])
-			return (false);
+			return (2);
 		core->env = core->env->next;
 		i++;
 		if (copy == core->env)
