@@ -18,6 +18,7 @@ void	handle_pipe_realloc_line_and_tab(t_pipe_var *ctx, char **tmp)
 	if (!ctx->cmd_tab)
 	{
 		free_split(tmp);
+		ctx->cmd_tab = NULL;
 		free(ctx->str - ctx->c);
 		return ;
 	}
@@ -64,8 +65,6 @@ void	handle_pipe(t_pipe_var *ctx)
 	char	**tmp;
 
 	tmp = ctx->cmd_tab;
-	if (!pipe_valid(ctx->str))
-		return ;
 	if (ctx->quote == false || ft_strlen(ctx->str + 1) == 0)
 	{
 		handle_pipe_get_cmd(ctx);

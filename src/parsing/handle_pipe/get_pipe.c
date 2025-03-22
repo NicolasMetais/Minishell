@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+static void	turn_false_pipe(t_pipe_var *ctx)
+{
+	ctx->i = 0;
+	ctx->quote = false;
+	increment(ctx);
+}
+
 char	**get_pipe(char *line)
 {
 	t_pipe_var	ctx;
@@ -22,11 +29,7 @@ char	**get_pipe(char *line)
 	while (ctx.end == 0)
 	{
 		if (ctx.str && (*ctx.str == ctx.i && *ctx.str))
-		{
-			ctx.i = 0;
-			ctx.quote = false;
-			increment(&ctx);
-		}
+			turn_false_pipe(&ctx);
 		if (ctx.str && ((*ctx.str == '\'' || *ctx.str == '"') && ctx.i == 0))
 		{
 			ctx.i = *ctx.str;
@@ -34,7 +37,11 @@ char	**get_pipe(char *line)
 		}
 		if ((*ctx.str == '|' && ctx.quote == false)
 			|| ft_strlen(ctx.str) == 0)
+		{
 			handle_pipe(&ctx);
+			if (!ctx.cmd_tab)
+				return (NULL);
+		}
 		else
 			increment(&ctx);
 	}
