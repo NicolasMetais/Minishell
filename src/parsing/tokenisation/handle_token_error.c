@@ -65,7 +65,7 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red **red, char *str)
 			("minishell: syntax error near unexpected token `newline'", 2);
 		return (true);
 	}
-	if (is_redirection_char(*str) && (*red)->valid == true)
+	if (is_redirec_char(*str) && (*red)->valid == true)
 	{	
 		redirection_error_2(*red, str);
 		return (true);
@@ -93,7 +93,7 @@ t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 			if (pipe_error(pipe, var.word, str))
 				return (free(var.tmp), true);
 		}
-		if (is_redirection_char(*var.word))
+		if (is_redirec_char(*var.word))
 		{
 			if (is_red_error(pipe, &red, &var))
 				return (free(var.tmp), true);

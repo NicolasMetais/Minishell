@@ -7,7 +7,7 @@ SRCS =	src/main.c \
 		src/parsing/handle_file/get_fd.c \
 		src/parsing/handle_file/get_file_utils.c \
 		src/parsing/handle_file/create_file_list.c \
-		src/parsing/handle_file/realloc_fd.c \
+		src/parsing/handle_file/extract_file.c \
 		src/parsing/handle_file/free_list_fd.c \
 		src/parsing/tokenisation/get_bool_dollar.c \
 		src/parsing/tokenisation/get_bool_dollar_utils.c \

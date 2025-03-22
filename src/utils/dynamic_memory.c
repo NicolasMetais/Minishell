@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	dynamic_delete_failed(char ***tab)
+{
+	(*tab)++;
+	free_split_get_fd(*tab);
+}
+
 char	*dynamic_delete(char *old)
 {
 	char	*new;
@@ -22,7 +28,7 @@ char	*dynamic_delete(char *old)
 	len = ft_strlen(old);
 	new = malloc(sizeof(char) * len);
 	if (!new)
-		return (NULL);
+		return (free(old), NULL);
 	i = 0;
 	j = 1;
 	while (i < len - 1)
@@ -46,7 +52,7 @@ char	*dynamic_copy(char *old, char c)
 	len = ft_strlen(old);
 	new = malloc(sizeof(char) * len + 2);
 	if (!new)
-		return (NULL);
+		return (free(old), NULL);
 	while (i < len)
 	{
 		new[i] = old[i];

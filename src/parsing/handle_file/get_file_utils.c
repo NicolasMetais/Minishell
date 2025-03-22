@@ -21,30 +21,14 @@ void	get_file_free_and_incr(char ***tab)
 	}
 }
 
-t_boolean	get_file_check(char ***tab, t_red **current, char c, t_cmd *cmd)
-{
-	if ((*current)->type == double_)
-		(**tab) = dynamic_delete(**tab);
-	(**tab) = dynamic_delete(**tab);
-	if ((*current)->empty_file)
-		add_file_to_cmd("", c, cmd, *current);
-	if ((*tab) && ft_strlen(**tab) == 0)
-	{
-		free((**tab));
-		(*tab)++;
-	}
-	if ((*current)->empty_file)
-	{
-		free((**tab));
-		(*tab)++;
-		return (true);
-	}
-	return (false);
-}
-
 char	**get_args(char **tmp, char **new, char ***tab)
 {
+	char	**old;
+
+	old = new;
 	new = realloc_add_to_tab(new, (*tmp));
+	if (!new)
+		return (free_split(old), free_split_get_fd(*tab), NULL);
 	(*tmp) = NULL;
 	if (ft_strlen(**tab) == 0)
 	{
@@ -53,7 +37,13 @@ char	**get_args(char **tmp, char **new, char ***tab)
 	}
 	while (*tab && **tab && ft_strlen(**tab) == 0)
 	{
-		new = realloc_add_to_tab(new, ft_strdup(""));
+		(*tmp) = ft_strdup("");
+		if (!(*tmp))
+			return (free_split(new), free_split_get_fd(*tab), NULL);
+		new = realloc_add_to_tab(new, (*tmp));
+		if (!new)
+			return (free_split(new), free_split_get_fd((*tab)), NULL);
+		(*tmp) = NULL;
 		free((**tab));
 		(*tab)++;
 	}
@@ -62,9 +52,26 @@ char	**get_args(char **tmp, char **new, char ***tab)
 
 void	fd_var_init(char **tab, t_fd_var *var)
 {
-	var->providence = tab;
+	var->head = tab;
 	var->new = malloc(sizeof(char *));
+	if (!var->new)
+	{	
+		free_split(tab);
+		return ;
+	}
 	var->new[0] = NULL;
 	var->tmp = NULL;
 	var->current = NULL;
+}
+
+void	free_split_get_fd(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
 }

@@ -70,7 +70,7 @@ t_file	*create_file(char *file, t_file *list, t_type_red type)
 	return (list);
 }
 
-void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red)
+t_boolean	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red)
 {
 	cmd->error = 0;
 	if (c == '<')
@@ -79,7 +79,7 @@ void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red)
 		if (!cmd->in)
 		{
 			cmd->error = 1;
-			free_list_fd(cmd->out);
+			return (false);
 		}	
 	}
 	else
@@ -88,7 +88,8 @@ void	add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red)
 		if (!cmd->out)
 		{	
 			cmd->error = 1;
-			free_list_fd(cmd->in);
+			return (false);
 		}
 	}
+	return (true);
 }

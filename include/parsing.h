@@ -105,6 +105,7 @@ typedef struct s_get_file_var
 {
 	char	c;
 	char	*file;
+	int		error;
 }				t_get_file_var;
 
 void		free_split(char **split);

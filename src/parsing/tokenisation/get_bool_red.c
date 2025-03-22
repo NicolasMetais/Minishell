@@ -95,7 +95,7 @@ t_red	*get_bool(char *word, t_red *red_value, int *error)
 		turn_bool_red(&ctx);
 		if (ft_strlen(ctx.word) == 0)
 			break ;
-		if (is_redirection_char(*ctx.word))
+		if (is_redirec_char(*ctx.word))
 		{
 			tmp = new_red_value(&ctx);
 			if (!tmp)

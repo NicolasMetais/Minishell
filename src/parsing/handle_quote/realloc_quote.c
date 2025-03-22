@@ -59,19 +59,19 @@ char	**realloc_add_to_tab(char **tab, char *new)
 	len = command_counter(tab);
 	new_tab = malloc(sizeof(char *) * (len + 2));
 	if (!new_tab)
-		return (NULL);
+		return (free(new), NULL);
 	if (!tab)
 		return (new_tab_init(new_tab, new));
 	while (tab[i])
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new)
-			return (free_split_init(tab, i), NULL);
+			return (free_split_init(new_tab, i), free(new), NULL);
 		i++;
 	}
 	new_tab[i] = ft_strdup(new);
 	if (!new_tab[i])
-		return (free_split_init(tab, i), free(new), NULL);
+		return (free_split_init(new_tab, i), free(new), NULL);
 	new_tab[i + 1] = NULL;
 	free(new);
 	return (free_split(tab), new_tab);

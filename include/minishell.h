@@ -160,7 +160,7 @@ typedef struct s_core
 typedef struct s_get_fd
 {
 	char		**new;
-	char		**providence;
+	char		**head;
 	char		*tmp;
 	t_red		*current;
 }				t_fd_var;
@@ -214,6 +214,9 @@ void			free_loop(t_glb *global, t_core *core);
 void			open_file_failed(char *cmd);
 char			*dynamic_delete(char *old);
 void			free_global(t_glb *global, t_core *core);
+void			dynamic_delete_failed(char ***tab);
+void			free_split_get_fd(char **split);
+
 //KILL
 void			kill_program(t_core *core);
 
@@ -231,7 +234,7 @@ void			pipe_var_init(t_pipe_var *ctx, char *line);
 void			quote_var_init(t_pipe_var *ctx, char *line);
 void			get_word_init(t_quote *ctx, char *str, int j);
 
-t_boolean		is_redirection_char(char s);
+t_boolean		is_redirec_char(char s);
 t_boolean		is_redirection(char	*s);
 char			**get_fd(char **tab, t_cmd	*cmd, t_red *tab_red);
 char			**get_outfd(t_cmd *cmd, char **cmd_split);
@@ -298,7 +301,7 @@ char			*handle_cmd_file_word_un(t_cmd *cmd, char *str,
 					t_red **tab_red);
 
 // CREATE FILES LIST IN CMD
-void			add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red);
+t_boolean		add_file_to_cmd(char *file, char c, t_cmd *cmd, t_red *tab_red);
 t_file			*create_file(char *file, t_file *list, t_type_red type);
 t_file			*add_to_file_list(t_file **lst, t_file *new);
 t_file			*get_all_out(t_cmd *cmd);
@@ -352,11 +355,13 @@ void			the_arno(t_glb *glb);
 
 // GETFD UTILS
 
-t_boolean		get_file_check(char ***tab, t_red **current, char c,
+int				get_file_check(char ***tab, t_red **current, char c,
 					t_cmd *cmd);
 char			**get_args(char **tmp, char **new, char ***tab);
 void			fd_var_init(char **tab, t_fd_var *var);
 void			get_file_free_and_incr(char ***tab);
 void			incr_empty_file(char **tmp, char **str);
+t_boolean		get_file(char ***tab, t_cmd *cmd, t_red **tab_red,
+					t_red **current);
 
 #endif
