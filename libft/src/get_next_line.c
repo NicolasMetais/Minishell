@@ -6,11 +6,12 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:48:37 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/17 01:34:50 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 20:40:01 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "../../include/minishell.h"
 #include <fcntl.h>
 
 char	*ft_free(char *str)

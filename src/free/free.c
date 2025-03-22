@@ -6,13 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 05:40:11 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 17:37:17 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 23:33:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	core_close_pipes_here(t_core *core)
+void	core_close__here(t_core *core)
 {
 	int	n;
 
@@ -28,8 +28,10 @@ void	core_close_pipes_here(t_core *core)
 //FREE DE TOUT LE PROGRAMME
 void	kill_program(t_core *core)
 {
-	close(core->save);
-	close(core->save1);
+	if (core->save > 0)
+		close(core->save);
+	if (core->save1 > 0)
+		close(core->save1);
 	free(core->line);
 	core->line = NULL;
 	free(core->prompt);

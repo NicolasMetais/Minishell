@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:54:18 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 15:53:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 16:14:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_boolean	pwd(t_cmd *cmd, t_core *core)
 		{
 			return (invalid_option(cmd, "pwd: ", core));
 		}
-
 	}
 	pwd = getcwd(NULL, 0);
 	if (!pwd)

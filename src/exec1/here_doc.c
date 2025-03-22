@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 17:08:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 00:22:41 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,32 @@
 t_boolean	here_doc(t_here_doc *here_doc)
 {
 	char	*line;
+	char	*tmp;
 	int		size;
 
 	size = ft_strlen(here_doc->limiter);
 	while (1)
 	{
-		ft_putstr_fd("here_doc> ", 2);
-		line = get_next_line(0);
+		line = readline("here_doc> ");
 		if (!line)
 		{
 			print_error();
 			free(line);
 			break ;
 		}
-		if (ft_strncmp(line, here_doc->limiter, size) == 0
-			&& line[size] == '\n')
+		if (ft_strncmp(line, here_doc->limiter, size) == 0)
 		{
 			free(line);
 			break ;
 		}
 		if (here_doc->is_pipe)
-			ft_putstr_fd(line, here_doc->pipe_here[1]);
+		{
+			tmp = ft_strjoin(line, "\n");
+			if (!tmp)
+				return (free(line), false);
+			ft_putstr_fd(tmp, here_doc->pipe_here[1]);
+			free(tmp);
+		}
 		free(line);
 	}
 	return (true);

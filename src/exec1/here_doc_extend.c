@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:24:46 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 00:17:23 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 20:55:20 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	here_doc_cleanup(t_core *core, t_exec *exec)
 void	print_error(void)
 {
 	ft_putendl_fd
-		("\nminishell: warning: here-document delimited by end-of-file", 2);
+		("minishell: warning: here-document delimited by end-of-file", 2);
 }

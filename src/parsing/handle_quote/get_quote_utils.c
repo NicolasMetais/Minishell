@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:09:02 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/18 02:13:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 22:02:34 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ char	*ft_pignouf_prime(char *line)
 	t_pignouf	var;
 
 	pignouf_init(&var, line);
-	while (line[var.i] == ' ')
+	while ((line[var.i] >= 9 && line[var.i] <= 13)
+		|| line[var.i] == 127 || line[var.i] == 32)
 		var.i++;
 	while (line[var.len] == ' ' && var.len != 0)
 	{

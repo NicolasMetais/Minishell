@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/22 12:08:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 22:15:38 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,15 @@ t_glb	*global_init(t_core *core)
 	t_glb	*glb;
 	char	*tmp;
 
+	core->line = remove_newline(core->line);
+	if (!core->line)
+		return (NULL);
 	tmp = core->line;
 	core->line = expansion_var(core);
 	if (!core->line)
 		return (NULL);
 	if (check_error(core))
-		return (NULL);
+		return (free(tmp), NULL);
 	free(tmp);
 	line_split = get_pipe(core->line);
 	if (!line_split)
@@ -111,6 +114,5 @@ t_glb	*global_init(t_core *core)
 	glb->cmd = set_cmd(line_split);
 	if (!glb->cmd)
 		return (free_split(line_split), free(glb), NULL);
-	the_arno(glb);
-	return (free_split(line_split), glb);
+	return (the_arno(glb), free_split(line_split), glb);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 10:04:55 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 19:15:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,24 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 		if (!child_dup(exec, 0, core))
 			return (true);
 		if (!builtin(core, exec->cmd, 0))
+		{
+			free_global(core->glb, NULL);
+			free_env(core);
 			return (false);
+		}
 	}
 	else
 	{
-		if (!fork_setup(exec, core))
+		if (!fork_previous(core, exec))
+		{
+			close_free_pipes(exec);
+			free_here_doc(exec);
+			free_env(core);
+			core->splitted_path -= 5;
+			free(core->splitted_path);
+			free_global(core->glb, NULL);
 			return (false);
+		}
 	}
 	return (true);
 }
@@ -71,6 +83,8 @@ int	main_exec(t_glb *global, t_core *core)
 {
 	t_exec	exec;
 
+	core->save = dup(STDIN_FILENO);
+	core->save1 = dup(STDOUT_FILENO);
 	if (!exec_init(&exec, global, core))
 		return (false);
 	if (!parse_files(&exec, core))

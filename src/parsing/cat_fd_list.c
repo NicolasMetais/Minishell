@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:23:49 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/18 17:21:49 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 22:16:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,26 @@ t_file	*cat_fd(t_file *head, t_file *new)
 	return (head);
 }
 
-t_file	*get_all_in(t_cmd *cmd)
+char	*remove_newline(char *line)
 {
-	t_file	*head;
+	char	*new;
+	int		i;
 
-	head = NULL;
-	while (cmd)
+	i = 0;
+	new = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	if (!new)
+		return (free(line), NULL);
+	while (line[i])
 	{
-		head = cat_fd(head, cmd->in);
-		cmd = cmd->next;
+		if (line[i] == '\n')
+			new[i] = ' ';
+		else
+			new[i] = line[i];
+		i++;
 	}
-	return (head);
-}
-
-t_file	*get_all_out(t_cmd *cmd)
-{
-	t_file	*head;
-
-	head = NULL;
-	while (cmd)
-	{
-		head = cat_fd(head, cmd->out);
-		cmd = cmd->next;
-	}
-	return (head);
+	new[i] = '\0';
+	free(line);
+	return (new);
 }
 
 void	the_arno(t_glb *glb)

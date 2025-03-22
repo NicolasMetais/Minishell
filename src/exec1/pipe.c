@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/22 14:36:41 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 23:48:30 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ void	free_failed_pipe(int **array, int n)
 	int	i;
 
 	i = 0;
-	while (i < n - 1)
+	while (i <= n)
 	{
-		close(array[i][0]);
-		close(array[i][1]);
+		if (array[i][0] > 0)
+			close(array[i][0]);
+		if (array[i][1] > 0)
+			close(array[i][1]);
 		free(array[i]);
+		i++;
 	}
 	free(array);
 }
@@ -56,20 +59,22 @@ int	**create_pipe_array(int pipe_nb)
 	int	**array;
 	int	i;
 
-	fprintf(stderr, "%d\n", pipe_nb);
 	array = malloc(sizeof(int *) * (pipe_nb));
 	if (!array)
 		return (0);
 	i = 0;
 	while (i < pipe_nb)
 	{
-		fprintf(stderr, "%d\n", i);
 		array[i] = malloc(sizeof(int) * 3);
 		if (!array[i])
 			return (free_failed_pipe(array, i), NULL);
 		array[i][2] = 0;
 		if (pipe(array[i]) == -1)
+		{
+			array[i][0] = -1; 
+			array[i][1] = -1; 
 			return (free_failed_pipe(array, i), NULL);
+		}
 		i++;
 	}
 	return (array);

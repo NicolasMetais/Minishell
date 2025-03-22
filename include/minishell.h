@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 15:26:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 22:18:23 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,5 +364,6 @@ void			get_file_free_and_incr(char ***tab);
 void			incr_empty_file(char **tmp, char **str);
 t_boolean		get_file(char ***tab, t_cmd *cmd, t_red **tab_red,
 					t_red **current);
+char			*remove_newline(char *line);
 
 #endif

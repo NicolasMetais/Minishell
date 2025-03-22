@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 06:12:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 16:02:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 17:25:53 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			builtin(t_core *core, t_cmd *cmd, t_boolean fork);
 t_boolean	env(t_core *core, t_cmd *cmd);
 void		exit_status_display(t_core *core, t_cmd *cmd);
 t_boolean	cd_init_extend(t_core *core, t_cmd *cmd, t_gc *gc, t_cd *cd);
-t_boolean	not_setted_check(t_core *core, t_gc *gc, t_cd *cd, char **folder);
+int			not_setted_check(t_core *core, t_gc *gc, t_cd *cd, char **folder);
 t_boolean	cd_init(t_core *core, t_cmd *cmd);
 t_boolean	cd_exec(t_core *core, t_cd *cd, t_cmd *cmd, t_gc *gc);
 t_boolean	echo_init(t_cmd *cmd, t_core *core);

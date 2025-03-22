@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 10:30:24 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 19:21:10 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int			env_exec(t_exec *exec, t_core *core);
 t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count);
 void		fd_setup(t_glb *global, int *pipe_fd);
 t_boolean	fork_setup(t_exec *exec, t_core *core);
+int			fork_previous(t_core *core, t_exec *exec);
 
 //  UTILS EXEC
 t_boolean	is_a_directory(char *arg);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 19:11:05 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 19:19:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
+	core->save1 = -1;
+	core->save = -1;
 	core->ac = ac;
 	core->glb = NULL;
 	core->av = av;
@@ -69,8 +71,6 @@ int	empty(char *line)
 //READLINE (GNL) ON 0 (STDOUT) TO READ EVERY MINISHELL INPUT 
 t_boolean	minishell_launch(t_core *core, t_glb *global)
 {
-	core->save = dup(STDIN_FILENO);
-	core->save1 = dup(STDOUT_FILENO);
 	while (1)
 	{
 		if (!prompt_update(core))

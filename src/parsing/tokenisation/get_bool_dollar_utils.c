@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 20:32:28 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/18 02:03:12 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 16:42:12 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	get_bool_dollar_turn_true(t_get_dollar_bool *ctx)
 		ctx->c_db = *ctx->line;
 	if (ctx->c_simp != 0 && ctx->c_db == 0)
 		ctx->quote = true;
-	ctx->line++;
+	if (*ctx->line)
+		ctx->line++;
 	ctx->k++;
 }
 
@@ -41,7 +42,8 @@ void	get_bool_dollar_turn_false(t_get_dollar_bool *ctx)
 		ctx->c_db = 0;
 	if (ctx->c_simp == 0)
 		ctx->quote = false;
-	ctx->line++;
+	if (*ctx->line)
+		ctx->line++;
 	ctx->k++;
 }
 

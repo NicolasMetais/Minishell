@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 15:48:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 17:33:35 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,17 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_cmd *cmd, t_gc *gc)
 {
 	char	*folder;
 	int		status;
+	int		check;
 
 	folder = cmd->args[1];
-	if (!not_setted_check(core, gc, cd, &folder))
+	check = not_setted_check(core, gc, cd, &folder);
+	if (check == 2)
+		return (free_gc(gc), true);
+	else if (check == false)
 		return (false);
 	status = chdir(folder);
 	if (status < 0)
-		return (funct_error("cd: ", folder, core));
+		return (free_gc(gc), funct_error("cd: ", folder, core));
 	if (!update_pwd(core, cd, gc))
 		return (false);
 	return (true);

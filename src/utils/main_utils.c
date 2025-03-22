@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 23:22:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 14:57:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 23:53:15 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,6 @@ t_boolean	main_setup(t_core *core, t_glb **global)
 		free_global(*global, NULL);
 		*global = NULL;
 	}
-	if ((*global)->nb_cmd > 250)
-	{
-		free_global(*global, NULL);
-		*global = NULL;
-		ft_putendl_fd("minishell: pipes: Too many pipes", 2);
-	}
 	core->glb = *global;
 	return (true);
 }
@@ -64,8 +58,10 @@ t_boolean	main_setup(t_core *core, t_glb **global)
 t_boolean	restore_stdio(t_core *core)
 {
 	if (dup2(core->save, STDIN_FILENO) < 0)
-		return (false);
+		return (true);
+	close(core->save);
 	if (dup2(core->save1, STDOUT_FILENO) < 0)
-		return (false);
+		return (true);
+	close(core->save1);
 	return (true);
 }

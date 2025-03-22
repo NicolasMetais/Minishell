@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:53:42 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/23 14:31:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 17:03:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void	free_gc(t_gc *gc)
 		temp = gc;
 		gc = gc->next;
 		free(temp->data);
+		temp->data = NULL;
 		free(temp);
+		temp = NULL;
 	}
 }
 
