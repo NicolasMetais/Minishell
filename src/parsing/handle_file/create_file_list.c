@@ -29,14 +29,14 @@ t_file	*init_list(char *file, t_file *list, t_type_red type)
 
 	new = malloc(sizeof(t_file));
 	if (!new)
-		return (free_list_fd(list), NULL);
+		return (NULL);
 	new->type = type;
 	if (ft_strlen(file) == 0)
 		new->file = ft_strdup("");
 	else
 		new->file = ft_strdup(file);
 	if (!new->file)
-		return (NULL);
+		return (free(new), NULL);
 	new->next = NULL;
 	list = new;
 	return (list);
@@ -64,7 +64,7 @@ t_file	*create_file(char *file, t_file *list, t_type_red type)
 			new->file = ft_strdup(file);
 		new->next = NULL;
 		if (!new->file)
-			return (NULL);
+			return (free_list_fd(list), NULL);
 		list = add_to_file_list(&list, new);
 	}
 	return (list);
