@@ -39,6 +39,7 @@ SRCS =	src/main.c \
 		src/expansion_var.c \
 		src/expansion_var_utils.c \
 		src/cmd/cd.c \
+		src/cmd/cd_bis.c \
 		src/cmd/echo.c \
 		src/cmd/exit.c \
 		src/cmd/pwd.c \

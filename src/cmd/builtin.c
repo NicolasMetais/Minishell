@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/18 02:15:08 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:50:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,15 @@ t_boolean	builtin_or_not(t_core *core, t_cmd *cmd, t_boolean fork)
 
 int	builtin(t_core *core, t_cmd *cmd, t_boolean fork)
 {
-	int			error;
+	t_boolean	error;
 	int			i;
 
 	i = 0;
+	error = false;
 	while (cmd->args[i])
 		i++;
 	cmd->args_nb = i;
-	error = builtin_or_not(core, cmd, fork);
+	if (is_builtin(cmd))
+		error = builtin_or_not(core, cmd, fork);
 	return (error);
 }

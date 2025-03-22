@@ -6,36 +6,44 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 21:33:29 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/03 17:47:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:54:42 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-long long	ft_atol(const char *nptr)
+typedef struct s_atol
 {
 	int				i;
-	long long		res;
-	int				bol;
+	long			res;
+	int				sign;
+	int				digit;
+}	t_atol;
 
-	res = 0;
-	i = 0;
-	bol = 0;
-	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+long long	ft_atol(const char *nptr)
+{
+	t_atol	atol;
+
+	atol.res = 0;
+	atol.i = 0;
+	atol.digit = 0;
+	atol.sign = 1;
+	while ((nptr[atol.i] >= '\t' && nptr[atol.i] <= '\r')
+		|| nptr[atol.i] == ' ')
+		atol.i++;
+	if (nptr[atol.i] == '+' || nptr[atol.i] == '-')
 	{
-		if (nptr[i] == '-')
-		bol = 1;
-		i++;
+		if (nptr[atol.i++] == '-')
+			atol.sign = -1;
 	}
-	while (nptr[i] && nptr[i] >= '0' && nptr[i] <= '9')
+	while (nptr[atol.i] && nptr[atol.i] >= '0' && nptr[atol.i] <= '9')
 	{
-		res = res * 10;
-		res = res + (nptr[i] - '0');
-		i++;
+		atol.digit = nptr[atol.i++] - '0';
+		if (atol.sign == 1 && (atol.res > (LONG_MAX - atol.digit) / 10))
+			return (LONG_MAX);
+		if (atol.sign == -1 && (atol.res > (LONG_MIN + atol.digit) / -10))
+			return (LONG_MIN);
+		atol.res = atol.res * 10 + atol.digit;
 	}
-	if (bol == 1)
-		res = res * (-1);
-	return (res);
+	return (atol.res * atol.sign);
 }

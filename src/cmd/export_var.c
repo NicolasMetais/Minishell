@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:38:14 by nmetais           #+#    #+#             */
-/*   Updated: 2025/02/20 22:51:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 16:07:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ t_boolean	re_write_var(t_core *core, char *var, char *var_name)
 	i = -1;
 	new_var = malloc(sizeof(char) * ((ft_strlen(core->env->var)
 					+ (ft_strlen(var) - (ft_strlen(var_name) + 2)) + 1)));
+	if (!new_var)
+		return (false);
 	while (core->env->var[++i])
 	{
 		if (core->env->var[i] == '=')
@@ -73,15 +75,12 @@ t_boolean	re_write_var(t_core *core, char *var, char *var_name)
 		new_var[i] = core->env->var[i];
 	}
 	while (var[j])
-	{
-		new_var[i] = var[j];
-		i++;
-		j++;
-	}
+		new_var[i++] = var[j++];
 	new_var[i] = '\0';
 	free(core->env->var);
 	core->env->var = new_var;
-	update_env_dup(core);
+	if (update_env_dup(core) == 2)
+		return (false);
 	return (true);
 }
 
@@ -100,6 +99,8 @@ t_boolean	update_var(t_core *core, char *var, char *var_name
 		{
 			free(core->env->var);
 			core->env->var = ft_strdup(var);
+			if (!core->env->var)
+				return (false);
 		}
 	}
 	else
@@ -128,8 +129,10 @@ t_boolean	add_var(char *var, t_core *core, t_boolean append)
 	if (!var_name)
 		return (false);
 	del_marked(var_name, core);
-	update_var(core, var, var_name, append);
-	update_env_dup(core);
+	if (!update_var(core, var, var_name, append))
+		return (false);
+	if (update_env_dup(core) == 2)
+		return (false);
 	free(var_name);
 	return (true);
 }
