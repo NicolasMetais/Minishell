@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:23:47 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/18 02:09:37 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 11:46:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ t_boolean	redirection_error(t_pipe_token *pipe, t_red **red, char *str)
 {
 	str++;
 	if ((*red)->next)
+	{
 		*red = (*red)->next;
+	}
 	while (*str && (*str == ' ' && (*str != '\'' && *str != '"')))
 		str++;
 	if (!*str)
@@ -86,12 +88,12 @@ t_boolean	token_error(t_pipe_token *pipe, t_red *red, char *str)
 	while (*var.word)
 	{
 		turn_token_error(&var);
-		if (*var.word == '|' && pipe->valid == true && var.quote == false)
+		if (*var.word == '|' && pipe->valid == true)
 		{
 			if (pipe_error(pipe, var.word, str))
 				return (free(var.tmp), true);
 		}
-		if (is_redirection_char(*var.word) && var.quote == false)
+		if (is_redirection_char(*var.word))
 		{
 			if (is_red_error(pipe, &red, &var))
 				return (free(var.tmp), true);

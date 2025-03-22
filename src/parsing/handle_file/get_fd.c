@@ -6,16 +6,21 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 20:36:31 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/19 20:57:08 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 11:57:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_file_next_in_false(char c, t_red **tab_red)
+void	get_file_next_in_false(char ***tab, char **file, t_red **tab_red)
 {
-	if (is_redirection_char(c) && (*tab_red)->valid == false)
+	if (is_redirection_char(***tab) && (*tab_red)->valid == false)
 	{
+		if ((*tab_red)->type == double_)
+		{
+			*file = dynamic_copy(*file, ***tab);
+			(**tab) = dynamic_delete(**tab);
+		}
 		if ((*tab_red)->next)
 			*tab_red = (*tab_red)->next;
 	}
@@ -31,7 +36,7 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 		return ;
 	while (**tab && !(is_redirection_char(***tab) && (*tab_red)->valid == true))
 	{
-		get_file_next_in_false(***tab, tab_red);
+		get_file_next_in_false(tab, &var.file, tab_red);
 		var.file = dynamic_copy(var.file, ***tab);
 		(**tab) = dynamic_delete(**tab);
 		if (((is_redirection_char(***tab) && (*tab_red)->valid == true)
@@ -39,6 +44,7 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 		{
 			if (!var.file)
 				break ;
+			printf("file : %s\n", var.file);
 			add_file_to_cmd(var.file, var.c, cmd, *current);
 			free(var.file);
 			var.file = NULL;

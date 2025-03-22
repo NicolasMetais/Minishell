@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:42:01 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 18:33:34 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 09:53:11 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*dynamic_copy(char *old, char c)
 
 void	incr_empty_file(char **tmp, char **str)
 {
-
 	(*tmp) += 2;
 	(*str) += 2;
 }

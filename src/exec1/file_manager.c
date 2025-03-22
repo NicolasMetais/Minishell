@@ -6,13 +6,13 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 19:31:34 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 20:08:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 10:31:09 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	infile_manager(t_exec *exec, t_core *core, int fd_out)
+int	infile_manager(t_exec *exec, t_core *core)
 {
 	t_file	*tmp_file;
 	int		fd;
@@ -26,8 +26,6 @@ int	infile_manager(t_exec *exec, t_core *core, int fd_out)
 			fd = __open_infile(tmp_file->file, core);
 			if (fd == -1)
 			{
-				if (fd_out > 0)
-					close(fd_out);
 				kill_open_file_failed(core, exec, tmp_file);
 			}
 		}
@@ -39,7 +37,7 @@ int	infile_manager(t_exec *exec, t_core *core, int fd_out)
 	return (fd);
 }
 
-int	outfile_manager(t_exec *exec, t_core *core)
+int	outfile_manager(t_exec *exec, t_core *core, int fd_in)
 {
 	t_file	*tmp_file;
 	int		fd;
@@ -50,7 +48,11 @@ int	outfile_manager(t_exec *exec, t_core *core)
 	{
 		fd = __open_outfile(tmp_file);
 		if (fd == -1)
+		{
+			if (fd_in > 0)
+				close(fd_in);
 			kill_open_file_failed(core, exec, tmp_file);
+		}
 		if (!tmp_file->next)
 			break ;
 		close(fd);

@@ -6,15 +6,15 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 21:45:13 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:33:37 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define LIGHT_BLUE "\033[38;2;100;149;237m"
-# define WHITE "\e[0;37m"
+# define LIGHT_BLUE "\1\033[38;2;100;149;237m\2"
+# define WHITE "\1\e[0;37m\2"
 
 //HEADERS
 # include "boolean.h"

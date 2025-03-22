@@ -6,11 +6,21 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/20 18:27:07 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/22 10:04:55 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_boolean	update_splitted_path(t_core *core)
+{
+	core->splitted_path[0] -= 5;
+	free_tab(core->splitted_path);
+	if (!env_parse(core))
+		return (false);
+	core->splitted_path[0] += 5;
+	return (true);
+}
 
 t_boolean	exec_init(t_exec *exec, t_glb *global, t_core *core)
 {
@@ -33,13 +43,10 @@ t_boolean	exec_init(t_exec *exec, t_glb *global, t_core *core)
 	exec->pipe_here_doc = NULL;
 	exec->pipe = NULL;
 	exec->child_pid = NULL;
-	core->splitted_path[0] -= 5;
-	free_tab(core->splitted_path);
-	if (!env_parse(core))
-		return (false);
-	core->splitted_path[0] += 5;
 	core->pipe_here_doc = NULL;
 	exec->here_tmp = NULL;
+	if (!update_splitted_path(core))
+		return (false);
 	return (true);
 }
 
