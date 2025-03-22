@@ -95,10 +95,10 @@ t_glb	*global_init(t_core *core)
 	char	*tmp;
 
 	tmp = core->line;
-	if (check_error(core))
-		return (NULL);
 	core->line = expansion_var(core);
 	if (!core->line)
+		return (NULL);
+	if (check_error(core))
 		return (NULL);
 	free(tmp);
 	line_split = get_pipe(core->line);

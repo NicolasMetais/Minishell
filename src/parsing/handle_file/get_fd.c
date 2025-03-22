@@ -44,7 +44,6 @@ void	get_file(char ***tab, t_cmd *cmd, t_red **tab_red, t_red **current)
 		{
 			if (!var.file)
 				break ;
-			printf("file : %s\n", var.file);
 			add_file_to_cmd(var.file, var.c, cmd, *current);
 			free(var.file);
 			var.file = NULL;
