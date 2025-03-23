@@ -101,9 +101,9 @@ t_glb	*global_init(t_core *core)
 	core->line = expansion_var(core);
 	if (!core->line)
 		return (NULL);
+	free(tmp);
 	if (check_error(core))
 		return (free(tmp), NULL);
-	free(tmp);
 	line_split = get_pipe(core->line);
 	if (!line_split)
 		return (NULL);

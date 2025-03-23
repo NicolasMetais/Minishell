@@ -31,8 +31,6 @@ void	init_var_expand(t_expand_var *ctx, t_core *core)
 	ctx->tmp = NULL;
 	ctx->new_line = NULL;
 	ctx->dollar = get_tk_dollar(core->line, &ctx->error);
-	if (!ctx->dollar)
-		ctx->error = 1;
 	ctx->tmp_d = ctx->dollar;
 }
 
