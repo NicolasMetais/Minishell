@@ -6,28 +6,28 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 21:25:11 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 15:55:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	sigint_here_doc(int sig)
-// {
-// 	if (g_signal == 1 && sig == SIGINT)
-// 	{
-// 		write(2, "\n", 1);
-// 		return ;
-// 	}
-// }
+void	sigint_here_doc(int sig)
+{
+	(void)sig;
+	g_signal = 2;
+	printf("\n");
+	close(0);
+	return ;
+}
 
 void	signal_here_doc(void)
 {
 	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = SIG_DFL;
 	sa.sa_flags = 0;
+	sa.sa_handler = sigint_here_doc;
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 }
 

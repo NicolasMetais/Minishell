@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:43:51 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/23 00:51:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 12:51:38 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	init_var_expand(t_expand_var *ctx, t_core *core)
 	ctx->tmp = NULL;
 	ctx->new_line = NULL;
 	ctx->dollar = get_tk_dollar(core->line, &ctx->error);
-	if (!ctx->dollar)
-		ctx->error = 1;
 	ctx->tmp_d = ctx->dollar;
 }
 

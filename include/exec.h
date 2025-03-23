@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 19:21:10 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 15:58:00 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int			infile_manager(t_exec *exec, t_core *core);
 //HERE_DOC
 void		signal_here_doc(void);
 void		print_error(void);
-void		here_doc_cleanup(t_core *core, t_exec *exec);
 void		close_node_pipe(t_here_doc *here);
 int			get_here_doc_nb(t_exec *exec);
 t_boolean	incr_here_doc(t_cmd *cmd);
