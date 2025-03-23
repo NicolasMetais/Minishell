@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 23:22:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 23:53:15 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 15:43:31 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_boolean	is_minishell(t_cmd *cmd)
 t_boolean	main_setup(t_core *core, t_glb **global)
 {
 	add_history(core->line);
+	g_signal = 0;
 	*global = global_init(core);
 	if (*global && (*global)->nb_cmd > 1 && is_minishell((*global)->cmd))
 	{

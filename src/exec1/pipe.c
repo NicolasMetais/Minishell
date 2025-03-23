@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:56:42 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/22 23:48:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 15:58:19 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	**create_pipe_array(int pipe_nb)
 		array[i][2] = 0;
 		if (pipe(array[i]) == -1)
 		{
-			array[i][0] = -1; 
-			array[i][1] = -1; 
+			array[i][0] = -1;
+			array[i][1] = -1;
 			return (free_failed_pipe(array, i), NULL);
 		}
 		i++;

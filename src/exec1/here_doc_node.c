@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 18:04:59 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/19 20:54:26 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 15:57:46 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,26 @@ void	hereadd_back(t_here_doc **lst, t_here_doc *new)
 		tmp = tmp->next;
 	tmp->next = new;
 	return ;
+}
+
+int	get_here_doc_nb(t_exec *exec)
+{
+	t_cmd	*cmd;
+	t_file	*infile;
+	int		size;
+
+	cmd = exec->cmd;
+	size = 0;
+	while (cmd)
+	{
+		infile = cmd->in;
+		while (infile)
+		{
+			if (infile->type == 0)
+				size++;
+			infile = infile->next;
+		}
+		cmd = cmd->next;
+	}
+	return (size);
 }

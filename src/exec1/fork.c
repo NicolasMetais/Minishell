@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 02:14:47 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 23:56:58 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 15:48:50 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ void	update_exit_code(t_core *core, pid_t *child_pid)
 		if (pid > 0 && WIFEXITED(status))
 		{
 			exit_status = WEXITSTATUS(status);
-			if (WTERMSIG(status) == SIGINT)
-				core->exit_code = 128 + exit_status;
 			if (exit_status != 0)
 				core->exit_code = exit_status;
 		}
-		exit_status = WEXITSTATUS(status);
-		if (WTERMSIG(status) == SIGINT)
+		if (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)
 			core->exit_code = 128 + WTERMSIG(status);
 		if (errno == EINTR)
 			continue ;
