@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:44 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/23 15:58:00 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:45:07 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_boolean	here_doc_manager(t_exec *exec, t_core *core);
 t_boolean	ishere_doc(t_exec *exec);
 t_here_doc	*new_here_doc(char *file);
 void		hereadd_back(t_here_doc **lst, t_here_doc *new);
+void		here_doc_cleanup(t_core *core, t_exec *exec);
 
 //BIG EXEC
 t_boolean	child_dup(t_exec *exec, int count, t_core *core);

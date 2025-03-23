@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 19:15:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:46:17 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,14 @@ int	main_exec(t_glb *global, t_core *core)
 	if (!parse_files(&exec, core))
 		return (false);
 	exec.here_tmp = exec.here;
-	if (!launch_fork(&exec, core))
-		return (false);
+	if (g_signal != 2)
+	{
+		if (!launch_fork(&exec, core))
+			return (false);
+	}
+	else
+		here_doc_cleanup(core, &exec);
+	g_signal = 0;
 	if (!restore_stdio(core))
 		return (false);
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 02:10:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/17 00:21:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/23 16:21:36 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ char	*expansion_var(t_core *core)
 		{
 			ctx.new_line = get_variable(ctx.new_line, core, ctx.dollar);
 			if (!ctx.new_line)
-				return (free(ctx.tmp), NULL);
+				return (free(ctx.tmp), free_tk_dollar(ctx.tmp_d), NULL);
 			ctx.dollar = ctx.dollar->next;
 		}
 		else
 		{
 			ctx.new_line = get_new_line(&ctx, core, &ctx.dollar);
 			if (!ctx.new_line)
-				return (free(ctx.tmp), NULL);
+				return (free(ctx.tmp), free_tk_dollar(ctx.tmp_d), NULL);
 		}
 	}
 	return (free_tk_dollar(ctx.tmp_d), ctx.new_line);
