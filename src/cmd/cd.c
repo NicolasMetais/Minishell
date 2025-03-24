@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 23:15:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 17:33:35 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:50:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_boolean	cd_exec(t_core *core, t_cd *cd, t_cmd *cmd, t_gc *gc)
 		return (free_gc(gc), true);
 	else if (check == false)
 		return (false);
+	if (!folder)
+		folder = cd->home;
 	status = chdir(folder);
 	if (status < 0)
 		return (free_gc(gc), funct_error("cd: ", folder, core));

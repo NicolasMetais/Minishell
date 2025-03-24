@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 06:16:12 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/23 15:55:45 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:59:45 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	sigint_here_doc(int sig)
 {
 	(void)sig;
 	g_signal = 2;
+	g_code_signal = 130;
 	printf("\n");
 	close(0);
 	return ;
@@ -37,6 +38,7 @@ void	sigint_fork(int sig, siginfo_t *info, void *test)
 	(void)info;
 	if (g_signal == 1 && sig == SIGINT)
 	{
+		g_code_signal = 130;
 		write(1, "\n", 1);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 22:18:23 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:58:44 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # include <limits.h>
 
 extern volatile sig_atomic_t	g_signal;
+
+extern volatile sig_atomic_t	g_code_signal;
 
 typedef struct s_redirection
 {

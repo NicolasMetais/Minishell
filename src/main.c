@@ -6,11 +6,14 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:07:28 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 19:19:46 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/24 12:02:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+volatile sig_atomic_t	g_signal;
+volatile sig_atomic_t	g_code_signal;
 
 t_boolean	core_init(t_core *core, int ac, char **av)
 {
@@ -95,8 +98,6 @@ t_boolean	minishell_launch(t_core *core, t_glb *global)
 	return (true);
 }
 
-volatile sig_atomic_t	g_signal;
-
 //DUPLICATION DE LA VARIABLE D'ENV
 int	main(int ac, char **av, char **env)
 {
@@ -104,6 +105,7 @@ int	main(int ac, char **av, char **env)
 	t_glb	*global;
 
 	global = NULL;
+	g_code_signal = 0;
 	g_signal = 0;
 	if (ac == 1)
 	{

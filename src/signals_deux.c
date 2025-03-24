@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:31:24 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/23 15:51:22 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:59:58 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_sigint(int sig, siginfo_t *info, void *test)
 	(void)info;
 	if (g_signal == 0 && sig == SIGINT)
 	{
+		g_code_signal = 130;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
