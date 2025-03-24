@@ -33,9 +33,14 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->valid = false;
 	ctx->quote = false;
 	if (ft_strlen(line) == 1)
+	{
+		printf("line = 1\n");
 		ctx->str = ft_strdup(line);
+	}
 	else
+	{
 		ctx->str = ft_pignouf_prime(line);
+	}
 	ctx->fstr = ctx->str;
 }
 

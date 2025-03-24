@@ -366,6 +366,7 @@ void			get_file_free_and_incr(char ***tab);
 void			incr_empty_file(char **tmp, char **str);
 t_boolean		get_file(char ***tab, t_cmd *cmd, t_red **tab_red,
 					t_red **current);
+void			pignouf_prime_incr(int *j, int *len);
 char			*remove_newline(char *line);
 
 #endif

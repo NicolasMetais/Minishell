@@ -64,11 +64,9 @@ char	*ft_pignouf_prime(char *line)
 	while ((line[var.i] >= 9 && line[var.i] <= 13)
 		|| line[var.i] == 127 || line[var.i] == 32)
 		var.i++;
-	while (line[var.len] == ' ' && var.len != 0)
-	{
-		var.len--;
-		var.j++;
-	}
+	while (((line[var.len] >= 9 && line[var.len] <= 13) 
+		|| line[var.len] == 127 || line[var.len] == 32) && var.len != 0)
+		pignouf_prime_incr(&var.j, &var.len);
 	if (var.len == 0)
 		return (NULL);
 	var.new = malloc(sizeof(char) * (ft_strlen(line) - (var.i + var.j)) + 1);

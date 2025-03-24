@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	pignouf_prime_incr(int *j, int *len)
+{
+	(*len)--;
+	(*j)++;
+}
+
 char	*extract_word(t_quote *ctx)
 {
 	ctx->tmp = ctx->str - ctx->i;
