@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:32:09 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/24 11:53:28 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 10:06:29 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ t_glb	*global_init(t_core *core)
 	core->line = expansion_var(core);
 	if (!core->line)
 		return (free(tmp), NULL);
-
 	free(tmp);
 	if (check_error(core))
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 02:10:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/24 12:01:30 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:03:21 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	*get_variable_utils(char *old, t_core *core, int i)
 		return (free(old), NULL);
 	if (*tmp == '?')
 	{
-		if (g_code_signal == 130)
-			core->exit_code = 130;
 		var = ft_itoa(core->exit_code);
 		if (!var)
 			return (NULL);
@@ -104,7 +102,7 @@ char	*expansion_var(t_core *core)
 				return (free(ctx.tmp), free_tk_dollar(ctx.tmp_d), NULL);
 		}
 	}
-	g_code_signal = 0;
-	core->exit_code = 0;
+	if (ctx.tmp_d)
+		core->exit_code = 0;
 	return (free_tk_dollar(ctx.tmp_d), ctx.new_line);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 16:30:32 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:08:10 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ t_boolean	overflow_long(char *args)
 	return (false);
 }
 
-void	free_exit(t_core *core, unsigned int status)
+void	free_exit(t_core *core, unsigned int status, t_cmd *cmd)
 {
+	(void)cmd;
 	free_global(core->glb, NULL);
 	core->splitted_path[0] -= 5;
 	free_tab(core->splitted_path);
 	kill_program(core);
+	printf("EXIT CODE %d\n", core->exit_code);
+	if (core->exit_code != 0 && cmd->args_nb == 1)
+		exit (core->exit_code);
 	exit(status);
 }
 
@@ -68,6 +72,6 @@ t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork)
 	}
 	if (status == 0 && cmd->args_nb > 1)
 		status = ft_atol(cmd->args[1]);
-	free_exit(core, status);
+	free_exit(core, status, cmd);
 	return (true);
 }

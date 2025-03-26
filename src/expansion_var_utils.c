@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:43:51 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/23 16:22:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:03:25 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_var_expand(t_expand_var *ctx, t_core *core)
 	ctx->new_line = NULL;
 	ctx->dollar = get_tk_dollar(core->line, &ctx->error);
 	ctx->tmp_d = ctx->dollar;
+	sigint_exit_code(core, false);
 }
 
 void	get_variable_incr(int *i, t_core *core)

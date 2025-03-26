@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 05:08:17 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/24 11:58:44 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 10:08:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@
 # include <limits.h>
 
 extern volatile sig_atomic_t	g_signal;
-
-extern volatile sig_atomic_t	g_code_signal;
 
 typedef struct s_redirection
 {
@@ -201,6 +199,7 @@ t_boolean		create_empty_env(t_core *core);
 void			free_tk_dollar(t_tk_dollar *dollar);
 
 //SIGNALS
+void			sigint_exit_code(t_core *core, t_boolean signal_reset);
 void			signal_here_doc(void);
 void			signal_mute(void);
 void			signal_fork(void);

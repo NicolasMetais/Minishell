@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 23:22:20 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/23 15:43:31 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:09:54 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exit_program(t_core *core)
 	core->splitted_path[0] -= 5;
 	free_tab(core->splitted_path);
 	kill_program(core);
-	exit(0);
+	exit(core->exit_code);
 }
 
 t_boolean	is_minishell(t_cmd *cmd)
@@ -44,7 +44,6 @@ t_boolean	is_minishell(t_cmd *cmd)
 t_boolean	main_setup(t_core *core, t_glb **global)
 {
 	add_history(core->line);
-	g_signal = 0;
 	*global = global_init(core);
 	if (*global && (*global)->nb_cmd > 1 && is_minishell((*global)->cmd))
 	{

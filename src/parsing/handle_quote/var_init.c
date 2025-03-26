@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 10:31:24 by jbayonne          #+#    #+#             */
-/*   Updated: 2025/03/10 18:23:11 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 09:34:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	quote_var_init(t_pipe_var *ctx, char *line)
 	ctx->quote = false;
 	if (ft_strlen(line) == 1)
 	{
-		printf("line = 1\n");
 		ctx->str = ft_strdup(line);
 	}
 	else

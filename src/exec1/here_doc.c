@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 21:46:50 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/23 15:57:40 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 09:50:57 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ t_boolean	here_doc(t_here_doc *here_doc)
 	int		size;
 
 	size = ft_strlen(here_doc->limiter);
-	while (g_signal != 2)
+	while (1)
 	{
 		ft_putstr_fd("heredoc > ", 2);
 		line = get_next_line(0);
-		if (!line && g_signal != 2)
+		if (!line && g_signal != 130)
 		{
 			print_error();
 			free(line);
 			break ;
 		}
-		if (g_signal == 2 || (ft_strncmp(line, here_doc->limiter, size) == 0
+		if (g_signal == 130 || (ft_strncmp(line, here_doc->limiter, size) == 0
 				&& line[size] == '\n'))
 		{
 			free(line);
