@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 02:04:36 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 15:50:13 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:51:59 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ t_boolean	is_builtin(t_cmd *cmd)
 }
 
 //DEUXIEME CHECKER DE BUILTIN
-t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core, t_boolean fork)
+t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core, t_boolean fork
+	, t_exec *exec)
 {
 	if ((ft_strcmp(cmd->args[0], "exit") == 0))
 	{
-		exit_custom(core, cmd, fork);
+		exit_custom(core, cmd, fork, exec);
 		return (true);
 	}
 	if ((ft_strcmp(cmd->args[0], "env") == 0))
@@ -61,7 +62,8 @@ t_boolean	builtin_the_sec(t_cmd *cmd, t_core *core, t_boolean fork)
 }
 
 //CHECKER DE BUILTIN
-t_boolean	builtin_or_not(t_core *core, t_cmd *cmd, t_boolean fork)
+t_boolean	builtin_or_not(t_core *core, t_cmd *cmd, t_boolean fork
+		, t_exec *exec)
 {
 	if ((ft_strcmp(cmd->args[0], "cd") == 0))
 	{
@@ -81,12 +83,12 @@ t_boolean	builtin_or_not(t_core *core, t_cmd *cmd, t_boolean fork)
 			return (false);
 		return (true);
 	}
-	if (builtin_the_sec(cmd, core, fork))
+	if (builtin_the_sec(cmd, core, fork, exec))
 		return (true);
 	return (false);
 }
 
-int	builtin(t_core *core, t_cmd *cmd, t_boolean fork)
+int	builtin(t_core *core, t_cmd *cmd, t_boolean fork, t_exec *exec)
 {
 	t_boolean	error;
 	int			i;
@@ -97,6 +99,6 @@ int	builtin(t_core *core, t_cmd *cmd, t_boolean fork)
 		i++;
 	cmd->args_nb = i;
 	if (is_builtin(cmd))
-		error = builtin_or_not(core, cmd, fork);
+		error = builtin_or_not(core, cmd, fork, exec);
 	return (error);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:26:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/26 09:29:48 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 12:16:13 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_boolean	launch_fork(t_exec *exec, t_core *core)
 	{
 		if (!child_dup(exec, 0, core))
 			return (true);
-		if (!builtin(core, exec->cmd, 0))
+		if (!builtin(core, exec->cmd, 0, exec))
 		{
 			free_global(core->glb, NULL);
 			free_env(core);

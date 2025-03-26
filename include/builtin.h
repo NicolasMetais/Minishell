@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 06:12:32 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 17:25:53 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:51:38 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_cd
 void		cmd_exec(t_core *core);
 
 //BUILTIN
-int			builtin(t_core *core, t_cmd *cmd, t_boolean fork);
+int			builtin(t_core *core, t_cmd *cmd, t_boolean fork, t_exec *exec);
 t_boolean	env(t_core *core, t_cmd *cmd);
 void		exit_status_display(t_core *core, t_cmd *cmd);
 t_boolean	cd_init_extend(t_core *core, t_cmd *cmd, t_gc *gc, t_cd *cd);
@@ -47,7 +47,7 @@ t_boolean	cd_init(t_core *core, t_cmd *cmd);
 t_boolean	cd_exec(t_core *core, t_cd *cd, t_cmd *cmd, t_gc *gc);
 t_boolean	echo_init(t_cmd *cmd, t_core *core);
 t_boolean	pwd(t_cmd *cmd, t_core *core);
-t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork);
+t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork, t_exec *exec);
 t_boolean	unset(t_core *core, t_cmd *cmd);
 //EXPORT
 t_boolean	export(t_core *core, t_cmd *cmd);

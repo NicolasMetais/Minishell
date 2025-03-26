@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:19:30 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/26 11:08:10 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 12:22:56 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,26 @@ t_boolean	overflow_long(char *args)
 	return (false);
 }
 
-void	free_exit(t_core *core, unsigned int status, t_cmd *cmd)
+void	free_exit(t_core *core, unsigned int status, t_cmd *cmd, t_exec *exec)
 {
 	(void)cmd;
-	free_global(core->glb, NULL);
+	(void)exec;
 	core->splitted_path[0] -= 5;
 	free_tab(core->splitted_path);
-	kill_program(core);
-	printf("EXIT CODE %d\n", core->exit_code);
 	if (core->exit_code != 0 && cmd->args_nb == 1)
+	{
+		free_global(core->glb, NULL);
+		kill_program(core);
+		if (exec->nb_cmd > 1)
+			free(exec->child_pid);
+		close_free_pipes(exec);
 		exit (core->exit_code);
+	}
+	free_global(core->glb, NULL);
+	if (exec->nb_cmd > 1)
+		free(exec->child_pid);
+	kill_program(core);
+	close_free_pipes(exec);
 	exit(status);
 }
 
@@ -48,7 +58,7 @@ t_boolean	num_arg(t_cmd *cmd, int *i, t_core *core, unsigned int *status)
 	return (true);
 }
 
-t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork)
+t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork, t_exec *exec)
 {
 	unsigned int	status;
 	int				i;
@@ -72,6 +82,6 @@ t_boolean	exit_custom(t_core *core, t_cmd *cmd, t_boolean fork)
 	}
 	if (status == 0 && cmd->args_nb > 1)
 		status = ft_atol(cmd->args[1]);
-	free_exit(core, status, cmd);
+	free_exit(core, status, cmd, exec);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: nmetais <nmetais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 21:27:58 by nmetais           #+#    #+#             */
-/*   Updated: 2025/03/22 18:28:38 by nmetais          ###   ########.fr       */
+/*   Updated: 2025/03/26 12:08:52 by nmetais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_boolean	fork_process(t_exec *exec, pid_t pid, t_core *core, int count)
 			execve_error(core, exec, exec->cmd->args[0]);
 		if (is_builtin(exec->cmd))
 		{
-			if (!(builtin(core, exec->cmd, 1)))
+			if (!(builtin(core, exec->cmd, 1, exec)))
 				return (false);
 			free_builtin_in_fork(core, exec);
 		}
